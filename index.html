@@ -198,6 +198,8 @@
 
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
   .reveal.in { opacity: 1; transform: none; }
+  /* painéis das abas do funil SG são altos demais pro reveal de 8%: sempre visíveis */
+  #funis .panel.reveal, #funis .panel .reveal { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; }
