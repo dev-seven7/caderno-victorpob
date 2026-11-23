@@ -163,6 +163,15 @@ a{color:inherit}
 .lj-cab__meta{display:flex;flex-wrap:wrap;gap:8px}
 .pill{display:inline-flex;align-items:center;gap:6px;background:var(--grafite-800);border-radius:99px;padding:6px 11px;font-size:13px;font-weight:600}
 .pill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
+.lj-horas{font-size:13px;color:var(--concreto)}
+.lj-horas summary{cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px;width:max-content;list-style:none}
+.lj-horas summary::-webkit-details-marker{display:none}
+.lj-horas summary::after{content:" ▾"}
+.lj-horas[open] summary::after{content:" ▴"}
+.lj-horas ul{list-style:none;margin-top:8px;display:grid;gap:2px;max-width:340px;background:var(--grafite-800);border-radius:12px;padding:10px 12px}
+.lj-horas li{display:flex;justify-content:space-between;gap:12px}
+.lj-horas li.hoje{color:#fff;font-weight:800}
+.lj-horas li.fechado span:last-child{color:#E08A8A}
 .lj-aviso{background:#FFF3D6;color:#5a4410;border-radius:12px;padding:10px 12px;font-size:14px;display:flex;gap:10px;align-items:center}
 .lj-nav{position:sticky;top:var(--topo);z-index:30;background:var(--concreto-50);border-bottom:1px solid var(--concreto-200)}
 .lj-nav .wrap{padding-top:10px;padding-bottom:10px;display:grid;gap:10px}
@@ -517,6 +526,7 @@ textarea.campo{min-height:70px;resize:vertical}
       <button class="link" id="lj-trocar" style="color:var(--concreto)"><svg><use href="#i-volta"/></svg>Trocar de loja</button>
       <h1 class="disp" id="h-loja">Ogro</h1>
       <div class="lj-cab__meta" id="lj-meta"></div>
+      <details class="lj-horas" id="lj-horas"><summary>Ver horários da semana</summary><ul id="lj-horas-l"></ul></details>
       <div class="lj-aviso" id="lj-aviso" hidden></div>
     </div>
   </div>
@@ -726,7 +736,6 @@ function track(event, params = {}) {
 }
 
 /* ---------- dados ---------- */
-const H_ABRE = 11, H_FECHA = 24; // simulado
 const LOJAS = [
   { id: "araruama", n: "Araruama", reg: "Lagos", cid: "Araruama · Região dos Lagos", cd: "1742579687071", lat: -22.873, lng: -42.343 },
   { id: "barra-da-tijuca", n: "Barra da Tijuca", reg: "Rio", cid: "Rio de Janeiro", cd: "1663537072665", lat: -23.000, lng: -43.360 },
@@ -770,7 +779,64 @@ function km(a, b) {
 const taxaKm = d => d == null ? null : Math.max(4.99, Math.ceil(3.9 + d * 1.1) - 0.01);
 const tempoKm = d => { const b = d == null ? 30 : Math.round(25 + d * 2.2); return `${b}–${b + 15} min`; };
 
-function aberta() { const h = new Date().getHours(); return h >= H_ABRE && h < H_FECHA; }
+// Horários reais de cada loja, lidos do Cardápio Digital (Databite) em 23/11/2026.
+// Índice = dia da semana (0 = domingo ... 6 = sábado). null = loja marcada como fechada no dia.
+// Cada faixa é [início, fim]. Quando o dia tem "18:00-23:59" + "00:00-05:00", o "00:00-05:00" é a madrugada
+// SEGUINTE (a noite emenda até as 5h do outro dia) — é como o Databite grava turno que passa da meia-noite.
+const HORARIOS = {
+  "araruama":          [[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]]],
+  "barra-da-tijuca":   [[["18:15","23:59"],["00:00","01:59"]],null,null,[["18:00","23:59"],["00:00","01:59"]],[["18:00","23:59"]],[["18:00","23:59"],["00:00","01:59"]],[["18:00","23:59"],["00:00","01:59"]]],
+  "barra-olimpica":    [[["17:30","23:00"]],[["12:00","23:00"]],[["12:00","23:00"]],[["12:00","23:59"],["00:00","04:00"]],[["12:00","23:59"],["00:00","04:00"]],[["12:00","23:59"],["00:00","04:00"]],[["17:30","23:59"],["00:00","04:00"]]],
+  "botafogo":          [null,null,[["18:00","23:59"],["00:00","05:00"]],[["18:00","23:59"],["00:00","05:00"]],null,[["18:00","23:59"],["00:00","05:00"]],[["18:00","23:59"],["00:00","05:00"]]],
+  "copacabana":        [[["18:00","23:59"],["00:00","05:00"]],[["20:00","23:59"],["00:00","05:00"]],null,null,null,null,[["18:00","23:59"],["00:00","05:00"]]],
+  "ilha-do-governador":[[["17:00","23:59"],["00:00","01:45"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"],["00:00","01:45"]],[["17:00","23:59"],["00:00","01:45"]]],
+  "lapa":              [[["11:00","23:59"],["00:00","04:59"]],[["11:00","23:59"],["00:00","03:59"]],[["11:00","23:59"],["00:00","03:59"]],[["11:00","23:59"],["00:00","03:59"]],[["11:00","23:00"],["00:00","03:59"]],[["11:00","23:59"],["00:00","04:59"]],[["11:00","23:59"],["00:00","04:59"]]],
+  "macae":             [[["18:00","23:59"]],[["18:00","23:45"]],[["18:00","23:59"]],[["18:00","23:59"]],null,[["18:00","23:59"]],[["18:00","23:59"]]],
+  "niteroi":           [[["11:30","23:59"]],[["11:30","23:59"]],[["11:30","23:59"]],[["11:30","23:59"]],[["11:30","23:59"]],[["11:30","23:59"]],[["11:30","23:59"]]],
+  "recreio":           [[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]],[["17:00","23:59"]]],
+  "regiao-oceanica":   [[["16:00","23:30"]],[["16:30","23:30"]],[["16:30","23:30"]],[["16:30","23:30"]],[["16:30","23:30"]],[["16:00","23:30"]],[["16:00","23:30"]]],
+  "tijuca-grajau":     [[["17:30","23:30"]],[["17:30","23:30"]],[["17:30","23:30"]],[["17:30","23:30"]],[["17:00","23:10"]],[["17:30","23:59"],["00:00","02:00"]],[["17:30","23:59"],["00:00","06:00"]]],
+  "vista-alegre":      [[["12:00","23:30"]],[["12:00","23:30"]],[["12:00","23:30"]],[["12:00","23:30"]],[["18:00","23:30"]],[["12:00","23:30"]],[["12:00","23:30"]]]
+};
+const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+const DIAS_LONGO = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+const min = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const hhmm = m => { m = ((m % 1440) + 1440) % 1440; const h = Math.floor(m / 60), r = m % 60; return r ? `${h}h${String(r).padStart(2, "0")}` : `${h}h`; };
+// turnos do dia em minutos a partir da 00:00 daquele dia; a madrugada vira 1440+ (dia seguinte)
+function turnos(id, dia) {
+  const f = HORARIOS[id] && HORARIOS[id][(dia + 7) % 7]; if (!f) return [];
+  const fs = f.map(([a, b]) => [min(a), min(b)]);
+  const viraNoite = fs.some(([a, b]) => a > 0 && b >= 1439);
+  const out = []; let noite = null;
+  fs.forEach(([a, b]) => { if (a === 0 && viraNoite) noite = b; else out.push([a, b]); });
+  if (noite != null) out.forEach(t => { if (t[1] >= 1439) t[1] = 1440 + noite; });
+  return out;
+}
+function turnoAgora(id, dt) {
+  const m = dt.getHours() * 60 + dt.getMinutes(), d = dt.getDay();
+  const hoje = turnos(id, d).find(([a, b]) => m >= a && m <= b); if (hoje) return { fim: hoje[1] };
+  const ontem = turnos(id, d - 1).find(([a, b]) => m + 1440 >= a && m + 1440 <= b); if (ontem) return { fim: ontem[1] - 1440 };
+  return null;
+}
+function abertaEm(id, dt) { return !!(HORARIOS[id] && turnoAgora(id, dt)); }
+function aberta(id) { return id ? abertaEm(id, new Date()) : LOJAS.some(l => !l.breve && abertaEm(l.id, new Date())); }
+const fimTxt = m => (m >= 1439 && m < 1440) || m === 1440 ? "meia-noite" : hhmm(m);
+function textoTurno(id, dia) { const t = turnos(id, dia); return t.length ? t.map(([a, b]) => `${hhmm(a)} às ${fimTxt(b)}`).join(" e ") : "Fechada"; }
+function fechaAs(id, dt = new Date()) { const t = turnoAgora(id, dt); return t ? t.fim : null; }
+// próxima abertura (procura de 15 em 15 min por até 8 dias)
+function proximaAbertura(id, dt = new Date()) {
+  const t = new Date(dt); t.setSeconds(0, 0); t.setMinutes(Math.ceil(t.getMinutes() / 15) * 15);
+  for (let i = 0; i < 8 * 96; i++) { if (abertaEm(id, t)) return new Date(t); t.setMinutes(t.getMinutes() + 15); }
+  return null;
+}
+function quandoAbre(id) {
+  const p = proximaAbertura(id); if (!p) return "sem horário";
+  const hoje = new Date(); const dd = Math.round((new Date(p).setHours(0, 0, 0, 0) - new Date(hoje).setHours(0, 0, 0, 0)) / 864e5);
+  const dia = dd === 0 ? "hoje" : dd === 1 ? "amanhã" : DIAS_LONGO[p.getDay()].toLowerCase();
+  return `abre ${dia} às ${hhmm(p.getHours() * 60 + p.getMinutes())}`;
+}
+function statusLoja(id) { return aberta(id) ? { on: true, txt: `Aberta · até ${fimTxt(fechaAs(id))}` } : { on: false, txt: `Fechada · ${quandoAbre(id)}` }; }
+
 
 const IMG = k => k ? `img/${k}.webp` : null;
 const BEBIDAS_LATA = ["Coca-Cola lata 350ml", "Coca-Cola sem açúcar lata 350ml", "Fanta Laranja lata 350ml", "Fanta Guaraná lata 350ml", "Fanta Uva lata 350ml"]; // as da foto oficial do Cardápio Digital
@@ -840,7 +906,7 @@ const P = [
   { id: "rh2", c: "beber", n: "H2OH! 500ml", d: "", p: 11.90, img: "p-rh2", t: "simples", ic: "H2O" },
   { id: "rag", c: "beber", n: "Água", d: "", p: 6.90, img: "p-rag", t: "simples", ic: "ÁG" },
   { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, img: "p-rco", arte: 1, t: "simples", ic: "CO" },
-  { id: "rst", c: "beber", n: "Stella Artois 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst", arte: 1, t: "simples", ic: "ST" }
+  { id: "rst", c: "beber", n: "Stella Artois puro malte 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst", arte: 1, t: "simples", ic: "ST" }
 ];
 const PID = Object.fromEntries(P.map(p => [p.id, p]));
 const COMBO_UP = 15; // "vira combo": batata P + refri lata (McManis 44,90 -> Combo 59,90)
@@ -878,7 +944,6 @@ function renderFiltros() {
   $("#filtros").innerHTML = regs.map(r => `<button class="chip" aria-pressed="${S.filtro === r}" data-f="${r}">${r}${r === "Todas" ? ` (${LOJAS.length})` : ""}</button>`).join("");
 }
 function renderLojas() {
-  const ab = aberta();
   let ls = LOJAS.map(l => ({ ...l, d: distLoja(l) }));
   const temRef = ls.some(l => l.d != null);
   if (temRef) ls.sort((a, b) => (a.breve ? 1 : 0) - (b.breve ? 1 : 0) || a.d - b.d);
@@ -898,10 +963,10 @@ function renderLojas() {
       <div>${top ? `<span class="badge">Mais perto de você</span>` : ultima ? `<span class="badge badge--kraft">Tua última loja</span>` : fora ? `<span class="badge badge--cinza">Fora da tua área</span>` : ""}
         <h3>${l.n}</h3>
         <div class="loja__meta">
-          <span class="st ${ab ? "st--on" : "st--off"}">${ab ? "Aberta" : "Abre às 11h"}</span>
+          <span class="st ${statusLoja(l.id).on ? "st--on" : "st--off"}">${statusLoja(l.id).txt}</span>
           ${l.d != null ? `<span>${l.d.toFixed(1).replace(".", ",")} km</span>${fora ? `<span>${l.cid}</span>` : `<span>${tempoKm(l.d)}</span><span>${brl(taxaKm(l.d))}</span>`}` : `<span>${l.cid}</span>`}
         </div></div>
-      <button class="btn ${top ? "btn--red" : fora ? "btn--ghost" : "btn--dark"}" data-loja="${l.id}">${fora ? "Cardápio" : ab ? "Pedir" : "Agendar"}</button>
+      <button class="btn ${top ? "btn--red" : fora ? "btn--ghost" : "btn--dark"}" data-loja="${l.id}">${fora ? "Cardápio" : aberta(l.id) ? "Pedir" : "Agendar"}</button>
     </article>`;
   }).join("") || `<p class="vazio">Nenhuma loja nessa região.</p>`;
 }
@@ -946,8 +1011,9 @@ async function buscarCep(cep, alvoRes) {
 /* ---------- topo animado + incentivos da entrada ---------- */
 const heroVid = $("#hero-vid");
 function renderTopo() {
-  const n = LOJAS.filter(l => !l.breve).length, ab = aberta();
-  $("#hero-abertas").textContent = ab ? `${n} lojas abertas agora` : "Abre às 11h · já dá pra agendar";
+  const n = LOJAS.filter(l => !l.breve && aberta(l.id)).length, ab = n > 0;
+  const prox = LOJAS.filter(l => !l.breve).map(l => proximaAbertura(l.id)).filter(Boolean).sort((a, b) => a - b)[0];
+  $("#hero-abertas").textContent = ab ? `${n} ${n === 1 ? "loja aberta" : "lojas abertas"} agora` : `Lojas abrem a partir das ${prox ? hhmm(prox.getHours() * 60 + prox.getMinutes()) : "—"} · já dá pra agendar`;
   $("#hero-pulso").classList.toggle("off", !ab);
   if (!semAnimacao) {
     if (!heroVid.dataset.ok) { heroVid.dataset.ok = 1; heroVid.innerHTML = `<source src="img/hero-chapa.webm" type="video/webm"><source src="img/hero-chapa.mp4" type="video/mp4">`; heroVid.preload = "auto"; heroVid.load(); }
@@ -988,14 +1054,17 @@ function cardProd(p) {
 }
 function renderLoja() {
   const l = lojaAtual(); if (!l) { location.hash = "#/"; return; }
-  const ab = aberta(), d = distLoja(l);
+  const ab = aberta(l.id), d = distLoja(l), st = statusLoja(l.id);
   $("#h-loja").textContent = "Ogro " + l.n;
   $("#lj-meta").innerHTML = `
-    <span class="pill"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:${ab ? "#5BD38A" : "#E06666"}"></span>${ab ? "Aberta agora" : "Fechada · abre às 11h"}</span>
+    <span class="pill"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:${ab ? "#5BD38A" : "#E06666"}"></span>${st.txt}</span>
     <span class="pill"><svg><use href="#i-relogio"/></svg>${tempoKm(d)}</span>
     <span class="pill"><svg><use href="#i-moto"/></svg>${d != null ? "Entrega " + brl(taxaKm(d)) : "Taxa pelo CEP"}</span>`;
+  const hoje = new Date().getDay();
+  $("#lj-horas").open = false;
+  $("#lj-horas-l").innerHTML = [1, 2, 3, 4, 5, 6, 0].map(dia => { const t = textoTurno(l.id, dia); return `<li class="${dia === hoje ? "hoje" : ""}${t === "Fechada" ? " fechado" : ""}"><span>${DIAS_LONGO[dia]}${dia === hoje ? " (hoje)" : ""}</span><span>${t}</span></li>`; }).join("");
   const av = $("#lj-aviso");
-  if (!ab) { av.hidden = false; av.innerHTML = `<span>⏰</span><span>A loja abre às 11h. Monta teu pedido agora e agenda a entrega no fim.</span>`; }
+  if (!ab) { av.hidden = false; av.innerHTML = `<span>⏰</span><span>A loja ${quandoAbre(l.id)}. Monta teu pedido agora e agenda a entrega no fim.</span>`; }
   else if (d != null && d > RAIO) { av.hidden = false; av.innerHTML = `<span>📍</span><span>Essa loja fica a ${d.toFixed(0)} km do teu CEP. <button class="link" id="lj-perto">Ver a mais perto</button></span>`; }
   else av.hidden = true;
   $("#lj-cats").innerHTML = CATS.map((c, i) => `<a class="chip${i === 0 ? " on" : ""}" href="#cat-${c.id}" data-cat="${c.id}">${c.n}</a>`).join("");
@@ -1341,16 +1410,21 @@ const perfil = () => Store.get("ogro_perfil") || {};
 function mascTel(v) { v = v.replace(/\D/g, "").slice(0, 11); if (v.length > 6) return `(${v.slice(0, 2)}) ${v.slice(2, v.length - 4)}-${v.slice(-4)}`; if (v.length > 2) return `(${v.slice(0, 2)}) ${v.slice(2)}`; return v; }
 function renderCheckout() {
   if (!S.cart.length) { location.hash = S.loja ? "#/loja/" + S.loja : "#/"; return; }
-  const pf = perfil(), l = lojaAtual(), ab = aberta();
+  const pf = perfil(), l = lojaAtual(), ab = aberta(l.id);
   const set = (id, v) => { const el = $(id); if (el && !el.value && v) el.value = v; };
   set("#f-nome", pf.nome); set("#f-tel", pf.tel); set("#f-cep", pf.cep || (S.cep ? mascaraCep(S.cep) : "")); set("#f-rua", pf.rua); set("#f-num", pf.num); set("#f-bairro", pf.bairro); set("#f-comp", pf.comp); set("#f-ref", pf.ref);
   if (!$("#f-rua").value && $("#f-cep").value.replace(/\D/g, "").length === 8) autoCep($("#f-cep").value.replace(/\D/g, ""));
   // horários de agendamento
-  const now = new Date(), hs = [];
-  for (let h = Math.max(H_ABRE, now.getHours() + 1); h < H_FECHA; h++) for (const m of [0, 30]) hs.push(`${String(h).padStart(2, "0")}:${m ? "30" : "00"}`);
-  if (!hs.length || !ab) for (let h = H_ABRE; h < H_ABRE + 4; h++) for (const m of [0, 30]) hs.push(`${!ab && now.getHours() < H_ABRE ? "Hoje" : "Amanhã"} ${String(h).padStart(2, "0")}:${m ? "30" : "00"}`);
+  // só horários em que a loja funciona de verdade (de 30 em 30 min, a partir de daqui a 45 min)
+  const now = new Date(), hs = [], t = new Date(now.getTime() + 45 * 60000); t.setSeconds(0, 0); t.setMinutes(Math.ceil(t.getMinutes() / 30) * 30);
+  const hoje0 = new Date(now).setHours(0, 0, 0, 0);
+  for (let i = 0; i < 3 * 48 && hs.length < 24; i++, t.setMinutes(t.getMinutes() + 30)) {
+    if (!abertaEm(l.id, t)) continue;
+    const dd = Math.round((new Date(t).setHours(0, 0, 0, 0) - hoje0) / 864e5);
+    hs.push(`${dd === 0 ? "Hoje" : dd === 1 ? "Amanhã" : DIAS_LONGO[t.getDay()]} ${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}`);
+  }
   $("#f-hora").innerHTML = hs.slice(0, 24).map(h => `<option>${h}</option>`).join("");
-  if (!ab) { $$("input[name=quando]")[1].checked = true; $$("input[name=quando]")[0].disabled = true; $("#quando-agora").textContent = "Loja fechada agora"; }
+  if (!ab) { $$("input[name=quando]")[1].checked = true; $$("input[name=quando]")[0].disabled = true; $("#quando-agora").textContent = "Loja fechada agora · " + quandoAbre(l.id); }
   else { $$("input[name=quando]")[0].disabled = false; $("#quando-agora").textContent = tempoKm(distLoja(l)); }
   renderResumo();
   window.scrollTo(0, 0);
