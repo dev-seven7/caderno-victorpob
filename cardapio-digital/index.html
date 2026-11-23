@@ -643,6 +643,7 @@ textarea.campo{min-height:70px;resize:vertical}
     <p>De um ogro pra outro. Só delivery, no Rio de Janeiro e região.</p>
     <p><button class="link" id="abrir-cookies" style="color:var(--concreto)">Preferências de cookies</button></p>
     <p style="opacity:.7">Protótipo de UX do Cardápio Digital · nenhum pedido é enviado.</p>
+    <p style="opacity:.7;font-size:12px">Fotos de Cookie de Chocolate, Corona Extra e Stella Artois: <a href="https://www.flickr.com/photos/22198928@N00/4013070232" target="_blank" rel="noopener">thebittenword.com</a>, <a href="https://www.flickr.com/photos/100105316@N05/9486414950" target="_blank" rel="noopener">yeah-design</a> e <a href="https://www.flickr.com/photos/42659291@N07/7366023364" target="_blank" rel="noopener">edwin.bautista</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>), recortadas.</p>
     <p class="assina">Feito por Victor Pusanovsky Okada</p>
   </div>
 </footer>
@@ -897,7 +898,7 @@ const P = [
   { id: "ama", c: "acomp", n: "Maioneses do Ogro", d: "", p: 4.00, img: "p-ama", t: "simples", sug: 5 },
   // doce
   { id: "sbr", c: "doce", n: "Brownie com gotas de chocolate", d: "Pra fechar o dia do jeito certo.", p: 13.90, img: "p-sbr", t: "simples", sug: 4, ic: "BR" },
-  { id: "scc", c: "doce", n: "Cookie de Chocolate", d: "", p: 9.90, img: "p-scc", arte: 1, t: "simples", ic: "CK" },
+  { id: "scc", c: "doce", n: "Cookie de Chocolate", d: "", p: 9.90, img: "p-scc-foto", t: "simples", ic: "CK" },
   { id: "scb", c: "doce", n: "Cookie de Baunilha", d: "", p: 9.90, img: "p-scb", t: "simples", ic: "CK" },
   // beber
   { id: "rla", c: "beber", n: "Refrigerante lata 350ml", d: "Coca-Cola, Coca-Cola sem açúcar ou Fanta (laranja, guaraná ou uva).", p: 9.90, img: "p-rla", t: "refri", sug: 6, ic: "350" },
@@ -905,8 +906,8 @@ const P = [
   { id: "rgu", c: "beber", n: "Guaraná Antarctica", d: "", p: 8.90, img: "p-rgu", t: "simples", ic: "GU" },
   { id: "rh2", c: "beber", n: "H2OH! 500ml", d: "", p: 11.90, img: "p-rh2", t: "simples", ic: "H2O" },
   { id: "rag", c: "beber", n: "Água", d: "", p: 6.90, img: "p-rag", t: "simples", ic: "ÁG" },
-  { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, img: "p-rco", arte: 1, t: "simples", ic: "CO" },
-  { id: "rst", c: "beber", n: "Stella Artois puro malte 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst", arte: 1, t: "simples", ic: "ST" }
+  { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, img: "p-rco-foto", t: "simples", ic: "CO" },
+  { id: "rst", c: "beber", n: "Stella Artois puro malte 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst-foto", t: "simples", ic: "ST" }
 ];
 const PID = Object.fromEntries(P.map(p => [p.id, p]));
 const COMBO_UP = 15; // "vira combo": batata P + refri lata (McManis 44,90 -> Combo 59,90)
@@ -1157,8 +1158,13 @@ function pausarB() { bPausa = true; clearTimeout(bRetoma); agendar(); }
 function retomarB(ms = 3500) { clearTimeout(bRetoma); bRetoma = setTimeout(() => { bPausa = false; agendar(); }, ms); }
 $("#carro").addEventListener("mouseenter", pausarB);
 $("#carro").addEventListener("mouseleave", () => retomarB(600));
-trilho.addEventListener("touchstart", pausarB, { passive: true });
-trilho.addEventListener("touchend", () => retomarB(), { passive: true });
+let toque = null;
+trilho.addEventListener("touchstart", e => { pausarB(); const t = e.touches[0]; toque = { x: t.clientX, y: t.clientY, noUltimo: bAtual === posicoes() - 1 }; }, { passive: true });
+trilho.addEventListener("touchend", e => {
+  // no último banner, um deslize pra frente (dedo pra esquerda) volta pro banner 1
+  if (toque && toque.noUltimo) { const t = e.changedTouches[0], dx = t.clientX - toque.x, dy = t.clientY - toque.y; if (dx < -40 && Math.abs(dx) > Math.abs(dy)) irB(0); }
+  toque = null; retomarB();
+}, { passive: true });
 // arrastar com o mouse
 let drag = null;
 trilho.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button !== 0) return; drag = { x: e.clientX, sl: trilho.scrollLeft, mov: 0, id: e.pointerId }; bArrastou = false; });
