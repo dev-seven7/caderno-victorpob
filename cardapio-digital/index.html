@@ -73,14 +73,33 @@ a{color:inherit}
 /* HOME */
 .hero{background:var(--preto);color:var(--concreto-100);position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:36px;background:var(--concreto-50);clip-path:polygon(0 100%,0 60%,4% 40%,7% 70%,10% 30%,13% 55%,17% 20%,21% 60%,25% 35%,29% 65%,33% 25%,38% 55%,42% 30%,46% 60%,50% 15%,54% 50%,58% 30%,62% 65%,66% 25%,70% 55%,74% 35%,78% 60%,82% 20%,86% 50%,90% 30%,94% 60%,97% 35%,100% 55%,100% 100%)}
-.hero .wrap{display:grid;gap:20px;padding-top:28px;padding-bottom:64px;position:relative;z-index:1}
-.hero__tag{display:inline-flex;align-items:center;gap:8px;background:rgba(196,164,108,.15);color:var(--kraft);border:1px solid rgba(196,164,108,.4);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;width:max-content}
-.hero h1{font-size:clamp(38px,10vw,72px);color:var(--branco)}
+/* topo compacto: título + burger animado lado a lado, CEP logo abaixo, lojas já aparecem na primeira tela */
+.hero .wrap{display:grid;grid-template-columns:1fr 118px;column-gap:12px;row-gap:12px;align-items:center;padding-top:14px;padding-bottom:34px;position:relative;z-index:1}
+.hero .wrap > :not(.hero__txt):not(.hero__burger){grid-column:1 / -1}
+.hero::after{height:20px}
+.hero__tag{display:inline-flex;align-items:center;gap:7px;color:var(--kraft);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.pulso{width:8px;height:8px;border-radius:50%;background:#5BD38A;box-shadow:0 0 0 0 rgba(91,211,138,.6);animation:pulsoV 1.8s infinite;flex:none}
+.pulso.off{background:#E06666;animation:none}
+@keyframes pulsoV{70%{box-shadow:0 0 0 8px rgba(91,211,138,0)}100%{box-shadow:0 0 0 0 rgba(91,211,138,0)}}
+.hero h1{font-size:clamp(30px,8.6vw,64px);color:var(--branco)}
 .hero h1 em{font-style:normal;color:var(--barra)}
-.hero p.lead{color:var(--concreto);max-width:52ch}
-.hero__img{position:relative;justify-self:center;width:min(78vw,420px);aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 10px rgba(178,34,34,.25),0 30px 60px rgba(0,0,0,.5)}
-.hero__img img{width:100%;height:100%;object-fit:cover}
-.busca{background:var(--branco);color:var(--preto);border-radius:18px;padding:14px;box-shadow:var(--sombra);display:grid;gap:10px;max-width:520px}
+.hero__burger{position:relative;width:118px;aspect-ratio:1;justify-self:end}
+.hero__burger video{position:absolute;inset:13px;width:calc(100% - 26px);height:calc(100% - 26px);border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--barra),0 12px 30px rgba(0,0,0,.6);background:#111}
+.hero__anel{position:absolute;inset:0;width:100%;height:100%;animation:gira 16s linear infinite;fill:var(--kraft);font:800 14px var(--corpo);letter-spacing:.06em}
+@keyframes gira{to{transform:rotate(360deg)}}
+.hero__desce{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--concreto-100);font-weight:800;font-size:14px;text-decoration:none;padding:4px 0}
+.hero__desce svg{width:18px;height:18px;fill:none;stroke:var(--kraft);stroke-width:2.4;animation:desce 1.4s ease-in-out infinite}
+@keyframes desce{50%{transform:translateY(5px)}}
+.busca{background:var(--branco);color:var(--preto);border-radius:16px;padding:10px;box-shadow:var(--sombra);display:grid;gap:6px;max-width:560px}
+.busca__pe{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.busca__pe .link{font-size:13px}
+/* faixa "mais pedidos" na entrada + reveal das lojas */
+@keyframes sobe{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.lojas .loja{animation:sobe .45s ease both}
+.lojas.chama .loja:not(.loja--breve){animation:chama 1s ease 2}
+@keyframes chama{50%{box-shadow:0 0 0 4px var(--barra)}}
+.favs .card-top{scroll-snap-align:start}
+.favs .card-top .cta{display:inline-flex;margin-top:6px;font-size:12px;font-weight:800;color:var(--barra)}
 .busca label{font-weight:700;font-size:14px}
 .busca__linha{display:flex;gap:8px}
 .campo{width:100%;border:2px solid var(--concreto-200);border-radius:12px;padding:12px 14px;background:var(--concreto-50);font-size:16px;transition:border-color .15s}
@@ -105,9 +124,6 @@ a{color:inherit}
 .continuar div{flex:1;font-size:14px;line-height:1.3}
 .continuar strong{display:block;font-size:15px}
 
-.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 0;max-width:520px}
-.passos li{list-style:none;font-size:12px;color:var(--concreto);display:flex;gap:6px;align-items:center}
-.passos b{width:22px;height:22px;flex:none;border-radius:50%;background:var(--barra);color:#fff;display:grid;place-items:center;font-size:12px}
 
 .sec{padding:28px 0}
 .sec__h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
@@ -155,14 +171,25 @@ a{color:inherit}
 .busca-menu .campo{padding-left:40px;padding-top:10px;padding-bottom:10px}
 
 .cat{padding:22px 0 6px}
-/* banner do cupom: espaço reservado (sem pulo de layout), leve, fechável */
+/* carrossel de banners: espaço reservado (sem pulo), passa sozinho, desliza com dedo ou mouse */
 #lj-banner-w{padding-top:16px}
-.banner{position:relative;max-width:760px;aspect-ratio:5/2;border-radius:var(--r);overflow:hidden;background:#F1E3CC;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.banner__abrir{display:block;width:100%;height:100%;padding:0}
-.banner video{width:100%;height:100%;object-fit:cover;display:block}
-.banner__x{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:rgba(26,26,26,.55);display:grid;place-items:center;opacity:.85}
-.banner__x:hover{opacity:1}
-.banner__x svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.6}
+.carro{position:relative;max-width:760px}
+.carro__trilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.08);background:#F1E3CC;overscroll-behavior-x:contain;cursor:grab;touch-action:pan-x pan-y}
+.carro__trilho::-webkit-scrollbar{display:none}
+.carro__trilho.arrastando{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.carro__slide{flex:0 0 100%;aspect-ratio:5/2;scroll-snap-align:center;scroll-snap-stop:always;padding:0;display:block}
+.carro__slide video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.carro__seta{position:absolute;top:50%;transform:translateY(-70%);width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.2);display:none;place-items:center;opacity:0;transition:opacity .2s}
+.carro__seta svg{width:18px;height:18px;fill:none;stroke:var(--preto);stroke-width:2.4}
+.carro__seta--e{left:10px}.carro__seta--d{right:10px}
+@media (hover:hover){.carro__seta{display:grid}.carro:hover .carro__seta,.carro__seta:focus-visible{opacity:1}}
+.carro__dots{display:flex;justify-content:center;gap:6px;padding-top:8px}
+.carro__dot{width:8px;height:8px;border-radius:99px;background:var(--concreto-200);overflow:hidden;position:relative;transition:width .25s;padding:0}
+.carro__dot.on{width:28px;background:var(--concreto)}
+.carro__dot i{position:absolute;inset:0;background:var(--barra);transform-origin:left;transform:scaleX(0)}
+.carro__dot.on i{transform:scaleX(1)}
+.carro__dot.on.corre i{animation:enche var(--d,6s) linear both}
+@keyframes enche{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .cat h2{font-size:28px;margin-bottom:4px}
 .cat > p{color:var(--cinza);font-size:14px;margin-bottom:12px}
 .grade{display:grid;grid-template-columns:1fr;gap:12px}
@@ -382,9 +409,11 @@ textarea.campo{min-height:70px;resize:vertical}
   .toast{bottom:32px}
 }
 @media (min-width:960px){
-  .hero .wrap{grid-template-columns:1.1fr .9fr;align-items:center;padding-top:48px;padding-bottom:90px}
-  .hero__img{grid-column:2;grid-row:1 / span 6}
-  .hero .wrap > :not(.hero__img){grid-column:1}
+  .hero .wrap{grid-template-columns:1fr 260px;column-gap:40px;padding-top:32px;padding-bottom:48px}
+  .hero .wrap > :not(.hero__txt):not(.hero__burger){grid-column:1}
+  .hero__txt{grid-column:1;grid-row:1}
+  .hero__burger{width:260px;grid-column:2;grid-row:1 / span 4;align-self:center}
+  .hero__burger video{inset:24px;width:calc(100% - 48px);height:calc(100% - 48px)}
   .lojas{grid-template-columns:repeat(3,1fr)}
   .grade{grid-template-columns:repeat(3,1fr)}
   .ck-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:start}
@@ -424,10 +453,15 @@ textarea.campo{min-height:70px;resize:vertical}
 <section class="view" id="v-home" aria-labelledby="h-home">
   <div class="hero">
     <div class="wrap">
-      <span class="hero__tag">Só delivery · canal oficial</span>
-      <h1 class="disp" id="h-home">Fome?<br><em>Isso resolve</em><br>teu dia.</h1>
-      <p class="lead">Diz teu CEP e a gente mostra a loja do Ogro que chega mais rápido em você. Ou escolhe direto na lista: todas as lojas estão aqui embaixo.</p>
-      <div class="hero__img"><img src="img/mcmanis.webp" alt="McManis: blend bovino, american cheese e cebola caramelizada no pão brioche" width="520" height="390" fetchpriority="high"></div>
+      <div class="hero__txt">
+        <p class="hero__tag"><span class="pulso" id="hero-pulso"></span><span id="hero-abertas">Lojas abertas agora</span></p>
+        <h1 class="disp" id="h-home">Fome? <em>Isso resolve</em> teu dia.</h1>
+      </div>
+      <!-- Burger animado: takes reais da chapa (smash, queijo, brioche) + McManis pronto. Poster = foto, vídeo só carrega se não houver economia de dados / menos movimento -->
+      <div class="hero__burger" aria-hidden="true">
+        <video id="hero-vid" muted loop playsinline preload="none" poster="img/mcmanis.webp" width="540" height="540"></video>
+        <svg class="hero__anel" viewBox="0 0 200 200"><defs><path id="anel-p" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/></defs><text textLength="536" lengthAdjust="spacing"><textPath href="#anel-p" textLength="536" lengthAdjust="spacing">FEITO NA CHAPA · NA HORA · DE UM OGRO PRA OUTRO ·</textPath></text></svg>
+      </div>
 
       <div class="continuar" id="continuar" hidden>
         <div><strong id="continuar-t">Teu pedido tá guardado</strong><span id="continuar-s"></span></div>
@@ -435,19 +469,15 @@ textarea.campo{min-height:70px;resize:vertical}
       </div>
 
       <form class="busca" id="form-cep" novalidate>
-        <label for="cep">Onde a gente entrega?</label>
+        <label for="cep" class="sr">Teu CEP</label>
         <div class="busca__linha">
           <input class="campo" id="cep" inputmode="numeric" autocomplete="postal-code" placeholder="Teu CEP · 00000-000" maxlength="9" aria-describedby="cep-res">
           <button class="btn btn--red" type="submit">Buscar</button>
         </div>
-        <button type="button" class="link" id="btn-geo"><svg><use href="#i-mira"/></svg>Usar minha localização</button>
-        <p class="busca__res" id="cep-res" aria-live="polite"></p>
+        <div class="busca__pe"><button type="button" class="link" id="btn-geo"><svg><use href="#i-mira"/></svg>Usar minha localização</button></div>
+        <p class="busca__res" id="cep-res" aria-live="polite" hidden></p>
       </form>
-      <ol class="passos" aria-label="Como funciona">
-        <li><b>1</b>Escolhe a loja</li>
-        <li><b>2</b>Monta o pedido</li>
-        <li><b>3</b>Pix ou na entrega</li>
-      </ol>
+      <a class="hero__desce" href="#todas" id="hero-desce">Ou escolhe entre as 14 lojas <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </div>
   </div>
 
@@ -459,6 +489,11 @@ textarea.campo{min-height:70px;resize:vertical}
       </div>
       <div class="chips" role="group" aria-label="Filtrar por região" id="filtros"></div>
       <div class="lojas" id="lojas"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-favs" style="padding-top:4px">
+      <div class="sec__h"><div><h2 class="disp" id="h-favs">Os mais pedidos do Ogro</h2><p>Tem em todas as lojas. Toca e já vai direto pra ele.</p></div></div>
+      <div class="carrossel favs" id="favs"></div>
     </section>
 
     <section class="sec" aria-labelledby="h-porque">
@@ -491,16 +526,13 @@ textarea.campo{min-height:70px;resize:vertical}
   </div>
   <!-- Banner do cupom (mesmo do Cardápio Digital no ar, GIF 3,6 MB convertido para vídeo de ~200 KB) -->
   <div class="wrap" id="lj-banner-w">
-    <figure class="banner" id="lj-banner">
-      <button class="banner__abrir" id="banner-abrir" aria-describedby="banner-txt">
-        <video id="banner-vid" muted loop playsinline preload="none" poster="img/banner-cupom.webp" width="1200" height="480" aria-hidden="true">
-          <source src="img/banner-cupom.webm" type="video/webm">
-          <source src="img/banner-cupom.mp4" type="video/mp4">
-        </video>
-        <span class="sr" id="banner-txt">Você tem um cupom para usar no seu pedido Ogro? Veja como usar: 1. escolha a loja Ogro; 2. faça o seu pedido; 3. coloque na sacola o burger ligado ao seu cupom; 4. digite o cupom na sacola para garantir o desconto. Toque para abrir a sacola.</span>
-      </button>
-      <button class="banner__x" id="banner-x" aria-label="Esconder banner do cupom"><svg><use href="#i-x"/></svg></button>
-    </figure>
+    <!-- Carrossel de banners. Para pôr banner novo: arquivo em img/ (nome.webm, nome.mp4, nome.webp, nome-600.webp) e uma linha na lista BANNERS do script. -->
+    <section class="carro" id="carro" aria-roledescription="carrossel" aria-label="Destaques do Ogro">
+      <div class="carro__trilho" id="carro-trilho"></div>
+      <button class="carro__seta carro__seta--e" id="carro-ant" aria-label="Banner anterior"><svg><use href="#i-volta"/></svg></button>
+      <button class="carro__seta carro__seta--d" id="carro-prox" aria-label="Próximo banner"><svg><use href="#i-seta"/></svg></button>
+      <div class="carro__dots" id="carro-dots"></div>
+    </section>
   </div>
   <div class="wrap" id="lj-menu"></div>
 </section>
@@ -680,6 +712,9 @@ const Store = {
   del(k) { try { localStorage.removeItem(k); } catch (e) {} }
 };
 
+// sem animação se a pessoa pediu "menos movimento" ou está em economia de dados: fica a imagem parada
+const semAnimacao = matchMedia("(prefers-reduced-motion: reduce)").matches || !!(navigator.connection && navigator.connection.saveData);
+
 /* ---------- consentimento + medição ---------- */
 window.dataLayer = window.dataLayer || [];
 let consent = Store.getC("ogro_consent");
@@ -850,12 +885,13 @@ function renderLojas() {
   $("#lojas-sub").textContent = temRef
     ? (perto ? `Ordenadas pela distância. A ${perto.n} é a que chega mais rápido em você.` : "Nenhuma loja entrega nesse endereço ainda. Dá uma olhada na mais perto.")
     : `${LOJAS.length} lojas no estado do Rio. Toca na tua pra ver o cardápio.`;
-  $("#lojas").innerHTML = ls.map(l => {
+  $("#lojas").innerHTML = ls.map((l, idx) => {
+    const atraso = ` style="animation-delay:${Math.min(idx, 9) * 45}ms"`;
     const fora = temRef && !l.breve && l.d > RAIO;
     const top = perto && l.id === perto.id;
     const ultima = S.loja === l.id && !top;
-    if (l.breve) return `<article class="loja loja--breve"><div class="loja__ic"><img src="img/ogro-quadrado-cor-negativo.svg" alt="" width="40" height="40" loading="lazy"></div><div><span class="badge badge--kraft">Chega ${l.breve}</span><h3>${l.n}</h3><div class="loja__meta"><span>${l.cid}</span></div></div><button class="btn btn--ghost" data-avisa="${l.id}">Me avisa</button></article>`;
-    return `<article class="loja${top ? " top" : ""}">
+    if (l.breve) return `<article class="loja loja--breve"${atraso}><div class="loja__ic"><img src="img/ogro-quadrado-cor-negativo.svg" alt="" width="40" height="40" loading="lazy"></div><div><span class="badge badge--kraft">Chega ${l.breve}</span><h3>${l.n}</h3><div class="loja__meta"><span>${l.cid}</span></div></div><button class="btn btn--ghost" data-avisa="${l.id}">Me avisa</button></article>`;
+    return `<article class="loja${top ? " top" : ""}"${atraso}>
       <div class="loja__ic"><img src="img/ogro-quadrado-cor-negativo.svg" alt="" width="40" height="40" loading="lazy"></div>
       <div>${top ? `<span class="badge">Mais perto de você</span>` : ultima ? `<span class="badge badge--kraft">Tua última loja</span>` : fora ? `<span class="badge badge--cinza">Fora da tua área</span>` : ""}
         <h3>${l.n}</h3>
@@ -905,6 +941,40 @@ async function buscarCep(cep, alvoRes) {
   return { coord, info };
 }
 
+/* ---------- topo animado + incentivos da entrada ---------- */
+const heroVid = $("#hero-vid");
+function renderTopo() {
+  const n = LOJAS.filter(l => !l.breve).length, ab = aberta();
+  $("#hero-abertas").textContent = ab ? `${n} lojas abertas agora` : "Abre às 11h · já dá pra agendar";
+  $("#hero-pulso").classList.toggle("off", !ab);
+  if (!semAnimacao) {
+    if (!heroVid.dataset.ok) { heroVid.dataset.ok = 1; heroVid.innerHTML = `<source src="img/hero-chapa.webm" type="video/webm"><source src="img/hero-chapa.mp4" type="video/mp4">`; heroVid.preload = "auto"; heroVid.load(); }
+    heroVid.play().catch(() => {});
+  }
+}
+function melhorLoja() {
+  if (S.loja) return S.loja;
+  const p = LOJAS.filter(l => !l.breve).map(l => ({ l, d: distLoja(l) })).filter(x => x.d != null && x.d <= RAIO).sort((a, b) => a.d - b.d)[0];
+  return p ? p.l.id : null;
+}
+function renderFavs() {
+  const alvo = melhorLoja(), l = alvo && LOJAS.find(x => x.id === alvo);
+  $("#favs").innerHTML = P.filter(p => p.top).sort((a, b) => a.top - b.top).map((p, i) => `
+    <button class="card-top" data-fav="${p.id}"><span class="rank">#${i + 1}</span><img src="${IMG(p.img)}" alt="" loading="lazy" decoding="async" width="260" height="195"><div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span><br><span class="cta">${l ? "Pedir da " + esc(l.n) + " →" : "Escolher a loja →"}</span></div></button>`).join("");
+}
+function chamarLojas(msg) {
+  $("#todas").scrollIntoView({ behavior: "smooth" });
+  const box = $("#lojas"); box.classList.remove("chama"); void box.offsetWidth; box.classList.add("chama");
+  if (msg) toast(msg);
+}
+$("#hero-desce").addEventListener("click", e => { e.preventDefault(); chamarLojas(); track("hero_ver_lojas"); });
+$("#favs").addEventListener("click", e => {
+  const b = e.target.closest("[data-fav]"); if (!b) return;
+  const alvo = melhorLoja(); track("select_item", { item_id: b.dataset.fav, origem: "home_favoritos" });
+  if (alvo) { location.hash = "#/loja/" + alvo; setTimeout(() => abrirProduto(b.dataset.fav), 380); }
+  else chamarLojas("Escolhe tua loja primeiro. Esse tem em todas.");
+});
+
 /* ---------- LOJA ---------- */
 function cardProd(p) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
@@ -948,7 +1018,7 @@ function renderMenu(q) {
   if (nq && !n) html = `<p class="nada">Nada com “${esc(q)}”. Tenta “bacon”, “costela” ou “frango”.</p>`;
   $("#lj-menu").innerHTML = html;
   $("#lj-cats").style.display = nq ? "none" : "";
-  $("#lj-banner-w").hidden = !!nq || !!Store.getC("ogro_banner_x");
+  $("#lj-banner-w").hidden = !!nq;
 }
 // atualiza só o selo "2×" dos cards, sem redesenhar o cardápio (não mexe na rolagem)
 function marcarQtds() {
@@ -959,27 +1029,87 @@ function marcarQtds() {
     else if (s) s.remove();
   });
 }
-/* ---------- banner do cupom ---------- */
-// O vídeo só baixa quando o banner aparece na tela e só toca se a pessoa não pediu "menos movimento"
-// nem está em modo economia de dados. Fora da tela, pausa. Senão fica a imagem estática (poster).
-const bannerVid = $("#banner-vid");
-const semAnimacao = matchMedia("(prefers-reduced-motion: reduce)").matches || (navigator.connection && navigator.connection.saveData);
-if (!semAnimacao && "IntersectionObserver" in window) {
-  new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { if (bannerVid.preload !== "auto") { bannerVid.preload = "auto"; bannerVid.load(); } bannerVid.play().catch(() => {}); }
-    else bannerVid.pause();
-  }), { threshold: .4 }).observe(bannerVid);
+/* ---------- carrossel de banners ---------- */
+// Para pôr banner novo: arquivos em img/ (arq.webm, arq.mp4, arq.webp, arq-600.webp) + uma linha aqui.
+// acao: "cupom" abre a sacola no campo do cupom; um id de produto abre o produto.
+const BANNERS = [
+  { arq: "banner-cupom", dur: 6300, acao: "cupom", nome: "banner_cupom",
+    alt: "Você tem um cupom para usar no seu pedido Ogro? Veja como usar: escolha a loja, faça o pedido, coloque na sacola o burger ligado ao cupom e digite o cupom na sacola. Toque para abrir a sacola." },
+  { arq: "banner-dupla-monstro", dur: 7000, acao: "dmo", nome: "banner_dupla_monstro",
+    alt: "Dupla Monstro, pra dividir: Ogrostela, Texano, Batata Belga G e 2 Coca-Cola lata por R$ 119,90. A janta de dois, resolvida por você. Toque para ver o combo." },
+  { arq: "banner-combo-mcmanis", dur: 7000, acao: "cmc", nome: "banner_combo_mcmanis",
+    alt: "O carro-chefe: Combo McManis, com McManis, batata e bebida, por R$ 59,90. Você sabe o que é bom. Não complica. Toque para ver o combo." }
+];
+const trilho = $("#carro-trilho"), dotsBox = $("#carro-dots"), NB = BANNERS.length;
+const pequeno = innerWidth < 700;
+trilho.innerHTML = BANNERS.map((b, i) => `<button class="carro__slide" data-b="${i}" role="group" aria-roledescription="banner" aria-label="${i + 1} de ${NB}. ${esc(b.alt)}"><video muted loop playsinline preload="none" poster="img/${b.arq}${pequeno ? "-600" : ""}.webp" width="1200" height="480" aria-hidden="true"></video></button>`).join("");
+dotsBox.innerHTML = BANNERS.map((b, i) => `<button class="carro__dot" data-d="${i}" aria-label="Ver banner ${i + 1} de ${NB}"><i></i></button>`).join("");
+const vids = $$("video", trilho), dots = $$(".carro__dot", dotsBox);
+let bAtual = 0, bTimer, bPausa = false, bVisivel = false, bArrastou = false;
+function carregar(v, i) { if (semAnimacao || v.dataset.ok) return; v.dataset.ok = 1; const a = BANNERS[i].arq; v.innerHTML = `<source src="img/${a}.webm" type="video/webm"><source src="img/${a}.mp4" type="video/mp4">`; v.preload = "auto"; v.load(); }
+function agendar() {
+  clearTimeout(bTimer);
+  const d = dots[bAtual]; dots.forEach(x => x.classList.remove("corre"));
+  if (semAnimacao || bPausa || !bVisivel || document.hidden) return;
+  d.style.setProperty("--d", BANNERS[bAtual].dur + "ms"); void d.offsetWidth; d.classList.add("corre");
+  bTimer = setTimeout(() => irB(bAtual + 1), BANNERS[bAtual].dur);
 }
-$("#banner-abrir").onclick = () => {
-  track("select_promotion", { promotion_name: "banner_cupom" });
-  if (S.cart.length) { abrirGaveta(); setTimeout(() => { const c = $("#cupom"); c && (c.focus(), c.scrollIntoView({ block: "center", behavior: "smooth" })); }, 320); }
-  else toast("Monta teu pedido. O campo do cupom fica na sacola, antes de fechar.", "Ver mais pedidos", () => $("#cat-top").scrollIntoView({ behavior: "smooth" }), 5000);
+function ativarB(i) {
+  bAtual = i;
+  dots.forEach((d, k) => { d.classList.toggle("on", k === i); d.setAttribute("aria-current", k === i ? "true" : "false"); });
+  vids.forEach((v, k) => {
+    if (k === i && bVisivel) { carregar(v, k); try { v.currentTime = 0; } catch (e) {} v.play().catch(() => {}); }
+    else v.pause();
+  });
+  if (bVisivel) carregar(vids[(i + 1) % NB], (i + 1) % NB); // já deixa o próximo pronto
+  agendar();
+}
+function irB(i) { i = (i + NB) % NB; trilho.scrollTo({ left: i * trilho.clientWidth, behavior: "smooth" }); ativarB(i); }
+let bScrollT;
+trilho.addEventListener("scroll", () => { clearTimeout(bScrollT); bScrollT = setTimeout(() => { if (!trilho.clientWidth) return; const i = Math.min(NB - 1, Math.max(0, Math.round(trilho.scrollLeft / trilho.clientWidth))); if (i !== bAtual) ativarB(i); }, 90); }, { passive: true });
+// pausa enquanto a pessoa mexe; retoma sozinho depois
+let bRetoma;
+function pausarB() { bPausa = true; clearTimeout(bRetoma); agendar(); }
+function retomarB(ms = 3500) { clearTimeout(bRetoma); bRetoma = setTimeout(() => { bPausa = false; agendar(); }, ms); }
+$("#carro").addEventListener("mouseenter", pausarB);
+$("#carro").addEventListener("mouseleave", () => retomarB(600));
+trilho.addEventListener("touchstart", pausarB, { passive: true });
+trilho.addEventListener("touchend", () => retomarB(), { passive: true });
+// arrastar com o mouse
+let drag = null;
+trilho.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button !== 0) return; drag = { x: e.clientX, sl: trilho.scrollLeft, mov: 0, id: e.pointerId }; bArrastou = false; });
+trilho.addEventListener("pointermove", e => {
+  if (!drag) return; const dx = e.clientX - drag.x; drag.mov = Math.max(drag.mov, Math.abs(dx));
+  if (drag.mov > 6 && !trilho.classList.contains("arrastando")) { trilho.classList.add("arrastando"); trilho.setPointerCapture(drag.id); }
+  if (drag.mov > 6) trilho.scrollLeft = drag.sl - dx;
+});
+const soltar = e => {
+  if (!drag) return; const dx = e.clientX - drag.x, mexeu = drag.mov > 6; drag = null;
+  if (!mexeu) return;
+  bArrastou = true; trilho.classList.remove("arrastando");
+  irB(dx < -50 ? bAtual + 1 : dx > 50 ? bAtual - 1 : bAtual); // irB dá a volta: do último vai pro primeiro
 };
-$("#banner-x").onclick = () => {
-  Store.setC("ogro_banner_x", true, 7); bannerVid.pause(); $("#lj-banner-w").hidden = true;
-  track("close_promotion", { promotion_name: "banner_cupom" });
-  toast("Banner escondido. O campo do cupom continua na sacola.");
-};
+trilho.addEventListener("pointerup", soltar); trilho.addEventListener("pointercancel", soltar);
+trilho.addEventListener("click", e => {
+  if (bArrastou) { e.preventDefault(); e.stopPropagation(); bArrastou = false; return; }
+  const s = e.target.closest("[data-b]"); if (!s) return;
+  const b = BANNERS[+s.dataset.b];
+  track("select_promotion", { promotion_name: b.nome, creative_slot: +s.dataset.b + 1 });
+  if (b.acao === "cupom") {
+    if (S.cart.length) { abrirGaveta(); setTimeout(() => { const c = $("#cupom"); c && (c.focus(), c.scrollIntoView({ block: "center", behavior: "smooth" })); }, 320); }
+    else toast("Monta teu pedido. O campo do cupom fica na sacola, antes de fechar.", "Ver mais pedidos", () => $("#cat-top").scrollIntoView({ behavior: "smooth" }), 5000);
+  } else abrirProduto(b.acao);
+}, true);
+$("#carro-ant").onclick = () => { irB(bAtual - 1); pausarB(); retomarB(); };
+$("#carro-prox").onclick = () => { irB(bAtual + 1); pausarB(); retomarB(); };
+dotsBox.addEventListener("click", e => { const d = e.target.closest("[data-d]"); if (d) { irB(+d.dataset.d); pausarB(); retomarB(); } });
+$("#carro").addEventListener("keydown", e => { if (e.key === "ArrowRight") { irB(bAtual + 1); pausarB(); retomarB(); } if (e.key === "ArrowLeft") { irB(bAtual - 1); pausarB(); retomarB(); } });
+$("#carro").addEventListener("focusin", pausarB);
+$("#carro").addEventListener("focusout", () => retomarB(1500));
+// só anima quando está na tela e a aba está aberta
+new IntersectionObserver(es => es.forEach(e => { bVisivel = e.isIntersecting; if (bVisivel) ativarB(bAtual); else { vids.forEach(v => v.pause()); clearTimeout(bTimer); } }), { threshold: .35 }).observe(trilho);
+document.addEventListener("visibilitychange", () => { if (document.hidden) { vids.forEach(v => v.pause()); clearTimeout(bTimer); } else if (bVisivel) ativarB(bAtual); });
+addEventListener("resize", () => { if (trilho.clientWidth) trilho.scrollLeft = bAtual * trilho.clientWidth; });
 
 // scroll-spy das categorias
 let spyObs;
@@ -1328,7 +1458,8 @@ function rota() {
   } else if (h === "#/checkout") { $("#v-checkout").classList.add("on"); renderCheckout(); }
   else if (h.startsWith("#/pedido")) { $("#v-pedido").classList.add("on"); renderPedido(); }
   else if (h.startsWith("#cat-")) { $("#v-loja").classList.add("on"); return; }
-  else { $("#v-home").classList.add("on"); renderFiltros(); renderLojas(); renderContinuar(); if (S.cep) $("#cep").value = mascaraCep(S.cep); window.scrollTo(0, 0); }
+  else { $("#v-home").classList.add("on"); renderFiltros(); renderLojas(); renderContinuar(); renderTopo(); renderFavs(); if (S.cep) $("#cep").value = mascaraCep(S.cep); window.scrollTo(0, 0); }
+  if (!$("#v-home").classList.contains("on")) heroVid.pause();
   const l = lojaAtual();
   $("#topo-loja").hidden = !l || !!(h === "#/" || h === "");
   if (l) $("#topo-loja-n").textContent = "Ogro " + l.n;
@@ -1356,13 +1487,13 @@ $("#busca-menu").addEventListener("input", e => { renderMenu(e.target.value); sp
 $("#cep").addEventListener("input", e => { e.target.value = mascaraCep(e.target.value); e.target.classList.remove("erro"); if (e.target.value.length === 9) $("#form-cep").requestSubmit(); });
 $("#form-cep").addEventListener("submit", async e => {
   e.preventDefault();
-  const cep = $("#cep").value.replace(/\D/g, ""), res = $("#cep-res");
+  const cep = $("#cep").value.replace(/\D/g, ""), res = $("#cep-res"); res.hidden = false;
   if (cep.length !== 8) { $("#cep").classList.add("erro"); res.textContent = "O CEP tem 8 números."; return; }
   res.textContent = "Procurando a loja mais perto…";
   const { coord, info } = await buscarCep(cep);
   if (!coord) { res.innerHTML = "Ainda não entregamos nesse CEP. Mas olha a lista: talvez uma loja perto de você resolva."; S.cep = null; S.geo = null; renderLojas(); return; }
   S.cep = cep; S.geo = null; Store.setC("ogro_cep", cep);
-  S.filtro = "Todas"; renderFiltros(); renderLojas();
+  S.filtro = "Todas"; renderFiltros(); renderLojas(); renderFavs();
   const top = LOJAS.filter(l => !l.breve).map(l => ({ l, d: distLoja(l) })).sort((a, b) => a.d - b.d)[0];
   const onde = info ? `${info.logradouro ? info.logradouro + ", " : ""}${info.bairro || info.localidade}` : "teu CEP";
   res.innerHTML = top.d <= RAIO ? `📍 ${esc(onde)} · a loja <b>${top.l.n}</b> chega em ${tempoKm(top.d)}. <button class="link" data-loja="${top.l.id}">Pedir dela</button>` : `📍 ${esc(onde)} · nenhuma loja entrega aí ainda. A mais perto é a ${top.l.n}.`;
@@ -1370,11 +1501,11 @@ $("#form-cep").addEventListener("submit", async e => {
   setTimeout(() => $("#todas").scrollIntoView({ behavior: "smooth", block: "start" }), 600);
 });
 $("#btn-geo").onclick = () => {
-  const res = $("#cep-res");
+  const res = $("#cep-res"); res.hidden = false;
   if (!navigator.geolocation) { res.textContent = "Teu navegador não libera a localização. Usa o CEP."; return; }
   res.textContent = "Pegando tua localização…";
   navigator.geolocation.getCurrentPosition(p => {
-    S.geo = { lat: p.coords.latitude, lng: p.coords.longitude }; S.filtro = "Todas"; renderFiltros(); renderLojas();
+    S.geo = { lat: p.coords.latitude, lng: p.coords.longitude }; S.filtro = "Todas"; renderFiltros(); renderLojas(); renderFavs();
     const top = LOJAS.filter(l => !l.breve).map(l => ({ l, d: km(S.geo, l) })).sort((a, b) => a.d - b.d)[0];
     res.innerHTML = top.d <= RAIO ? `📍 A loja <b>${top.l.n}</b> é a mais perto de você. <button class="link" data-loja="${top.l.id}">Pedir dela</button>` : `📍 Nenhuma loja entrega aí ainda. A mais perto é a ${top.l.n}.`;
     $("#todas").scrollIntoView({ behavior: "smooth" });
