@@ -773,7 +773,7 @@ const tempoKm = d => { const b = d == null ? 30 : Math.round(25 + d * 2.2); retu
 function aberta() { const h = new Date().getHours(); return h >= H_ABRE && h < H_FECHA; }
 
 const IMG = k => k ? `img/${k}.webp` : null;
-const BEBIDAS_LATA = ["Coca-Cola lata 350ml", "Coca-Cola Zero lata 350ml", "Guaraná Antarctica lata 350ml", "Antarctica Soda lata 350ml"];
+const BEBIDAS_LATA = ["Coca-Cola lata 350ml", "Coca-Cola sem açúcar lata 350ml", "Fanta Laranja lata 350ml", "Fanta Guaraná lata 350ml", "Fanta Uva lata 350ml"]; // as da foto oficial do Cardápio Digital
 const ADD = [["Bacon extra", 6], ["Cheddar extra", 4], ["Carne extra (blend)", 14], ["Cebola caramelizada", 4], ["Maionese do Ogro (pote)", 4]];
 const ESCOLHA_BURGERS = ["McManis", "Ogro Festival", "P.C.Q", "Quarter Ogro", "X Bacon", "Texano", "Ogro GPT", "Notdog", "X-Cocó"];
 
@@ -789,14 +789,14 @@ const CATS = [
 // t: tipo -> burger | combo | escolha | simples | refri
 const P = [
   // dividir
-  { id: "d2b", c: "dividir", n: "2 Burgers + 1 Batata G", d: "Escolhe teus dois burgers do Ogro e leva uma batata G.", p: 73.90, img: "dupla", t: "escolha", esc: 2, beb: 0 },
-  { id: "d3b", c: "dividir", n: "3 Burgers + 3 Batatas P", d: "Escolhe 3 burgers do Ogro e leva 3 batatas P.", p: 110.90, img: "dupla", t: "escolha", esc: 3, beb: 0 },
-  { id: "d4p", c: "dividir", n: "4 P.C.Q (Pão, Carne 120g e Queijo)", d: "4 unidades do P.C.Q: blend bovino, american cheese e maionese artesanal de alho confitado no pão brioche.", p: 89.90, img: "pcq", t: "simples" },
-  { id: "d2m", c: "dividir", n: "2 McManis + 2 Batatas + 2 Refri", d: "2 McManis (blend bovino, american cheese, cebola caramelizada e maionese de alho confitado no brioche) com batatas e bebidas.", p: 86.90, img: "c-mcmanis", t: "escolha", esc: 0, beb: 2 },
-  { id: "dmo", c: "dividir", n: "Dupla Monstro", d: "Ogrostela + Texano + Batata Belga G + 2 Coca-Cola lata 350ml.", p: 119.90, img: "c-ogrostela", t: "simples", top: 5 },
-  { id: "dcl", c: "dividir", n: "Dupla Clássica", d: "2 burgers à escolha (McManis ou American) + Batata Belga G + 2 Coca-Cola lata 350ml.", p: 99.90, img: "c-mcmanis", t: "escolha", esc: 2, opcoes: ["McManis", "American"], beb: 0 },
-  { id: "dga", c: "dividir", n: "Ogro da Galera", d: "McManis + Ogro GPT + X-Cocó do Ogro + Batata Belga G + Nuggets (8) + 3 Coca-Cola lata 350ml.", p: 143.90, img: "nuggets", t: "simples" },
-  { id: "dnu", c: "dividir", n: "McManis + Batata P + Bebida + Nuggets (4)", d: "McManis + batata palito P + Coca-Cola lata 350ml + 4 nuggets com barbecue.", p: 73.90, img: "c-mcmanis", t: "simples" },
+  { id: "d2b", c: "dividir", n: "2 Burgers + 1 Batata G", d: "Escolhe teus dois burgers do Ogro e leva uma batata G.", p: 73.90, img: "p-d2b", t: "escolha", esc: 2, beb: 0 },
+  { id: "d3b", c: "dividir", n: "3 Burgers + 3 Batatas P", d: "Escolhe 3 burgers do Ogro e leva 3 batatas P.", p: 110.90, img: "p-d3b", t: "escolha", esc: 3, beb: 0 },
+  { id: "d4p", c: "dividir", n: "4 P.C.Q (Pão, Carne 120g e Queijo)", d: "4 unidades do P.C.Q: blend bovino, american cheese e maionese artesanal de alho confitado no pão brioche.", p: 89.90, img: "p-d4p", t: "simples" },
+  { id: "d2m", c: "dividir", n: "2 McManis + 2 Batatas + 2 Refri", d: "2 McManis (blend bovino, american cheese, cebola caramelizada e maionese de alho confitado no brioche) com batatas e bebidas.", p: 86.90, img: "p-d2m", t: "escolha", esc: 0, beb: 2 },
+  { id: "dmo", c: "dividir", n: "Dupla Monstro", d: "Ogrostela + Texano + Batata Belga G + 2 Coca-Cola lata 350ml.", p: 119.90, img: "p-dmo", t: "simples", top: 5 },
+  { id: "dcl", c: "dividir", n: "Dupla Clássica", d: "2 burgers à escolha (McManis ou American) + Batata Belga G + 2 Coca-Cola lata 350ml.", p: 99.90, img: "p-dcl", t: "escolha", esc: 2, opcoes: ["McManis", "American"], beb: 0 },
+  { id: "dga", c: "dividir", n: "Ogro da Galera", d: "McManis + Ogro GPT + X-Cocó do Ogro + Batata Belga G + Nuggets (8) + 3 Coca-Cola lata 350ml.", p: 143.90, img: "p-dga", t: "simples" },
+  { id: "dnu", c: "dividir", n: "McManis + Batata P + Bebida + Nuggets (4)", d: "McManis + batata palito P + Coca-Cola lata 350ml + 4 nuggets com barbecue.", p: 73.90, img: "p-dnu", t: "simples" },
   // combos
   { id: "cmc", c: "combos", n: "Combo McManis", d: "McManis + batata + bebida. O carro-chefe com tudo que acompanha.", p: 59.90, img: "c-mcmanis", t: "combo", top: 1 },
   { id: "cfe", c: "combos", n: "Combo Ogro Festival", d: "Blend bovino, bacon, cheddar inglês e barbecue com especiarias + batata + bebida.", p: 59.90, img: "c-festival", t: "combo" },
@@ -821,26 +821,26 @@ const P = [
   { id: "bqu", c: "burgers", n: "Quarter Ogro", d: "Na vibe americana. Blend bovino, american cheese, picles, ketchup e maionese de alho assado no pão brioche.", p: 36.90, img: "quarter", t: "burger" },
   { id: "bnd", c: "burgers", n: "Notdog", d: "Não é cachorro-quente. Costela desfiada, cebola caramelizada, american cheese e maionese de alho no pão baguete.", p: 37.90, img: "notdog", t: "burger" },
   { id: "bxc", c: "burgers", n: "X-Cocó do Ogro", d: "Linha de frango. Empanado de frango, cheddar, alface, tomate e maionese de alho no pão brioche.", p: 39.90, img: "xcoco", t: "burger" },
-  { id: "bca", c: "burgers", n: "Cabrón", d: "Blend bovino, molho de tomate picante, cheddar inglês, cebola roxa e avocadonese no pão brioche.", p: 43.90, t: "burger" },
-  { id: "bbr", c: "burgers", n: "Brasileiríssimo", d: "Blend bovino, maionese de alho, queijo coalho e mel no pão brioche.", p: 47.90, t: "burger" },
-  { id: "bam", c: "burgers", n: "American", d: "Blend bovino, maionese de alho, american cheese, alface, tomate e picles no pão brioche.", p: 45.90, t: "burger" },
+  { id: "bca", c: "burgers", n: "Cabrón", d: "Blend bovino, molho de tomate picante, cheddar inglês, cebola roxa e avocadonese no pão brioche.", p: 43.90, img: "p-bca", t: "burger" },
+  { id: "bbr", c: "burgers", n: "Brasileiríssimo", d: "Blend bovino, maionese de alho, queijo coalho e mel no pão brioche.", p: 47.90, img: "p-bbr", t: "burger" },
+  { id: "bam", c: "burgers", n: "American", d: "Blend bovino, maionese de alho, american cheese, alface, tomate e picles no pão brioche.", p: 45.90, img: "p-bam", t: "burger" },
   // acompanhar
   { id: "abf", c: "acomp", n: "Batata Frita", d: "Batata palito belga: crocante por fora, macia por dentro.", p: 17.90, img: "batata", t: "simples", sug: 1 },
   { id: "abc", c: "acomp", n: "Batata Belga Canoa G", d: "Corte canoa que segura mais sabor. Crocante por fora, macia por dentro.", p: 21.90, img: "canoa", t: "simples", sug: 2 },
   { id: "anu", c: "acomp", n: "Nuggets com Barbecue", d: "Crocantes por fora, suculentos por dentro, com o barbecue do Ogro.", p: 11.90, img: "nuggets", t: "simples", sug: 3 },
-  { id: "ama", c: "acomp", n: "Maioneses do Ogro", d: "Alho confitado, smoke ou defumada. Pra quem não divide a batata.", p: 4.00, t: "simples", sug: 5 },
+  { id: "ama", c: "acomp", n: "Maioneses do Ogro", d: "", p: 4.00, img: "p-ama", t: "simples", sug: 5 },
   // doce
-  { id: "sbr", c: "doce", n: "Brownie com gotas de chocolate", d: "Pra fechar o dia do jeito certo.", p: 13.90, t: "simples", sug: 4, ic: "BR" },
-  { id: "scc", c: "doce", n: "Cookie de Chocolate", d: "", p: 9.90, t: "simples", ic: "CK" },
-  { id: "scb", c: "doce", n: "Cookie de Baunilha", d: "", p: 9.90, t: "simples", ic: "CK" },
+  { id: "sbr", c: "doce", n: "Brownie com gotas de chocolate", d: "Pra fechar o dia do jeito certo.", p: 13.90, img: "p-sbr", t: "simples", sug: 4, ic: "BR" },
+  { id: "scc", c: "doce", n: "Cookie de Chocolate", d: "", p: 9.90, img: "p-scc", arte: 1, t: "simples", ic: "CK" },
+  { id: "scb", c: "doce", n: "Cookie de Baunilha", d: "", p: 9.90, img: "p-scb", t: "simples", ic: "CK" },
   // beber
-  { id: "rla", c: "beber", n: "Refrigerante lata 350ml", d: "Coca-Cola, Coca Zero, Guaraná ou Soda.", p: 9.90, t: "refri", sug: 6, ic: "350" },
-  { id: "r60", c: "beber", n: "Coca-Cola 600ml", d: "", p: 12.90, t: "simples", ic: "600" },
-  { id: "rgu", c: "beber", n: "Guaraná Antarctica", d: "", p: 8.90, t: "simples", ic: "GU" },
-  { id: "rh2", c: "beber", n: "H2OH! 500ml", d: "", p: 11.90, t: "simples", ic: "H2O" },
-  { id: "rag", c: "beber", n: "Água", d: "", p: 6.90, t: "simples", ic: "ÁG" },
-  { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, t: "simples", ic: "CO" },
-  { id: "rst", c: "beber", n: "Stella Artois 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, t: "simples", ic: "ST" }
+  { id: "rla", c: "beber", n: "Refrigerante lata 350ml", d: "Coca-Cola, Coca-Cola sem açúcar ou Fanta (laranja, guaraná ou uva).", p: 9.90, img: "p-rla", t: "refri", sug: 6, ic: "350" },
+  { id: "r60", c: "beber", n: "Coca-Cola 600ml", d: "", p: 12.90, img: "p-r60", t: "simples", ic: "600" },
+  { id: "rgu", c: "beber", n: "Guaraná Antarctica", d: "", p: 8.90, img: "p-rgu", t: "simples", ic: "GU" },
+  { id: "rh2", c: "beber", n: "H2OH! 500ml", d: "", p: 11.90, img: "p-rh2", t: "simples", ic: "H2O" },
+  { id: "rag", c: "beber", n: "Água", d: "", p: 6.90, img: "p-rag", t: "simples", ic: "ÁG" },
+  { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, img: "p-rco", arte: 1, t: "simples", ic: "CO" },
+  { id: "rst", c: "beber", n: "Stella Artois 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst", arte: 1, t: "simples", ic: "ST" }
 ];
 const PID = Object.fromEntries(P.map(p => [p.id, p]));
 const COMBO_UP = 15; // "vira combo": batata P + refri lata (McManis 44,90 -> Combo 59,90)
@@ -980,7 +980,7 @@ $("#favs").addEventListener("click", e => {
 /* ---------- LOJA ---------- */
 function cardProd(p) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
-  const img = p.img ? `<img src="${IMG(p.img)}" alt="" loading="lazy" decoding="async" width="112" height="112">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  const img = p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" decoding="async" width="112" height="112">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
   return `<button class="prod" data-p="${p.id}" aria-label="${esc(p.n)}, ${brl(p.p)}">
     <div><h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${p.t === "escolha" || p.t === "combo" || p.t === "burger" ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
     <div class="prod__img">${img}${q ? `<span class="prod__qtd">${q}×</span>` : ""}<span class="prod__mais" aria-hidden="true">+</span></div>
@@ -1295,7 +1295,7 @@ function renderGaveta() {
   const sug = P.filter(p => p.sug && !ids.has(p.id)).sort((a, b) => a.sug - b.sug).slice(0, 5);
   c.innerHTML = `${l ? `<p style="font-size:13px;color:var(--grafite-700)">Loja <b>${l.n}</b> · ${tempoKm(distLoja(l))}</p>` : ""}
     ${S.cart.map(i => { const p = PID[i.id]; return `<div class="item">
-      <div class="item__img">${p.img ? `<img src="${IMG(p.img)}" alt="" loading="lazy" width="56" height="56">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
+      <div class="item__img">${p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" width="56" height="56">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
       <div><h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
         <div class="item__pe"><div class="stepper"><button data-q="${i.k}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${i.k}|1" aria-label="Mais um">+</button></div>
         ${p.t !== "simples" ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
