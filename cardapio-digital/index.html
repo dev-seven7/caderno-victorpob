@@ -776,7 +776,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
     <p>De um ogro pra outro. Só delivery, no Rio de Janeiro e região.</p>
     <p><button class="link" id="abrir-cookies" style="color:var(--concreto)">Preferências de cookies</button></p>
     <p style="opacity:.7">Protótipo de UX do Cardápio Digital · nenhum pedido é enviado.</p>
-    <p style="opacity:.7;font-size:12px">Fotos de Cookie de Chocolate, Corona Extra e Stella Artois: <a href="https://www.flickr.com/photos/22198928@N00/4013070232" target="_blank" rel="noopener">thebittenword.com</a>, <a href="https://www.flickr.com/photos/100105316@N05/9486414950" target="_blank" rel="noopener">yeah-design</a> e <a href="https://www.flickr.com/photos/42659291@N07/7366023364" target="_blank" rel="noopener">edwin.bautista</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>), recortadas.</p>
+    <p style="opacity:.7;font-size:12px">Fotos de licença livre: Cookie de Chocolate por <a href="https://www.flickr.com/photos/22198928@N00/4013070232" target="_blank" rel="noopener">thebittenword.com</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>), recortada; garrafas de Corona Extra por <a href="https://commons.wikimedia.org/wiki/File:Corona_Extra_beer_bottle_(2019).png" target="_blank" rel="noopener">Bruce The Deus</a> e de Stella Artois por <a href="https://commons.wikimedia.org/wiki/File:Stella_Artois_bottle.jpg" target="_blank" rel="noopener">Kimjon12</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>), recortadas e montadas sobre a cena do cardápio.</p>
     <p class="assina">Feito por Victor Pusanovsky Okada</p>
   </div>
 </footer>
@@ -1245,7 +1245,7 @@ const VIDS = new Set([
   "mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam",
   "c-mcmanis", "c-festival", "c-ogrostela", "c-texano", "c-gpt", "c-xbacon", "c-hiper", "c-quarter", "c-pcq", "c-notdog", "c-xcoco",
   "batata", "canoa", "nuggets", "p-ama", "p-d2b", "p-d2m", "p-d3b", "p-d4p", "p-dcl", "p-dga", "p-dmo", "p-dnu",
-  "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto", "p-rpe"]);
+  "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto", "p-rpe", "p-rso"]);
 const temVid = p => !semAnimacao && VIDS.has(p.img);
 /* Formatos (bancada de 25/11, mesma nitidez medida por SSIM):
    - foto: AVIF 24% menor que WebP (890 → 680 KB nos 47); JPEG XL empatou com o WebP e o Edge não abre → não entrou.
@@ -1341,7 +1341,7 @@ const P = [
   { id: "rh2", c: "beber", n: "H2OH! 500ml", d: "Normal ou Limoneto.", p: 11.90, img: "p-rh2", t: "simples", ic: "H2O" },
   { id: "rag", c: "beber", n: "Água 500ml", d: "Com ou sem gás.", p: 6.90, img: "p-rag", t: "simples", ic: "ÁG" },
   { id: "rpe", c: "beber", n: "Pepsi", d: "Lata 350ml ou garrafa de 1,5l e 2l, normal ou Black.", p: 8.90, img: "p-rpe", t: "simples" },
-  { id: "rso", c: "beber", n: "Antarctica Soda lata 350ml", d: "", p: 8.90, img: null, t: "simples", ic: "SODA" },
+  { id: "rso", c: "beber", n: "Antarctica Soda lata 350ml", d: "Refrigerante de limão.", p: 8.90, img: "p-rso", t: "simples" },  // imagem PROVISÓRIA (lata ilustrada) até chegar foto da loja
   { id: "rco", c: "beber", n: "Corona Extra long neck 330ml", d: "Venda para maiores de 18 anos.", p: 14.90, img: "p-rco-foto", t: "simples", ic: "CO" },
   { id: "rst", c: "beber", n: "Stella Artois puro malte 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst-foto", t: "simples", ic: "ST" }
 ];
