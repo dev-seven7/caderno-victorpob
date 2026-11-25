@@ -26,6 +26,8 @@
   RODADA 4 (25/11/2026):
    - Burgers animados: img/v-*.webm/.mp4, feitos da foto oficial por _trabalho/gerar-videos-burgers.py (sem IA no produto,
      regra 6 da higgsfield-ogro). Para burger novo: foto + linha em BURGERS no script + chave em VIDS aqui.
+   - Formatos (25/11, bancada SSIM): fotos AVIF com WebP de reserva (_trabalho/gerar-fotos-avif.py, −24%);
+     vídeos AV1 → VP9 → H.264 (−35 a −64%). JPEG XL medido e descartado: empata com WebP e o Edge não abre.
    - Rastreamento completo por produto (GA4 e-commerce no dataLayer + Meta via fbq). Painel: abrir o link com ?debug=1.
      Falta no ar: GTM da loja no Databite, GA4/Pixel reais, purchase só depois do backend confirmar e CAPI com o mesmo event_id.
 -->
@@ -417,6 +419,7 @@ textarea.campo{min-height:70px;resize:vertical}
 /* burger animado (vídeo feito da foto oficial): mesmo lugar e tamanho da foto */
 .prod__img video,.sheet__img video{width:100%;height:100%;object-fit:cover;display:block;background:#111}
 .card-top video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#111}
+picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o mesmo CSS de antes */
 
 /* painel de rastreamento (só com ?debug=1) */
 .trk-bt{position:fixed;left:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:96;background:var(--preto);color:#fff;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;gap:6px;align-items:center}
@@ -1105,16 +1108,31 @@ const VIDS = new Set([
   "batata", "canoa", "nuggets", "p-ama", "p-d2b", "p-d2m", "p-d3b", "p-d4p", "p-dcl", "p-dga", "p-dmo", "p-dnu",
   "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto"]);
 const temVid = p => !semAnimacao && VIDS.has(p.img);
-const vidTag = (p, q) => `<video muted loop playsinline preload="none" poster="${IMG(p.img)}" data-v="v-${p.img}${q ? "-q" : ""}" aria-hidden="true"></video>`;
+/* Formatos (bancada de 25/11, mesma nitidez medida por SSIM):
+   - foto: AVIF 24% menor que WebP (890 → 680 KB nos 47); JPEG XL empatou com o WebP e o Edge não abre → não entrou.
+   - vídeo: AV1 35–64% menor que VP9; JXL animado ficou ~40× maior que VP9 → não serve para vídeo.
+   O navegador escolhe o primeiro que sabe abrir: AVIF → WebP · AV1 → VP9 → H.264. */
+const fotoTag = (k, attrs) => VIDS.has(k)
+  ? `<picture><source srcset="img/${k}.avif" type="image/avif"><img src="img/${k}.webp" ${attrs}></picture>`
+  : `<img src="${IMG(k)}" ${attrs}>`;
+let avifOk = false; // o poster do <video> é uma URL só (não aceita <picture>): testa o AVIF uma vez e escolhe
+{ const t = new Image(); t.onload = () => { avifOk = t.width > 0; }; t.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAD5bWV0YQAAAAAAAAAvaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAFBpY3R1cmVIYW5kbGVyAAAAAA5waXRtAAAAAAABAAAAHmlsb2MAAAAARAAAAQABAAAAAQAAASEAAAAUAAAAKGlpbmYAAAAAAAEAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAAGppcHJwAAAAS2lwY28AAAAUaXNwZQAAAAAAAAACAAAAAgAAABBwaXhpAAAAAAMICAgAAAAMYXYxQ4EADAAAAAATY29scm5jbHgAAgACAAIAAAAAF2lwbWEAAAAAAAAAAQABBAECgwQAAAAcbWRhdAoFGAA2wCAyCx/wAABYAAAAAK8w"; }
+const posterDe = k => `img/${k}.${avifOk && VIDS.has(k) ? "avif" : "webp"}`;
+const fontesVid = base => `<source src="img/${base}.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'><source src="img/${base}.webm" type='video/webm; codecs="vp9"'><source src="img/${base}.mp4" type="video/mp4">`;
+// poster só quando o card chega perto da tela (antes, os 47 posters baixavam todos ao abrir o cardápio)
+const vidTag = (p, q) => `<video muted loop playsinline preload="none" data-poster="${p.img}" data-v="v-${p.img}${q ? "-q" : ""}" aria-hidden="true"></video>`;
+const posterObs = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; const v = e.target; v.poster = posterDe(v.dataset.poster); posterObs.unobserve(v);
+}), { rootMargin: "600px 0px" });
 // só toca o que está na tela; carrega o arquivo na primeira vez que aparece
 const vidObs = new IntersectionObserver(es => es.forEach(e => {
   const v = e.target;
   if (e.isIntersecting && !document.hidden) {
-    if (!v.dataset.ok) { v.dataset.ok = 1; v.innerHTML = `<source src="img/${v.dataset.v}.webm" type="video/webm"><source src="img/${v.dataset.v}.mp4" type="video/mp4">`; v.load(); }
+    if (!v.dataset.ok) { v.dataset.ok = 1; v.innerHTML = fontesVid(v.dataset.v); v.load(); }
     v.play().catch(() => {});
   } else v.pause();
 }), { threshold: .5 });
-const observarVids = root => $$("video[data-v]", root).forEach(v => vidObs.observe(v));
+const observarVids = root => $$("video[data-v]", root).forEach(v => { vidObs.observe(v); posterObs.observe(v); });
 document.addEventListener("visibilitychange", () => $$("video[data-v]").forEach(v => { if (document.hidden) v.pause(); else { vidObs.unobserve(v); vidObs.observe(v); } }));
 const BEBIDAS_LATA = ["Coca-Cola lata 350ml", "Coca-Cola sem açúcar lata 350ml", "Fanta Laranja lata 350ml", "Fanta Guaraná lata 350ml", "Fanta Uva lata 350ml"]; // as da foto oficial do Cardápio Digital
 const ADD = [["Bacon extra", 6], ["Cheddar extra", 4], ["Carne extra (blend)", 14], ["Cebola caramelizada", 4], ["Maionese do Ogro (pote)", 4]];
@@ -1305,7 +1323,7 @@ function melhorLoja() {
 function renderFavs() {
   const alvo = melhorLoja(), l = alvo && LOJAS.find(x => x.id === alvo);
   $("#favs").innerHTML = P.filter(p => p.top).sort((a, b) => a.top - b.top).map((p, i) => `
-    <button class="card-top" data-fav="${p.id}" data-list="home_mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : `<img src="${IMG(p.img)}" alt="" loading="lazy" decoding="async" width="260" height="195">`}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span><br><span class="cta">${l ? "Pedir da " + esc(l.n) + " →" : "Escolher a loja →"}</span></div></button>`).join("");
+    <button class="card-top" data-fav="${p.id}" data-list="home_mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : fotoTag(p.img, `alt="" loading="lazy" decoding="async" width="260" height="195"`)}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span><br><span class="cta">${l ? "Pedir da " + esc(l.n) + " →" : "Escolher a loja →"}</span></div></button>`).join("");
   observarVids($("#favs")); Expo.observar($("#favs"));
 }
 function chamarLojas(msg) {
@@ -1331,7 +1349,7 @@ function selecionou(el) {
 }
 function cardProd(p, idx, lista) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
-  const img = temVid(p) ? vidTag(p, true) : p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" decoding="async" width="112" height="112">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  const img = temVid(p) ? vidTag(p, true) : p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" decoding="async" width="112" height="112"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
   return `<button class="prod" data-p="${p.id}" data-list="${lista}" data-idx="${idx}" aria-label="${esc(p.n)}, ${brl(p.p)}">
     <div><h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${p.t === "escolha" || p.t === "combo" || p.t === "burger" ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
     <div class="prod__img">${img}${q ? `<span class="prod__qtd">${q}×</span>` : ""}<span class="prod__mais" aria-hidden="true">+</span></div>
@@ -1364,7 +1382,7 @@ function renderMenu(q) {
   if (!nq) {
     const top = P.filter(p => p.top).sort((a, b) => a.top - b.top);
     html += `<section class="cat" id="cat-top" style="content-visibility:visible"><h2 class="disp">Mais pedidos</h2><p>O que mais sai das chapas do Ogro.</p><div class="carrossel">${top.map((p, i) => `
-      <button class="card-top" data-p="${p.id}" data-list="mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : `<img src="${IMG(p.img)}" alt="" ${i < 2 ? "" : 'loading="lazy"'} decoding="async" width="260" height="195">`}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span></div></button>`).join("")}</div></section>`;
+      <button class="card-top" data-p="${p.id}" data-list="mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : fotoTag(p.img, `alt="" ${i < 2 ? "" : 'loading="lazy"'} decoding="async" width="260" height="195"`)}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span></div></button>`).join("")}</div></section>`;
   }
   let n = 0;
   CATS.filter(c => c.id !== "top").forEach(c => {
@@ -1553,10 +1571,10 @@ function abrirProduto(id, editKey, origem) {
 function midiaSheet(p) {
   const w = document.createElement("div"); w.className = "sheet__img";
   if (temVid(p)) {
-    w.innerHTML = `<video muted loop playsinline autoplay preload="auto" poster="${IMG(p.img)}" aria-label="${esc(p.n)} animado"><source src="img/v-${p.img}.webm" type="video/webm"><source src="img/v-${p.img}.mp4" type="video/mp4"></video>`;
+    w.innerHTML = `<video muted loop playsinline autoplay preload="auto" poster="${posterDe(p.img)}" aria-label="${esc(p.n)} animado">${fontesVid("v-" + p.img)}</video>`;
     const v = w.querySelector("video"); let ult = 0;
     v.addEventListener("timeupdate", () => { let d = v.currentTime - ult; if (d < 0) d += v.duration || 0; ult = v.currentTime; if (d > 0 && d < 1.5 && ItemT.at && ItemT.at.p === p) ItemT.at.vid += d * 1000; });
-  } else w.innerHTML = p.img ? `<img src="${IMG(p.img)}" alt="${esc(p.n)}" width="520" height="325">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  } else w.innerHTML = p.img ? fotoTag(p.img, `alt="${esc(p.n)}" width="520" height="325"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
   w.insertAdjacentHTML("beforeend", `<button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-x"/></svg></button>`);
   return w;
 }
@@ -1567,7 +1585,7 @@ function renderSheet(first) {
   let h = `<div id="sh-midia"></div>
     <div class="sheet__info"><h2 class="disp" id="sh-nome">${esc(p.n)}</h2>${p.d ? `<p>${esc(p.d)}</p>` : ""}<p style="font-weight:800;color:var(--preto);font-size:18px;margin-top:8px">${brl(p.p)}</p></div>`;
   if (p.t === "burger") {
-    h += `<div class="grupo"><label class="combo-up"><img src="img/batata.webp" alt="" width="64" height="64" loading="lazy"><div><strong>Vira combo +${brl(COMBO_UP)}</strong>Batata P + refri lata. Sai mais em conta que separado.</div><input type="checkbox" data-combo ${sel.combo ? "checked" : ""}></label></div>`;
+    h += `<div class="grupo"><label class="combo-up">${fotoTag("batata", `alt="" width="64" height="64" loading="lazy"`)}<div><strong>Vira combo +${brl(COMBO_UP)}</strong>Batata P + refri lata. Sai mais em conta que separado.</div><input type="checkbox" data-combo ${sel.combo ? "checked" : ""}></label></div>`;
   }
   gs.forEach(g => {
     const val = sel[g.id];
@@ -1684,11 +1702,11 @@ function renderGaveta() {
   const sug = P.filter(p => p.sug && !ids.has(p.id)).sort((a, b) => a.sug - b.sug).slice(0, 5);
   c.innerHTML = `${l ? `<p style="font-size:13px;color:var(--grafite-700)">Loja <b>${l.n}</b> · ${tempoKm(distLoja(l))}</p>` : ""}
     ${S.cart.map(i => { const p = PID[i.id]; return `<div class="item">
-      <div class="item__img">${p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" width="56" height="56">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
+      <div class="item__img">${p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" width="56" height="56"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
       <div><h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
         <div class="item__pe"><div class="stepper"><button data-q="${i.k}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${i.k}|1" aria-label="Mais um">+</button></div>
         ${p.t !== "simples" ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
-    ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map((p, i) => `<button class="sug__i" data-add="${p.id}" data-list="sacola_sugestoes" data-idx="${i}">${p.img ? `<img src="${IMG(p.img)}" alt="" loading="lazy" width="140" height="80">` : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
+    ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map((p, i) => `<button class="sug__i" data-add="${p.id}" data-list="sacola_sugestoes" data-idx="${i}">${p.img ? fotoTag(p.img, `alt="" loading="lazy" width="140" height="80"`) : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
     <div><div class="cupom"><input class="campo" id="cupom" placeholder="Tem cupom?" value="${S.cupom || ""}" aria-label="Cupom" autocomplete="off"><button class="btn btn--dark" id="cupom-b">${S.cupom ? "Trocar" : "Aplicar"}</button></div>
       <div id="cupom-msg">${S.cupom ? (t.falta ? `<p class="cupom-msg">Faltam <b>${brl(t.falta)}</b> pro cupom ${S.cupom} valer.</p><div class="prog"><i style="width:${Math.min(100, (t.sub / CUPONS[S.cupom].min) * 100)}%"></i></div>` : `<p class="cupom-msg ok">✓ ${S.cupom} aplicado: ${CUPONS[S.cupom].txt}</p>`) : ""}</div></div>
     <div class="totais"><div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}<div><span>Entrega${distLoja(l) == null ? " (estimada)" : ""}</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div></div>`;
@@ -1845,7 +1863,7 @@ function mostrarNudge(origem) {
   if (nudgeVisto || !S.cart.length || location.hash.startsWith("#/pedido") || $(".sheet.on, .gaveta.on")) return;
   nudgeVisto = true; try { sessionStorage.setItem("ogro_nudge", "1"); } catch (e) {}
   const imgs = S.cart.map(i => PID[i.id].img).filter(Boolean).slice(0, 3);
-  $("#nudge-mini").innerHTML = imgs.map(k => `<img src="${IMG(k)}" alt="">`).join("");
+  $("#nudge-mini").innerHTML = imgs.map(k => fotoTag(k, `alt=""`)).join("");
   const ck = location.hash === "#/checkout";
   $("#h-nudge").textContent = ck ? "Falta pouco." : "Tá guardado.";
   $("#nudge-p").textContent = ck ? `Teu pedido de ${brl(totais().total)} tá a um toque. Se travou em alguma coisa, chama a loja no WhatsApp.` : "Teu pedido continua na sacola. Falta só dizer onde entregar.";
