@@ -1096,10 +1096,15 @@ function statusLoja(id) { return aberta(id) ? { on: true, txt: `Aberta · até $
 
 
 const IMG = k => k ? `img/${k}.webp` : null;
-// Burgers animados: img/v-<img>.webm/.mp4 (720×540, ficha e "mais pedidos") e v-<img>-q (240×240, card).
-// Feitos da FOTO OFICIAL (_trabalho/gerar-videos-burgers.py): o burger é a foto real, só a câmera e o vapor se mexem.
-const VIDS = new Set(["mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam"]);
-const temVid = p => !semAnimacao && p.t === "burger" && VIDS.has(p.img);
+// TODOS os produtos animados: img/v-<img>.webm/.mp4 (720×540, ficha e "mais pedidos") e v-<img>-q (240×240, card).
+// Feitos da FOTO do cardápio (_trabalho/gerar-videos-burgers.py): o produto é a foto real; só a câmera se mexe,
+// com vapor nos quentes e reflexo de luz nas bebidas geladas. Produto novo = linha no script + chave aqui.
+const VIDS = new Set([
+  "mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam",
+  "c-mcmanis", "c-festival", "c-ogrostela", "c-texano", "c-gpt", "c-xbacon", "c-hiper", "c-quarter", "c-pcq", "c-notdog", "c-xcoco",
+  "batata", "canoa", "nuggets", "p-ama", "p-d2b", "p-d2m", "p-d3b", "p-d4p", "p-dcl", "p-dga", "p-dmo", "p-dnu",
+  "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto"]);
+const temVid = p => !semAnimacao && VIDS.has(p.img);
 const vidTag = (p, q) => `<video muted loop playsinline preload="none" poster="${IMG(p.img)}" data-v="v-${p.img}${q ? "-q" : ""}" aria-hidden="true"></video>`;
 // só toca o que está na tela; carrega o arquivo na primeira vez que aparece
 const vidObs = new IntersectionObserver(es => es.forEach(e => {
