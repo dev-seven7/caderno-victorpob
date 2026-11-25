@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cardápio Digital · atual × protótipo × Angular | Ogro</title>
+<meta name="description" content="Piloto 1 da esteira Databite Angular: os 12 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
+<meta name="robots" content="noindex, nofollow" />
+<meta property="og:title" content="Cardápio Digital · atual × protótipo × Angular" />
+<meta property="og:description" content="12 diferenciais, 11 já em código, 28 de 28 testes passando." />
+<meta property="og:image" content="img/prototipo-home.webp" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FF5500'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coal:#0D0D0D; --coal2:#141414; --graphite:#1E1E1E; --graphite2:#252525; --line:#333;
+    --txt:#E5E5E5; --txt2:#A3A3A3; --txt3:#737373;
+    --flame:#FF5500; --ember:#E65100; --blood:#C62828; --cheddar:#FFB300;
+    --ok:#4ADE80; --warn:#FACC15; --bad:#F87171; --info:#94A3B8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--coal);color:var(--txt);font:15px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--flame);color:var(--coal)}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(255,85,0,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,85,0,.035) 1px,transparent 1px);
+    background-size:72px 72px;mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 75%)}
+  header,main,footer,nav{position:relative;z-index:1}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  a{color:var(--flame)}
+  section{scroll-margin-top:72px;padding:40px 0 8px}
+  h1,h2,h3{margin:0;font-weight:400}
+  .display{font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;line-height:.95}
+  .impact{font-family:Anton,sans-serif}
+  code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+  /* topo */
+  header{padding:36px 0 28px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 20% -10%,rgba(255,85,0,.18),transparent 60%)}
+  .kicker{display:inline-flex;gap:.5rem;align-items:center;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--flame)}
+  .kicker::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--flame);box-shadow:0 0 12px var(--flame)}
+  header h1{font-size:clamp(2.6rem,9vw,5.2rem);color:#fff;margin:.6rem 0 .4rem}
+  header h1 em{font-style:normal;color:var(--flame)}
+  header p.lead{max-width:760px;color:var(--txt2);font-size:1.02rem;margin:0}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+  .chip{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .75rem;border-radius:999px;border:1px solid;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .st-ok{background:#1B3B2B;border-color:var(--ok);color:var(--ok)}
+  .st-warn{background:#3E3110;border-color:var(--warn);color:var(--warn)}
+  .st-bad{background:#3F1919;border-color:var(--bad);color:var(--bad)}
+  .st-info{background:#1E293B;border-color:var(--info);color:var(--info)}
+
+  /* navegação */
+  nav{position:sticky;top:0;background:rgba(13,13,13,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:.4rem;overflow-x:auto;padding-top:.6rem;padding-bottom:.6rem;scrollbar-width:none}
+  nav .wrap::-webkit-scrollbar{display:none}
+  nav a{flex:none;padding:.42rem .85rem;border-radius:999px;border:1px solid var(--line);background:#1A1A1A;color:#9a9a9a;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:.18s}
+  nav a:hover,nav a:focus-visible{border-color:var(--flame);color:#fff;outline:none}
+
+  /* títulos de seção */
+  .sec-h{display:flex;align-items:baseline;gap:.8rem;margin-bottom:.4rem}
+  .sec-h .n{font-family:'Bebas Neue';font-size:1.1rem;color:var(--flame)}
+  .sec-h h2{font-family:'Bebas Neue';font-size:clamp(2rem,5vw,2.8rem);color:#fff;letter-spacing:.02em}
+  .sec-sub{color:var(--txt2);max-width:780px;margin:0 0 1.2rem}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:1.6rem}
+  .kpi{background:var(--coal2);border:1px solid var(--line);border-radius:.9rem;padding:1rem}
+  .kpi b{display:block;font-family:Anton;font-size:2.2rem;line-height:1;color:#fff}
+  .kpi b span{color:var(--flame)}
+  .kpi small{color:var(--txt2);font-size:.8rem}
+  @media(min-width:768px){.kpis{grid-template-columns:repeat(4,1fr)}}
+
+  /* lado a lado */
+  .duo{display:grid;gap:1rem}
+  .duo-row{display:grid;gap:.8rem;margin-bottom:1.4rem}
+  .duo-row h3{font-family:'Bebas Neue';font-size:1.5rem;color:#fff}
+  .shot{margin:0;background:var(--coal2);border:1px solid var(--line);border-radius:.9rem;overflow:hidden}
+  .shot img{display:block;width:100%;height:auto;aspect-ratio:1100/712;object-fit:cover;object-position:top}
+  .shot figcaption{display:flex;justify-content:space-between;gap:.6rem;padding:.6rem .8rem;font-size:.8rem;color:var(--txt2);border-top:1px solid var(--line)}
+  .tag{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .5rem;border-radius:.3rem}
+  .tag-atual{background:#262626;color:#bdbdbd}
+  .tag-novo{background:var(--flame);color:var(--coal)}
+  @media(min-width:768px){.duo-row .pair{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}}
+  .pair{display:grid;gap:.8rem}
+
+  /* diferenciais */
+  .filtros{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
+  .f-btn{cursor:pointer;padding:.42rem .85rem;border-radius:999px;border:1px solid var(--line);background:#1A1A1A;color:#9a9a9a;font:700 .72rem Inter;letter-spacing:.06em;text-transform:uppercase}
+  .f-btn[aria-pressed="true"]{background:var(--flame);border-color:var(--flame);color:var(--coal)}
+  .difs{display:grid;gap:.9rem}
+  .difs>*,.pair>*,.arq>*,.duo-row,details.cod,pre{min-width:0;max-width:100%}
+  .dif{background:var(--coal2);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:.9rem;padding:1rem 1rem .9rem}
+  .dif[data-st="ok"]{border-left-color:var(--ok)}
+  .dif[data-st="parcial"]{border-left-color:var(--warn)}
+  .dif[data-st="bloq"]{border-left-color:var(--bad)}
+  .dif-top{display:flex;gap:.8rem;align-items:flex-start}
+  .dif-n{flex:none;width:2.4rem;height:2.4rem;border-radius:.6rem;background:var(--graphite);display:grid;place-items:center;font-family:Anton;font-size:1.15rem;color:var(--flame)}
+  .dif h3{font-family:Inter;font-weight:800;font-size:1.02rem;color:#fff;line-height:1.3}
+  .dif .meta{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.35rem}
+  .dif .meta .chip{font-size:.62rem;padding:.2rem .55rem}
+  .vs{display:grid;gap:.5rem;margin:.8rem 0 .4rem}
+  .vs div{background:var(--graphite);border:1px solid #2a2a2a;border-radius:.6rem;padding:.6rem .7rem;font-size:.86rem;color:var(--txt2)}
+  .vs div b{display:block;margin-bottom:.15rem;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3)}
+  .vs div.novo{border-color:rgba(255,85,0,.35);background:rgba(255,85,0,.06);color:var(--txt)}
+  .vs div.novo b{color:var(--flame)}
+  @media(min-width:640px){.vs{grid-template-columns:1fr 1fr}}
+  .arqs{font-size:.78rem;color:var(--txt3);margin-top:.4rem}
+  .arqs code{color:var(--cheddar);background:#1a1407;padding:.05rem .35rem;border-radius:.3rem}
+  details.cod{margin-top:.7rem;border:1px solid var(--line);border-radius:.6rem;background:#0f0f0f}
+  details.cod summary{cursor:pointer;list-style:none;padding:.55rem .8rem;font-size:.78rem;font-weight:700;color:#cfcfcf;display:flex;justify-content:space-between;gap:.5rem}
+  details.cod summary::-webkit-details-marker{display:none}
+  details.cod summary::after{content:'+';color:var(--flame);font-weight:800}
+  details.cod[open] summary::after{content:'–'}
+  details.cod summary:focus-visible{outline:2px solid var(--flame);outline-offset:2px;border-radius:.6rem}
+  pre{margin:0;padding:.9rem 1rem;overflow:auto;font-size:.76rem;line-height:1.55;color:#d6d6d6;border-top:1px solid var(--line);max-height:560px;tab-size:2}
+  .arq-nome{display:block;padding:.45rem 1rem;font-size:.7rem;color:var(--txt3);border-top:1px solid var(--line);background:#121212}
+  .k{color:#ff8a4c}.s{color:#9ee37d}.c{color:#6b7280;font-style:italic}.n{color:#ffcf5c}.d{color:#c4a3ff}
+  @media(min-width:900px){.difs{grid-template-columns:1fr 1fr}}
+
+  /* arquitetura */
+  .arq{display:grid;gap:.7rem}
+  .camada{background:var(--coal2);border:1px solid var(--line);border-radius:.9rem;padding:1rem}
+  .camada h3{font-family:'Bebas Neue';font-size:1.45rem;color:#fff}
+  .camada p{margin:.2rem 0 .5rem;color:var(--txt2);font-size:.88rem}
+  .camada ul{margin:0;padding-left:1.1rem;font-size:.82rem;color:var(--txt2)}
+  .camada.pura{border-color:rgba(74,222,128,.45)}
+  .camada.pura h3::after{content:' · TS puro, serve em Angular ou React';font-family:Inter;font-size:.7rem;font-weight:700;color:var(--ok);letter-spacing:.04em}
+  @media(min-width:768px){.arq{grid-template-columns:repeat(2,1fr)}}
+
+  /* listas e tabelas */
+  .lista{display:grid;gap:.55rem;padding:0;margin:0;list-style:none}
+  .lista li{background:var(--coal2);border:1px solid var(--line);border-radius:.7rem;padding:.7rem .9rem;color:var(--txt2);font-size:.9rem}
+  .lista li b{color:#fff}
+  .tabela{overflow-x:auto;border:1px solid var(--line);border-radius:.9rem}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:560px}
+  th,td{text-align:left;padding:.7rem .8rem;border-bottom:1px solid #262626;vertical-align:top}
+  th{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);background:#121212}
+  tr:last-child td{border-bottom:0}
+  td .chip{font-size:.62rem;padding:.2rem .55rem}
+  details.testes{margin-top:.8rem;border:1px solid var(--line);border-radius:.7rem;background:#0f0f0f}
+  details.testes summary{cursor:pointer;padding:.6rem .9rem;font-weight:700;font-size:.82rem}
+
+  .p0{display:grid;gap:.55rem;padding:0;margin:0}
+  .p0 li{list-style:none;background:var(--coal2);border:1px solid var(--line);border-radius:.7rem;padding:.7rem .9rem .7rem 3rem;position:relative;font-size:.9rem;color:var(--txt2)}
+  .p0 li b{color:#fff}
+  .p0 li::before{content:attr(data-id);position:absolute;left:.7rem;top:.7rem;font:800 .7rem Inter;color:var(--flame)}
+  @media(min-width:768px){.p0{grid-template-columns:1fr 1fr}}
+
+  footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);color:var(--txt3);font-size:.8rem}
+  .aviso{background:#3E3110;border:1px solid #6b5514;color:#f1dc8c;border-radius:.8rem;padding:.8rem 1rem;font-size:.88rem}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="kicker">Piloto 1 · Databite Angular Migration Engine</span>
+    <h1 class="display">Cardápio Digital: atual × <em>protótipo</em> × Angular</h1>
+    <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. As regras foram testadas; a parte Angular espera a versão e o padrão do repositório deles.</p>
+    <div class="chips">
+      <span class="chip st-info">Prototype only</span>
+      <span class="chip st-ok">Regras: 28/28 testes</span>
+      <span class="chip st-warn">Angular: build não rodado</span>
+      <span class="chip st-bad">Cardápio atual é React 18.2</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>12</b><small>diferenciais do protótipo</small></div>
+      <div class="kpi"><b>11<span>/12</span></b><small>já em código</small></div>
+      <div class="kpi"><b>28<span>/28</span></b><small>testes das regras passando</small></div>
+      <div class="kpi"><b>32</b><small>eventos de medição mapeados</small></div>
+    </div>
+  </div>
+</header>
+
+<nav aria-label="Seções">
+  <div class="wrap">
+    <a href="#lado-a-lado">Lado a lado</a>
+    <a href="#diferenciais">12 diferenciais</a>
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#atual-melhor">O que o atual faz melhor</a>
+    <a href="#status">Status e testes</a>
+    <a href="#databite">O que falta da Databite</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="lado-a-lado">
+    <div class="sec-h"><span class="n">01</span><h2>Lado a lado</h2></div>
+    <p class="sec-sub">Mesma loja (Botafogo), mesmo horário (25/11, 12h45, loja fechada) e mesma tela de 1384 px. À esquerda o Cardápio Digital de hoje; à direita, o <a href="../cardapio-digital/">protótipo</a>.</p>
+
+    <div class="duo-row">
+      <h3>Entrada</h3>
+      <div class="pair">
+        <figure class="shot"><img src="img/atual-home.webp" alt="Cardápio atual: pede o endereço e mostra um único card de loja, Botafogo, marcado como Fechado" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Pede o endereço e mostra a loja que entrega nele</span></figcaption></figure>
+        <figure class="shot"><img src="img/prototipo-home.webp" alt="Protótipo: título Fome? Isso resolve teu dia, busca por CEP e a lista das 14 lojas com status e botão Pedir ou Agendar" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>14 lojas, CEP ou localização, "abre hoje às 18h"</span></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="duo-row">
+      <h3>Ficha do produto</h3>
+      <div class="pair">
+        <figure class="shot"><img src="img/atual-ficha-mcmanis.webp" alt="Cardápio atual: ficha do McManis com foto, descrição em português e inglês e o grupo de sachês com contador; botão Loja fechada" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Grupos de opções; "Loja fechada" bloqueia</span></figcaption></figure>
+        <figure class="shot"><img src="img/prototipo-ficha-mcmanis.webp" alt="Protótipo: ficha do McManis com vídeo do burger, caixa Vira combo mais 15 reais e botão Adicionar com o preço" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>Vídeo, "vira combo" em 1 toque, preço no botão</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="diferenciais">
+    <div class="sec-h"><span class="n">02</span><h2>Os 12 diferenciais, com o código</h2></div>
+    <p class="sec-sub">Cada card compara o Cardápio atual com o protótipo e abre o código que implementa o diferencial. Sacola, cupom e checkout do atual não foram testados: a loja estava fechada e não fazemos pedido real.</p>
+    <div class="filtros" role="group" aria-label="Filtrar diferenciais">
+      <button class="f-btn" data-f="todos" aria-pressed="true">Todos (12)</button>
+      <button class="f-btn" data-f="ok" aria-pressed="false">Testado (8)</button>
+      <button class="f-btn" data-f="parcial" aria-pressed="false">Em código, sem teste (3)</button>
+      <button class="f-btn" data-f="bloq" aria-pressed="false">Depende da API (1)</button>
+    </div>
+
+    <div class="difs">
+
+      <article class="dif" data-st="bloq">
+        <div class="dif-top"><span class="dif-n">1</span><div><h3>Entrada com todas as lojas</h3><div class="meta"><span class="chip st-bad">Depende da API (B5)</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Pede o endereço e mostra só a loja que entrega nele.</div><div class="novo"><b>Protótipo</b>As 13 lojas + São Gonçalo "em breve", filtro por região, CEP ou localização e a mais perto em destaque.</div></div>
+        <p class="arqs">O status de cada loja usa <code>domain/horarios.ts</code> (card 2). Distância, área e taxa de entrega vêm da API da Databite.</p>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">2</span><div><h3>Status que diz quando abre</h3><div class="meta"><span class="chip st-ok">7 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>"Fechado".</div><div class="novo"><b>Protótipo</b>"Fechada · abre hoje às 18h" / "Aberta · até 5h", entendendo turno que passa da meia-noite.</div></div>
+        <details class="cod"><summary>Ver código · horarios.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/horarios.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { HorarioSemana } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 1 · Status real da loja: "Aberta · até 2h" / "Fechada · abre hoje às 18h".
+ *
+ * O Cardápio atual mostra só "Fechado". O protótipo diz quando abre, e entende turno que
+ * passa da meia-noite (a Databite grava "18:00–23:59" + "00:00–05:00" no mesmo dia,
+ * e o "00:00–05:00" é a madrugada seguinte).
+ *
+ * Funções puras: recebem `agora`, não leem relógio. Testáveis e iguais em Angular ou React.
+ */</span>
+
+<span class="k">const</span> MINUTOS_DIA = <span class="n">1440</span>;
+<span class="k">const</span> DIAS_LONGO = [<span class="s">'domingo'</span>, <span class="s">'segunda'</span>, <span class="s">'terça'</span>, <span class="s">'quarta'</span>, <span class="s">'quinta'</span>, <span class="s">'sexta'</span>, <span class="s">'sábado'</span>];
+
+<span class="c">/** Faixa em minutos desde a 00:00 do dia; o fim pode passar de 1440 (madrugada seguinte). */</span>
+<span class="k">export</span> <span class="k">type</span> Faixa = <span class="k">readonly</span> [inicio: number, fim: number];
+
+<span class="k">const</span> paraMinutos = (hhmm: string): number =&gt; {
+  <span class="k">const</span> [h, m] = hhmm.split(<span class="s">':'</span>).map(Number);
+  <span class="k">return</span> h * <span class="n">60</span> + m;
+};
+
+<span class="c">/** Turnos de um dia já com a madrugada emendada na noite. */</span>
+<span class="k">export</span> <span class="k">function</span> turnosDoDia(semana: HorarioSemana, dia: number): Faixa[] {
+  <span class="k">const</span> faixas = semana[((dia % <span class="n">7</span>) + <span class="n">7</span>) % <span class="n">7</span>];
+  <span class="k">if</span> (!faixas) <span class="k">return</span> [];
+  <span class="k">const</span> brutas = faixas.map(t =&gt; [paraMinutos(t.inicio), paraMinutos(t.fim)] <span class="k">as</span> <span class="k">const</span>);
+  <span class="k">const</span> viraNoite = brutas.some(([a, b]) =&gt; a &gt; <span class="n">0</span> &amp;&amp; b &gt;= MINUTOS_DIA - <span class="n">1</span>);
+
+  <span class="k">let</span> madrugada: number | <span class="k">null</span> = <span class="k">null</span>;
+  <span class="k">const</span> saida: Array&lt;[number, number]&gt; = [];
+  <span class="k">for</span> (<span class="k">const</span> [a, b] <span class="k">of</span> brutas) {
+    <span class="k">if</span> (a === <span class="n">0</span> &amp;&amp; viraNoite) madrugada = b;
+    <span class="k">else</span> saida.push([a, b]);
+  }
+  <span class="k">if</span> (madrugada !== <span class="k">null</span>) {
+    <span class="k">for</span> (<span class="k">const</span> t <span class="k">of</span> saida) <span class="k">if</span> (t[<span class="n">1</span>] &gt;= MINUTOS_DIA - <span class="n">1</span>) t[<span class="n">1</span>] = MINUTOS_DIA + madrugada;
+  }
+  <span class="k">return</span> saida;
+}
+
+<span class="c">/** Minuto em que o turno atual termina (relativo à 00:00 de hoje), ou null se fechada. */</span>
+<span class="k">export</span> <span class="k">function</span> fimDoTurnoAtual(semana: HorarioSemana, agora: Date): number | <span class="k">null</span> {
+  <span class="k">const</span> m = agora.getHours() * <span class="n">60</span> + agora.getMinutes();
+  <span class="k">const</span> dia = agora.getDay();
+  <span class="k">const</span> hoje = turnosDoDia(semana, dia).find(([a, b]) =&gt; m &gt;= a &amp;&amp; m &lt;= b);
+  <span class="k">if</span> (hoje) <span class="k">return</span> hoje[<span class="n">1</span>];
+  <span class="k">const</span> ontem = turnosDoDia(semana, dia - <span class="n">1</span>).find(([a, b]) =&gt; m + MINUTOS_DIA &gt;= a &amp;&amp; m + MINUTOS_DIA &lt;= b);
+  <span class="k">return</span> ontem ? ontem[<span class="n">1</span>] - MINUTOS_DIA : <span class="k">null</span>;
+}
+
+<span class="k">export</span> <span class="k">function</span> estaAberta(semana: HorarioSemana, agora: Date): boolean {
+  <span class="k">return</span> fimDoTurnoAtual(semana, agora) !== <span class="k">null</span>;
+}
+
+<span class="c">/** Próxima abertura, procurando de 15 em 15 minutos por até 8 dias. */</span>
+<span class="k">export</span> <span class="k">function</span> proximaAbertura(semana: HorarioSemana, agora: Date, passoMin = <span class="n">15</span>, dias = <span class="n">8</span>): Date | <span class="k">null</span> {
+  <span class="k">const</span> t = <span class="k">new</span> Date(agora);
+  t.setSeconds(<span class="n">0</span>, <span class="n">0</span>);
+  t.setMinutes(Math.ceil(t.getMinutes() / passoMin) * passoMin);
+  <span class="k">const</span> passos = (dias * MINUTOS_DIA) / passoMin;
+  <span class="k">for</span> (<span class="k">let</span> i = <span class="n">0</span>; i &lt; passos; i++) {
+    <span class="k">if</span> (estaAberta(semana, t)) <span class="k">return</span> <span class="k">new</span> Date(t);
+    t.setMinutes(t.getMinutes() + passoMin);
+  }
+  <span class="k">return</span> <span class="k">null</span>;
+}
+
+<span class="c">/** 1080 → "18h"; 1110 → "18h30"; 1439/1440 → "meia-noite". */</span>
+<span class="k">export</span> <span class="k">function</span> formatarHora(minutos: number): string {
+  <span class="k">if</span> (minutos === MINUTOS_DIA || minutos === MINUTOS_DIA - <span class="n">1</span>) <span class="k">return</span> <span class="s">'meia-noite'</span>;
+  <span class="k">const</span> m = ((minutos % MINUTOS_DIA) + MINUTOS_DIA) % MINUTOS_DIA;
+  <span class="k">const</span> h = Math.floor(m / <span class="n">60</span>);
+  <span class="k">const</span> r = m % <span class="n">60</span>;
+  <span class="k">return</span> r ? <span class="s">`${h}h${String(r).padStart(2, '0')}`</span> : <span class="s">`${h}h`</span>;
+}
+
+<span class="k">export</span> <span class="k">interface</span> StatusLoja {
+  <span class="k">readonly</span> aberta: boolean;
+  <span class="k">readonly</span> texto: string;
+}
+
+<span class="c">/** Texto curto do card da loja. */</span>
+<span class="k">export</span> <span class="k">function</span> statusLoja(semana: HorarioSemana, agora: Date): StatusLoja {
+  <span class="k">const</span> fim = fimDoTurnoAtual(semana, agora);
+  <span class="k">if</span> (fim !== <span class="k">null</span>) <span class="k">return</span> { aberta: <span class="k">true</span>, texto: <span class="s">`Aberta · até ${formatarHora(fim)}`</span> };
+
+  <span class="k">const</span> prox = proximaAbertura(semana, agora);
+  <span class="k">if</span> (!prox) <span class="k">return</span> { aberta: <span class="k">false</span>, texto: <span class="s">'Fechada · sem horário'</span> };
+  <span class="k">const</span> meiaNoite = (d: Date) =&gt; <span class="k">new</span> Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  <span class="k">const</span> dif = Math.round((meiaNoite(prox) - meiaNoite(agora)) / <span class="n">86_400_000</span>);
+  <span class="k">const</span> quando = dif === <span class="n">0</span> ? <span class="s">'hoje'</span> : dif === <span class="n">1</span> ? <span class="s">'amanhã'</span> : DIAS_LONGO[prox.getDay()];
+  <span class="k">return</span> { aberta: <span class="k">false</span>, texto: <span class="s">`Fechada · abre ${quando} às ${formatarHora(prox.getHours() * 60 + prox.getMinutes())}`</span> };
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="parcial">
+        <div class="dif-top"><span class="dif-n">3</span><div><h3>Produto em vídeo, leve</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Foto parada + "Ampliar imagem".</div><div class="novo"><b>Protótipo</b>Vídeo curto em loop, só o que está na tela; AV1 → VP9 → MP4; foto parada para quem pede menos movimento ou economiza dados.</div></div>
+        <details class="cod"><summary>Ver código · video-produto.directive.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/video-produto.directive.ts</span><pre><code><span class="k">import</span> { DestroyRef, Directive, ElementRef, OnInit, Renderer2, inject, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 3 · Produto em movimento, sem pesar o celular.
+ *
+ * O Cardápio atual mostra foto parada (com "Ampliar imagem"). O protótipo mostra um vídeo curto
+ * do burger em loop no card e na ficha, com estas travas:
+ * - só baixa o vídeo quando o card aparece na tela, e só toca o que está visível;
+ * - pausa com a aba escondida;
+ * - "menos movimento" (prefers-reduced-motion) ou economia de dados = fica a foto parada;
+ * - o navegador escolhe o formato mais leve que abre: AV1 → VP9 (WebM) → H.264 (MP4).
+ *   Na bancada de 25/11, AV1 ficou 35–64% menor que VP9; a foto em AVIF, 24% menor que WebP.
+ *
+ * Uso: &lt;video appVideoProduto base="img/v-mcmanis" poster="img/mcmanis.avif" muted loop playsinline&gt;&lt;/video&gt;
+ */</span>
+<span class="d">@Directive</span>({ selector: <span class="s">'video[appVideoProduto]'</span>, standalone: <span class="k">true</span> })
+<span class="k">export</span> <span class="k">class</span> VideoProdutoDirective <span class="k">implements</span> OnInit {
+  <span class="c">/** Caminho sem extensão; espera &lt;base&gt;.av1.mp4, &lt;base&gt;.webm e &lt;base&gt;.mp4. */</span>
+  <span class="k">readonly</span> base = input.required&lt;string&gt;();
+
+  <span class="k">private</span> <span class="k">readonly</span> el = inject&lt;ElementRef&lt;HTMLVideoElement&gt;&gt;(ElementRef);
+  <span class="k">private</span> <span class="k">readonly</span> r = inject(Renderer2);
+  <span class="k">private</span> <span class="k">readonly</span> destroyRef = inject(DestroyRef);
+  <span class="k">private</span> carregado = <span class="k">false</span>;
+
+  ngOnInit(): <span class="k">void</span> {
+    <span class="k">const</span> v = <span class="k">this</span>.el.nativeElement;
+    v.muted = <span class="k">true</span>; <span class="c">// autoplay só funciona mudo</span>
+    v.preload = <span class="s">'none'</span>;
+    <span class="k">if</span> (<span class="k">this</span>.semMovimento() || <span class="k">typeof</span> IntersectionObserver === <span class="s">'undefined'</span>) <span class="k">return</span>;
+
+    <span class="k">const</span> obs = <span class="k">new</span> IntersectionObserver(([e]) =&gt; {
+      <span class="k">if</span> (e.isIntersecting &amp;&amp; !document.hidden) {
+        <span class="k">this</span>.carregar(v);
+        v.play().<span class="k">catch</span>(() =&gt; { <span class="c">/* navegador bloqueou: fica o poster */</span> });
+      } <span class="k">else</span> {
+        v.pause();
+      }
+    }, { threshold: <span class="n">0.5</span> });
+    obs.observe(v);
+
+    <span class="k">const</span> aoEsconder = () =&gt; { <span class="k">if</span> (document.hidden) v.pause(); };
+    document.addEventListener(<span class="s">'visibilitychange'</span>, aoEsconder);
+    <span class="k">this</span>.destroyRef.onDestroy(() =&gt; {
+      obs.disconnect();
+      document.removeEventListener(<span class="s">'visibilitychange'</span>, aoEsconder);
+    });
+  }
+
+  <span class="k">private</span> carregar(v: HTMLVideoElement): <span class="k">void</span> {
+    <span class="k">if</span> (<span class="k">this</span>.carregado) <span class="k">return</span>;
+    <span class="k">this</span>.carregado = <span class="k">true</span>;
+    <span class="k">const</span> fontes: ReadonlyArray&lt;<span class="k">readonly</span> [string, string]&gt; = [
+      [<span class="s">`${this.base()}.av1.mp4`</span>, <span class="s">'video/mp4; codecs="av01.0.05M.08"'</span>],
+      [<span class="s">`${this.base()}.webm`</span>, <span class="s">'video/webm; codecs="vp9"'</span>],
+      [<span class="s">`${this.base()}.mp4`</span>, <span class="s">'video/mp4'</span>],
+    ];
+    <span class="k">for</span> (<span class="k">const</span> [src, <span class="k">type</span>] <span class="k">of</span> fontes) {
+      <span class="k">const</span> s = <span class="k">this</span>.r.createElement(<span class="s">'source'</span>) <span class="k">as</span> HTMLSourceElement;
+      <span class="k">this</span>.r.setAttribute(s, <span class="s">'src'</span>, src);
+      <span class="k">this</span>.r.setAttribute(s, <span class="s">'type'</span>, <span class="k">type</span>);
+      <span class="k">this</span>.r.appendChild(v, s);
+    }
+    v.load();
+  }
+
+  <span class="k">private</span> semMovimento(): boolean {
+    <span class="k">const</span> nav = navigator <span class="k">as</span> Navigator &amp; { connection?: { saveData?: boolean } };
+    <span class="k">return</span> matchMedia(<span class="s">'(prefers-reduced-motion: reduce)'</span>).matches || !!nav.connection?.saveData;
+  }
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">4</span><div><h3>Busca que perdoa acento + filtros</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Busca no cardápio.</div><div class="novo"><b>Protótipo</b>"coco" acha X-Cocó; filtros Frango, Costela, Bacon, Até R$ 40 e Pra dividir.</div></div>
+        <details class="cod"><summary>Ver código · busca-e-filtros.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/busca-e-filtros.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, Produto } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 4 · Busca que perdoa acento + filtros de 1 toque.
+ *
+ * O Cardápio atual tem busca. O protótipo acrescenta:
+ * - busca sem acento e sem maiúscula ("cocó" acha "X-Cocó", "brasileirissimo" acha "Brasileiríssimo");
+ * - filtros rápidos: Frango, Costela, Bacon, Até R$ 40, Pra dividir;
+ * - número de resultados, que vai na medição (busca com 0 resultado = produto que o cliente quer e não tem).
+ */</span>
+
+<span class="c">/** Minúsculas, sem acento: "Cocó" → "coco". */</span>
+<span class="k">export</span> <span class="k">function</span> normalizar(texto: string): string {
+  <span class="k">return</span> texto.normalize(<span class="s">'NFD'</span>).replace(/[̀-ͯ]/g, <span class="s">''</span>).toLowerCase();
+}
+
+<span class="k">const</span> contem = (p: Produto, termo: string) =&gt; normalizar(<span class="s">`${p.nome} ${p.descricao}`</span>).includes(normalizar(termo));
+
+<span class="k">export</span> <span class="k">interface</span> FiltroRapido {
+  <span class="k">readonly</span> id: string;
+  <span class="k">readonly</span> rotulo: string;
+  <span class="k">readonly</span> aceita: (p: Produto) =&gt; boolean;
+}
+
+<span class="c">/**
+ * Filtros por ingrediente leem a descrição hoje. No produto final, o ideal é a Databite mandar
+ * tags por produto (frango, costela, vegetariano…) para não depender do texto (pergunta B3).
+ */</span>
+<span class="k">export</span> <span class="k">function</span> filtrosPadrao(tetoBarato: Centavos = <span class="n">4000</span>): FiltroRapido[] {
+  <span class="k">return</span> [
+    { id: <span class="s">'frango'</span>, rotulo: <span class="s">'Frango'</span>, aceita: p =&gt; contem(p, <span class="s">'frango'</span>) },
+    { id: <span class="s">'costela'</span>, rotulo: <span class="s">'Costela'</span>, aceita: p =&gt; contem(p, <span class="s">'costela'</span>) },
+    { id: <span class="s">'bacon'</span>, rotulo: <span class="s">'Bacon'</span>, aceita: p =&gt; contem(p, <span class="s">'bacon'</span>) },
+    { id: <span class="s">'barato'</span>, rotulo: <span class="s">`Até R$ ${tetoBarato / 100}`</span>, aceita: p =&gt; p.preco &lt;= tetoBarato },
+    { id: <span class="s">'dividir'</span>, rotulo: <span class="s">'Pra dividir'</span>, aceita: p =&gt; p.categoriaId === <span class="s">'dividir'</span> },
+  ];
+}
+
+<span class="c">/** Busca + filtros ligados (todos precisam valer). */</span>
+<span class="k">export</span> <span class="k">function</span> filtrarCardapio(
+  produtos: ReadonlyArray&lt;Produto&gt;,
+  termo: string,
+  filtrosAtivos: ReadonlyArray&lt;FiltroRapido&gt;,
+): Produto[] {
+  <span class="k">const</span> t = termo.trim();
+  <span class="k">return</span> produtos.filter(p =&gt; (!t || contem(p, t)) &amp;&amp; filtrosAtivos.every(f =&gt; f.aceita(p)));
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">5</span><div><h3>Ficha que guia a escolha</h3><div class="meta"><span class="chip st-ok">6 testes ok</span><span class="chip st-info">Modelo do atual + experiência do protótipo</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Grupos com mínimo, máximo e obrigatório; o upsell é um grupo de 22 opções dentro do burger.</div><div class="novo"><b>Protótipo</b>"Vira combo +R$ 15" em 1 toque, que já abre a bebida; o botão diz o que falta ("Escolhe mais 2").</div></div>
+        <details class="cod"><summary>Ver código · selecao.ts + models.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/selecao.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, GrupoOpcoes, Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 5 · Ficha do produto que guia a escolha.
+ *
+ * Ficamos com o melhor de cada lado:
+ * - Do Cardápio atual, o MODELO: grupos com mínimo, máximo e obrigatório, vindos da API.
+ *   O protótipo tinha regras fixas por tipo de produto e isso não escala.
+ * - Do protótipo, a EXPERIÊNCIA: o botão diz o que falta ("Escolhe a bebida",
+ *   "Escolhe mais 2"), o preço atualiza na hora e o "vira combo" abre o grupo da bebida.
+ */</span>
+
+<span class="k">const</span> total = (sel: Selecao, grupoId: string): number =&gt;
+  Object.values(sel[grupoId] ?? {}).reduce((a, b) =&gt; a + b, <span class="n">0</span>);
+
+<span class="c">/** Grupos que aparecem agora (respeita `visivelSe`, ex.: bebida só depois do "vira combo"). */</span>
+<span class="k">export</span> <span class="k">function</span> gruposVisiveis(produto: Produto, sel: Selecao): GrupoOpcoes[] {
+  <span class="k">return</span> produto.grupos.filter(g =&gt; !g.visivelSe || (sel[g.visivelSe.grupoId]?.[g.visivelSe.opcaoId] ?? <span class="n">0</span>) &gt; <span class="n">0</span>);
+}
+
+<span class="c">/** Texto do que falta, na ordem dos grupos. Vazio = pode adicionar. */</span>
+<span class="k">export</span> <span class="k">function</span> oQueFalta(produto: Produto, sel: Selecao): string {
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
+    <span class="k">const</span> n = total(sel, g.id);
+    <span class="k">if</span> (n &lt; g.min) {
+      <span class="k">if</span> (g.min === <span class="n">1</span> &amp;&amp; g.max === <span class="n">1</span>) <span class="k">return</span> <span class="s">`Escolhe: ${g.titulo}`</span>;
+      <span class="k">return</span> <span class="s">`Escolhe mais ${g.min - n}`</span>;
+    }
+  }
+  <span class="k">return</span> <span class="s">''</span>;
+}
+
+<span class="c">/** Pode somar mais uma unidade desta opção sem passar do máximo do grupo? */</span>
+<span class="k">export</span> <span class="k">function</span> podeAumentar(grupo: GrupoOpcoes, sel: Selecao, opcaoId: string): boolean {
+  <span class="k">if</span> (total(sel, grupo.id) &gt;= grupo.max) <span class="k">return</span> <span class="k">false</span>;
+  <span class="k">return</span> grupo.repetir || (sel[grupo.id]?.[opcaoId] ?? <span class="n">0</span>) === <span class="n">0</span>;
+}
+
+<span class="c">/**
+ * Aplica um toque numa opção e devolve a NOVA seleção (imutável, bom para signals/OnPush).
+ * - Rádio (max 1, sem repetir): marcar outra opção substitui a anterior; tocar de novo desmarca
+ *   quando o grupo é opcional (min 0), como um checkbox.
+ * - Desmarcou o "vira combo"? A bebida do combo sai junto: ninguém paga por grupo escondido.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> alternar(produto: Produto, grupo: GrupoOpcoes, sel: Selecao, opcaoId: string, delta: <span class="n">1</span> | -<span class="n">1</span>): Selecao {
+  <span class="k">const</span> atual: Record&lt;string, number&gt; = { ...(sel[grupo.id] ?? {}) };
+  <span class="k">if</span> (grupo.max === <span class="n">1</span> &amp;&amp; !grupo.repetir) {
+    <span class="k">const</span> marcada = (atual[opcaoId] ?? <span class="n">0</span>) &gt; <span class="n">0</span>;
+    <span class="k">const</span> proximo = delta === <span class="n">1</span> &amp;&amp; !(marcada &amp;&amp; grupo.min === <span class="n">0</span>) ? { [opcaoId]: <span class="n">1</span> } : {};
+    <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: proximo });
+  }
+  <span class="k">if</span> (delta === <span class="n">1</span> &amp;&amp; !podeAumentar(grupo, sel, opcaoId)) <span class="k">return</span> sel;
+  <span class="k">const</span> novo = Math.max(<span class="n">0</span>, (atual[opcaoId] ?? <span class="n">0</span>) + delta);
+  <span class="k">if</span> (novo === <span class="n">0</span>) delete atual[opcaoId];
+  <span class="k">else</span> atual[opcaoId] = novo;
+  <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: atual });
+}
+
+<span class="c">/** Remove escolhas de grupos que deixaram de ser visíveis. */</span>
+<span class="k">export</span> <span class="k">function</span> normalizar(produto: Produto, sel: Selecao): Selecao {
+  <span class="k">const</span> visiveis = <span class="k">new</span> Set(gruposVisiveis(produto, sel).map(g =&gt; g.id));
+  <span class="k">return</span> Object.fromEntries(Object.entries(sel).filter(([id]) =&gt; visiveis.has(id)));
+}
+
+<span class="c">/** Preço unitário estimado: base + soma das opções × quantidade. O servidor confirma (B6). */</span>
+<span class="k">export</span> <span class="k">function</span> precoUnitario(produto: Produto, sel: Selecao): Centavos {
+  <span class="k">let</span> valor = produto.preco;
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
+    <span class="k">for</span> (<span class="k">const</span> o <span class="k">of</span> g.opcoes) valor += o.preco * (sel[g.id]?.[o.id] ?? <span class="n">0</span>);
+  }
+  <span class="k">return</span> valor;
+}
+
+<span class="c">/** Chave estável do item na sacola: mesma escolha = mesmo item (soma quantidade). */</span>
+<span class="k">export</span> <span class="k">function</span> chaveItem(produtoId: string, sel: Selecao, ajustes: ReadonlyArray&lt;string&gt; = []): string {
+  <span class="k">const</span> ordenada = Object.keys(sel).sort().map(g =&gt; [g, Object.entries(sel[g]).sort(([a], [b]) =&gt; a.localeCompare(b))]);
+  <span class="k">return</span> <span class="s">`${produtoId}|${JSON.stringify(ordenada)}|${[...ajustes].sort().join(',')}`</span>;
+}</code></pre><span class="arq-nome">src/app/features/cardapio/domain/models.ts</span><pre><code><span class="c">/**
+ * Modelos de tela do Cardápio Digital (view models).
+ *
+ * São o formato que os componentes consomem. O formato da API (DTO) fica em
+ * `data-access/dto` e chega aqui por um adapter, quando o contrato existir (B1–B4).
+ * Dinheiro: sempre em centavos inteiros (`Centavos`), nunca em float.
+ */</span>
+
+<span class="c">/** Valor monetário em centavos inteiros (R$ 44,90 = 4490). */</span>
+<span class="k">export</span> <span class="k">type</span> Centavos = number;
+
+<span class="c">/** Faixa de funcionamento no formato gravado pela Databite: "HH:MM". */</span>
+<span class="k">export</span> <span class="k">interface</span> Turno {
+  <span class="k">readonly</span> inicio: string;
+  <span class="k">readonly</span> fim: string;
+}
+
+<span class="c">/**
+ * Horário da semana, índice 0 = domingo … 6 = sábado. `null` = fechada no dia.
+ * Turno que passa da meia-noite vem como ["18:00","23:59"] + ["00:00","05:00"]:
+ * o "00:00–05:00" é a madrugada SEGUINTE daquela mesma noite.
+ */</span>
+<span class="k">export</span> <span class="k">type</span> HorarioSemana = ReadonlyArray&lt;ReadonlyArray&lt;Turno&gt; | <span class="k">null</span>&gt;;
+
+<span class="k">export</span> <span class="k">interface</span> Loja {
+  <span class="k">readonly</span> id: string;
+  <span class="k">readonly</span> nome: string;
+  <span class="k">readonly</span> regiao: string;
+  <span class="k">readonly</span> horarios: HorarioSemana;
+  <span class="c">/** Data de abertura quando a loja ainda não abriu ("em breve"). */</span>
+  <span class="k">readonly</span> emBreve?: string;
+}
+
+<span class="k">export</span> <span class="k">interface</span> Opcao {
+  <span class="k">readonly</span> id: string;
+  <span class="k">readonly</span> nome: string;
+  <span class="k">readonly</span> preco: Centavos;
+}
+
+<span class="c">/**
+ * Grupo de opções no mesmo modelo que o Cardápio atual já usa:
+ * "Escolha 1 opção · OBRIGATÓRIO" = min 1, max 1; "Escolha até 10 opções" = min 0, max 10.
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> GrupoOpcoes {
+  <span class="k">readonly</span> id: string;
+  <span class="k">readonly</span> titulo: string;
+  <span class="k">readonly</span> min: number;
+  <span class="k">readonly</span> max: number;
+  <span class="c">/** true = stepper por opção (pode repetir a mesma); false = rádio/checkbox. */</span>
+  <span class="k">readonly</span> repetir: boolean;
+  <span class="k">readonly</span> opcoes: ReadonlyArray&lt;Opcao&gt;;
+  <span class="c">/** Grupo que só aparece quando outra opção está marcada (ex.: bebida do "vira combo"). */</span>
+  <span class="k">readonly</span> visivelSe?: { <span class="k">readonly</span> grupoId: string; <span class="k">readonly</span> opcaoId: string };
+}
+
+<span class="k">export</span> <span class="k">interface</span> Produto {
+  <span class="k">readonly</span> id: string;
+  <span class="k">readonly</span> nome: string;
+  <span class="k">readonly</span> descricao: string;
+  <span class="k">readonly</span> preco: Centavos;
+  <span class="k">readonly</span> categoriaId: string;
+  <span class="k">readonly</span> grupos: ReadonlyArray&lt;GrupoOpcoes&gt;;
+  <span class="k">readonly</span> imagem?: string;
+  <span class="c">/** Base do vídeo curto do produto (sem extensão); ausente = só foto. */</span>
+  <span class="k">readonly</span> video?: string;
+  <span class="c">/** Posição no ranking "Mais pedidos" (1 = primeiro). */</span>
+  <span class="k">readonly</span> rankMaisPedidos?: number;
+}
+
+<span class="c">/** Seleção do cliente: grupoId → (opcaoId → quantidade). */</span>
+<span class="k">export</span> <span class="k">type</span> Selecao = Readonly&lt;Record&lt;string, Readonly&lt;Record&lt;string, number&gt;&gt;&gt;&gt;;
+
+<span class="k">export</span> <span class="k">interface</span> ItemSacola {
+  <span class="c">/** produtoId + seleção + ajustes: itens iguais se somam, diferentes ficam separados. */</span>
+  <span class="k">readonly</span> chave: string;
+  <span class="k">readonly</span> produtoId: string;
+  <span class="k">readonly</span> categoriaId: string;
+  <span class="k">readonly</span> quantidade: number;
+  <span class="k">readonly</span> selecao: Selecao;
+  <span class="k">readonly</span> ajustes: ReadonlyArray&lt;string&gt;;
+  <span class="k">readonly</span> observacao?: string;
+  <span class="c">/** Estimativa da tela. O valor que vale é o da cotação do servidor (B6). */</span>
+  <span class="k">readonly</span> precoUnitarioEstimado: Centavos;
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">6</span><div><h3>Ajustes em 1 toque</h3><div class="meta"><span class="chip st-ok">1 teste ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Só o campo "Alguma observação?".</div><div class="novo"><b>Protótipo</b>"Sem cebola", "Sem picles", "Molho à parte": só os que o produto tem. O campo livre continua.</div></div>
+        <details class="cod"><summary>Ver código · ajustes.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/ajustes.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Produto } <span class="k">from</span> <span class="s">'./models'</span>;
+<span class="k">import</span> { normalizar } <span class="k">from</span> <span class="s">'./busca-e-filtros'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 6 · Ajustes em 1 toque ("Sem cebola", "Molho à parte").
+ *
+ * O Cardápio atual só tem o campo livre "Alguma observação?". O protótipo sugere chips
+ * tirados dos ingredientes do próprio produto: "Sem picles" só aparece em quem tem picles.
+ * Menos digitação no celular e menos erro na cozinha. O campo livre continua existindo.
+ *
+ * No produto final, a lista deve vir da ficha técnica de cada produto (pergunta C6),
+ * não da leitura do texto da descrição.
+ */</span>
+<span class="k">const</span> REGRAS: ReadonlyArray&lt;<span class="k">readonly</span> [RegExp, string]&gt; = [
+  [/cebola/, <span class="s">'Sem cebola'</span>],
+  [/picles/, <span class="s">'Sem picles'</span>],
+  [/alface|tomate/, <span class="s">'Sem salada'</span>],
+  [/bacon/, <span class="s">'Sem bacon'</span>],
+  [/maionese|avocadonese/, <span class="s">'Sem maionese'</span>],
+  [/barbecue/, <span class="s">'Sem barbecue'</span>],
+  [/ketchup/, <span class="s">'Sem ketchup'</span>],
+  [/maionese|barbecue|ketchup|molho/, <span class="s">'Molho à parte'</span>],
+];
+
+<span class="k">export</span> <span class="k">function</span> ajustesSugeridos(produto: Pick&lt;Produto, <span class="s">'nome'</span> | <span class="s">'descricao'</span>&gt;): string[] {
+  <span class="k">const</span> texto = normalizar(<span class="s">`${produto.nome} ${produto.descricao}`</span>);
+  <span class="k">return</span> REGRAS.filter(([re]) =&gt; re.test(texto)).map(([, rotulo]) =&gt; rotulo);
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="parcial">
+        <div class="dif-top"><span class="dif-n">7</span><div><h3>Sacola que perdoa erro</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Não testado.</div><div class="novo"><b>Protótipo</b>Guardada entre visitas, "Desfazer" por 5 s, editar sem duplicar, foto voando até a sacola.</div></div>
+        <details class="cod"><summary>Ver código · sacola.store.ts + voar-para-sacola.service.ts</summary><span class="arq-nome">src/app/features/cardapio/state/sacola.store.ts</span><pre><code><span class="k">import</span> { Injectable, InjectionToken, computed, effect, inject, signal } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> <span class="k">type</span> { Centavos, ItemSacola } <span class="k">from</span> <span class="s">'../domain/models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 7 · Sacola que não se perde e perdoa erro.
+ * - Persistência: fechou a aba e voltou, a sacola está lá ("Continuar pedido").
+ * - Desfazer: tirou sem querer, "Desfazer" por 5 s devolve o item no mesmo lugar.
+ * - Editar: reabre a ficha com a seleção e troca o item, sem duplicar.
+ *
+ * Estado local com signals (Angular 17+). Se o repositório da Databite usar NgRx ou serviço
+ * com BehaviorSubject, a API pública abaixo se mantém e só a implementação muda (A4).
+ * Total oficial = cotação do servidor (B6). Aqui só há estimativa para a tela.
+ */</span>
+
+<span class="c">/** Porta de armazenamento: localStorage por padrão; trocar pelo padrão da casa se existir. */</span>
+<span class="k">export</span> <span class="k">interface</span> SacolaStorage {
+  ler(): ItemSacola[] | <span class="k">null</span>;
+  gravar(itens: ReadonlyArray&lt;ItemSacola&gt;): <span class="k">void</span>;
+}
+
+<span class="k">export</span> <span class="k">const</span> SACOLA_STORAGE = <span class="k">new</span> InjectionToken&lt;SacolaStorage&gt;(<span class="s">'SACOLA_STORAGE'</span>, {
+  providedIn: <span class="s">'root'</span>,
+  factory: () =&gt; {
+    <span class="k">const</span> CHAVE = <span class="s">'cardapio_sacola_v1'</span>;
+    <span class="k">return</span> {
+      ler: () =&gt; {
+        <span class="k">try</span> { <span class="k">return</span> JSON.parse(localStorage.getItem(CHAVE) ?? <span class="s">'null'</span>); } <span class="k">catch</span> { <span class="k">return</span> <span class="k">null</span>; }
+      },
+      gravar: itens =&gt; {
+        <span class="k">try</span> { localStorage.setItem(CHAVE, JSON.stringify(itens)); } <span class="k">catch</span> { <span class="c">/* modo privado / cota cheia */</span> }
+      },
+    };
+  },
+});
+
+<span class="d">@Injectable</span>({ providedIn: <span class="s">'root'</span> })
+<span class="k">export</span> <span class="k">class</span> SacolaStore {
+  <span class="k">private</span> <span class="k">readonly</span> storage = inject(SACOLA_STORAGE);
+  <span class="k">private</span> <span class="k">readonly</span> _itens = signal&lt;ReadonlyArray&lt;ItemSacola&gt;&gt;(<span class="k">this</span>.storage.ler() ?? []);
+  <span class="k">private</span> removido: { item: ItemSacola; indice: number } | <span class="k">null</span> = <span class="k">null</span>;
+
+  <span class="k">readonly</span> itens = <span class="k">this</span>._itens.asReadonly();
+  <span class="k">readonly</span> quantidade = computed(() =&gt; <span class="k">this</span>._itens().reduce((a, i) =&gt; a + i.quantidade, <span class="n">0</span>));
+  <span class="k">readonly</span> vazia = computed(() =&gt; <span class="k">this</span>._itens().length === <span class="n">0</span>);
+  <span class="k">readonly</span> subtotalEstimado = computed&lt;Centavos&gt;(() =&gt;
+    <span class="k">this</span>._itens().reduce((a, i) =&gt; a + i.precoUnitarioEstimado * i.quantidade, <span class="n">0</span>),
+  );
+
+  constructor() {
+    effect(() =&gt; <span class="k">this</span>.storage.gravar(<span class="k">this</span>._itens()));
+  }
+
+  <span class="c">/** Mesma chave (mesma escolha) soma quantidade; chave nova entra no fim. */</span>
+  adicionar(item: ItemSacola): <span class="k">void</span> {
+    <span class="k">this</span>._itens.update(lista =&gt; {
+      <span class="k">const</span> i = lista.findIndex(x =&gt; x.chave === item.chave);
+      <span class="k">if</span> (i &lt; <span class="n">0</span>) <span class="k">return</span> [...lista, item];
+      <span class="k">return</span> lista.map((x, k) =&gt; (k === i ? { ...x, quantidade: x.quantidade + item.quantidade } : x));
+    });
+  }
+
+  <span class="c">/** Editar = trocar o item antigo pelo novo, mantendo a posição. */</span>
+  substituir(chaveAntiga: string, novo: ItemSacola): <span class="k">void</span> {
+    <span class="k">this</span>._itens.update(lista =&gt; {
+      <span class="k">const</span> semAntigo = lista.filter(x =&gt; x.chave !== chaveAntiga);
+      <span class="k">const</span> existente = semAntigo.findIndex(x =&gt; x.chave === novo.chave);
+      <span class="k">if</span> (existente &gt;= <span class="n">0</span>) {
+        <span class="k">return</span> semAntigo.map((x, k) =&gt; (k === existente ? { ...x, quantidade: x.quantidade + novo.quantidade } : x));
+      }
+      <span class="k">const</span> pos = lista.findIndex(x =&gt; x.chave === chaveAntiga);
+      <span class="k">const</span> copia = [...semAntigo];
+      copia.splice(pos &lt; <span class="n">0</span> ? copia.length : pos, <span class="n">0</span>, novo);
+      <span class="k">return</span> copia;
+    });
+  }
+
+  <span class="c">/** Chegou a 0? Sai da sacola e fica guardado para o "Desfazer". */</span>
+  alterarQuantidade(chave: string, delta: number): <span class="k">void</span> {
+    <span class="k">const</span> lista = <span class="k">this</span>._itens();
+    <span class="k">const</span> indice = lista.findIndex(x =&gt; x.chave === chave);
+    <span class="k">if</span> (indice &lt; <span class="n">0</span>) <span class="k">return</span>;
+    <span class="k">const</span> nova = lista[indice].quantidade + delta;
+    <span class="k">if</span> (nova &lt;= <span class="n">0</span>) {
+      <span class="k">this</span>.removido = { item: { ...lista[indice], quantidade: <span class="n">1</span> }, indice };
+      <span class="k">this</span>._itens.set(lista.filter((_, k) =&gt; k !== indice));
+      <span class="k">return</span>;
+    }
+    <span class="k">this</span>._itens.set(lista.map((x, k) =&gt; (k === indice ? { ...x, quantidade: Math.min(nova, <span class="n">30</span>) } : x)));
+  }
+
+  desfazerRemocao(): boolean {
+    <span class="k">const</span> r = <span class="k">this</span>.removido;
+    <span class="k">if</span> (!r) <span class="k">return</span> <span class="k">false</span>;
+    <span class="k">this</span>.removido = <span class="k">null</span>;
+    <span class="k">this</span>._itens.update(lista =&gt; {
+      <span class="k">const</span> copia = [...lista];
+      copia.splice(Math.min(r.indice, copia.length), <span class="n">0</span>, r.item);
+      <span class="k">return</span> copia;
+    });
+    <span class="k">return</span> <span class="k">true</span>;
+  }
+
+  <span class="c">/** Só depois que o servidor confirmar o pedido (B8). */</span>
+  limpar(): <span class="k">void</span> {
+    <span class="k">this</span>.removido = <span class="k">null</span>;
+    <span class="k">this</span>._itens.set([]);
+  }
+}</code></pre><span class="arq-nome">src/app/features/cardapio/ui/voar-para-sacola.service.ts</span><pre><code><span class="k">import</span> { DOCUMENT } <span class="k">from</span> <span class="s">'@angular/common'</span>;
+<span class="k">import</span> { Injectable, inject } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 7 (cont.) · Confirmação visual de "foi pra sacola".
+ * A foto do produto voa do botão até o ícone da sacola, que pulsa na chegada; vibração de 12 ms
+ * no celular. Sem animação e sem vibração para quem pediu menos movimento.
+ * Retorna uma Promise que resolve quando a foto chega (para o pulso acontecer na hora certa).
+ */</span>
+<span class="d">@Injectable</span>({ providedIn: <span class="s">'root'</span> })
+<span class="k">export</span> <span class="k">class</span> VoarParaSacolaService {
+  <span class="k">private</span> <span class="k">readonly</span> doc = inject(DOCUMENT);
+
+  <span class="k">async</span> voar(origem: DOMRect, destino: HTMLElement, imagemUrl: string): Promise&lt;boolean&gt; {
+    <span class="k">const</span> win = <span class="k">this</span>.doc.defaultView;
+    <span class="k">if</span> (!win || !origem.width || !(<span class="s">'animate'</span> <span class="k">in</span> Element.prototype)) <span class="k">return</span> <span class="k">false</span>;
+    <span class="k">if</span> (win.matchMedia(<span class="s">'(prefers-reduced-motion: reduce)'</span>).matches) <span class="k">return</span> <span class="k">false</span>;
+
+    <span class="k">const</span> alvo = destino.getBoundingClientRect();
+    <span class="k">const</span> tam = <span class="n">76</span>;
+    <span class="k">const</span> x0 = origem.left + origem.width / <span class="n">2</span>;
+    <span class="k">const</span> y0 = origem.top + origem.height / <span class="n">2</span>;
+    <span class="k">const</span> dx = alvo.left + alvo.width / <span class="n">2</span> - x0;
+    <span class="k">const</span> dy = alvo.top + alvo.height / <span class="n">2</span> - y0;
+
+    <span class="k">const</span> img = <span class="k">this</span>.doc.createElement(<span class="s">'img'</span>);
+    img.src = imagemUrl;
+    img.alt = <span class="s">''</span>;
+    img.setAttribute(<span class="s">'aria-hidden'</span>, <span class="s">'true'</span>);
+    Object.assign(img.style, {
+      position: <span class="s">'fixed'</span>, zIndex: <span class="s">'1000'</span>, pointerEvents: <span class="s">'none'</span>, borderRadius: <span class="s">'50%'</span>, objectFit: <span class="s">'cover'</span>,
+      left: <span class="s">`${x0 - tam / 2}px`</span>, top: <span class="s">`${y0 - tam / 2}px`</span>, width: <span class="s">`${tam}px`</span>, height: <span class="s">`${tam}px`</span>,
+    });
+    <span class="k">this</span>.doc.body.appendChild(img);
+
+    <span class="k">try</span> { win.navigator.vibrate?.(<span class="n">12</span>); } <span class="k">catch</span> { <span class="c">/* sem suporte */</span> }
+
+    <span class="k">const</span> anim = img.animate([
+      { transform: <span class="s">'translate(0,0) scale(1)'</span>, opacity: <span class="n">1</span> },
+      { transform: <span class="s">`translate(${dx * 0.45}px, ${dy * 0.45 - 70}px) scale(.75)`</span>, opacity: <span class="n">1</span>, offset: <span class="n">0.5</span> },
+      { transform: <span class="s">`translate(${dx}px, ${dy}px) scale(.22)`</span>, opacity: <span class="n">0.5</span> },
+    ], { duration: <span class="n">620</span>, easing: <span class="s">'cubic-bezier(.45,0,.55,1)'</span> });
+
+    <span class="k">await</span> anim.finished.<span class="k">catch</span>(() =&gt; <span class="k">undefined</span>);
+    img.remove();
+    <span class="k">return</span> <span class="k">true</span>;
+  }
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">8</span><div><h3>Cupom que mostra quanto falta</h3><div class="meta"><span class="chip st-ok">2 testes ok</span><span class="chip st-info">O servidor valida</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Não testado.</div><div class="novo"><b>Protótipo</b>"Faltam R$ 12,30 pro OGRO10 valer" + barra de progresso.</div></div>
+        <details class="cod"><summary>Ver código · cupom.ts + dinheiro.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/cupom.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 8 · Cupom que mostra quanto falta.
+ *
+ * Em vez de só "cupom inválido", a sacola mostra "Faltam R$ 12,30 pro OGRO10 valer" com
+ * uma barra de progresso. É o empurrão honesto para o pedido mínimo, sem urgência inventada.
+ *
+ * ESTIMATIVA DE TELA. Quem valida código, validade, mínimo e acúmulo é o servidor (B7);
+ * o desconto que vale é o da cotação (B6). Esta função nunca decide sozinha.
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> RegraCupom {
+  <span class="k">readonly</span> codigo: string;
+  <span class="k">readonly</span> percentual: number; <span class="c">// 10 = 10%</span>
+  <span class="k">readonly</span> minimo: Centavos;
+}
+
+<span class="k">export</span> <span class="k">interface</span> SituacaoCupom {
+  <span class="k">readonly</span> valendo: boolean;
+  <span class="k">readonly</span> desconto: Centavos;
+  <span class="k">readonly</span> falta: Centavos;
+  <span class="c">/** 0 a 1, para a barra de progresso. */</span>
+  <span class="k">readonly</span> progresso: number;
+}
+
+<span class="k">export</span> <span class="k">function</span> situacaoCupom(subtotal: Centavos, regra: RegraCupom): SituacaoCupom {
+  <span class="k">if</span> (subtotal &gt;= regra.minimo) {
+    <span class="k">return</span> { valendo: <span class="k">true</span>, desconto: Math.round((subtotal * regra.percentual) / <span class="n">100</span>), falta: <span class="n">0</span>, progresso: <span class="n">1</span> };
+  }
+  <span class="k">return</span> {
+    valendo: <span class="k">false</span>,
+    desconto: <span class="n">0</span>,
+    falta: regra.minimo - subtotal,
+    progresso: regra.minimo &gt; <span class="n">0</span> ? subtotal / regra.minimo : <span class="n">0</span>,
+  };
+}</code></pre><span class="arq-nome">src/app/features/cardapio/domain/dinheiro.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * Converte reais (como o protótipo guardava: 44.9) para centavos inteiros.
+ * Usado só em fixtures e adapters; a API deve mandar o valor no formato oficial (C1).
+ */</span>
+<span class="k">export</span> <span class="k">function</span> deReais(reais: number): Centavos {
+  <span class="k">if</span> (!Number.isFinite(reais)) <span class="k">throw</span> <span class="k">new</span> RangeError(<span class="s">`Valor inválido: ${reais}`</span>);
+  <span class="k">return</span> Math.round(reais * <span class="n">100</span>);
+}
+
+<span class="k">const</span> BRL = <span class="k">new</span> Intl.NumberFormat(<span class="s">'pt-BR'</span>, { style: <span class="s">'currency'</span>, currency: <span class="s">'BRL'</span> });
+
+<span class="c">/** 4490 → "R$ 44,90". */</span>
+<span class="k">export</span> <span class="k">function</span> formatarBRL(valor: Centavos): string {
+  <span class="k">return</span> BRL.format(valor / <span class="n">100</span>);
+}
+
+<span class="c">/** Soma segura em centavos (evita 0,1 + 0,2 = 0,30000000000000004). */</span>
+<span class="k">export</span> <span class="k">function</span> somar(...valores: ReadonlyArray&lt;Centavos&gt;): Centavos {
+  <span class="k">return</span> valores.reduce((total, v) =&gt; total + v, <span class="n">0</span>);
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">9</span><div><h3>"Completa teu pedido?"</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Sugestões dentro da ficha de cada burger.</div><div class="novo"><b>Protótipo</b>Um passo antes do pagamento, só com o que falta (bebida, batata, sobremesa), sem urgência inventada.</div></div>
+        <details class="cod"><summary>Ver código · completa-pedido.ts + componente</summary><span class="arq-nome">src/app/features/cardapio/domain/completa-pedido.ts</span><pre><code><span class="c">/**
+ * DIFERENCIAL 9 · "Completa teu pedido?" antes do pagamento.
+ *
+ * Um passo, uma vez por sacola, só com o que FALTA (bebida, batata, sobremesa) e só se faltar.
+ * Um toque adiciona; "Seguir pro pagamento" fica sempre à mão. Sem urgência inventada.
+ * O Cardápio atual oferece tudo dentro da ficha de cada burger (grupo "Até 40% off"
+ * com 22 opções); aqui a sugestão vem no fim, olhando o pedido inteiro.
+ */</span>
+
+<span class="c">/** O mínimo que a regra precisa saber de cada item da sacola. */</span>
+<span class="k">export</span> <span class="k">interface</span> ItemParaSugestao {
+  <span class="k">readonly</span> categoriaId: string;
+  <span class="c">/** O item já traz bebida (combo, "vira combo", combo pra dividir com refri). */</span>
+  <span class="k">readonly</span> incluiBebida: boolean;
+  <span class="c">/** O item já traz acompanhamento (batata, nuggets). */</span>
+  <span class="k">readonly</span> incluiAcompanhamento: boolean;
+}
+
+<span class="k">export</span> <span class="k">interface</span> Sugestao {
+  <span class="k">readonly</span> produtoId: string;
+  <span class="k">readonly</span> motivo: string;
+}
+
+<span class="k">export</span> <span class="k">interface</span> RegraSugestao {
+  <span class="k">readonly</span> produtoId: string;
+  <span class="k">readonly</span> motivo: string;
+  <span class="k">readonly</span> jaTem: (i: ItemParaSugestao) =&gt; boolean;
+}
+
+<span class="c">/** Regras do Ogro. Os IDs reais vêm do cardápio da loja (B3); estes são os do protótipo. */</span>
+<span class="k">export</span> <span class="k">const</span> REGRAS_OGRO: ReadonlyArray&lt;RegraSugestao&gt; = [
+  { produtoId: <span class="s">'rla'</span>, motivo: <span class="s">'Faltou a bebida gelada'</span>, jaTem: i =&gt; i.categoriaId === <span class="s">'beber'</span> || i.incluiBebida },
+  { produtoId: <span class="s">'abf'</span>, motivo: <span class="s">'Burger pede batata'</span>, jaTem: i =&gt; i.categoriaId === <span class="s">'acomp'</span> || i.incluiAcompanhamento },
+  { produtoId: <span class="s">'sbr'</span>, motivo: <span class="s">'Pra fechar o dia'</span>, jaTem: i =&gt; i.categoriaId === <span class="s">'doce'</span> },
+];
+
+<span class="c">/**
+ * @param disponiveis IDs que a loja tem agora (produto esgotado não é sugerido).
+ */</span>
+<span class="k">export</span> <span class="k">function</span> oQueFaltaNoPedido(
+  itens: ReadonlyArray&lt;ItemParaSugestao&gt;,
+  disponiveis: ReadonlySet&lt;string&gt;,
+  regras: ReadonlyArray&lt;RegraSugestao&gt; = REGRAS_OGRO,
+): Sugestao[] {
+  <span class="k">if</span> (!itens.length) <span class="k">return</span> [];
+  <span class="k">return</span> regras
+    .filter(r =&gt; disponiveis.has(r.produtoId) &amp;&amp; !itens.some(r.jaTem))
+    .map(({ produtoId, motivo }) =&gt; ({ produtoId, motivo }));
+}</code></pre><span class="arq-nome">src/app/features/cardapio/ui/completa-pedido.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, input, output } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> { CurrencyPipe } <span class="k">from</span> <span class="s">'@angular/common'</span>;
+
+<span class="c">/** Sugestão pronta para a tela (o container junta a regra do domínio com o cardápio da loja). */</span>
+<span class="k">export</span> <span class="k">interface</span> SugestaoVista {
+  <span class="k">readonly</span> produtoId: string;
+  <span class="k">readonly</span> nome: string;
+  <span class="k">readonly</span> motivo: string;
+  <span class="c">/** Em reais, só para exibir. */</span>
+  <span class="k">readonly</span> precoReais: number;
+  <span class="k">readonly</span> imagem?: string;
+  <span class="c">/** Produto simples entra com 1 toque; com opções, abre a ficha. */</span>
+  <span class="k">readonly</span> simples: boolean;
+  <span class="k">readonly</span> naSacola: boolean;
+}
+
+<span class="c">/**
+ * DIFERENCIAL 9 · "Completa teu pedido?" (apresentação pura, OnPush).
+ * Regra de o que sugerir: domain/completa-pedido.ts. Este componente só mostra e emite.
+ */</span>
+<span class="d">@Component</span>({
+  selector: <span class="s">'app-completa-pedido'</span>,
+  standalone: <span class="k">true</span>,
+  imports: [CurrencyPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: <span class="s">`
+    &lt;section class="cp" aria-labelledby="cp-titulo"&gt;
+      &lt;h3 id="cp-titulo"&gt;Completa teu pedido?&lt;/h3&gt;
+      &lt;p class="cp__sub"&gt;Só se fizer sentido pra tua fome. Um toque e já entra.&lt;/p&gt;
+
+      @if (avisoCupom()) {
+        &lt;p class="cp__cupom" role="status"&gt;{{ avisoCupom() }}&lt;/p&gt;
+      }
+
+      &lt;ul class="cp__lista"&gt;
+        @for (s of sugestoes(); track s.produtoId) {
+          &lt;li class="cp__item" [class.ok]="s.naSacola"&gt;
+            @if (s.imagem) {
+              &lt;img [src]="s.imagem" alt="" width="64" height="64" loading="lazy" /&gt;
+            }
+            &lt;div&gt;
+              &lt;small&gt;{{ s.motivo }}&lt;/small&gt;
+              &lt;b&gt;{{ s.nome }}&lt;/b&gt;
+              &lt;span&gt;{{ s.precoReais | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}&lt;/span&gt;
+            &lt;/div&gt;
+            @if (s.naSacola) {
+              &lt;span class="cp__ok"&gt;✓ Na sacola&lt;/span&gt;
+            } @else if (s.simples) {
+              &lt;button type="button" (click)="adicionar.emit(s.produtoId)" [attr.aria-label]="'Adicionar ' + s.nome"&gt;+ Adicionar&lt;/button&gt;
+            } @else {
+              &lt;button type="button" (click)="escolher.emit(s.produtoId)"&gt;Escolher&lt;/button&gt;
+            }
+          &lt;/li&gt;
+        }
+      &lt;/ul&gt;
+
+      &lt;button type="button" class="link" (click)="voltar.emit()"&gt;Voltar pra sacola&lt;/button&gt;
+      &lt;button type="button" class="btn btn--principal" (click)="seguir.emit()"&gt;Seguir pro pagamento&lt;/button&gt;
+    &lt;/section&gt;
+  `</span>,
+})
+<span class="k">export</span> <span class="k">class</span> CompletaPedidoComponent {
+  <span class="k">readonly</span> sugestoes = input.required&lt;ReadonlyArray&lt;SugestaoVista&gt;&gt;();
+  <span class="k">readonly</span> avisoCupom = input&lt;string | <span class="k">null</span>&gt;(<span class="k">null</span>);
+
+  <span class="k">readonly</span> adicionar = output&lt;string&gt;();
+  <span class="k">readonly</span> escolher = output&lt;string&gt;();
+  <span class="k">readonly</span> voltar = output&lt;<span class="k">void</span>&gt;();
+  <span class="k">readonly</span> seguir = output&lt;<span class="k">void</span>&gt;();
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">10</span><div><h3>Agendar com a loja fechada</h3><div class="meta"><span class="chip st-ok">2 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>"Loja fechada" bloqueia o pedido.</div><div class="novo"><b>Protótipo</b>Troca "Agora" por "Agendar" e lista só horários em que a loja abre.</div></div>
+        <details class="cod"><summary>Ver código · agendamento.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/agendamento.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { HorarioSemana } <span class="k">from</span> <span class="s">'./models'</span>;
+<span class="k">import</span> { estaAberta } <span class="k">from</span> <span class="s">'./horarios'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 10 · Agendar só em horário que a loja abre de verdade.
+ *
+ * Loja fechada não trava o cliente: o checkout troca "Agora" por "Agendar" e lista só
+ * horários válidos (a partir de daqui a 45 min, de 30 em 30, nos próximos 3 dias).
+ * Antecedência, intervalo e janela são regra de negócio da Databite (pergunta C3);
+ * os valores abaixo são os do protótipo e entram como parâmetro.
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> RegraAgendamento {
+  <span class="k">readonly</span> antecedenciaMin: number;
+  <span class="k">readonly</span> passoMin: number;
+  <span class="k">readonly</span> dias: number;
+  <span class="k">readonly</span> maxOpcoes: number;
+}
+
+<span class="k">export</span> <span class="k">const</span> AGENDAMENTO_PADRAO: RegraAgendamento = { antecedenciaMin: <span class="n">45</span>, passoMin: <span class="n">30</span>, dias: <span class="n">3</span>, maxOpcoes: <span class="n">24</span> };
+
+<span class="k">export</span> <span class="k">function</span> horariosAgendaveis(semana: HorarioSemana, agora: Date, regra: RegraAgendamento = AGENDAMENTO_PADRAO): Date[] {
+  <span class="k">const</span> t = <span class="k">new</span> Date(agora.getTime() + regra.antecedenciaMin * <span class="n">60_000</span>);
+  t.setSeconds(<span class="n">0</span>, <span class="n">0</span>);
+  t.setMinutes(Math.ceil(t.getMinutes() / regra.passoMin) * regra.passoMin);
+  <span class="k">const</span> saida: Date[] = [];
+  <span class="k">const</span> passos = (regra.dias * <span class="n">1440</span>) / regra.passoMin;
+  <span class="k">for</span> (<span class="k">let</span> i = <span class="n">0</span>; i &lt; passos &amp;&amp; saida.length &lt; regra.maxOpcoes; i++) {
+    <span class="k">if</span> (estaAberta(semana, t)) saida.push(<span class="k">new</span> Date(t));
+    t.setMinutes(t.getMinutes() + regra.passoMin);
+  }
+  <span class="k">return</span> saida;
+}
+
+<span class="k">const</span> DIAS = [<span class="s">'Domingo'</span>, <span class="s">'Segunda'</span>, <span class="s">'Terça'</span>, <span class="s">'Quarta'</span>, <span class="s">'Quinta'</span>, <span class="s">'Sexta'</span>, <span class="s">'Sábado'</span>];
+
+<span class="c">/** "Hoje 19:30", "Amanhã 18:00", "Sexta 20:00". */</span>
+<span class="k">export</span> <span class="k">function</span> rotuloAgendamento(quando: Date, agora: Date): string {
+  <span class="k">const</span> dia = (d: Date) =&gt; <span class="k">new</span> Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  <span class="k">const</span> dif = Math.round((dia(quando) - dia(agora)) / <span class="n">86_400_000</span>);
+  <span class="k">const</span> nome = dif === <span class="n">0</span> ? <span class="s">'Hoje'</span> : dif === <span class="n">1</span> ? <span class="s">'Amanhã'</span> : DIAS[quando.getDay()];
+  <span class="k">const</span> hh = String(quando.getHours()).padStart(<span class="n">2</span>, <span class="s">'0'</span>);
+  <span class="k">const</span> mm = String(quando.getMinutes()).padStart(<span class="n">2</span>, <span class="s">'0'</span>);
+  <span class="k">return</span> <span class="s">`${nome} ${hh}:${mm}`</span>;
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">11</span><div><h3>Link de campanha</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>URL de produto, sem cupom nem origem.</div><div class="novo"><b>Protótipo</b><code>/loja/botafogo/ogrostela?cupom=OGRO10&amp;utm_source=whatsapp</code> abre a ficha, guarda o cupom e a origem segue em todos os eventos.</div></div>
+        <details class="cod"><summary>Ver código · link-direto.ts + guard</summary><span class="arq-nome">src/app/features/cardapio/domain/link-direto.ts</span><pre><code><span class="c">/**
+ * DIFERENCIAL 11 · Link de campanha que abre o produto certo, com cupom e origem.
+ *
+ * Disparo de WhatsApp, direct do "comenta OGRO", bio ou QR impresso:
+ *   /cardapio/loja/botafogo/ogrostela?cupom=OGRO10&amp;utm_source=whatsapp&amp;utm_campaign=disparo-0312
+ *   /cardapio/p/ogrostela?cupom=OGRO10      → loja mais perto ou a última usada
+ * Abre a loja, abre a ficha do produto e guarda o cupom na sacola. As utm_* seguem em todos
+ * os eventos da sessão, para medir qual disparo vendeu.
+ * O Cardápio atual tem URL de produto (/product/&lt;id&gt;), mas sem cupom e sem origem de campanha.
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> LinkDireto {
+  <span class="k">readonly</span> lojaId: string | <span class="k">null</span>;
+  <span class="c">/** id, chave da foto ou nome em slug ("ogrostela"); resolver contra o cardápio da loja. */</span>
+  <span class="k">readonly</span> produtoRef: string | <span class="k">null</span>;
+  <span class="k">readonly</span> cupom: string | <span class="k">null</span>;
+  <span class="k">readonly</span> utm: Readonly&lt;Record&lt;string, string&gt;&gt;;
+}
+
+<span class="k">const</span> UTM = [<span class="s">'utm_source'</span>, <span class="s">'utm_medium'</span>, <span class="s">'utm_campaign'</span>, <span class="s">'utm_content'</span>] <span class="k">as</span> <span class="k">const</span>;
+
+<span class="k">export</span> <span class="k">function</span> slug(texto: string): string {
+  <span class="k">return</span> texto
+    .normalize(<span class="s">'NFD'</span>).replace(/[̀-ͯ]/g, <span class="s">''</span>).toLowerCase()
+    .replace(/[^a-z0-<span class="n">9</span>]+/g, <span class="s">'-'</span>).replace(/^-|-$/g, <span class="s">''</span>);
+}
+
+<span class="c">/** Lê caminho + query. Devolve null quando a URL não é um link de campanha. */</span>
+<span class="k">export</span> <span class="k">function</span> lerLinkDireto(caminho: string, query: URLSearchParams): LinkDireto | <span class="k">null</span> {
+  <span class="k">const</span> m = caminho.match(/\/(?:loja\/([\w-]+)\/([\w.-]+)|p\/([\w.-]+))\/?$/);
+  <span class="k">const</span> cupom = (query.get(<span class="s">'cupom'</span>) ?? <span class="s">''</span>).trim().toUpperCase().replace(/[^A-Z0-<span class="n">9</span>]/g, <span class="s">''</span>).slice(<span class="n">0</span>, <span class="n">20</span>) || <span class="k">null</span>;
+  <span class="k">const</span> utm: Record&lt;string, string&gt; = {};
+  <span class="k">for</span> (<span class="k">const</span> k <span class="k">of</span> UTM) {
+    <span class="k">const</span> v = query.get(k);
+    <span class="k">if</span> (v) utm[k] = v.slice(<span class="n">0</span>, <span class="n">60</span>);
+  }
+  <span class="k">if</span> (!m &amp;&amp; !cupom &amp;&amp; !Object.keys(utm).length) <span class="k">return</span> <span class="k">null</span>;
+  <span class="k">return</span> {
+    lojaId: m?.[<span class="n">1</span>] ?? <span class="k">null</span>,
+    produtoRef: m ? slug(m[<span class="n">2</span>] ?? m[<span class="n">3</span>]) : <span class="k">null</span>,
+    cupom,
+    utm,
+  };
+}</code></pre><span class="arq-nome">src/app/features/cardapio/link-direto.guard.ts</span><pre><code><span class="k">import</span> { inject } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> { CanActivateFn, Router } <span class="k">from</span> <span class="s">'@angular/router'</span>;
+<span class="k">import</span> { lerLinkDireto } <span class="k">from</span> <span class="s">'./domain/link-direto'</span>;
+<span class="k">import</span> { AnalyticsService } <span class="k">from</span> <span class="s">'./data-access/analytics.service'</span>;
+<span class="k">import</span> { LinkDiretoPendente } <span class="k">from</span> <span class="s">'./state/link-direto-pendente'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 11 · Link de campanha (ver domain/link-direto.ts).
+ *
+ * Rotas sugeridas no cardapio.routes.ts (páginas entram na fatia F2):
+ *   { path: 'loja/:loja/:produto', canActivate: [linkDiretoGuard], children: [] },
+ *   { path: 'p/:produto',          canActivate: [linkDiretoGuard], children: [] },
+ *
+ * O guard guarda loja, produto e cupom, registra a origem (utm) na medição e redireciona para
+ * a URL limpa da loja: recarregar a página não reabre a ficha nem reaplica o cupom.
+ * O cupom só é VALIDADO no servidor (B7); aqui ele é apenas lembrado.
+ */</span>
+<span class="k">export</span> <span class="k">const</span> linkDiretoGuard: CanActivateFn = (_route, state) =&gt; {
+  <span class="k">const</span> router = inject(Router);
+  <span class="k">const</span> url = router.parseUrl(state.url);
+  <span class="k">const</span> caminho = <span class="s">'/'</span> + (url.root.children[<span class="s">'primary'</span>]?.segments.map(s =&gt; s.path).join(<span class="s">'/'</span>) ?? <span class="s">''</span>);
+  <span class="k">const</span> link = lerLinkDireto(caminho, <span class="k">new</span> URLSearchParams(url.queryParams <span class="k">as</span> Record&lt;string, string&gt;));
+  <span class="k">if</span> (!link) <span class="k">return</span> <span class="k">true</span>;
+
+  <span class="k">const</span> analytics = inject(AnalyticsService);
+  <span class="k">if</span> (Object.keys(link.utm).length) analytics.definirOrigemCampanha(link.utm);
+  analytics.track(<span class="s">'deep_link'</span>, {
+    loja_link: link.lojaId ?? <span class="k">undefined</span>,
+    produto_ref: link.produtoRef ?? <span class="k">undefined</span>,
+    coupon: link.cupom ?? <span class="k">undefined</span>,
+  });
+
+  inject(LinkDiretoPendente).guardar(link);
+  <span class="c">// Com loja: vai direto pra ela. Sem loja: a página inicial escolhe a mais perto (ou pede).</span>
+  <span class="k">return</span> router.createUrlTree(link.lojaId ? [<span class="s">'/cardapio'</span>, <span class="s">'loja'</span>, link.lojaId] : [<span class="s">'/cardapio'</span>]);
+};</code></pre><span class="arq-nome">src/app/features/cardapio/state/link-direto-pendente.ts</span><pre><code><span class="k">import</span> { Injectable, signal } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> <span class="k">type</span> { LinkDireto } <span class="k">from</span> <span class="s">'../domain/link-direto'</span>;
+
+<span class="c">/**
+ * Guarda o link de campanha até a página da loja consumir: abre a ficha do produto e
+ * leva o cupom para a sacola. Lido uma vez só (`consumir`).
+ */</span>
+<span class="d">@Injectable</span>({ providedIn: <span class="s">'root'</span> })
+<span class="k">export</span> <span class="k">class</span> LinkDiretoPendente {
+  <span class="k">private</span> <span class="k">readonly</span> _link = signal&lt;LinkDireto | <span class="k">null</span>&gt;(<span class="k">null</span>);
+  <span class="k">readonly</span> link = <span class="k">this</span>._link.asReadonly();
+
+  guardar(link: LinkDireto): <span class="k">void</span> {
+    <span class="k">this</span>._link.set(link);
+  }
+
+  consumir(): LinkDireto | <span class="k">null</span> {
+    <span class="k">const</span> l = <span class="k">this</span>._link();
+    <span class="k">this</span>._link.set(<span class="k">null</span>);
+    <span class="k">return</span> l;
+  }
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="parcial">
+        <div class="dif-top"><span class="dif-n">12</span><div><h3>Medição por produto</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Aviso de cookies (Recusar/Permitir); eventos não verificados.</div><div class="novo"><b>Protótipo</b>32 eventos GA4/Meta, impressão real (≥ 50% na tela por ≥ 1 s), tempo na ficha, <code>event_id</code> para deduplicar com a CAPI, nada sem consentimento.</div></div>
+        <details class="cod"><summary>Ver código · analytics.service.ts + impressao.directive.ts + mapa-eventos.ts</summary><span class="arq-nome">src/app/features/cardapio/data-access/analytics.service.ts</span><pre><code><span class="k">import</span> { DOCUMENT } <span class="k">from</span> <span class="s">'@angular/common'</span>;
+<span class="k">import</span> { Injectable, inject, signal } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> { MAPA_EVENTOS } <span class="k">from</span> <span class="s">'./mapa-eventos'</span>;
+
+<span class="c">/** Item no formato GA4 (o mesmo serve para content_ids da Meta). */</span>
+<span class="k">export</span> <span class="k">interface</span> ItemGA4 {
+  <span class="k">readonly</span> item_id: string;
+  <span class="k">readonly</span> item_name: string;
+  <span class="k">readonly</span> item_category?: string;
+  <span class="k">readonly</span> item_list_id?: string;
+  <span class="k">readonly</span> item_list_name?: string;
+  <span class="k">readonly</span> index?: number;
+  <span class="c">/** Em reais, como o GA4 espera; converter de centavos na borda. */</span>
+  <span class="k">readonly</span> price?: number;
+  <span class="k">readonly</span> quantity?: number;
+}
+
+<span class="k">export</span> <span class="k">interface</span> Consentimento {
+  <span class="k">readonly</span> analise: boolean;
+  <span class="k">readonly</span> marketing: boolean;
+}
+
+<span class="k">type</span> Fbq = (acao: <span class="s">'track'</span>, evento: string, params: object, opcoes: { eventID: string }) =&gt; <span class="k">void</span>;
+<span class="k">interface</span> JanelaComTags <span class="k">extends</span> Window {
+  dataLayer?: object[];
+  fbq?: Fbq;
+}
+
+<span class="k">const</span> META = <span class="k">new</span> Map(MAPA_EVENTOS.filter(e =&gt; e.meta).map(e =&gt; [e.ga4, e.meta!]));
+
+<span class="c">/**
+ * Fachada única de medição. Componentes chamam `track()`; ninguém fala com dataLayer ou fbq direto.
+ * - Sem consentimento de Análise: nada é enviado.
+ * - Meta só com consentimento de Marketing, com o MESMO event_id (deduplicação com a CAPI).
+ * - Nunca recebe dado pessoal (nome, telefone, endereço): só IDs e números.
+ * Se a Databite já tiver serviço de analytics/CMP, este vira um adapter dele (E4, F1–F3).
+ */</span>
+<span class="d">@Injectable</span>({ providedIn: <span class="s">'root'</span> })
+<span class="k">export</span> <span class="k">class</span> AnalyticsService {
+  <span class="k">private</span> <span class="k">readonly</span> janela = inject(DOCUMENT).defaultView <span class="k">as</span> JanelaComTags | <span class="k">null</span>;
+  <span class="k">private</span> <span class="k">readonly</span> sessao = <span class="k">this</span>.gerarSessao();
+  <span class="k">private</span> seq = <span class="n">0</span>;
+  <span class="k">private</span> utm: Record&lt;string, string&gt; = {};
+
+  <span class="k">readonly</span> consentimento = signal&lt;Consentimento&gt;({ analise: <span class="k">false</span>, marketing: <span class="k">false</span> });
+  <span class="c">/** Loja atual, vira store_id em todo evento ("ogro_botafogo"). */</span>
+  <span class="k">readonly</span> lojaId = signal&lt;string | <span class="k">null</span>&gt;(<span class="k">null</span>);
+
+  definirOrigemCampanha(utm: Readonly&lt;Record&lt;string, string&gt;&gt;): <span class="k">void</span> {
+    <span class="k">this</span>.utm = { ...utm };
+  }
+
+  track(evento: string, params: Record&lt;string, unknown&gt; = {}, ecommerce?: { value?: number; items?: ItemGA4[] }): string {
+    <span class="k">const</span> eventId = <span class="s">`${this.sessao}_${++this.seq}`</span>;
+    <span class="k">const</span> { analise, marketing } = <span class="k">this</span>.consentimento();
+    <span class="k">if</span> (!analise || !<span class="k">this</span>.janela) <span class="k">return</span> eventId;
+
+    <span class="k">const</span> loja = <span class="k">this</span>.lojaId();
+    <span class="k">const</span> payload: Record&lt;string, unknown&gt; = {
+      event: evento,
+      event_id: eventId,
+      session_id: <span class="k">this</span>.sessao,
+      store_id: loja ? <span class="s">`ogro_${loja.replace(/-/g, '_')}`</span> : <span class="k">undefined</span>,
+      ...<span class="k">this</span>.utm,
+      ...params,
+    };
+    <span class="k">if</span> (ecommerce) payload[<span class="s">'ecommerce'</span>] = { currency: <span class="s">'BRL'</span>, ...ecommerce };
+
+    <span class="k">const</span> dl = (<span class="k">this</span>.janela.dataLayer ??= []);
+    <span class="k">if</span> (ecommerce) dl.push({ ecommerce: <span class="k">null</span> }); <span class="c">// limpa o objeto anterior (recomendação do GA4)</span>
+    dl.push(<span class="k">this</span>.semVazios(payload));
+
+    <span class="k">const</span> meta = META.get(evento);
+    <span class="k">if</span> (marketing &amp;&amp; meta &amp;&amp; <span class="k">typeof</span> <span class="k">this</span>.janela.fbq === <span class="s">'function'</span>) {
+      <span class="k">const</span> items = ecommerce?.items ?? [];
+      <span class="k">this</span>.janela.fbq(<span class="s">'track'</span>, meta, {
+        content_type: <span class="s">'product'</span>,
+        content_ids: items.map(i =&gt; i.item_id),
+        contents: items.map(i =&gt; ({ id: i.item_id, quantity: i.quantity ?? <span class="n">1</span> })),
+        value: ecommerce?.value,
+        currency: <span class="s">'BRL'</span>,
+      }, { eventID: eventId });
+    }
+    <span class="k">return</span> eventId;
+  }
+
+  <span class="k">private</span> semVazios(o: Record&lt;string, unknown&gt;): Record&lt;string, unknown&gt; {
+    <span class="k">return</span> Object.fromEntries(Object.entries(o).filter(([, v]) =&gt; v !== <span class="k">undefined</span>));
+  }
+
+  <span class="k">private</span> gerarSessao(): string {
+    <span class="k">const</span> c = <span class="k">this</span>.janela?.crypto;
+    <span class="k">return</span> c?.randomUUID ? c.randomUUID().slice(<span class="n">0</span>, <span class="n">13</span>) : Date.now().toString(<span class="n">36</span>);
+  }
+}</code></pre><span class="arq-nome">src/app/features/cardapio/ui/impressao.directive.ts</span><pre><code><span class="k">import</span> { DestroyRef, Directive, ElementRef, Injectable, OnInit, inject, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> { AnalyticsService, ItemGA4 } <span class="k">from</span> <span class="s">'../data-access/analytics.service'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 12 (cont.) · Impressão de produto de verdade: card ≥ 50% na tela por ≥ 1 s.
+ * Mostra quais produtos o cliente VIU e não abriu: dá CTR por produto e posição no cardápio.
+ * Envia em lotes de 20 por lista (GA4 view_item_list), uma vez por produto por visita.
+ *
+ * Uso: &lt;app-card-produto [appImpressao]="itemGA4(p)" lista="mais_pedidos" [indice]="i" /&gt;
+ */</span>
+<span class="d">@Injectable</span>({ providedIn: <span class="s">'root'</span> })
+<span class="k">export</span> <span class="k">class</span> ImpressoesService {
+  <span class="k">private</span> <span class="k">readonly</span> analytics = inject(AnalyticsService);
+  <span class="k">private</span> <span class="k">readonly</span> vistos = <span class="k">new</span> Set&lt;string&gt;();
+  <span class="k">private</span> <span class="k">readonly</span> fila = <span class="k">new</span> Map&lt;string, ItemGA4[]&gt;();
+  <span class="k">private</span> timer: ReturnType&lt;<span class="k">typeof</span> setTimeout&gt; | <span class="k">undefined</span>;
+
+  registrar(lista: string, item: ItemGA4): <span class="k">void</span> {
+    <span class="k">const</span> chave = <span class="s">`${lista}|${item.item_id}`</span>;
+    <span class="k">if</span> (<span class="k">this</span>.vistos.has(chave)) <span class="k">return</span>;
+    <span class="k">this</span>.vistos.add(chave);
+    <span class="k">this</span>.fila.set(lista, [...(<span class="k">this</span>.fila.get(lista) ?? []), item]);
+    clearTimeout(<span class="k">this</span>.timer);
+    <span class="k">this</span>.timer = setTimeout(() =&gt; <span class="k">this</span>.enviar(), <span class="n">1200</span>);
+  }
+
+  <span class="c">/** Chamar ao sair da tela (troca de rota) para fechar a visita. */</span>
+  enviar(): <span class="k">void</span> {
+    <span class="k">for</span> (<span class="k">const</span> [lista, itens] <span class="k">of</span> <span class="k">this</span>.fila) {
+      <span class="k">for</span> (<span class="k">let</span> i = <span class="n">0</span>; i &lt; itens.length; i += <span class="n">20</span>) {
+        <span class="k">this</span>.analytics.track(<span class="s">'view_item_list'</span>, { item_list_id: lista }, { items: itens.slice(i, i + <span class="n">20</span>) });
+      }
+    }
+    <span class="k">this</span>.fila.clear();
+  }
+
+  novaVisita(): <span class="k">void</span> {
+    <span class="k">this</span>.enviar();
+    <span class="k">this</span>.vistos.clear();
+  }
+}
+
+<span class="d">@Directive</span>({ selector: <span class="s">'[appImpressao]'</span>, standalone: <span class="k">true</span> })
+<span class="k">export</span> <span class="k">class</span> ImpressaoDirective <span class="k">implements</span> OnInit {
+  <span class="k">readonly</span> appImpressao = input.required&lt;ItemGA4&gt;();
+  <span class="k">readonly</span> lista = input.required&lt;string&gt;();
+  <span class="k">readonly</span> indice = input(<span class="n">0</span>);
+
+  <span class="k">private</span> <span class="k">readonly</span> el = inject&lt;ElementRef&lt;HTMLElement&gt;&gt;(ElementRef);
+  <span class="k">private</span> <span class="k">readonly</span> impressoes = inject(ImpressoesService);
+  <span class="k">private</span> <span class="k">readonly</span> destroyRef = inject(DestroyRef);
+
+  ngOnInit(): <span class="k">void</span> {
+    <span class="k">if</span> (<span class="k">typeof</span> IntersectionObserver === <span class="s">'undefined'</span>) <span class="k">return</span>; <span class="c">// SSR ou navegador antigo</span>
+    <span class="k">let</span> espera: ReturnType&lt;<span class="k">typeof</span> setTimeout&gt; | <span class="k">undefined</span>;
+    <span class="k">const</span> obs = <span class="k">new</span> IntersectionObserver(([e]) =&gt; {
+      clearTimeout(espera);
+      <span class="k">if</span> (e.isIntersecting &amp;&amp; e.intersectionRatio &gt;= <span class="n">0.5</span> &amp;&amp; !document.hidden) {
+        espera = setTimeout(() =&gt; {
+          <span class="k">this</span>.impressoes.registrar(<span class="k">this</span>.lista(), { ...<span class="k">this</span>.appImpressao(), item_list_id: <span class="k">this</span>.lista(), index: <span class="k">this</span>.indice() });
+        }, <span class="n">1000</span>);
+      }
+    }, { threshold: [<span class="n">0</span>, <span class="n">0.5</span>] });
+    obs.observe(<span class="k">this</span>.el.nativeElement);
+    <span class="k">this</span>.destroyRef.onDestroy(() =&gt; { clearTimeout(espera); obs.disconnect(); });
+  }
+}</code></pre><span class="arq-nome">src/app/features/cardapio/data-access/mapa-eventos.ts</span><pre><code><span class="c">/**
+ * DIFERENCIAL 12 · Medição completa do funil, por produto.
+ *
+ * Mapa dos eventos do protótipo (GA4 / dataLayer → Meta). Serve de especificação para o
+ * GTM e para a CAPI. Todo evento leva event_id (deduplicação Pixel × CAPI), store_id,
+ * session_id e tela; os de produto levam ecommerce.items no padrão GA4.
+ * Nada sai sem consentimento (Análise para GA4; Marketing para Meta).
+ * Schema oficial da Databite, se existir, prevalece (F1–F3).
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> EventoMapeado {
+  <span class="k">readonly</span> ga4: string;
+  <span class="k">readonly</span> quando: string;
+  <span class="k">readonly</span> meta?: <span class="s">'PageView'</span> | <span class="s">'ViewContent'</span> | <span class="s">'AddToCart'</span> | <span class="s">'InitiateCheckout'</span> | <span class="s">'AddPaymentInfo'</span> | <span class="s">'Purchase'</span> | <span class="s">'Search'</span>;
+  <span class="k">readonly</span> conversao?: boolean;
+}
+
+<span class="k">export</span> <span class="k">const</span> MAPA_EVENTOS: ReadonlyArray&lt;EventoMapeado&gt; = [
+  { ga4: <span class="s">'virtual_page_view'</span>, quando: <span class="s">'Troca de tela (início, cardápio, checkout, pedido)'</span>, meta: <span class="s">'PageView'</span> },
+  { ga4: <span class="s">'select_store'</span>, quando: <span class="s">'Escolheu a loja'</span> },
+  { ga4: <span class="s">'view_menu'</span>, quando: <span class="s">'Abriu o cardápio de uma loja'</span>, meta: <span class="s">'ViewContent'</span> },
+  { ga4: <span class="s">'view_promotion'</span>, quando: <span class="s">'Banner ≥ 50% na tela por 1 s'</span> },
+  { ga4: <span class="s">'select_promotion'</span>, quando: <span class="s">'Tocou num banner'</span> },
+  { ga4: <span class="s">'view_category'</span>, quando: <span class="s">'Categoria passou pela tela'</span> },
+  { ga4: <span class="s">'select_category'</span>, quando: <span class="s">'Tocou numa categoria'</span> },
+  { ga4: <span class="s">'view_item_list'</span>, quando: <span class="s">'Card ≥ 50% na tela por 1 s (impressão, em lotes de 20)'</span> },
+  { ga4: <span class="s">'select_item'</span>, quando: <span class="s">'Tocou no card (lista e posição)'</span> },
+  { ga4: <span class="s">'view_item'</span>, quando: <span class="s">'Abriu a ficha do produto'</span>, meta: <span class="s">'ViewContent'</span> },
+  { ga4: <span class="s">'select_option'</span>, quando: <span class="s">'Escolheu bebida, burger do combo ou adicional'</span> },
+  { ga4: <span class="s">'upsell_combo'</span>, quando: <span class="s">'Marcou "vira combo"'</span> },
+  { ga4: <span class="s">'tempo_no_item'</span>, quando: <span class="s">'Fechou a ficha: segundos na ficha, segundos de vídeo, se adicionou'</span> },
+  { ga4: <span class="s">'exposicao_itens'</span>, quando: <span class="s">'Saiu do cardápio: segundos que cada produto ficou visível'</span> },
+  { ga4: <span class="s">'tempo_engajado'</span>, quando: <span class="s">'Marcos de 15, 30, 60, 120 e 300 s ativos'</span> },
+  { ga4: <span class="s">'scroll_profundidade'</span>, quando: <span class="s">'Rolou 25, 50, 75 e 90%'</span> },
+  { ga4: <span class="s">'search'</span>, quando: <span class="s">'Buscou no cardápio (com nº de resultados; 0 = procura algo que não tem)'</span>, meta: <span class="s">'Search'</span> },
+  { ga4: <span class="s">'filtro_cardapio'</span>, quando: <span class="s">'Ligou ou tirou um filtro rápido, com nº de resultados'</span> },
+  { ga4: <span class="s">'add_to_cart'</span>, quando: <span class="s">'Pôs na sacola (ficha, sugestão, repetir)'</span>, meta: <span class="s">'AddToCart'</span>, conversao: <span class="k">true</span> },
+  { ga4: <span class="s">'remove_from_cart'</span>, quando: <span class="s">'Tirou da sacola'</span> },
+  { ga4: <span class="s">'view_cart'</span>, quando: <span class="s">'Abriu a sacola'</span> },
+  { ga4: <span class="s">'coupon_apply'</span>, quando: <span class="s">'Aplicou cupom'</span> },
+  { ga4: <span class="s">'completa_pedido'</span>, quando: <span class="s">'"Completa teu pedido?": mostrou (o que faltava) e seguiu (quantos itens entraram)'</span> },
+  { ga4: <span class="s">'begin_checkout'</span>, quando: <span class="s">'Abriu o checkout'</span>, meta: <span class="s">'InitiateCheckout'</span>, conversao: <span class="k">true</span> },
+  { ga4: <span class="s">'add_shipping_info'</span>, quando: <span class="s">'Confirmou entrega (agora ou agendado)'</span> },
+  { ga4: <span class="s">'add_payment_info'</span>, quando: <span class="s">'Escolheu a forma de pagamento'</span>, meta: <span class="s">'AddPaymentInfo'</span> },
+  { ga4: <span class="s">'checkout_erro'</span>, quando: <span class="s">'Tentou confirmar com campo faltando (só o NOME do campo, nunca o conteúdo)'</span> },
+  { ga4: <span class="s">'purchase'</span>, quando: <span class="s">'Pedido confirmado PELO SERVIDOR'</span>, meta: <span class="s">'Purchase'</span>, conversao: <span class="k">true</span> },
+  { ga4: <span class="s">'rating'</span>, quando: <span class="s">'Deu nota ao pedido'</span> },
+  { ga4: <span class="s">'deep_link'</span>, quando: <span class="s">'Entrou por link de campanha (produto, loja, cupom, utm_*)'</span> },
+  { ga4: <span class="s">'nudge_show'</span>, quando: <span class="s">'Lembrete de sacola guardada apareceu (inatividade ou saída)'</span> },
+  { ga4: <span class="s">'erro_tecnico'</span>, quando: <span class="s">'Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)'</span> },
+];</code></pre></details>
+      </article>
+
+    </div>
+    <p class="arqs" style="margin-top:1rem">Ainda sem código: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix estão bloqueados até os contratos B8–B10.</p>
+  </section>
+
+  <section id="arquitetura">
+    <div class="sec-h"><span class="n">03</span><h2>Como o código está organizado</h2></div>
+    <p class="sec-sub">Quatro camadas. As regras não conhecem Angular: por isso passam nos testes sem framework e servem mesmo que a Databite decida fazer o Cardápio novo em React.</p>
+    <div class="arq">
+      <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção, cupom, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>10 arquivos + 4 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
+      <div class="camada"><h3>state/</h3><p>Sacola com signals, com persistência, "Desfazer" e editar. Link de campanha pendente.</p><ul><li>Armazenamento trocável por token de injeção</li></ul></div>
+      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 32 eventos.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
+      <div class="camada"><h3>ui/</h3><p>Diretivas de vídeo e de impressão, animação da sacola, componente "Completa teu pedido?" (OnPush).</p><ul><li>Respeita "menos movimento" e economia de dados</li></ul></div>
+    </div>
+  </section>
+
+  <section id="atual-melhor">
+    <div class="sec-h"><span class="n">04</span><h2>O que o atual faz melhor</h2></div>
+    <p class="sec-sub">E o código mantém.</p>
+    <ul class="lista">
+      <li><b>Grupos de opções vindos da API, com mínimo e máximo.</b> O protótipo tinha regras fixas por tipo de produto; o <code>selecao.ts</code> adota o modelo do atual.</li>
+      <li><b>Cada produto com URL própria.</b> O link de campanha se apoia nisso.</li>
+      <li><b>"Monte seu hambúrguer".</b> O protótipo não tem.</li>
+      <li><b>Mais variedade de bebida e "Ampliar imagem".</b></li>
+    </ul>
+  </section>
+
+  <section id="status">
+    <div class="sec-h"><span class="n">05</span><h2>Status e testes</h2></div>
+    <p class="sec-sub">Pela regra da skill, NOT_RUN não conta como aprovado. A entrega é um candidato de integração (PROTOTYPE_ONLY), não código homologado.</p>
+    <div class="tabela"><table>
+      <thead><tr><th>Gate</th><th>Status</th><th>Evidência</th></tr></thead>
+      <tbody>
+        <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>28 de 28, exit 0, Node 26.12, 25/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
+        <tr><td>Build, lint e typecheck do Angular</td><td><span class="chip st-warn">Não rodado</span></td><td>O Angular não está instalado aqui. O código assume Angular 17+ (standalone, signals, @if/@for) até a Databite confirmar a versão.</td></tr>
+        <tr><td>Testes de componente</td><td><span class="chip st-warn">Não rodado</span></td><td>Dependem do TestBed do Angular.</td></tr>
+        <tr><td>Paridade visual</td><td><span class="chip st-warn">Não rodado</span></td><td>Falta montar as telas (fatia F2).</td></tr>
+        <tr><td>Segurança</td><td><span class="chip st-info">Parcial</span></td><td>Sem innerHTML, sem bypassSecurityTrust, sem dado pessoal na medição; cupom e total são só estimativa de tela.</td></tr>
+      </tbody>
+    </table></div>
+    <details class="testes"><summary>Ver a saída dos testes</summary><pre><code>ok   busca e filtros › busca sem acento
+  ok   busca e filtros › filtros rápidos combinam com a busca
+  ok   busca e filtros › busca sem resultado devolve lista vazia (vira evento de medição)
+  ok   ajustes em 1 toque › só sugere o que o produto tem
+  ok   horarios › emenda a madrugada na noite do mesmo dia
+  ok   horarios › sábado 2h está aberta pelo turno de sexta
+  ok   horarios › sexta 2h está fechada porque quinta não abre
+  ok   horarios › mostra até quando fica aberta, mesmo virando a noite
+  ok   horarios › fechada de dia mostra que abre hoje
+  ok   horarios › pula os dias fechados e diz o dia da semana
+  ok   horarios › turno até 23:59 aparece como meia-noite
+  ok   dinheiro em centavos › não erra centavo em soma de float
+  ok   cupom › abaixo do mínimo mostra quanto falta
+  ok   cupom › acima do mínimo calcula 10% em centavos inteiros
+  ok   completa teu pedido › burger sozinho: sugere bebida, batata e sobremesa
+  ok   completa teu pedido › combo já tem bebida e batata: só sobremesa
+  ok   completa teu pedido › não sugere produto esgotado nem sacola vazia
+  ok   agendamento › só oferece horário em que a loja abre, com 45 min de antecedência
+  ok   agendamento › loja fechada o dia todo não oferece nada
+  ok   link direto de campanha › lê loja, produto, cupom e utm
+  ok   link direto de campanha › produto sem loja deixa a escolha da loja para depois
+  ok   link direto de campanha › URL comum não é link de campanha
+  ok   selecao › pede o obrigatório antes de liberar o Adicionar
+  ok   selecao › vira combo abre o grupo da bebida e cobra o adicional
+  ok   selecao › desmarcar o combo tira a bebida junto
+  ok   selecao › rádio troca a opção em vez de somar
+  ok   selecao › respeita o máximo do grupo
+  ok   selecao › a mesma escolha gera a mesma chave, em qualquer ordem
+
+4 arquivos · 28 testes · 28 passaram · 0 falharam</code></pre></details>
+  </section>
+
+  <section id="databite">
+    <div class="sec-h"><span class="n">06</span><h2>O que falta da Databite</h2></div>
+    <p class="sec-sub">Com estas 10 respostas o código sai do protótipo e entra no repositório deles.</p>
+    <div class="aviso" style="margin-bottom:1rem">Verificado em 25/11: o Cardápio Digital atual é <b>React 18.2</b>, não Angular. A primeira decisão é deles: o Cardápio novo sai em Angular, como CRM e PDV, ou em React, como o atual?</div>
+    <ol class="p0">
+      <li data-id="A1"><b>Angular ou React</b> para o Cardápio novo.</li>
+      <li data-id="A2"><b>Repositório e branch</b> de integração, com acesso de leitura.</li>
+      <li data-id="A3"><b>Versões</b> de Angular, TypeScript, RxJS e Node.</li>
+      <li data-id="B1"><b>Contrato de lojas:</b> lista, status e horários.</li>
+      <li data-id="B2"><b>ID da loja</b> na API.</li>
+      <li data-id="B3"><b>Contrato do cardápio</b> por loja.</li>
+      <li data-id="B4"><b>Contrato de opções:</b> mínimo, máximo, obrigatório, combo.</li>
+      <li data-id="B8"><b>Criar pedido</b> com chave de idempotência.</li>
+      <li data-id="C1"><b>Como a API representa dinheiro</b> e arredonda desconto.</li>
+      <li data-id="G1"><b>Ponto focal técnico</b> do lado deles.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Caderno do Victor · Ogro Steaks · 25/11/2026 · Issue <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/54">cs-ogro-steaks#54</a> · Protótipo: <a href="../cardapio-digital/">cardapio-digital</a> · <a href="../">voltar ao caderno</a>
+  </div>
+</footer>
+
+<script>
+  // filtro dos cards de diferenciais
+  const botoes = document.querySelectorAll('.f-btn');
+  botoes.forEach(b => b.addEventListener('click', () => {
+    botoes.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const f = b.dataset.f;
+    document.querySelectorAll('.dif').forEach(d => { d.hidden = f !== 'todos' && d.dataset.st !== f; });
+  }));
+</script>
+</body>
+</html>
