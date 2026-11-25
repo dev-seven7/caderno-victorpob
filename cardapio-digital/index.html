@@ -847,6 +847,13 @@ const MAPA_EVENTOS = [
   ["purchase", "Pedido confirmado (no ar: só depois do backend confirmar)", "Purchase", "sim"],
   ["rating", "Deu nota ao pedido", "", ""],
   ["deep_link", "Entrou por link direto (produto, loja, cupom, utm_*). As utm_* seguem em todos os eventos da sessão", "", ""],
+  ["add_shipping_info", "Confirmou entrega (agora ou agendado), antes do purchase", "", ""],
+  ["checkout_erro", "Tentou confirmar com campo faltando: quais campos (só o nome do campo, nunca o conteúdo)", "", ""],
+  ["pix_copiar / pix_paguei", "Copiou o código Pix · tocou em Já paguei (com segundos no Pix)", "", ""],
+  ["nudge_show / nudge_click", "Lembrete de sacola guardada: apareceu (inatividade ou saída) e o que a pessoa escolheu", "", ""],
+  ["filtro_regiao · geolocalizacao · ver_horarios · continuar_pedido", "Escolha de região · uso da localização (ok, negado, falhou) · abriu os horários · retomou a sacola guardada", "", ""],
+  ["search (resultados)", "A busca leva quantos produtos achou: 0 = o cliente procurou algo que não tem", "", ""],
+  ["erro_tecnico", "Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)", "", ""],
   ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""]
 ];
 function metaParams(ev) {
@@ -954,6 +961,15 @@ const ItemT = {
   }
 };
 document.addEventListener("visibilitychange", () => { if (document.hidden) { Expo.pausar(); ItemT.pausar(); } else { Expo.retomar(); ItemT.retomar(); } });
+// erro técnico: script quebrado ou foto/vídeo que não carregou (no máx. 10 por sessão; nunca dado do cliente)
+let errosEnviados = 0;
+const erroTecnico = (tipo, detalhe) => { if (errosEnviados++ < 10) track("erro_tecnico", { tipo, detalhe: String(detalhe || "").slice(0, 100) }); };
+addEventListener("error", e => {
+  const el = e.target;
+  if (el && el !== window && /^(IMG|SOURCE|VIDEO)$/.test(el.tagName)) erroTecnico("midia", (el.currentSrc || el.src || "").split("/").pop());
+  else if (e.message) erroTecnico("script", e.message);
+}, true);
+addEventListener("unhandledrejection", e => erroTecnico("promessa", e.reason && e.reason.message));
 addEventListener("pagehide", () => { ItemT.fim("saiu_do_site"); Expo.fechar(viewAtual()); Eng.fechar(); });
 
 /* painel de demonstração (só com ?debug=1): eventos ao vivo, números por produto e o mapa de eventos */
@@ -1326,7 +1342,7 @@ function renderContinuar() {
     $("#continuar-t").textContent = "Teu pedido tá guardado";
     $("#continuar-s").textContent = `${n} ${n === 1 ? "item" : "itens"} na sacola · loja ${l.n} · ${brl(totais().total)}`;
     $("#continuar-b").textContent = "Continuar";
-    $("#continuar-b").onclick = () => { location.hash = "#/loja/" + l.id; setTimeout(abrirGaveta, 300); };
+    $("#continuar-b").onclick = () => { track("continuar_pedido", { itens: n }); location.hash = "#/loja/" + l.id; setTimeout(abrirGaveta, 300); };
     box.hidden = false;
   } else if (ult && ult.itens && ult.itens.length) {
     $("#continuar-t").textContent = "Pede de novo?";
@@ -1784,7 +1800,7 @@ function renderGaveta() {
     ${S.cart.map(i => { const p = PID[i.id]; return `<div class="item">
       <div class="item__img">${p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" width="56" height="56"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
       <div><h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
-        <div class="item__pe"><div class="stepper"><button data-q="${i.k}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${i.k}|1" aria-label="Mais um">+</button></div>
+        <div class="item__pe"><div class="stepper"><button data-q="${esc(i.k)}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${esc(i.k)}|1" aria-label="Mais um">+</button></div>
         ${p.t !== "simples" ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
     ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map((p, i) => `<button class="sug__i" data-add="${p.id}" data-list="sacola_sugestoes" data-idx="${i}">${p.img ? fotoTag(p.img, `alt="" loading="lazy" width="140" height="80"`) : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
     <div><div class="cupom"><input class="campo" id="cupom" placeholder="Tem cupom?" value="${S.cupom || ""}" aria-label="Cupom" autocomplete="off"><button class="btn btn--dark" id="cupom-b">${S.cupom ? "Trocar" : "Aplicar"}</button></div>
@@ -1844,12 +1860,14 @@ function abrirGaveta() { $("#toast").classList.remove("on"); renderGaveta(); abr
 $("#gaveta").addEventListener("click", e => {
   const q = e.target.closest("[data-q]");
   if (q) {
-    const [k, d] = q.dataset.q.split("|"); const i = S.cart.find(x => x.k === k); if (!i) return;
+    // a chave do item já tem "|" e JSON dentro: o passo (+1/−1) é o que vem depois do ÚLTIMO "|"
+    const cut = q.dataset.q.lastIndexOf("|"), k = q.dataset.q.slice(0, cut), d = q.dataset.q.slice(cut + 1);
+    const i = S.cart.find(x => x.k === k); if (!i) return;
     i.q += +d;
     const um = [itemCart({ ...i, q: 1 })];
     if (+d > 0) track("add_to_cart", { origem: "sacola_mais_um" }, { value: valorDe(um), items: um });
     if (+d < 0) track("remove_from_cart", { origem: "sacola" }, { value: valorDe(um), items: um });
-    if (i.q <= 0) { const idx = S.cart.indexOf(i), bkp = { ...i, q: 1 }; S.cart.splice(idx, 1); toast(`${PID[i.id].n} saiu da sacola.`, "Desfazer", () => { S.cart.splice(idx, 0, bkp); salvarCart(); renderGaveta(); atualizarSacola(); }, 5000); }
+    if (i.q <= 0) { const idx = S.cart.indexOf(i), bkp = { ...i, q: 1 }; S.cart.splice(idx, 1); toast(`${PID[i.id].n} saiu da sacola.`, "Desfazer", () => { S.cart.splice(idx, 0, bkp); salvarCart(); renderGaveta(); atualizarSacola(); const v = [itemCart(bkp)]; track("add_to_cart", { origem: "desfazer_remocao" }, { value: valorDe(v), items: v }); }, 5000); }
     salvarCart(); renderGaveta(); atualizarSacola(); return;
   }
   const a = e.target.closest("[data-add]"); if (a) { selecionou(a); return addRapido(a.dataset.add); }
@@ -1923,7 +1941,8 @@ function validar() {
   const regras = [["#f-nome", v => v.trim().length >= 2, "Diz teu nome"], ["#f-tel", v => v.replace(/\D/g, "").length >= 10, "WhatsApp com DDD"], ["#f-cep", v => v.replace(/\D/g, "").length === 8, "CEP com 8 números"], ["#f-num", v => v.trim(), "Número da casa"], ["#f-rua", v => v.trim().length > 2, "Falta a rua"], ["#f-bairro", v => v.trim().length > 1, "Falta o bairro"]];
   let primeiro = null;
   regras.forEach(([id, ok, msg]) => { const el = $(id), m = el.parentElement.querySelector(".msg"); const bom = ok(el.value); el.classList.toggle("erro", !bom); m.textContent = bom ? "" : msg; if (!bom && !primeiro) primeiro = el; });
-  if (primeiro) { primeiro.focus(); primeiro.scrollIntoView({ block: "center", behavior: "smooth" }); toast("Falta pouco: confere os campos em vermelho."); }
+  if (primeiro) { track("checkout_erro", { campos: regras.filter(([id, ok]) => !ok($(id).value)).map(([id]) => id.slice(3)).join(",") });
+    primeiro.focus(); primeiro.scrollIntoView({ block: "center", behavior: "smooth" }); toast("Falta pouco: confere os campos em vermelho."); }
   return !primeiro;
 }
 $("#form-ck").addEventListener("input", e => { if (e.target.classList.contains("erro")) { e.target.classList.remove("erro"); const m = e.target.parentElement.querySelector(".msg"); if (m) m.textContent = ""; } });
@@ -1936,6 +1955,7 @@ $("#btn-confirmar").onclick = () => {
   if ($("#f-lembrar").checked) Store.set("ogro_perfil", dados); else Store.del("ogro_perfil");
   Store.del("ogro_rascunho");
   const t = totais(), pag = $("input[name=pag]:checked").value, quando = $("input[name=quando]:checked").value;
+  { const its = S.cart.map(itemCart); track("add_shipping_info", { shipping_tier: quando === "agora" ? "agora" : "agendado", lembrar_dados: $("#f-lembrar").checked }, { value: +t.total.toFixed(2), shipping_tier: quando === "agora" ? "agora" : "agendado", items: its }); }
   const num = "OG-" + String(Date.now()).slice(-6);
   const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now() };
   Store.set("ogro_pedido", pedido);
@@ -1977,13 +1997,13 @@ function renderPedido() {
     $("#pix-code").value = `00020126580014BR.GOV.BCB.PIX0136ogro-demo-${p.num}5204000053039865406${p.t.total.toFixed(2)}5802BR5911OGRO STEAKS6014RIO DE JANEIRO`;
     let s = 600; const tick = () => { $("#pix-timer").textContent = `O código vale por ${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; if (s-- <= 0) { clearInterval(pixTimer); $("#pix-timer").textContent = "O código venceu. Toca em Já paguei ou gera outro pedido."; } };
     tick(); pixTimer = setInterval(tick, 1000);
-    $("#btn-paguei").onclick = () => { p.pago = true; Store.set("ogro_pedido", p); $("#ped-pix").hidden = true; clearInterval(pixTimer); at = 1; desenhar(); avancar(); toast("Pix confirmado. A loja já começou."); };
+    $("#btn-paguei").onclick = () => { track("pix_paguei", { transaction_id: p.num, segundos_no_pix: 600 - Math.max(0, s) }); p.pago = true; Store.set("ogro_pedido", p); $("#ped-pix").hidden = true; clearInterval(pixTimer); at = 1; desenhar(); avancar(); toast("Pix confirmado. A loja já começou."); };
   } else avancar();
   $("#estrelas").innerHTML = [1, 2, 3, 4, 5].map(n => `<button data-e="${n}" aria-label="${n} estrela${n > 1 ? "s" : ""}">★</button>`).join("");
   $("#aval-msg").textContent = "";
   window.scrollTo(0, 0);
 }
-$("#btn-copiar").onclick = async () => { try { await navigator.clipboard.writeText($("#pix-code").value); } catch (e) { $("#pix-code").select(); document.execCommand("copy"); } toast("Código Pix copiado. Cola no app do banco."); };
+$("#btn-copiar").onclick = async () => { try { await navigator.clipboard.writeText($("#pix-code").value); } catch (e) { $("#pix-code").select(); document.execCommand("copy"); } toast("Código Pix copiado. Cola no app do banco."); track("pix_copiar"); };
 $("#estrelas").addEventListener("click", e => { const b = e.target.closest("[data-e]"); if (!b) return; const n = +b.dataset.e; $$("#estrelas button").forEach((x, i) => x.classList.toggle("on", i < n)); $("#aval-msg").textContent = n >= 4 ? "Valeu. Isso faz o dia de quem tá na chapa." : "Valeu por avisar. A loja vai ver tua nota."; track("rating", { value: n }); });
 $("#btn-novo").onclick = repetir;
 
@@ -2000,8 +2020,8 @@ function mostrarNudge(origem) {
   $("#nudge-ok").textContent = ck ? "Confirmar agora" : "Fechar meu pedido";
   abrir($("#nudge")); track("nudge_show", { origem });
 }
-$("#nudge-ok").onclick = () => { fecharTudo(); if (location.hash === "#/checkout") $("#btn-confirmar").click(); else location.hash = "#/checkout"; };
-$("#nudge-nao").onclick = fecharTudo;
+$("#nudge-ok").onclick = () => { track("nudge_click", { acao: "fechar_pedido" }); fecharTudo(); if (location.hash === "#/checkout") $("#btn-confirmar").click(); else location.hash = "#/checkout"; };
+$("#nudge-nao").onclick = () => { track("nudge_click", { acao: "ainda_escolhendo" }); fecharTudo(); };
 function resetIdle() { clearTimeout(idleT); idleT = setTimeout(() => mostrarNudge("inatividade"), 75000); }
 ["pointerdown", "keydown", "scroll"].forEach(ev => addEventListener(ev, resetIdle, { passive: true }));
 document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY < 8) mostrarNudge("saida"); });
@@ -2083,7 +2103,7 @@ addEventListener("hashchange", rota);
 document.addEventListener("click", e => {
   const lj = e.target.closest("[data-loja]"); if (lj) { location.hash = "#/loja/" + lj.dataset.loja; return; }
   const pr = e.target.closest("[data-p]"); if (pr) { const lista = selecionou(pr); abrirProduto(pr.dataset.p, null, lista); return; }
-  const f = e.target.closest("[data-f]"); if (f) { S.filtro = f.dataset.f; renderFiltros(); renderLojas(); return; }
+  const f = e.target.closest("[data-f]"); if (f) { S.filtro = f.dataset.f; renderFiltros(); renderLojas(); track("filtro_regiao", { regiao: S.filtro, lojas_mostradas: $$("#lojas .loja").length }); return; }
   const av = e.target.closest("[data-avisa]"); if (av) { toast("Combinado. Quando a loja de São Gonçalo abrir, a gente te avisa."); track("notify_store", { store: av.dataset.avisa }); return; }
   const cat = e.target.closest("#lj-cats [data-cat]"); if (cat) { e.preventDefault(); track("select_category", { category: cat.textContent }); const s = $("#cat-" + cat.dataset.cat); s && s.scrollIntoView({ behavior: "smooth" }); return; }
   if (e.target.closest("#lj-perto")) { const p = LOJAS.filter(l => !l.breve).map(l => ({ l, d: distLoja(l) })).sort((a, b) => a.d - b.d)[0]; if (p) location.hash = "#/loja/" + p.l.id; }
@@ -2093,7 +2113,7 @@ $("#barra-b").onclick = () => location.hash === "#/checkout" ? $("#btn-confirmar
 $("#topo-loja").onclick = () => { location.hash = "#/"; setTimeout(() => $("#todas").scrollIntoView({ behavior: "smooth" }), 50); };
 $("#lj-trocar").onclick = $("#topo-loja").onclick;
 let buscaT;
-$("#busca-menu").addEventListener("input", e => { renderMenu(e.target.value); spy(); clearTimeout(buscaT); buscaT = setTimeout(() => e.target.value.trim() && track("search", { search_term: e.target.value.trim() }), 800); });
+$("#busca-menu").addEventListener("input", e => { renderMenu(e.target.value); spy(); clearTimeout(buscaT); buscaT = setTimeout(() => e.target.value.trim() && track("search", { search_term: e.target.value.trim().slice(0, 60), resultados: $$("#lj-menu .prod").length }), 800); });
 
 $("#cep").addEventListener("input", e => { e.target.value = mascaraCep(e.target.value); e.target.classList.remove("erro"); if (e.target.value.length === 9) $("#form-cep").requestSubmit(); });
 $("#form-cep").addEventListener("submit", async e => {
@@ -2111,16 +2131,17 @@ $("#form-cep").addEventListener("submit", async e => {
   track("search_cep", { cep3: cep.slice(0, 3), loja: top.l.id });
   setTimeout(() => $("#todas").scrollIntoView({ behavior: "smooth", block: "start" }), 600);
 });
+$("#lj-horas").addEventListener("toggle", e => { if (e.target.open) track("ver_horarios", { aberta: aberta(S.loja) }); });
 $("#btn-geo").onclick = () => {
   const res = $("#cep-res"); res.hidden = false;
-  if (!navigator.geolocation) { res.textContent = "Teu navegador não libera a localização. Usa o CEP."; return; }
+  if (!navigator.geolocation) { res.textContent = "Teu navegador não libera a localização. Usa o CEP."; track("geolocalizacao", { resultado: "indisponivel" }); return; }
   res.textContent = "Pegando tua localização…";
   navigator.geolocation.getCurrentPosition(p => {
-    S.geo = { lat: p.coords.latitude, lng: p.coords.longitude }; S.filtro = "Todas"; renderFiltros(); renderLojas(); renderFavs();
+    S.geo = { lat: p.coords.latitude, lng: p.coords.longitude }; S.filtro = "Todas"; renderFiltros(); renderLojas(); renderFavs(); track("geolocalizacao", { resultado: "ok" });
     const top = LOJAS.filter(l => !l.breve).map(l => ({ l, d: km(S.geo, l) })).sort((a, b) => a.d - b.d)[0];
     res.innerHTML = top.d <= RAIO ? `📍 A loja <b>${top.l.n}</b> é a mais perto de você. <button class="link" data-loja="${top.l.id}">Pedir dela</button>` : `📍 Nenhuma loja entrega aí ainda. A mais perto é a ${top.l.n}.`;
     $("#todas").scrollIntoView({ behavior: "smooth" });
-  }, () => { res.textContent = "Sem permissão de localização. Sem problema: digita o CEP."; }, { timeout: 8000, maximumAge: 600000 });
+  }, err => { res.textContent = "Sem permissão de localização. Sem problema: digita o CEP."; track("geolocalizacao", { resultado: err && err.code === 1 ? "negado" : "falhou" }); }, { timeout: 8000, maximumAge: 600000 });
 };
 
 /* ---------- cookies ---------- */
