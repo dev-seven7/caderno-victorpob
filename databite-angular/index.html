@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cardápio Digital · atual × protótipo × Angular | Ogro</title>
-<meta name="description" content="Piloto 1 da esteira Databite Angular: os 12 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
+<meta name="description" content="Piloto 1 da esteira Databite Angular: os 14 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
 <meta name="robots" content="noindex, nofollow" />
 <meta property="og:title" content="Cardápio Digital · atual × protótipo × Angular" />
-<meta property="og:description" content="12 diferenciais, 11 já em código, 28 de 28 testes passando." />
+<meta property="og:description" content="14 diferenciais, 13 já em código, 34 de 34 testes passando." />
 <meta property="og:image" content="img/prototipo-home.webp" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FF5500'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,7 +161,7 @@
     <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. As regras foram testadas; a parte Angular espera a versão e o padrão do repositório deles.</p>
     <div class="chips">
       <span class="chip st-info">Prototype only</span>
-      <span class="chip st-ok">Regras: 28/28 testes</span>
+      <span class="chip st-ok">Regras: 34/34 testes</span>
       <span class="chip st-warn">Angular: build não rodado</span>
       <span class="chip st-bad">Cardápio atual é React 18.2</span>
     </div>
@@ -177,7 +177,7 @@
 <nav aria-label="Seções">
   <div class="wrap">
     <a href="#lado-a-lado">Lado a lado</a>
-    <a href="#diferenciais">12 diferenciais</a>
+    <a href="#diferenciais">14 diferenciais</a>
     <a href="#arquitetura">Arquitetura</a>
     <a href="#atual-melhor">O que o atual faz melhor</a>
     <a href="#status">Status e testes</a>
@@ -209,7 +209,7 @@
   </section>
 
   <section id="diferenciais">
-    <div class="sec-h"><span class="n">02</span><h2>Os 12 diferenciais, com o código</h2></div>
+    <div class="sec-h"><span class="n">02</span><h2>Os 14 diferenciais, com o código</h2></div>
     <p class="sec-sub">Cada card compara o Cardápio atual com o protótipo e abre o código que implementa o diferencial. Sacola, cupom e checkout do atual não foram testados: a loja estava fechada e não fazemos pedido real.</p>
     <div class="filtros" role="group" aria-label="Filtrar diferenciais">
       <button class="f-btn" data-f="todos" aria-pressed="true">Todos (12)</button>
@@ -456,7 +456,7 @@
 
       <article class="dif" data-st="ok">
         <div class="dif-top"><span class="dif-n">5</span><div><h3>Ficha que guia a escolha</h3><div class="meta"><span class="chip st-ok">6 testes ok</span><span class="chip st-info">Modelo do atual + experiência do protótipo</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Grupos com mínimo, máximo e obrigatório; o upsell é um grupo de 22 opções dentro do burger.</div><div class="novo"><b>Protótipo</b>"Vira combo +R$ 15" em 1 toque, que já abre a bebida; o botão diz o que falta ("Escolhe mais 2").</div></div>
+        <div class="vs"><div><b>Atual</b>Grupos com mínimo, máximo e obrigatório; o upsell é um grupo de 22 opções dentro do burger.</div><div class="novo"><b>Protótipo</b>Os mesmos grupos reais (mínimo, máximo, preço), com menos toques: o que já vem fica marcado, a opção grátis vem escolhida, a lista longa de upsell começa recolhida e o botão diz o que falta ("Falta 1 em Bebida gelada"). Desde 25/11 o "Vira combo" simulado saiu.</div></div>
         <details class="cod"><summary>Ver código · selecao.ts + models.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/selecao.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, GrupoOpcoes, Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
 
 <span class="c">/**
@@ -1365,6 +1365,309 @@
   { ga4: <span class="s">'erro_tecnico'</span>, quando: <span class="s">'Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)'</span> },
 ];</code></pre></details>
       </article>
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">13</span><div><h3>“Monte seu hambúrguer” montado na tela</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-info">Grupos e preços do atual</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Vende o “Monte seu hambúrguer” com os grupos certos, mas mostra a foto de outro burger (Ogro Festival).</div><div class="novo"><b>Protótipo</b>Mesmos grupos e preços; o burger vai sendo montado em camadas conforme a escolha, com descrição para leitor de tela.</div></div>
+        <details class="cod"><summary>Ver código · monte.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/monte.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 13 · "Monte seu hambúrguer" montado na tela.
+ *
+ * O Cardápio atual já vende o "Monte seu hambúrguer" (grupos Pão, Carne, Queijos, Molhos e Complementos, com
+ * mínimo, máximo e preço), mas mostra a foto de outro burger. Aqui a escolha vira camadas, na ordem da montagem:
+ * pão de cima, molhos extras, complementos, queijos, carne, 1º molho, pão de baixo (lido de cima para baixo).
+ *
+ * Regra pura (sem Angular): recebe o produto e a seleção, devolve as camadas e uma descrição para leitor de tela.
+ * Quem desenha é `ui/monte-preview.component.ts`. O mapa de ingrediente → camada é por nome, porque a API ainda
+ * não tem um campo de "tipo de ingrediente" (pedir à Databite junto com B4).
+ */</span>
+
+<span class="k">export</span> <span class="k">type</span> TipoCamada = <span class="s">'pao-topo'</span> | <span class="s">'pao-base'</span> | <span class="s">'carne'</span> | <span class="s">'queijo'</span> | <span class="s">'molho'</span> | <span class="s">'folha'</span> | <span class="s">'tomate'</span> | <span class="s">'picles'</span> | <span class="s">'cebola'</span> | <span class="s">'bacon'</span>;
+
+<span class="k">export</span> <span class="k">interface</span> Camada {
+  <span class="k">readonly</span> tipo: TipoCamada;
+  <span class="k">readonly</span> nome: string;
+  <span class="c">/** Cor de apoio do desenho (o design system pode trocar por token). */</span>
+  <span class="k">readonly</span> cor?: string;
+  <span class="c">/** Carne de 180 g desenha mais grossa. */</span>
+  <span class="k">readonly</span> grossa?: boolean;
+}
+
+<span class="k">const</span> CAMADA: ReadonlyArray&lt;<span class="k">readonly</span> [RegExp, TipoCamada, string]&gt; = [
+  [/maionese de alho/, <span class="s">'molho'</span>, <span class="s">'#F2EAD3'</span>], [/smoke/, <span class="s">'molho'</span>, <span class="s">'#D9B98A'</span>], [/ketchup/, <span class="s">'molho'</span>, <span class="s">'#C0302A'</span>], [/barbecue/, <span class="s">'molho'</span>, <span class="s">'#5B2418'</span>],
+  [/american cheese/, <span class="s">'queijo'</span>, <span class="s">'#F5C242'</span>], [/cheddar/, <span class="s">'queijo'</span>, <span class="s">'#E8892B'</span>],
+  [/alface/, <span class="s">'folha'</span>, <span class="s">'#6FB04A'</span>], [/tomate/, <span class="s">'tomate'</span>, <span class="s">'#D9472B'</span>], [/picles/, <span class="s">'picles'</span>, <span class="s">'#7C9A3A'</span>],
+  [/cebola roxa/, <span class="s">'cebola'</span>, <span class="s">'#8E4A8C'</span>], [/cebola caramelizada/, <span class="s">'cebola'</span>, <span class="s">'#8A5A2B'</span>], [/bacon/, <span class="s">'bacon'</span>, <span class="s">'#9E3B2A'</span>],
+];
+
+<span class="k">const</span> semAcento = (s: string) =&gt; s.normalize(<span class="s">'NFD'</span>).replace(/[̀-ͯ]/g, <span class="s">''</span>).toLowerCase();
+
+<span class="c">/** Nomes escolhidos num grupo (pelo título), na ordem das opções do cardápio. */</span>
+<span class="k">function</span> escolhidos(produto: Produto, sel: Selecao, titulo: string): string[] {
+  <span class="k">const</span> g = produto.grupos.find(x =&gt; semAcento(x.titulo) === semAcento(titulo));
+  <span class="k">if</span> (!g) <span class="k">return</span> [];
+  <span class="k">return</span> g.opcoes.filter(o =&gt; (sel[g.id]?.[o.id] ?? 0) &gt; 0).map(o =&gt; o.nome);
+}
+
+<span class="k">function</span> camadaDe(nome: string): Camada | null {
+  <span class="k">const</span> achou = CAMADA.find(([re]) =&gt; re.test(semAcento(nome)));
+  <span class="k">return</span> achou ? { tipo: achou[1], nome, cor: achou[2] } : null;
+}
+
+<span class="k">export</span> <span class="k">interface</span> Montagem {
+  <span class="c">/** De cima para baixo. A carne aparece só depois de escolhida (`temCarne` false = desenhar o lugar vazio). */</span>
+  <span class="k">readonly</span> camadas: ReadonlyArray&lt;Camada&gt;;
+  <span class="k">readonly</span> temCarne: boolean;
+  <span class="c">/** "Teu burger: Carne 180g, Queijo Cheddar, Barbecue..." para aria-label. */</span>
+  <span class="k">readonly</span> descricao: string;
+}
+
+<span class="k">export</span> <span class="k">function</span> montarBurger(produto: Produto, sel: Selecao): Montagem {
+  <span class="k">const</span> carne = escolhidos(produto, sel, <span class="s">'Carne'</span>)[0];
+  <span class="k">const</span> queijos = escolhidos(produto, sel, <span class="s">'Queijos'</span>);
+  <span class="k">const</span> molhos = escolhidos(produto, sel, <span class="s">'Molhos'</span>);
+  <span class="k">const</span> compl = escolhidos(produto, sel, <span class="s">'Complementos'</span>);
+  <span class="k">const</span> so = (xs: ReadonlyArray&lt;string&gt;) =&gt; xs.map(camadaDe).filter((c): c is Camada =&gt; !!c);
+  <span class="k">const</span> camadas: Camada[] = [
+    { tipo: <span class="s">'pao-topo'</span>, nome: <span class="s">'Pão'</span> },
+    ...so(molhos.slice(1)), ...so(compl), ...so(queijos),
+    ...(carne ? [{ tipo: <span class="s">'carne'</span> as <span class="k">const</span>, nome: carne, grossa: /180/.test(carne) }] : []),
+    ...so(molhos.slice(0, 1)),
+    { tipo: <span class="s">'pao-base'</span>, nome: <span class="s">'Pão'</span> },
+  ];
+  <span class="k">const</span> itens = [carne, ...queijos, ...molhos, ...compl].filter(Boolean);
+  <span class="k">return</span> { camadas, temCarne: !!carne, descricao: itens.length ? <span class="s">`Teu burger: ${itens.join(', ')}`</span> : <span class="s">'Monte teu burger'</span> };
+}
+</code></pre></details><details class="cod"><summary>Ver código · monte-preview.component.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/monte-preview.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+<span class="k">import</span> <span class="k">type</span> { Montagem } <span class="k">from</span> <span class="s">'../domain/monte'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 13 · "Monte seu hambúrguer" montado na tela (apresentação pura, OnPush).
+ * Regra das camadas: domain/monte.ts (montarBurger). Este componente só desenha.
+ * - Cada camada entra com uma queda curta; com "menos movimento" não anima (CSS abaixo).
+ * - Para leitor de tela, o desenho é UMA imagem com a descrição do burger (role="img").
+ * - `mini` = versão do card do cardápio (sem animação, menor).
+ */</span>
+@Component({
+  selector: <span class="s">'app-monte-preview'</span>,
+  standalone: <span class="k">true</span>,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: <span class="s">`
+    &lt;div class="pilha" [class.pilha--mini]="mini()" role="img" [attr.aria-label]="montagem().descricao"&gt;
+      @for (c of montagem().camadas; track $index) {
+        @if (c.tipo === 'pao-base' &amp;&amp; !montagem().temCarne) {
+          &lt;i class="cm cm--vazio" aria-hidden="true"&gt;carne&lt;/i&gt;
+        }
+        &lt;i class="cm" [class]="'cm cm--' + c.tipo" [class.grossa]="c.grossa" [style.--c]="c.cor" [attr.title]="c.nome" aria-hidden="true"&gt;&lt;/i&gt;
+      }
+    &lt;/div&gt;
+  `</span>,
+  styles: [<span class="s">`
+    :host { display: block; height: 100%; }
+    .pilha { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; height: 100%; padding: 18px 0;
+             background: radial-gradient(circle at 50% 40%, #2c2c2c, #141414); }
+    .cm { display: block; width: 62%; height: 8px; border-radius: 6px; background: var(--c); animation: cai .35s cubic-bezier(.2,.9,.3,1.2) both; }
+    @keyframes cai { from { transform: translateY(-14px); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .cm { animation: none; } }
+    .cm--pao-topo { height: 54px; width: 66%; border-radius: 60% 60% 12px 12px / 90% 90% 12px 12px; background: radial-gradient(ellipse at 40% 25%, #F6C873, #D98E2B 60%, #B86E1A); }
+    .cm--pao-base { height: 22px; width: 64%; border-radius: 8px 8px 16px 16px; background: linear-gradient(#E9A64A, #C97F24); }
+    .cm--carne { height: 20px; width: 68%; border-radius: 10px; background: radial-gradient(ellipse at 50% 30%, #7A4529, #4A2615); }
+    .cm--carne.grossa { height: 28px; }
+    .cm--queijo { height: 7px; width: 72%; border-radius: 2px 2px 8px 8px; }
+    .cm--folha { height: 9px; width: 74%; border-radius: 40% 40% 50% 50%; }
+    .cm--molho { height: 5px; width: 60%; border-radius: 4px; }
+    .cm--bacon { height: 7px; width: 70%; background: repeating-linear-gradient(90deg, var(--c) 0 14px, #C86A52 14px 20px); }
+    .cm--picles, .cm--cebola, .cm--tomate { height: 6px; }
+    .cm--vazio { height: 20px; width: 62%; border: 2px dashed #666; background: none; color: #888; font: 700 11px sans-serif; display: grid; place-items: center; font-style: normal; animation: none; }
+    .pilha--mini { padding: 8px 0; gap: 1px; }
+    .pilha--mini .cm { animation: none; }
+    .pilha--mini .cm--pao-topo { height: 24px; } .pilha--mini .cm--pao-base, .pilha--mini .cm--carne { height: 10px; }
+  `</span>],
+})
+<span class="k">export</span> <span class="k">class</span> MontePreviewComponent {
+  <span class="k">readonly</span> montagem = input.required&lt;Montagem&gt;();
+  <span class="k">readonly</span> mini = input(<span class="k">false</span>);
+}
+</code></pre></details>
+      </article>
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">14</span><div><h3>Ampliar imagem e “Já vem com”</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-warn">Componente · sem teste</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Tem “Ampliar imagem”; pede toque até em grupo de uma opção só e não pré-marca a opção grátis.</div><div class="novo"><b>Protótipo</b>Foto grande só baixa quando o cliente pede e aproxima no toque; grupo de uma opção vem marcado; Fome normal e Batata P vêm marcadas (nunca opção paga).</div></div>
+        <details class="cod"><summary>Ver código · zoom-foto.component.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/zoom-foto.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, ElementRef, afterNextRender, inject, input, output, signal, viewChild } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 14 · "Ampliar imagem" (o atual tem; aqui com dois cuidados a mais).
+ * - A foto grande só baixa quando o cliente pede: o componente só existe com @if no container
+ *   (`@if (zoom()) { &lt;app-zoom-foto ... /&gt; }`), então nada é buscado antes.
+ * - Toque aproxima no ponto tocado (2,4×) e toque de novo afasta; Esc, ✕ ou toque fora fecham.
+ * - Foco vai para o ✕ ao abrir; quem abriu devolve o foco ao fechar (padrão das camadas da casa).
+ * Formatos: AVIF com WebP de reserva (bancada de 25/11: AVIF ~24% menor na mesma nitidez).
+ */</span>
+@Component({
+  selector: <span class="s">'app-zoom-foto'</span>,
+  standalone: <span class="k">true</span>,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { <span class="s">'(document:keydown.escape)'</span>: <span class="s">'fechar.emit()'</span> },
+  template: <span class="s">`
+    &lt;div class="zoom" [class.perto]="perto()" role="dialog" aria-modal="true" [attr.aria-label]="'Foto ampliada: ' + nome()" (click)="fora($event)"&gt;
+      &lt;div class="zoom__foto" #caixa&gt;
+        &lt;picture&gt;
+          &lt;source [attr.srcset]="base() + '.avif'" type="image/avif" /&gt;
+          &lt;img [src]="base() + '.webp'" [alt]="nome()" (click)="alternar($event)" /&gt;
+        &lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;p class="zoom__dica"&gt;{{ perto() ? 'Toca de novo pra afastar' : 'Toca na foto pra aproximar' }}&lt;/p&gt;
+      &lt;button type="button" class="fechar" #fecharBt (click)="fechar.emit()" aria-label="Fechar a foto"&gt;✕&lt;/button&gt;
+    &lt;/div&gt;
+  `</span>,
+  styles: [<span class="s">`
+    .zoom { position: fixed; inset: 0; z-index: 99; background: rgba(12,12,12,.95); display: grid; }
+    .zoom__foto { overflow: auto; width: 100%; height: 100%; display: grid; place-items: center; overscroll-behavior: contain; }
+    picture { display: contents; }
+    img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
+    .perto .zoom__foto { place-items: start; }
+    .perto img { max-width: none; max-height: none; width: 240%; cursor: zoom-out; }
+    .fechar { position: absolute; top: calc(12px + env(safe-area-inset-top)); right: 12px; width: 40px; height: 40px; border-radius: 50%; background: #fff; }
+    .zoom__dica { position: absolute; left: 0; right: 0; bottom: calc(16px + env(safe-area-inset-bottom)); text-align: center; color: #bbb; font-size: 13px; pointer-events: none; }
+  `</span>],
+})
+<span class="k">export</span> <span class="k">class</span> ZoomFotoComponent {
+  <span class="c">/** Caminho da foto grande SEM extensão (ex.: 'img/z-mcmanis'); vem do campo de mídia do produto (B16). */</span>
+  <span class="k">readonly</span> base = input.required&lt;string&gt;();
+  <span class="k">readonly</span> nome = input.required&lt;string&gt;();
+  <span class="k">readonly</span> fechar = output&lt;void&gt;();
+
+  <span class="k">protected</span> <span class="k">readonly</span> perto = signal(<span class="k">false</span>);
+  <span class="k">private</span> <span class="k">readonly</span> caixa = viewChild.required&lt;ElementRef&lt;HTMLElement&gt;&gt;(<span class="s">'caixa'</span>);
+  <span class="k">private</span> <span class="k">readonly</span> fecharBt = viewChild.required&lt;ElementRef&lt;HTMLButtonElement&gt;&gt;(<span class="s">'fecharBt'</span>);
+
+  constructor() {
+    afterNextRender(() =&gt; this.fecharBt().nativeElement.focus({ preventScroll: <span class="k">true</span> }));
+  }
+
+  <span class="k">protected</span> alternar(ev: MouseEvent): void {
+    ev.stopPropagation();
+    <span class="k">const</span> img = ev.target as HTMLImageElement, r = img.getBoundingClientRect();
+    <span class="k">const</span> fx = (ev.clientX - r.left) / r.width, fy = (ev.clientY - r.top) / r.height;
+    this.perto.update(v =&gt; !v);
+    <span class="k">if</span> (this.perto()) {
+      requestAnimationFrame(() =&gt; {
+        <span class="k">const</span> c = this.caixa().nativeElement;
+        c.scrollLeft = fx * c.scrollWidth - c.clientWidth / 2;
+        c.scrollTop = fy * c.scrollHeight - c.clientHeight / 2;
+      });
+    }
+  }
+
+  <span class="k">protected</span> fora(ev: MouseEvent): void {
+    <span class="k">const</span> alvo = ev.target as HTMLElement;
+    <span class="k">if</span> (alvo.classList.contains(<span class="s">'zoom'</span>) || alvo.classList.contains(<span class="s">'zoom__foto'</span>)) this.fechar.emit();
+  }
+}
+</code></pre></details><details class="cod"><summary>Ver código · selecao.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/selecao.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, GrupoOpcoes, Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 5 · Ficha do produto que guia a escolha.
+ *
+ * Ficamos com o melhor de cada lado:
+ * - Do Cardápio atual, o MODELO: grupos com mínimo, máximo e obrigatório, vindos da API.
+ *   O protótipo tinha regras fixas por tipo de produto e isso não escala.
+ * - Do protótipo, a EXPERIÊNCIA: o botão diz o que falta ("Escolhe a bebida",
+ *   "Escolhe mais 2"), o preço atualiza na hora e o "vira combo" abre o grupo da bebida.
+ */</span>
+
+<span class="k">const</span> total = (sel: Selecao, grupoId: string): number =&gt;
+  Object.values(sel[grupoId] ?? {}).reduce((a, b) =&gt; a + b, 0);
+
+<span class="c">/**
+ * Seleção inicial da ficha (protótipo, 25/11 · "o que o atual faz melhor, faça melhor também"):
+ * - grupo obrigatório de UMA opção só ("Pão", "Pegue seu Ogrostela") já vem marcado e aparece como "Já vem com";
+ * - grupo obrigatório de 1 escolha em que só UMA opção é grátis e as outras custam (Fome normal × Fome de Ogro,
+ *   Batata P × G) já vem com a grátis: o cliente só toca se quiser mudar. Nunca pré-marca opção paga.
+ * Bebida (todas grátis) continua sem pré-seleção: o sabor é escolha do cliente.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> selecaoPadrao(produto: Produto): Selecao {
+  <span class="k">const</span> sel: Record&lt;string, Record&lt;string, number&gt;&gt; = {};
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> produto.grupos) {
+    <span class="k">if</span> (g.visivelSe || g.min &lt; 1) continue;
+    <span class="k">if</span> (g.opcoes.length === 1 &amp;&amp; g.max === 1) { sel[g.id] = { [g.opcoes[0].id]: 1 }; continue; }
+    <span class="k">if</span> (g.min === 1 &amp;&amp; g.max === 1) {
+      <span class="k">const</span> gratis = g.opcoes.filter(o =&gt; o.preco === 0);
+      <span class="k">if</span> (gratis.length === 1 &amp;&amp; g.opcoes.length &gt; 1) sel[g.id] = { [gratis[0].id]: 1 };
+    }
+  }
+  <span class="k">return</span> sel;
+}
+
+<span class="c">/** Grupos que vêm resolvidos (uma opção só): a tela mostra numa linha "Já vem com", sem pedir toque. */</span>
+<span class="k">export</span> <span class="k">const</span> jaVemCom = (produto: Produto): ReadonlyArray&lt;GrupoOpcoes&gt; =&gt;
+  produto.grupos.filter(g =&gt; g.min &gt;= 1 &amp;&amp; g.max === 1 &amp;&amp; g.opcoes.length === 1 &amp;&amp; !g.visivelSe);
+
+<span class="c">/** Grupos que aparecem agora (respeita `visivelSe`, ex.: bebida só depois do "vira combo"). */</span>
+<span class="k">export</span> <span class="k">function</span> gruposVisiveis(produto: Produto, sel: Selecao): GrupoOpcoes[] {
+  <span class="k">return</span> produto.grupos.filter(g =&gt; !g.visivelSe || (sel[g.visivelSe.grupoId]?.[g.visivelSe.opcaoId] ?? 0) &gt; 0);
+}
+
+<span class="c">/** Texto do que falta, na ordem dos grupos. Vazio = pode adicionar. */</span>
+<span class="k">export</span> <span class="k">function</span> oQueFalta(produto: Produto, sel: Selecao): string {
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
+    <span class="k">const</span> n = total(sel, g.id);
+    <span class="k">if</span> (n &lt; g.min) {
+      <span class="k">if</span> (g.min === 1 &amp;&amp; g.max === 1) <span class="k">return</span> <span class="s">`Escolhe: ${g.titulo}`</span>;
+      <span class="k">return</span> <span class="s">`Escolhe mais ${g.min - n}`</span>;
+    }
+  }
+  <span class="k">return</span> <span class="s">''</span>;
+}
+
+<span class="c">/** Pode somar mais uma unidade desta opção sem passar do máximo do grupo? */</span>
+<span class="k">export</span> <span class="k">function</span> podeAumentar(grupo: GrupoOpcoes, sel: Selecao, opcaoId: string): boolean {
+  <span class="k">if</span> (total(sel, grupo.id) &gt;= grupo.max) <span class="k">return</span> <span class="k">false</span>;
+  <span class="k">return</span> grupo.repetir || (sel[grupo.id]?.[opcaoId] ?? 0) === 0;
+}
+
+<span class="c">/**
+ * Aplica um toque numa opção e devolve a NOVA seleção (imutável, bom para signals/OnPush).
+ * - Rádio (max 1, sem repetir): marcar outra opção substitui a anterior; tocar de novo desmarca
+ *   quando o grupo é opcional (min 0), como um checkbox.
+ * - Desmarcou o "vira combo"? A bebida do combo sai junto: ninguém paga por grupo escondido.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> alternar(produto: Produto, grupo: GrupoOpcoes, sel: Selecao, opcaoId: string, delta: 1 | -1): Selecao {
+  <span class="k">const</span> atual: Record&lt;string, number&gt; = { ...(sel[grupo.id] ?? {}) };
+  <span class="k">if</span> (grupo.max === 1 &amp;&amp; !grupo.repetir) {
+    <span class="k">const</span> marcada = (atual[opcaoId] ?? 0) &gt; 0;
+    <span class="k">const</span> proximo = delta === 1 &amp;&amp; !(marcada &amp;&amp; grupo.min === 0) ? { [opcaoId]: 1 } : {};
+    <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: proximo });
+  }
+  <span class="k">if</span> (delta === 1 &amp;&amp; !podeAumentar(grupo, sel, opcaoId)) <span class="k">return</span> sel;
+  <span class="k">const</span> novo = Math.max(0, (atual[opcaoId] ?? 0) + delta);
+  <span class="k">if</span> (novo === 0) delete atual[opcaoId];
+  else atual[opcaoId] = novo;
+  <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: atual });
+}
+
+<span class="c">/** Remove escolhas de grupos que deixaram de ser visíveis. */</span>
+<span class="k">export</span> <span class="k">function</span> normalizar(produto: Produto, sel: Selecao): Selecao {
+  <span class="k">const</span> visiveis = <span class="k">new</span> Set(gruposVisiveis(produto, sel).map(g =&gt; g.id));
+  <span class="k">return</span> Object.fromEntries(Object.entries(sel).filter(([id]) =&gt; visiveis.has(id)));
+}
+
+<span class="c">/** Preço unitário estimado: base + soma das opções × quantidade. O servidor confirma (B6). */</span>
+<span class="k">export</span> <span class="k">function</span> precoUnitario(produto: Produto, sel: Selecao): Centavos {
+  <span class="k">let</span> valor = produto.preco;
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
+    <span class="k">for</span> (<span class="k">const</span> o <span class="k">of</span> g.opcoes) valor += o.preco * (sel[g.id]?.[o.id] ?? 0);
+  }
+  <span class="k">return</span> valor;
+}
+
+<span class="c">/** Chave estável do item na sacola: mesma escolha = mesmo item (soma quantidade). */</span>
+<span class="k">export</span> <span class="k">function</span> chaveItem(produtoId: string, sel: Selecao, ajustes: ReadonlyArray&lt;string&gt; = []): string {
+  <span class="k">const</span> ordenada = Object.keys(sel).sort().map(g =&gt; [g, Object.entries(sel[g]).sort(([a], [b]) =&gt; a.localeCompare(b))]);
+  <span class="k">return</span> <span class="s">`${produtoId}|${JSON.stringify(ordenada)}|${[...ajustes].sort().join(',')}`</span>;
+}
+</code></pre></details>
+      </article>
 
     </div>
     <p class="arqs" style="margin-top:1rem">Ainda sem código: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix estão bloqueados até os contratos B8–B10.</p>
@@ -1390,7 +1693,7 @@
       <li><b>"Monte seu hambúrguer"</b>, com os grupos e preços reais: pão, carne 120 g ou 180 g, 1 a 2 queijos, 1 a 3 molhos e 1 a 6 complementos. <i>A mais:</i> o burger vai sendo montado na tela, camada por camada, conforme a escolha. O atual mostra a foto de outro burger.</li>
       <li><b>Mais variedade de bebida e "Ampliar imagem".</b> Entraram Pepsi (lata, Black, 1,5 l e 2 l), Antarctica Soda, Guaraná em 1,5 l e 2 l, água com e sem gás e H2OH! Limoneto. Agora são 9 bebidas. <i>A mais:</i> a foto ampliada (até 1200 px, cerca de 45 KB em AVIF) só baixa quando o cliente toca, e um toque aproxima no ponto tocado.</li>
     </ul>
-    <p class="sec-sub">Ver no protótipo: <a href="../cardapio-digital/#/loja/botafogo/monte-seu-hamburguer">Monte seu hambúrguer</a> · <a href="../cardapio-digital/#/loja/botafogo/mcmanis">McManis com as opções reais</a> · <a href="../cardapio-digital/#/loja/botafogo/p-rpe">Pepsi</a>. Falta no código Angular: o "Monte seu hambúrguer" montado na tela e a foto ampliada (fatia F11/F5).</p>
+    <p class="sec-sub">Ver no protótipo: <a href="../cardapio-digital/#/loja/botafogo/monte-seu-hamburguer">Monte seu hambúrguer</a> · <a href="../cardapio-digital/#/loja/botafogo/mcmanis">McManis com as opções reais</a> · <a href="../cardapio-digital/#/loja/botafogo/p-rpe">Pepsi</a>. No código Angular: diferenciais 13 e 14 (domain/monte.ts, ui/monte-preview, ui/zoom-foto, selecaoPadrao).</p>
   </section>
 
   <section id="status">
@@ -1399,7 +1702,7 @@
     <div class="tabela"><table>
       <thead><tr><th>Gate</th><th>Status</th><th>Evidência</th></tr></thead>
       <tbody>
-        <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>28 de 28, exit 0, Node 26.12, 25/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
+        <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>34 de 34, exit 0, Node 26.12, 25/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
         <tr><td>Build, lint e typecheck do Angular</td><td><span class="chip st-warn">Não rodado</span></td><td>O Angular não está instalado aqui. O código assume Angular 17+ (standalone, signals, @if/@for) até a Databite confirmar a versão.</td></tr>
         <tr><td>Testes de componente</td><td><span class="chip st-warn">Não rodado</span></td><td>Dependem do TestBed do Angular.</td></tr>
         <tr><td>Paridade visual</td><td><span class="chip st-warn">Não rodado</span></td><td>Falta montar as telas (fatia F2).</td></tr>
@@ -1417,6 +1720,9 @@
   ok   horarios › fechada de dia mostra que abre hoje
   ok   horarios › pula os dias fechados e diz o dia da semana
   ok   horarios › turno até 23:59 aparece como meia-noite
+  ok   monte seu hambúrguer › começa só com o pão e o lugar da carne; pede a carne primeiro
+  ok   monte seu hambúrguer › monta na ordem certa: complementos e queijo em cima da carne, 1º molho embaixo
+  ok   monte seu hambúrguer › segundo molho vai por cima; respeita o máximo de queijos
   ok   dinheiro em centavos › não erra centavo em soma de float
   ok   cupom › abaixo do mínimo mostra quanto falta
   ok   cupom › acima do mínimo calcula 10% em centavos inteiros
@@ -1428,6 +1734,9 @@
   ok   link direto de campanha › lê loja, produto, cupom e utm
   ok   link direto de campanha › produto sem loja deixa a escolha da loja para depois
   ok   link direto de campanha › URL comum não é link de campanha
+  ok   selecao padrão (Já vem com + única opção grátis) › grupo de uma opção só já vem marcado e vira "Já vem com"
+  ok   selecao padrão (Já vem com + única opção grátis) › a única opção grátis vem marcada (Fome normal, Batata P); bebida espera o cliente
+  ok   selecao padrão (Já vem com + única opção grátis) › nunca pré-marca opção paga, grupo opcional nem grupo escondido
   ok   selecao › pede o obrigatório antes de liberar o Adicionar
   ok   selecao › vira combo abre o grupo da bebida e cobra o adicional
   ok   selecao › desmarcar o combo tira a bebida junto
@@ -1435,7 +1744,7 @@
   ok   selecao › respeita o máximo do grupo
   ok   selecao › a mesma escolha gera a mesma chave, em qualquer ordem
 
-4 arquivos · 28 testes · 28 passaram · 0 falharam</code></pre></details>
+5 arquivos · 34 testes · 34 passaram · 0 falharam</code></pre></details>
   </section>
 
   <section id="databite">
