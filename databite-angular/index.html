@@ -150,6 +150,42 @@
   footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);color:var(--txt3);font-size:.8rem}
   .aviso{background:#3E3110;border:1px solid #6b5514;color:#f1dc8c;border-radius:.8rem;padding:.8rem 1rem;font-size:.88rem}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+  /* comparativo em vídeo */
+  .cmp-ctrl{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem}
+  .seg{display:inline-flex;background:#1A1A1A;border:1px solid var(--line);border-radius:999px;padding:3px}
+  .seg button{cursor:pointer;border:0;background:none;color:#9a9a9a;font:700 .74rem Inter;letter-spacing:.06em;text-transform:uppercase;padding:.45rem .95rem;border-radius:999px;min-height:32px}
+  .seg button[aria-pressed="true"]{background:var(--flame);color:var(--coal)}
+  .caps{display:flex;flex-wrap:wrap;gap:.4rem}
+  .caps button{cursor:pointer;border:1px solid var(--line);background:#161616;color:#bdbdbd;font:600 .8rem Inter;padding:.45rem .8rem;border-radius:.6rem;min-height:34px}
+  .caps button b{font-family:Anton;color:var(--flame);margin-right:.3rem;font-weight:400}
+  .caps button[aria-selected="true"]{border-color:var(--flame);color:#fff;background:rgba(255,85,0,.1)}
+  .cmp-acoes{display:flex;gap:.4rem;margin-left:auto}
+  .btn-v{cursor:pointer;border:1px solid var(--line);background:#1A1A1A;color:#e5e5e5;font:700 .74rem Inter;padding:.45rem .8rem;border-radius:.6rem;min-height:34px}
+  .btn-v:hover,.caps button:hover,.seg button:hover{border-color:var(--flame)}
+  .cmp button:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+  .palco{display:grid;gap:1rem}
+  .palco[data-dev="mobile"]{grid-template-columns:1fr 1fr;max-width:760px;margin:0 auto;gap:.8rem}
+  @media(min-width:900px){.palco[data-dev="desktop"]{grid-template-columns:1fr 1fr}}
+  .tela{margin:0;min-width:0;background:var(--coal2);border:1px solid var(--line);border-radius:1rem;padding:.7rem}
+  .tela--novo{border-color:rgba(255,85,0,.45);box-shadow:0 0 0 1px rgba(255,85,0,.12),0 18px 50px -24px rgba(255,85,0,.45)}
+  .tela figcaption{display:flex;justify-content:space-between;align-items:center;margin-bottom:.55rem}
+  .t-tempo{font:600 .78rem 'JetBrains Mono',monospace;color:var(--txt3);white-space:nowrap}
+  .moldura{position:relative;border-radius:.6rem;overflow:hidden;background:#000;aspect-ratio:16/10}
+  .palco[data-dev="mobile"] .moldura{aspect-ratio:390/664;border-radius:1.4rem;border:5px solid #262626}
+  .palco[data-dev="mobile"] .moldura video{object-fit:contain}
+  .moldura video{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .fim{position:absolute;top:.5rem;right:.5rem;background:rgba(13,13,13,.85);color:#fff;font:700 .68rem Inter;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .55rem;border-radius:999px}
+  .barra{height:4px;background:#262626;border-radius:4px;margin-top:.55rem;overflow:hidden}
+  .barra i{display:block;height:100%;width:0;background:var(--txt3)}
+  .tela--novo .barra i{background:var(--flame)}
+  .resultado{list-style:none;margin:.7rem 0 0;padding:0;display:grid;gap:.35rem}
+  .resultado li{position:relative;padding-left:1.4rem;font-size:.84rem;line-height:1.45;color:var(--txt2)}
+  .resultado li::before{position:absolute;left:0;top:0;font-weight:800}
+  .tela--atual .resultado li::before{content:'–';color:var(--txt3)}
+  .tela--novo .resultado li{color:var(--txt)}
+  .tela--novo .resultado li::before{content:'✓';color:var(--ok)}
+  @media(max-width:520px){.palco[data-dev="mobile"] .resultado li{font-size:.74rem}.cmp-acoes{margin-left:0}.palco[data-dev="mobile"] .t-tempo{font-size:.62rem}.palco[data-dev="mobile"] .tag{font-size:.56rem;padding:.12rem .4rem}.palco[data-dev="mobile"] .tela{padding:.5rem}}
 </style>
 </head>
 <body>
@@ -176,7 +212,7 @@
 
 <nav aria-label="Seções">
   <div class="wrap">
-    <a href="#lado-a-lado">Lado a lado</a>
+    <a href="#lado-a-lado">Veja em vídeo</a>
     <a href="#diferenciais">16 diferenciais</a>
     <a href="#atual-melhor">O que veio do atual</a>
     <a href="#arquitetura">Arquitetura</a>
@@ -188,30 +224,39 @@
 <main class="wrap">
 
   <section id="lado-a-lado">
-    <div class="sec-h"><span class="n">01</span><h2>Lado a lado</h2></div>
-    <p class="sec-sub">Mesma loja (Botafogo, fechada no horário) e mesma tela de 1384 px. À esquerda o Cardápio Digital de hoje; à direita, o <a href="../cardapio-digital/">protótipo</a>.</p>
+    <div class="sec-h"><span class="n">01</span><h2>Veja o cliente usando</h2></div>
+    <p class="sec-sub">O mesmo caminho nos dois cardápios: mesmo CEP, mesma loja (Botafogo, fechada no horário da gravação), mesmas buscas. Gravado em 25/11 em tempo real, sem cortes e sem acelerar. O círculo laranja é o toque do cliente.</p>
 
-    <div class="duo-row">
-      <h3>Entrada</h3>
-      <div class="pair">
-        <figure class="shot"><img src="img/atual-home.webp" alt="Cardápio atual: pede o endereço e mostra um único card de loja, Botafogo, marcado como Fechado" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Pede o endereço e mostra a loja que entrega nele</span></figcaption></figure>
-        <figure class="shot"><img src="img/prototipo-home.webp" alt="Protótipo: título Fome? Isso resolve teu dia, busca por CEP e a lista das 14 lojas com status e botão Pedir ou Agendar" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>14 lojas, CEP ou localização, "abre hoje às 18h"</span></figcaption></figure>
+    <div class="cmp" id="cmp">
+      <div class="cmp-ctrl">
+        <div class="seg" role="group" aria-label="Aparelho">
+          <button type="button" data-dev="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-dev="mobile" aria-pressed="false">Celular</button>
+        </div>
+        <div class="caps" role="tablist" aria-label="Momento da jornada">
+          <button type="button" role="tab" data-cap="entrada" aria-selected="true"><b>1</b> Primeira visita</button>
+          <button type="button" role="tab" data-cap="pedido" aria-selected="false"><b>2</b> Pedir um McManis</button>
+          <button type="button" role="tab" data-cap="monte" aria-selected="false"><b>3</b> Monte seu hambúrguer</button>
+        </div>
+        <div class="cmp-acoes">
+          <button type="button" class="btn-v" id="cmp-play" aria-label="Pausar">❚❚ Pausar</button>
+          <button type="button" class="btn-v" id="cmp-de-novo">↺ Assistir de novo</button>
+        </div>
       </div>
-    </div>
 
-    <div class="duo-row">
-      <h3>Ficha do produto</h3>
-      <div class="pair">
-        <figure class="shot"><img src="img/atual-ficha-mcmanis.webp" alt="Cardápio atual: ficha do McManis com foto, descrição em português e inglês e o grupo de sachês com contador; botão Loja fechada" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Grupos reais; nada vem marcado; "Loja fechada" bloqueia</span></figcaption></figure>
-        <figure class="shot"><img src="img/prototipo-ficha-mcmanis.webp" alt="Protótipo: ficha do McManis com botões Ampliar e Compartilhar, grupo Tamanho da fome com Fome normal já marcada e botão Adicionar com o preço" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>Mesmos grupos; a opção grátis já vem marcada; ampliar e compartilhar</span></figcaption></figure>
-      </div>
-    </div>
-
-    <div class="duo-row">
-      <h3>Monte seu hambúrguer</h3>
-      <div class="pair">
-        <figure class="shot"><img src="img/atual-monte.webp" alt="Cardápio atual: Monte seu hambúrguer com foto de outro burger, preço R$ 0,00 e o grupo Pão obrigatório com uma opção só" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Foto de outro burger; R$ 0,00; pede para escolher o único pão</span></figcaption></figure>
-        <figure class="shot"><img src="img/prototipo-monte.webp" alt="Protótipo: Monte seu hambúrguer com o burger montado a partir de recortes das fotos do cardápio (pão, carne, queijos, barbecue, bacon, tomate, alface), a partir de R$ 31,50 e Já vem com Pão" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>Burger montado com recortes das fotos do cardápio; "Já vem com Pão"</span></figcaption></figure>
+      <div class="palco" id="palco" data-dev="desktop">
+        <figure class="tela tela--atual">
+          <figcaption><span class="tag tag-atual">Atual</span><span class="t-tempo" id="t-atual">0:00</span></figcaption>
+          <div class="moldura"><video id="v-atual" muted playsinline preload="metadata" aria-label="Gravação do Cardápio Digital atual"></video><span class="fim" hidden>✓ fim</span></div>
+          <div class="barra"><i id="b-atual"></i></div>
+          <ul class="resultado" id="r-atual"></ul>
+        </figure>
+        <figure class="tela tela--novo">
+          <figcaption><span class="tag tag-novo">Protótipo</span><span class="t-tempo" id="t-prototipo">0:00</span></figcaption>
+          <div class="moldura"><video id="v-prototipo" muted playsinline preload="metadata" aria-label="Gravação do protótipo"></video><span class="fim" hidden>✓ fim</span></div>
+          <div class="barra"><i id="b-prototipo"></i></div>
+          <ul class="resultado" id="r-prototipo"></ul>
+        </figure>
       </div>
     </div>
   </section>
@@ -1748,6 +1793,96 @@
     const f = b.dataset.f;
     document.querySelectorAll('.dif').forEach(d => { d.hidden = f !== 'todos' && d.dataset.st !== f; });
   }));
+
+  // comparativo em vídeo: os dois cardápios começam juntos; quando o mais longo termina, recomeçam juntos
+  (() => {
+    const RES = {
+      entrada: {
+        atual: ['Antes de ver qualquer loja, pede CEP e número', 'Depois mostra só a loja do endereço: Botafogo, "Fechado"', 'Não diz quando a loja abre'],
+        prototipo: ['As 14 lojas aparecem na hora; o CEP é opcional', 'Com o CEP, ordena pela distância: "Mais perto de você"', '"Fechada · abre hoje às 18h", com tempo e taxa de entrega'],
+      },
+      pedido: {
+        atual: ['"Fome normal" precisa ser marcada à mão', 'Com a loja fechada, o botão vira "Loja fechada" e o pedido para ali'],
+        prototipo: ['"Fome normal" já vem marcada', 'Loja fechada não trava: monta o pedido e agenda a entrega', 'A foto voa até a sacola; "Completa teu pedido?" antes do pagamento'],
+      },
+      monte: {
+        atual: ['A foto é de outro burger e não muda com a escolha', 'O preço no topo fica em R$ 0,00', 'Cada ingrediente num contador − 0 +'],
+        prototipo: ['O burger que o cliente monta aparece na tela, camada por camada', 'O pão já vem incluído ("Já vem com")', 'O total aparece no botão Adicionar'],
+      },
+    };
+    const SITES = ['atual', 'prototipo'];
+    const sec = document.getElementById('cmp');
+    if (!sec) return;
+    const palco = document.getElementById('palco');
+    const btnPlay = document.getElementById('cmp-play');
+    const v = Object.fromEntries(SITES.map(s => [s, document.getElementById('v-' + s)]));
+    const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let dev = innerWidth < 700 ? 'mobile' : 'desktop', cap = 'entrada', pausado = calmo, visivel = false, reinicio;
+    const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+    function rotuloPlay() {
+      btnPlay.textContent = pausado ? '▶ Assistir' : '❚❚ Pausar';
+      btnPlay.setAttribute('aria-label', pausado ? 'Assistir' : 'Pausar');
+    }
+    function tocarTudo() {
+      clearTimeout(reinicio);
+      if (pausado || !visivel) return;
+      SITES.forEach(s => v[s].play().catch(() => {}));
+    }
+    function doZero() {
+      clearTimeout(reinicio);
+      SITES.forEach(s => { v[s].currentTime = 0; v[s].parentElement.querySelector('.fim').hidden = true; });
+      tocarTudo();
+    }
+    function carregar() {
+      clearTimeout(reinicio);
+      palco.dataset.dev = dev;
+      SITES.forEach(s => {
+        const base = `vid/${s}-${dev}-${cap}`;
+        v[s].poster = base + '.jpg';
+        v[s].src = base + '.mp4';
+        v[s].parentElement.querySelector('.fim').hidden = true;
+        document.getElementById('b-' + s).style.width = '0';
+        document.getElementById('r-' + s).innerHTML = RES[cap][s].map(t => `<li>${t}</li>`).join('');
+      });
+      tocarTudo();
+    }
+    SITES.forEach(s => {
+      const el = v[s];
+      el.addEventListener('timeupdate', () => {
+        if (!el.duration) return;
+        document.getElementById('b-' + s).style.width = (el.currentTime / el.duration * 100) + '%';
+        document.getElementById('t-' + s).textContent = `${mmss(el.currentTime)} / ${mmss(el.duration)}`;
+      });
+      el.addEventListener('ended', () => {
+        el.parentElement.querySelector('.fim').hidden = false;
+        if (SITES.every(x => v[x].ended)) reinicio = setTimeout(doZero, 2500);
+      });
+    });
+    sec.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+      dev = b.dataset.dev;
+      sec.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      carregar();
+    }));
+    sec.querySelectorAll('.caps button').forEach(b => b.addEventListener('click', () => {
+      cap = b.dataset.cap;
+      sec.querySelectorAll('.caps button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+      carregar();
+    }));
+    btnPlay.addEventListener('click', () => {
+      pausado = !pausado; rotuloPlay();
+      if (pausado) { clearTimeout(reinicio); SITES.forEach(s => v[s].pause()); }
+      else if (SITES.every(s => v[s].ended)) doZero(); else tocarTudo();
+    });
+    document.getElementById('cmp-de-novo').addEventListener('click', () => { pausado = false; rotuloPlay(); doZero(); });
+    new IntersectionObserver(([e]) => {
+      visivel = e.isIntersecting;
+      if (visivel) tocarTudo(); else SITES.forEach(s => v[s].pause());
+    }, { threshold: 0.25 }).observe(sec);
+    sec.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.dev === dev)));
+    rotuloPlay();
+    carregar();
+  })();
 </script>
 </body>
 </html>
