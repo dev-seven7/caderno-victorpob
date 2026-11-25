@@ -186,6 +186,9 @@
   .tela--novo .resultado li{color:var(--txt)}
   .tela--novo .resultado li::before{content:'✓';color:var(--ok)}
   @media(max-width:520px){.palco[data-dev="mobile"] .resultado li{font-size:.74rem}.cmp-acoes{margin-left:0}.palco[data-dev="mobile"] .t-tempo{font-size:.62rem}.palco[data-dev="mobile"] .tag{font-size:.56rem;padding:.12rem .4rem}.palco[data-dev="mobile"] .tela{padding:.5rem}}
+  .sem-video{margin:0;display:grid;place-items:center;text-align:center;min-height:220px;padding:1.4rem;border:1px dashed #3a3a3a;border-radius:.6rem;color:var(--txt2);font-size:.95rem;line-height:1.55;background:repeating-linear-gradient(135deg,#151515 0 12px,#121212 12px 24px)}
+  .palco[data-dev="mobile"] .sem-video{min-height:420px;font-size:.82rem}
+  .sem-video[hidden],.moldura[hidden],.barra[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -225,7 +228,7 @@
 
   <section id="lado-a-lado">
     <div class="sec-h"><span class="n">01</span><h2>Veja o cliente usando</h2></div>
-    <p class="sec-sub">O mesmo caminho nos dois cardápios: mesmo CEP, mesma loja (Botafogo, fechada no horário da gravação), mesmas buscas. Gravado em 25/11 em tempo real, sem cortes e sem acelerar. O círculo laranja é o toque do cliente.</p>
+    <p class="sec-sub">O mesmo caminho nos dois cardápios, em 8 momentos. Momentos 1 a 3: mesmo CEP e loja Botafogo (fechada no horário). Momentos 4 a 8: loja Lapa, aberta. Quando o atual não tem o recurso, a tela dele diz isso. Gravado em 25/11 em tempo real, sem cortes e sem acelerar. O círculo laranja é o toque do cliente.</p>
 
     <div class="cmp" id="cmp">
       <div class="cmp-ctrl">
@@ -237,6 +240,11 @@
           <button type="button" role="tab" data-cap="entrada" aria-selected="true"><b>1</b> Primeira visita</button>
           <button type="button" role="tab" data-cap="pedido" aria-selected="false"><b>2</b> Pedir um McManis</button>
           <button type="button" role="tab" data-cap="monte" aria-selected="false"><b>3</b> Monte seu hambúrguer</button>
+          <button type="button" role="tab" data-cap="busca" aria-selected="false"><b>4</b> Achar o que quer</button>
+          <button type="button" role="tab" data-cap="foto" aria-selected="false"><b>5</b> Ver de perto</button>
+          <button type="button" role="tab" data-cap="sacola" aria-selected="false"><b>6</b> Sacola e cupom</button>
+          <button type="button" role="tab" data-cap="link" aria-selected="false"><b>7</b> Link do WhatsApp</button>
+          <button type="button" role="tab" data-cap="depois" aria-selected="false"><b>8</b> Depois de pedir</button>
         </div>
         <div class="cmp-acoes">
           <button type="button" class="btn-v" id="cmp-play" aria-label="Pausar">❚❚ Pausar</button>
@@ -247,6 +255,7 @@
       <div class="palco" id="palco" data-dev="desktop">
         <figure class="tela tela--atual">
           <figcaption><span class="tag tag-atual">Atual</span><span class="t-tempo" id="t-atual">0:00</span></figcaption>
+          <p class="sem-video" id="sem-video" hidden></p>
           <div class="moldura"><video id="v-atual" muted playsinline preload="metadata" aria-label="Gravação do Cardápio Digital atual"></video><span class="fim" hidden>✓ fim</span></div>
           <div class="barra"><i id="b-atual"></i></div>
           <ul class="resultado" id="r-atual"></ul>
@@ -1794,7 +1803,8 @@
     document.querySelectorAll('.dif').forEach(d => { d.hidden = f !== 'todos' && d.dataset.st !== f; });
   }));
 
-  // comparativo em vídeo: os dois cardápios começam juntos; quando o mais longo termina, recomeçam juntos
+  // comparativo em vídeo: os dois cardápios começam juntos; quando o mais longo termina, recomeçam juntos.
+  // Momento sem vídeo do atual (o atual não tem o recurso, ou mostrar exigiria pedido real): aviso no lugar.
   (() => {
     const RES = {
       entrada: {
@@ -1809,6 +1819,28 @@
         atual: ['A foto é de outro burger e não muda com a escolha', 'O preço no topo fica em R$ 0,00', 'Cada ingrediente num contador − 0 +'],
         prototipo: ['O burger que o cliente monta aparece na tela, camada por camada', 'O pão já vem incluído ("Já vem com")', 'O total aparece no botão Adicionar'],
       },
+      busca: {
+        atual: ['Busca no cardápio, sem filtros', 'Buscar "coco" não acha o X-Cocó: a lista fica vazia (falta o acento)'],
+        prototipo: ['"coco" acha o X-Cocó, mesmo sem acento', 'Filtros de 1 toque: Frango, Costela, Bacon, Até R$ 40, Pra dividir', 'Mostra quantas opções sobraram: "21 opções em Até R$ 40"'],
+      },
+      foto: {
+        atual: ['"Ampliar imagem" abre a foto maior num quadro, com a descrição e "Ver produto"', 'Foto parada, sem vídeo do produto'],
+        prototipo: ['A ficha abre com o burger em vídeo', '"Ampliar" baixa a foto grande só quando o cliente pede', 'Um toque aproxima: dá pra ver a cebola caramelizada'],
+      },
+      sacola: {
+        atual: ['A sacola é uma página com pagamento, cupom, itens, nota fiscal e "Confirmar pedido"', 'OGRO10 com R$ 44,90 na sacola: "Cupom inválido.", sem dizer se falta valor', 'Pagamento já vem escolhido: "Na entrega - Master Crédito"'],
+        prototipo: ['O cupom mostra quanto falta: "Faltam R$ 15,10 pro OGRO10 valer"', 'Mais um McManis e o desconto entra na hora', 'Tirou sem querer? "Desfazer" devolve o item'],
+      },
+      link: {
+        atual: null,
+        semVideo: 'O Cardápio atual tem link por produto, mas o link não leva cupom nem diz de onde o cliente veio (WhatsApp, Instagram, QR). Não há o que gravar.',
+        prototipo: ['O link do disparo de WhatsApp abre direto a ficha do Ogrostela', '"Cupom OGRO10 guardado na sacola"', 'A origem (WhatsApp, campanha) vai junto na medição'],
+      },
+      depois: {
+        atual: null,
+        semVideo: 'Não gravado: no Cardápio atual, mostrar esta etapa exigiria fazer um pedido real na loja.',
+        prototipo: ['O CEP preenche a rua sozinho', 'Pix com QR e copia-e-cola, com prazo na tela', 'Acompanha o pedido: recebido, pago, na chapa, saiu, entregue', 'Demonstração: nenhum pedido é enviado'],
+      },
     };
     const SITES = ['atual', 'prototipo'];
     const sec = document.getElementById('cmp');
@@ -1816,8 +1848,10 @@
     const palco = document.getElementById('palco');
     const btnPlay = document.getElementById('cmp-play');
     const v = Object.fromEntries(SITES.map(s => [s, document.getElementById('v-' + s)]));
+    const aviso = document.getElementById('sem-video');
     const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let dev = innerWidth < 700 ? 'mobile' : 'desktop', cap = 'entrada', pausado = calmo, visivel = false, reinicio;
+    const ativos = () => SITES.filter(s => RES[cap][s] !== null);
     const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
     function rotuloPlay() {
@@ -1827,24 +1861,29 @@
     function tocarTudo() {
       clearTimeout(reinicio);
       if (pausado || !visivel) return;
-      SITES.forEach(s => v[s].play().catch(() => {}));
+      ativos().forEach(s => v[s].play().catch(() => {}));
     }
     function doZero() {
       clearTimeout(reinicio);
-      SITES.forEach(s => { v[s].currentTime = 0; v[s].parentElement.querySelector('.fim').hidden = true; });
+      ativos().forEach(s => { v[s].currentTime = 0; v[s].parentElement.querySelector('.fim').hidden = true; });
       tocarTudo();
     }
     function carregar() {
       clearTimeout(reinicio);
       palco.dataset.dev = dev;
       SITES.forEach(s => {
-        const base = `vid/${s}-${dev}-${cap}`;
-        v[s].poster = base + '.jpg';
-        v[s].src = base + '.mp4';
-        v[s].parentElement.querySelector('.fim').hidden = true;
+        const el = v[s], tem = RES[cap][s] !== null;
+        el.parentElement.hidden = !tem;
+        document.getElementById('b-' + s).parentElement.hidden = !tem;
+        document.getElementById('t-' + s).textContent = tem ? '0:00' : '';
+        el.parentElement.querySelector('.fim').hidden = true;
         document.getElementById('b-' + s).style.width = '0';
-        document.getElementById('r-' + s).innerHTML = RES[cap][s].map(t => `<li>${t}</li>`).join('');
+        document.getElementById('r-' + s).innerHTML = tem ? RES[cap][s].map(t => `<li>${t}</li>`).join('') : '';
+        if (tem) { const base = `vid/${s}-${dev}-${cap}`; el.poster = base + '.jpg'; el.src = base + '.mp4'; }
+        else { el.pause(); el.removeAttribute('src'); el.load(); }
       });
+      aviso.hidden = RES[cap].atual !== null;
+      aviso.textContent = RES[cap].semVideo || '';
       tocarTudo();
     }
     SITES.forEach(s => {
@@ -1856,7 +1895,7 @@
       });
       el.addEventListener('ended', () => {
         el.parentElement.querySelector('.fim').hidden = false;
-        if (SITES.every(x => v[x].ended)) reinicio = setTimeout(doZero, 2500);
+        if (ativos().every(x => v[x].ended)) reinicio = setTimeout(doZero, 2500);
       });
     });
     sec.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
@@ -1872,7 +1911,7 @@
     btnPlay.addEventListener('click', () => {
       pausado = !pausado; rotuloPlay();
       if (pausado) { clearTimeout(reinicio); SITES.forEach(s => v[s].pause()); }
-      else if (SITES.every(s => v[s].ended)) doZero(); else tocarTudo();
+      else if (ativos().every(s => v[s].ended)) doZero(); else tocarTudo();
     });
     document.getElementById('cmp-de-novo').addEventListener('click', () => { pausado = false; rotuloPlay(); doZero(); });
     new IntersectionObserver(([e]) => {
