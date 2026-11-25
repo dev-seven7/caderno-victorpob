@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cardápio Digital · atual × protótipo × Angular | Ogro</title>
-<meta name="description" content="Piloto 1 da esteira Databite Angular: os 14 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
+<meta name="description" content="Piloto 1 da esteira Databite Angular: os 16 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
 <meta name="robots" content="noindex, nofollow" />
 <meta property="og:title" content="Cardápio Digital · atual × protótipo × Angular" />
-<meta property="og:description" content="14 diferenciais, 13 já em código, 34 de 34 testes passando." />
+<meta property="og:description" content="16 diferenciais, 13 já em código, todos os testes das regras passando." />
 <meta property="og:image" content="img/prototipo-home.webp" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FF5500'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -158,7 +158,7 @@
   <div class="wrap">
     <span class="kicker">Piloto 1 · Databite Angular Migration Engine</span>
     <h1 class="display">Cardápio Digital: atual × <em>protótipo</em> × Angular</h1>
-    <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. As regras foram testadas; a parte Angular espera a versão e o padrão do repositório deles.</p>
+    <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. Comparação refeita em 25/11, às 14h, com a versão do protótipo das 13h52.</p>
     <div class="chips">
       <span class="chip st-info">Prototype only</span>
       <span class="chip st-ok">Regras: 34/34 testes</span>
@@ -166,20 +166,21 @@
       <span class="chip st-bad">Cardápio atual é React 18.2</span>
     </div>
     <div class="kpis">
-      <div class="kpi"><b>12</b><small>diferenciais do protótipo</small></div>
-      <div class="kpi"><b>11<span>/12</span></b><small>já em código</small></div>
-      <div class="kpi"><b>28<span>/28</span></b><small>testes das regras passando</small></div>
-      <div class="kpi"><b>32</b><small>eventos de medição mapeados</small></div>
+      <div class="kpi"><b>16</b><small>diferenciais do protótipo</small></div>
+      <div class="kpi"><b>13<span>/16</span></b><small>já em código</small></div>
+      <div class="kpi"><b>34<span>/34</span></b><small>testes das regras passando</small></div>
+      <div class="kpi"><b>44</b><small>eventos de medição, iguais no protótipo e no código</small></div>
     </div>
   </div>
 </header>
 
 <nav aria-label="Seções">
   <div class="wrap">
+    <a href="#novidades">O que mudou</a>
     <a href="#lado-a-lado">Lado a lado</a>
-    <a href="#diferenciais">14 diferenciais</a>
+    <a href="#diferenciais">16 diferenciais</a>
+    <a href="#atual-melhor">O que o atual fazia melhor</a>
     <a href="#arquitetura">Arquitetura</a>
-    <a href="#atual-melhor">O que o atual faz melhor</a>
     <a href="#status">Status e testes</a>
     <a href="#databite">O que falta da Databite</a>
   </div>
@@ -187,9 +188,20 @@
 
 <main class="wrap">
 
+  <section id="novidades">
+    <div class="sec-h"><span class="n">00</span><h2>O que mudou desde a 1ª comparação</h2></div>
+    <p class="sec-sub">A 1ª versão desta página (13h10) comparava 12 diferenciais. O protótipo andou duas vezes depois disso, e a comparação foi refeita contra a versão no ar.</p>
+    <ul class="lista">
+      <li><b>Saíram o "vira combo" e o "Turbina teu burger", que eram simulados.</b> A ficha agora usa as opções reais do Cardápio Digital: Tamanho da fome 120 g/180 g, batata, bebida, "Leva junto com desconto", sachês e burgers do combo, com o mínimo, o máximo e o preço de cada um.</li>
+      <li><b>Tudo o que o Cardápio atual fazia melhor entrou no protótipo, e melhorado:</b> URL própria por produto com botão de compartilhar, "Monte seu hambúrguer" montado na tela, mais bebidas e ampliar imagem (cards 5, 11, 13 e 14).</li>
+      <li><b>Novos: acessibilidade AA e app instalável (PWA)</b> (cards 15 e 16). O Cardápio atual não tem manifesto nem service worker, ou seja, não instala na tela e não abre sem internet (verificado em 25/11).</li>
+      <li><b>No código:</b> 34 testes (eram 28) e lista de eventos alinhada com o protótipo (44 eventos; saiu o <code>upsell_combo</code>).</li>
+    </ul>
+  </section>
+
   <section id="lado-a-lado">
     <div class="sec-h"><span class="n">01</span><h2>Lado a lado</h2></div>
-    <p class="sec-sub">Mesma loja (Botafogo), mesmo horário (25/11, 12h45, loja fechada) e mesma tela de 1384 px. À esquerda o Cardápio Digital de hoje; à direita, o <a href="../cardapio-digital/">protótipo</a>.</p>
+    <p class="sec-sub">Mesma loja (Botafogo, fechada no horário) e mesma tela de 1384 px. À esquerda o Cardápio Digital de hoje; à direita, o <a href="../cardapio-digital/">protótipo</a>.</p>
 
     <div class="duo-row">
       <h3>Entrada</h3>
@@ -202,33 +214,41 @@
     <div class="duo-row">
       <h3>Ficha do produto</h3>
       <div class="pair">
-        <figure class="shot"><img src="img/atual-ficha-mcmanis.webp" alt="Cardápio atual: ficha do McManis com foto, descrição em português e inglês e o grupo de sachês com contador; botão Loja fechada" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Grupos de opções; "Loja fechada" bloqueia</span></figcaption></figure>
-        <figure class="shot"><img src="img/prototipo-ficha-mcmanis.webp" alt="Protótipo: ficha do McManis com vídeo do burger, caixa Vira combo mais 15 reais e botão Adicionar com o preço" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>Vídeo, "vira combo" em 1 toque, preço no botão</span></figcaption></figure>
+        <figure class="shot"><img src="img/atual-ficha-mcmanis.webp" alt="Cardápio atual: ficha do McManis com foto, descrição em português e inglês e o grupo de sachês com contador; botão Loja fechada" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Grupos reais; nada vem marcado; "Loja fechada" bloqueia</span></figcaption></figure>
+        <figure class="shot"><img src="img/prototipo-ficha-mcmanis.webp" alt="Protótipo: ficha do McManis com botões Ampliar e Compartilhar, grupo Tamanho da fome com Fome normal já marcada e botão Adicionar com o preço" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>Mesmos grupos; a opção grátis já vem marcada; ampliar e compartilhar</span></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="duo-row">
+      <h3>Monte seu hambúrguer</h3>
+      <div class="pair">
+        <figure class="shot"><img src="img/atual-monte.webp" alt="Cardápio atual: Monte seu hambúrguer com foto de outro burger, preço R$ 0,00 e o grupo Pão obrigatório com uma opção só" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-atual">Atual</span><span>Foto de outro burger; R$ 0,00; pede para escolher o único pão</span></figcaption></figure>
+        <figure class="shot"><img src="img/prototipo-monte.webp" alt="Protótipo: Monte seu hambúrguer com o burger desenhado em camadas (pão, carne, queijos, bacon, alface, tomate), a partir de R$ 31,50, Já vem com Pão e total R$ 57,10" width="1100" height="712" loading="lazy"><figcaption><span class="tag tag-novo">Protótipo</span><span>O burger montado em camadas; "Já vem com Pão"; preço real</span></figcaption></figure>
       </div>
     </div>
   </section>
 
   <section id="diferenciais">
-    <div class="sec-h"><span class="n">02</span><h2>Os 14 diferenciais, com o código</h2></div>
+    <div class="sec-h"><span class="n">02</span><h2>Os 16 diferenciais, com o código</h2></div>
     <p class="sec-sub">Cada card compara o Cardápio atual com o protótipo e abre o código que implementa o diferencial. Sacola, cupom e checkout do atual não foram testados: a loja estava fechada e não fazemos pedido real.</p>
     <div class="filtros" role="group" aria-label="Filtrar diferenciais">
-      <button class="f-btn" data-f="todos" aria-pressed="true">Todos (12)</button>
-      <button class="f-btn" data-f="ok" aria-pressed="false">Testado (8)</button>
-      <button class="f-btn" data-f="parcial" aria-pressed="false">Em código, sem teste (3)</button>
-      <button class="f-btn" data-f="bloq" aria-pressed="false">Depende da API (1)</button>
+      <button class="f-btn" data-f="todos" aria-pressed="true">Todos (16)</button>
+      <button class="f-btn" data-f="ok" aria-pressed="false">Testado (9)</button>
+      <button class="f-btn" data-f="parcial" aria-pressed="false">Em código, sem teste (4)</button>
+      <button class="f-btn" data-f="bloq" aria-pressed="false">Sem código ainda (3)</button>
     </div>
 
     <div class="difs">
 
       <article class="dif" data-st="bloq">
         <div class="dif-top"><span class="dif-n">1</span><div><h3>Entrada com todas as lojas</h3><div class="meta"><span class="chip st-bad">Depende da API (B5)</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Pede o endereço e mostra só a loja que entrega nele.</div><div class="novo"><b>Protótipo</b>As 13 lojas + São Gonçalo "em breve", filtro por região, CEP ou localização e a mais perto em destaque.</div></div>
+        <div class="vs"><div><b>Atual</b>Pede o endereço e mostra só a loja que entrega nele.</div><div class="novo"><b>Protótipo</b>As 13 lojas + São Gonçalo "em breve", filtro por região, CEP ou localização, a mais perto em destaque e "Tua última loja".</div></div>
         <p class="arqs">O status de cada loja usa <code>domain/horarios.ts</code> (card 2). Distância, área e taxa de entrega vêm da API da Databite.</p>
       </article>
 
       <article class="dif" data-st="ok">
         <div class="dif-top"><span class="dif-n">2</span><div><h3>Status que diz quando abre</h3><div class="meta"><span class="chip st-ok">7 testes ok</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>"Fechado".</div><div class="novo"><b>Protótipo</b>"Fechada · abre hoje às 18h" / "Aberta · até 5h", entendendo turno que passa da meia-noite.</div></div>
+        <div class="vs"><div><b>Atual</b>"Fechado".</div><div class="novo"><b>Protótipo</b>"Fechada · abre hoje às 18h" / "Aberta · até 4h", entendendo turno que passa da meia-noite.</div></div>
         <details class="cod"><summary>Ver código · horarios.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/horarios.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { HorarioSemana } <span class="k">from</span> <span class="s">'./models'</span>;
 
 <span class="c">/**
@@ -328,7 +348,7 @@
 
       <article class="dif" data-st="parcial">
         <div class="dif-top"><span class="dif-n">3</span><div><h3>Produto em vídeo, leve</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Foto parada + "Ampliar imagem".</div><div class="novo"><b>Protótipo</b>Vídeo curto em loop, só o que está na tela; AV1 → VP9 → MP4; foto parada para quem pede menos movimento ou economiza dados.</div></div>
+        <div class="vs"><div><b>Atual</b>Foto parada.</div><div class="novo"><b>Protótipo</b>Vídeo curto em loop, só o que está na tela; AV1 → VP9 → MP4; foto parada para quem pede menos movimento ou economiza dados.</div></div>
         <details class="cod"><summary>Ver código · video-produto.directive.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/video-produto.directive.ts</span><pre><code><span class="k">import</span> { DestroyRef, Directive, ElementRef, OnInit, Renderer2, inject, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
 
 <span class="c">/**
@@ -455,8 +475,8 @@
       </article>
 
       <article class="dif" data-st="ok">
-        <div class="dif-top"><span class="dif-n">5</span><div><h3>Ficha que guia a escolha</h3><div class="meta"><span class="chip st-ok">6 testes ok</span><span class="chip st-info">Modelo do atual + experiência do protótipo</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Grupos com mínimo, máximo e obrigatório; o upsell é um grupo de 22 opções dentro do burger.</div><div class="novo"><b>Protótipo</b>Os mesmos grupos reais (mínimo, máximo, preço), com menos toques: o que já vem fica marcado, a opção grátis vem escolhida, a lista longa de upsell começa recolhida e o botão diz o que falta ("Falta 1 em Bebida gelada"). Desde 25/11 o "Vira combo" simulado saiu.</div></div>
+        <div class="dif-top"><span class="dif-n">5</span><div><h3>Ficha que guia a escolha</h3><div class="meta"><span class="chip st-ok">9 testes ok</span><span class="chip st-info">Opções reais do atual</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Grupos com mínimo, máximo e obrigatório; pede toque até em grupo de uma opção só; nada vem marcado.</div><div class="novo"><b>Protótipo</b>Os mesmos grupos e preços. Grupo de uma opção vira "Já vem com"; a única opção grátis já vem marcada (Fome normal, Batata P), nunca uma paga; lista longa recolhida; o botão diz o que falta.</div></div>
         <details class="cod"><summary>Ver código · selecao.ts + models.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/selecao.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, GrupoOpcoes, Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
 
 <span class="c">/**
@@ -466,13 +486,37 @@
  * - Do Cardápio atual, o MODELO: grupos com mínimo, máximo e obrigatório, vindos da API.
  *   O protótipo tinha regras fixas por tipo de produto e isso não escala.
  * - Do protótipo, a EXPERIÊNCIA: o botão diz o que falta ("Escolhe a bebida",
- *   "Escolhe mais 2"), o preço atualiza na hora e o "vira combo" abre o grupo da bebida.
+ *   "Escolhe mais 2"), o preço atualiza na hora e um grupo condicional só aparece quando faz sentido.
  */</span>
 
 <span class="k">const</span> total = (sel: Selecao, grupoId: string): number =&gt;
   Object.values(sel[grupoId] ?? {}).reduce((a, b) =&gt; a + b, <span class="n">0</span>);
 
-<span class="c">/** Grupos que aparecem agora (respeita `visivelSe`, ex.: bebida só depois do "vira combo"). */</span>
+<span class="c">/**
+ * Seleção inicial da ficha (protótipo, 25/11 · "o que o atual faz melhor, faça melhor também"):
+ * - grupo obrigatório de UMA opção só ("Pão", "Pegue seu Ogrostela") já vem marcado e aparece como "Já vem com";
+ * - grupo obrigatório de 1 escolha em que só UMA opção é grátis e as outras custam (Fome normal × Fome de Ogro,
+ *   Batata P × G) já vem com a grátis: o cliente só toca se quiser mudar. Nunca pré-marca opção paga.
+ * Bebida (todas grátis) continua sem pré-seleção: o sabor é escolha do cliente.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> selecaoPadrao(produto: Produto): Selecao {
+  <span class="k">const</span> sel: Record&lt;string, Record&lt;string, number&gt;&gt; = {};
+  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> produto.grupos) {
+    <span class="k">if</span> (g.visivelSe || g.min &lt; <span class="n">1</span>) continue;
+    <span class="k">if</span> (g.opcoes.length === <span class="n">1</span> &amp;&amp; g.max === <span class="n">1</span>) { sel[g.id] = { [g.opcoes[<span class="n">0</span>].id]: <span class="n">1</span> }; continue; }
+    <span class="k">if</span> (g.min === <span class="n">1</span> &amp;&amp; g.max === <span class="n">1</span>) {
+      <span class="k">const</span> gratis = g.opcoes.filter(o =&gt; o.preco === <span class="n">0</span>);
+      <span class="k">if</span> (gratis.length === <span class="n">1</span> &amp;&amp; g.opcoes.length &gt; <span class="n">1</span>) sel[g.id] = { [gratis[<span class="n">0</span>].id]: <span class="n">1</span> };
+    }
+  }
+  <span class="k">return</span> sel;
+}
+
+<span class="c">/** Grupos que vêm resolvidos (uma opção só): a tela mostra numa linha "Já vem com", sem pedir toque. */</span>
+<span class="k">export</span> <span class="k">const</span> jaVemCom = (produto: Produto): ReadonlyArray&lt;GrupoOpcoes&gt; =&gt;
+  produto.grupos.filter(g =&gt; g.min &gt;= <span class="n">1</span> &amp;&amp; g.max === <span class="n">1</span> &amp;&amp; g.opcoes.length === <span class="n">1</span> &amp;&amp; !g.visivelSe);
+
+<span class="c">/** Grupos que aparecem agora (respeita `visivelSe`, ex.: bebida só depois de marcar um combo). */</span>
 <span class="k">export</span> <span class="k">function</span> gruposVisiveis(produto: Produto, sel: Selecao): GrupoOpcoes[] {
   <span class="k">return</span> produto.grupos.filter(g =&gt; !g.visivelSe || (sel[g.visivelSe.grupoId]?.[g.visivelSe.opcaoId] ?? <span class="n">0</span>) &gt; <span class="n">0</span>);
 }
@@ -499,7 +543,7 @@
  * Aplica um toque numa opção e devolve a NOVA seleção (imutável, bom para signals/OnPush).
  * - Rádio (max 1, sem repetir): marcar outra opção substitui a anterior; tocar de novo desmarca
  *   quando o grupo é opcional (min 0), como um checkbox.
- * - Desmarcou o "vira combo"? A bebida do combo sai junto: ninguém paga por grupo escondido.
+ * - Desmarcou a opção que abria um grupo condicional? O grupo sai junto: ninguém paga por grupo escondido.
  */</span>
 <span class="k">export</span> <span class="k">function</span> alternar(produto: Produto, grupo: GrupoOpcoes, sel: Selecao, opcaoId: string, delta: <span class="n">1</span> | -<span class="n">1</span>): Selecao {
   <span class="k">const</span> atual: Record&lt;string, number&gt; = { ...(sel[grupo.id] ?? {}) };
@@ -585,7 +629,7 @@
   <span class="c">/** true = stepper por opção (pode repetir a mesma); false = rádio/checkbox. */</span>
   <span class="k">readonly</span> repetir: boolean;
   <span class="k">readonly</span> opcoes: ReadonlyArray&lt;Opcao&gt;;
-  <span class="c">/** Grupo que só aparece quando outra opção está marcada (ex.: bebida do "vira combo"). */</span>
+  <span class="c">/** Grupo que só aparece quando outra opção está marcada (ex.: bebida que só aparece depois de marcar um combo; confirmar se a API tem grupo condicional, B4). */</span>
   <span class="k">readonly</span> visivelSe?: { <span class="k">readonly</span> grupoId: string; <span class="k">readonly</span> opcaoId: string };
 }
 
@@ -814,7 +858,7 @@
       </article>
 
       <article class="dif" data-st="ok">
-        <div class="dif-top"><span class="dif-n">8</span><div><h3>Cupom que mostra quanto falta</h3><div class="meta"><span class="chip st-ok">2 testes ok</span><span class="chip st-info">O servidor valida</span></div></div></div>
+        <div class="dif-top"><span class="dif-n">8</span><div><h3>Cupom que mostra quanto falta</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-info">O servidor valida</span></div></div></div>
         <div class="vs"><div><b>Atual</b>Não testado.</div><div class="novo"><b>Protótipo</b>"Faltam R$ 12,30 pro OGRO10 valer" + barra de progresso.</div></div>
         <details class="cod"><summary>Ver código · cupom.ts + dinheiro.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/cupom.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos } <span class="k">from</span> <span class="s">'./models'</span>;
 
@@ -877,7 +921,7 @@
 
       <article class="dif" data-st="ok">
         <div class="dif-top"><span class="dif-n">9</span><div><h3>"Completa teu pedido?"</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Sugestões dentro da ficha de cada burger.</div><div class="novo"><b>Protótipo</b>Um passo antes do pagamento, só com o que falta (bebida, batata, sobremesa), sem urgência inventada.</div></div>
+        <div class="vs"><div><b>Atual</b>Oferece tudo dentro da ficha de cada burger (grupo "Até 40% off", 22 opções).</div><div class="novo"><b>Protótipo</b>Um passo antes do pagamento, só com o que falta (bebida, batata, sobremesa), sem urgência inventada.</div></div>
         <details class="cod"><summary>Ver código · completa-pedido.ts + componente</summary><span class="arq-nome">src/app/features/cardapio/domain/completa-pedido.ts</span><pre><code><span class="c">/**
  * DIFERENCIAL 9 · "Completa teu pedido?" antes do pagamento.
  *
@@ -890,7 +934,7 @@
 <span class="c">/** O mínimo que a regra precisa saber de cada item da sacola. */</span>
 <span class="k">export</span> <span class="k">interface</span> ItemParaSugestao {
   <span class="k">readonly</span> categoriaId: string;
-  <span class="c">/** O item já traz bebida (combo, "vira combo", combo pra dividir com refri). */</span>
+  <span class="c">/** O item já traz bebida (combo, combo pra dividir com refri). */</span>
   <span class="k">readonly</span> incluiBebida: boolean;
   <span class="c">/** O item já traz acompanhamento (batata, nuggets). */</span>
   <span class="k">readonly</span> incluiAcompanhamento: boolean;
@@ -1048,8 +1092,8 @@
       </article>
 
       <article class="dif" data-st="ok">
-        <div class="dif-top"><span class="dif-n">11</span><div><h3>Link de campanha</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>URL de produto, sem cupom nem origem.</div><div class="novo"><b>Protótipo</b><code>/loja/botafogo/ogrostela?cupom=OGRO10&amp;utm_source=whatsapp</code> abre a ficha, guarda o cupom e a origem segue em todos os eventos.</div></div>
+        <div class="dif-top"><span class="dif-n">11</span><div><h3>URL por produto e link de campanha</h3><div class="meta"><span class="chip st-ok">3 testes ok</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>URL de produto (<code>/product/&lt;id&gt;</code>), sem cupom, sem origem e sem botão de compartilhar.</div><div class="novo"><b>Protótipo</b><code>/loja/botafogo/mcmanis</code> legível, botão de compartilhar, voltar do celular fecha a ficha sem perder a rolagem; <code>?cupom=OGRO10&amp;utm_source=whatsapp</code> guarda o cupom e a origem.</div></div>
         <details class="cod"><summary>Ver código · link-direto.ts + guard</summary><span class="arq-nome">src/app/features/cardapio/domain/link-direto.ts</span><pre><code><span class="c">/**
  * DIFERENCIAL 11 · Link de campanha que abre o produto certo, com cupom e origem.
  *
@@ -1152,8 +1196,8 @@
       </article>
 
       <article class="dif" data-st="parcial">
-        <div class="dif-top"><span class="dif-n">12</span><div><h3>Medição por produto</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Aviso de cookies (Recusar/Permitir); eventos não verificados.</div><div class="novo"><b>Protótipo</b>32 eventos GA4/Meta, impressão real (≥ 50% na tela por ≥ 1 s), tempo na ficha, <code>event_id</code> para deduplicar com a CAPI, nada sem consentimento.</div></div>
+        <div class="dif-top"><span class="dif-n">12</span><div><h3>Medição por produto</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span><span class="chip st-info">44 eventos = protótipo</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Aviso de cookies (Recusar/Permitir); eventos não verificados.</div><div class="novo"><b>Protótipo</b>44 eventos GA4/Meta, impressão real (≥ 50% na tela por ≥ 1 s), tempo na ficha, compartilhar, ampliar, PWA, <code>event_id</code> para deduplicar com a CAPI, nada sem consentimento.</div></div>
         <details class="cod"><summary>Ver código · analytics.service.ts + impressao.directive.ts + mapa-eventos.ts</summary><span class="arq-nome">src/app/features/cardapio/data-access/analytics.service.ts</span><pre><code><span class="k">import</span> { DOCUMENT } <span class="k">from</span> <span class="s">'@angular/common'</span>;
 <span class="k">import</span> { Injectable, inject, signal } <span class="k">from</span> <span class="s">'@angular/core'</span>;
 <span class="k">import</span> { MAPA_EVENTOS } <span class="k">from</span> <span class="s">'./mapa-eventos'</span>;
@@ -1341,12 +1385,18 @@
   { ga4: <span class="s">'view_item_list'</span>, quando: <span class="s">'Card ≥ 50% na tela por 1 s (impressão, em lotes de 20)'</span> },
   { ga4: <span class="s">'select_item'</span>, quando: <span class="s">'Tocou no card (lista e posição)'</span> },
   { ga4: <span class="s">'view_item'</span>, quando: <span class="s">'Abriu a ficha do produto'</span>, meta: <span class="s">'ViewContent'</span> },
-  { ga4: <span class="s">'select_option'</span>, quando: <span class="s">'Escolheu bebida, burger do combo ou adicional'</span> },
-  { ga4: <span class="s">'upsell_combo'</span>, quando: <span class="s">'Marcou "vira combo"'</span> },
+  { ga4: <span class="s">'select_option'</span>, quando: <span class="s">'Escolheu uma opção da ficha (grupo = nome real: Tamanho da fome, Bebida gelada, Molhos…) ou um ajuste'</span> },
+  { ga4: <span class="s">'ampliar_imagem'</span>, quando: <span class="s">'Abriu a foto grande do produto'</span> },
+  { ga4: <span class="s">'share'</span>, quando: <span class="s">'Compartilhou o produto pela ficha (nativo do celular ou link copiado)'</span> },
   { ga4: <span class="s">'tempo_no_item'</span>, quando: <span class="s">'Fechou a ficha: segundos na ficha, segundos de vídeo, se adicionou'</span> },
   { ga4: <span class="s">'exposicao_itens'</span>, quando: <span class="s">'Saiu do cardápio: segundos que cada produto ficou visível'</span> },
   { ga4: <span class="s">'tempo_engajado'</span>, quando: <span class="s">'Marcos de 15, 30, 60, 120 e 300 s ativos'</span> },
   { ga4: <span class="s">'scroll_profundidade'</span>, quando: <span class="s">'Rolou 25, 50, 75 e 90%'</span> },
+  { ga4: <span class="s">'tempo_na_pagina'</span>, quando: <span class="s">'Saiu da tela: segundos ativos, totais e rolagem máxima'</span> },
+  { ga4: <span class="s">'filtro_regiao'</span>, quando: <span class="s">'Escolheu uma região na lista de lojas'</span> },
+  { ga4: <span class="s">'geolocalizacao'</span>, quando: <span class="s">'Usou a localização (ok, negado, falhou)'</span> },
+  { ga4: <span class="s">'ver_horarios'</span>, quando: <span class="s">'Abriu os horários da semana da loja'</span> },
+  { ga4: <span class="s">'continuar_pedido'</span>, quando: <span class="s">'Retomou a sacola guardada'</span> },
   { ga4: <span class="s">'search'</span>, quando: <span class="s">'Buscou no cardápio (com nº de resultados; 0 = procura algo que não tem)'</span>, meta: <span class="s">'Search'</span> },
   { ga4: <span class="s">'filtro_cardapio'</span>, quando: <span class="s">'Ligou ou tirou um filtro rápido, com nº de resultados'</span> },
   { ga4: <span class="s">'add_to_cart'</span>, quando: <span class="s">'Pôs na sacola (ficha, sugestão, repetir)'</span>, meta: <span class="s">'AddToCart'</span>, conversao: <span class="k">true</span> },
@@ -1359,16 +1409,23 @@
   { ga4: <span class="s">'add_payment_info'</span>, quando: <span class="s">'Escolheu a forma de pagamento'</span>, meta: <span class="s">'AddPaymentInfo'</span> },
   { ga4: <span class="s">'checkout_erro'</span>, quando: <span class="s">'Tentou confirmar com campo faltando (só o NOME do campo, nunca o conteúdo)'</span> },
   { ga4: <span class="s">'purchase'</span>, quando: <span class="s">'Pedido confirmado PELO SERVIDOR'</span>, meta: <span class="s">'Purchase'</span>, conversao: <span class="k">true</span> },
+  { ga4: <span class="s">'pix_copiar'</span>, quando: <span class="s">'Copiou o código Pix (só com o Pix real do gateway, B9)'</span> },
+  { ga4: <span class="s">'pix_paguei'</span>, quando: <span class="s">'Tocou em "Já paguei", com os segundos no Pix'</span> },
   { ga4: <span class="s">'rating'</span>, quando: <span class="s">'Deu nota ao pedido'</span> },
   { ga4: <span class="s">'deep_link'</span>, quando: <span class="s">'Entrou por link de campanha (produto, loja, cupom, utm_*)'</span> },
   { ga4: <span class="s">'nudge_show'</span>, quando: <span class="s">'Lembrete de sacola guardada apareceu (inatividade ou saída)'</span> },
+  { ga4: <span class="s">'nudge_click'</span>, quando: <span class="s">'O que a pessoa escolheu no lembrete (fechar pedido ou ainda escolhendo)'</span> },
+  { ga4: <span class="s">'pwa_convite'</span>, quando: <span class="s">'Convite para instalar o app apareceu (só depois do 1º pedido)'</span> },
+  { ga4: <span class="s">'pwa_instalar'</span>, quando: <span class="s">'Resposta ao convite (aceitou, recusou, agora não)'</span> },
+  { ga4: <span class="s">'pwa_instalado'</span>, quando: <span class="s">'App instalado. Todo evento aberto pelo app leva app: true'</span> },
   { ga4: <span class="s">'erro_tecnico'</span>, quando: <span class="s">'Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)'</span> },
 ];</code></pre></details>
       </article>
+
       <article class="dif" data-st="ok">
-        <div class="dif-top"><span class="dif-n">13</span><div><h3>“Monte seu hambúrguer” montado na tela</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-info">Grupos e preços do atual</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Vende o “Monte seu hambúrguer” com os grupos certos, mas mostra a foto de outro burger (Ogro Festival).</div><div class="novo"><b>Protótipo</b>Mesmos grupos e preços; o burger vai sendo montado em camadas conforme a escolha, com descrição para leitor de tela.</div></div>
-        <details class="cod"><summary>Ver código · monte.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/monte.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
+        <div class="dif-top"><span class="dif-n">13</span><div><h3>"Monte seu hambúrguer" montado na tela</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-info">Grupos e preços do atual</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Vende com os grupos certos, mas mostra a foto de outro burger e o preço R$ 0,00.</div><div class="novo"><b>Protótipo</b>Mesmos grupos e preços, "a partir de R$ 31,50"; o burger vai sendo montado em camadas, com descrição para leitor de tela.</div></div>
+        <details class="cod"><summary>Ver código · monte.ts + monte-preview.component.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/monte.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
 
 <span class="c">/**
  * DIFERENCIAL 13 · "Monte seu hambúrguer" montado na tela.
@@ -1406,12 +1463,12 @@
 <span class="k">function</span> escolhidos(produto: Produto, sel: Selecao, titulo: string): string[] {
   <span class="k">const</span> g = produto.grupos.find(x =&gt; semAcento(x.titulo) === semAcento(titulo));
   <span class="k">if</span> (!g) <span class="k">return</span> [];
-  <span class="k">return</span> g.opcoes.filter(o =&gt; (sel[g.id]?.[o.id] ?? 0) &gt; 0).map(o =&gt; o.nome);
+  <span class="k">return</span> g.opcoes.filter(o =&gt; (sel[g.id]?.[o.id] ?? <span class="n">0</span>) &gt; <span class="n">0</span>).map(o =&gt; o.nome);
 }
 
-<span class="k">function</span> camadaDe(nome: string): Camada | null {
+<span class="k">function</span> camadaDe(nome: string): Camada | <span class="k">null</span> {
   <span class="k">const</span> achou = CAMADA.find(([re]) =&gt; re.test(semAcento(nome)));
-  <span class="k">return</span> achou ? { tipo: achou[1], nome, cor: achou[2] } : null;
+  <span class="k">return</span> achou ? { tipo: achou[<span class="n">1</span>], nome, cor: achou[<span class="n">2</span>] } : <span class="k">null</span>;
 }
 
 <span class="k">export</span> <span class="k">interface</span> Montagem {
@@ -1423,22 +1480,21 @@
 }
 
 <span class="k">export</span> <span class="k">function</span> montarBurger(produto: Produto, sel: Selecao): Montagem {
-  <span class="k">const</span> carne = escolhidos(produto, sel, <span class="s">'Carne'</span>)[0];
+  <span class="k">const</span> carne = escolhidos(produto, sel, <span class="s">'Carne'</span>)[<span class="n">0</span>];
   <span class="k">const</span> queijos = escolhidos(produto, sel, <span class="s">'Queijos'</span>);
   <span class="k">const</span> molhos = escolhidos(produto, sel, <span class="s">'Molhos'</span>);
   <span class="k">const</span> compl = escolhidos(produto, sel, <span class="s">'Complementos'</span>);
   <span class="k">const</span> so = (xs: ReadonlyArray&lt;string&gt;) =&gt; xs.map(camadaDe).filter((c): c is Camada =&gt; !!c);
   <span class="k">const</span> camadas: Camada[] = [
     { tipo: <span class="s">'pao-topo'</span>, nome: <span class="s">'Pão'</span> },
-    ...so(molhos.slice(1)), ...so(compl), ...so(queijos),
-    ...(carne ? [{ tipo: <span class="s">'carne'</span> as <span class="k">const</span>, nome: carne, grossa: /180/.test(carne) }] : []),
-    ...so(molhos.slice(0, 1)),
+    ...so(molhos.slice(<span class="n">1</span>)), ...so(compl), ...so(queijos),
+    ...(carne ? [{ tipo: <span class="s">'carne'</span> <span class="k">as</span> <span class="k">const</span>, nome: carne, grossa: /<span class="n">180</span>/.test(carne) }] : []),
+    ...so(molhos.slice(<span class="n">0</span>, <span class="n">1</span>)),
     { tipo: <span class="s">'pao-base'</span>, nome: <span class="s">'Pão'</span> },
   ];
   <span class="k">const</span> itens = [carne, ...queijos, ...molhos, ...compl].filter(Boolean);
   <span class="k">return</span> { camadas, temCarne: !!carne, descricao: itens.length ? <span class="s">`Teu burger: ${itens.join(', ')}`</span> : <span class="s">'Monte teu burger'</span> };
-}
-</code></pre></details><details class="cod"><summary>Ver código · monte-preview.component.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/monte-preview.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
+}</code></pre><span class="arq-nome">src/app/features/cardapio/ui/monte-preview.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, input } <span class="k">from</span> <span class="s">'@angular/core'</span>;
 <span class="k">import</span> <span class="k">type</span> { Montagem } <span class="k">from</span> <span class="s">'../domain/monte'</span>;
 
 <span class="c">/**
@@ -1448,7 +1504,7 @@
  * - Para leitor de tela, o desenho é UMA imagem com a descrição do burger (role="img").
  * - `mini` = versão do card do cardápio (sem animação, menor).
  */</span>
-@Component({
+<span class="d">@Component</span>({
   selector: <span class="s">'app-monte-preview'</span>,
   standalone: <span class="k">true</span>,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1487,12 +1543,12 @@
 <span class="k">export</span> <span class="k">class</span> MontePreviewComponent {
   <span class="k">readonly</span> montagem = input.required&lt;Montagem&gt;();
   <span class="k">readonly</span> mini = input(<span class="k">false</span>);
-}
-</code></pre></details>
+}</code></pre></details>
       </article>
-      <article class="dif" data-st="ok">
-        <div class="dif-top"><span class="dif-n">14</span><div><h3>Ampliar imagem e “Já vem com”</h3><div class="meta"><span class="chip st-ok">3 testes ok</span><span class="chip st-warn">Componente · sem teste</span></div></div></div>
-        <div class="vs"><div><b>Atual</b>Tem “Ampliar imagem”; pede toque até em grupo de uma opção só e não pré-marca a opção grátis.</div><div class="novo"><b>Protótipo</b>Foto grande só baixa quando o cliente pede e aproxima no toque; grupo de uma opção vem marcado; Fome normal e Batata P vêm marcadas (nunca opção paga).</div></div>
+
+      <article class="dif" data-st="parcial">
+        <div class="dif-top"><span class="dif-n">14</span><div><h3>Ampliar imagem, sem pesar</h3><div class="meta"><span class="chip st-warn">Angular · sem teste</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>"Ampliar imagem".</div><div class="novo"><b>Protótipo</b>A foto grande (até 1200 px, AVIF ~45 KB) só baixa quando o cliente toca; o toque aproxima no ponto tocado; Esc ou toque fora fecha.</div></div>
         <details class="cod"><summary>Ver código · zoom-foto.component.ts</summary><span class="arq-nome">src/app/features/cardapio/ui/zoom-foto.component.ts</span><pre><code><span class="k">import</span> { ChangeDetectionStrategy, Component, ElementRef, afterNextRender, inject, input, output, signal, viewChild } <span class="k">from</span> <span class="s">'@angular/core'</span>;
 
 <span class="c">/**
@@ -1503,7 +1559,7 @@
  * - Foco vai para o ✕ ao abrir; quem abriu devolve o foco ao fechar (padrão das camadas da casa).
  * Formatos: AVIF com WebP de reserva (bancada de 25/11: AVIF ~24% menor na mesma nitidez).
  */</span>
-@Component({
+<span class="d">@Component</span>({
   selector: <span class="s">'app-zoom-foto'</span>,
   standalone: <span class="k">true</span>,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1535,165 +1591,77 @@
   <span class="c">/** Caminho da foto grande SEM extensão (ex.: 'img/z-mcmanis'); vem do campo de mídia do produto (B16). */</span>
   <span class="k">readonly</span> base = input.required&lt;string&gt;();
   <span class="k">readonly</span> nome = input.required&lt;string&gt;();
-  <span class="k">readonly</span> fechar = output&lt;void&gt;();
+  <span class="k">readonly</span> fechar = output&lt;<span class="k">void</span>&gt;();
 
-  <span class="k">protected</span> <span class="k">readonly</span> perto = signal(<span class="k">false</span>);
+  protected <span class="k">readonly</span> perto = signal(<span class="k">false</span>);
   <span class="k">private</span> <span class="k">readonly</span> caixa = viewChild.required&lt;ElementRef&lt;HTMLElement&gt;&gt;(<span class="s">'caixa'</span>);
   <span class="k">private</span> <span class="k">readonly</span> fecharBt = viewChild.required&lt;ElementRef&lt;HTMLButtonElement&gt;&gt;(<span class="s">'fecharBt'</span>);
 
   constructor() {
-    afterNextRender(() =&gt; this.fecharBt().nativeElement.focus({ preventScroll: <span class="k">true</span> }));
+    afterNextRender(() =&gt; <span class="k">this</span>.fecharBt().nativeElement.focus({ preventScroll: <span class="k">true</span> }));
   }
 
-  <span class="k">protected</span> alternar(ev: MouseEvent): void {
+  protected alternar(ev: MouseEvent): <span class="k">void</span> {
     ev.stopPropagation();
-    <span class="k">const</span> img = ev.target as HTMLImageElement, r = img.getBoundingClientRect();
+    <span class="k">const</span> img = ev.target <span class="k">as</span> HTMLImageElement, r = img.getBoundingClientRect();
     <span class="k">const</span> fx = (ev.clientX - r.left) / r.width, fy = (ev.clientY - r.top) / r.height;
-    this.perto.update(v =&gt; !v);
-    <span class="k">if</span> (this.perto()) {
+    <span class="k">this</span>.perto.update(v =&gt; !v);
+    <span class="k">if</span> (<span class="k">this</span>.perto()) {
       requestAnimationFrame(() =&gt; {
-        <span class="k">const</span> c = this.caixa().nativeElement;
-        c.scrollLeft = fx * c.scrollWidth - c.clientWidth / 2;
-        c.scrollTop = fy * c.scrollHeight - c.clientHeight / 2;
+        <span class="k">const</span> c = <span class="k">this</span>.caixa().nativeElement;
+        c.scrollLeft = fx * c.scrollWidth - c.clientWidth / <span class="n">2</span>;
+        c.scrollTop = fy * c.scrollHeight - c.clientHeight / <span class="n">2</span>;
       });
     }
   }
 
-  <span class="k">protected</span> fora(ev: MouseEvent): void {
-    <span class="k">const</span> alvo = ev.target as HTMLElement;
-    <span class="k">if</span> (alvo.classList.contains(<span class="s">'zoom'</span>) || alvo.classList.contains(<span class="s">'zoom__foto'</span>)) this.fechar.emit();
+  protected fora(ev: MouseEvent): <span class="k">void</span> {
+    <span class="k">const</span> alvo = ev.target <span class="k">as</span> HTMLElement;
+    <span class="k">if</span> (alvo.classList.contains(<span class="s">'zoom'</span>) || alvo.classList.contains(<span class="s">'zoom__foto'</span>)) <span class="k">this</span>.fechar.emit();
   }
-}
-</code></pre></details><details class="cod"><summary>Ver código · selecao.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/selecao.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, GrupoOpcoes, Produto, Selecao } <span class="k">from</span> <span class="s">'./models'</span>;
+}</code></pre></details>
+      </article>
 
-<span class="c">/**
- * DIFERENCIAL 5 · Ficha do produto que guia a escolha.
- *
- * Ficamos com o melhor de cada lado:
- * - Do Cardápio atual, o MODELO: grupos com mínimo, máximo e obrigatório, vindos da API.
- *   O protótipo tinha regras fixas por tipo de produto e isso não escala.
- * - Do protótipo, a EXPERIÊNCIA: o botão diz o que falta ("Escolhe a bebida",
- *   "Escolhe mais 2"), o preço atualiza na hora e o "vira combo" abre o grupo da bebida.
- */</span>
+      <article class="dif" data-st="bloq">
+        <div class="dif-top"><span class="dif-n">15</span><div><h3>Acessibilidade AA</h3><div class="meta"><span class="chip st-bad">Sem código Angular ainda</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Não medido.</div><div class="novo"><b>Protótipo</b>0 problemas no verificador em 8 telas: o vermelho do título sobre o preto passou de 2,6:1 para 3,5:1 de contraste, alvo de toque ≥ 24 px, fundo inerte e Tab preso dentro das camadas (ficha, sacola, lembrete, foto).</div></div>
+        <p class="arqs">No Angular: <code>cdkTrapFocus</code> do Angular CDK nas camadas e <code>inert</code> no fundo, se a Databite já usa o CDK (A5); senão, uma diretiva própria.</p>
+      </article>
 
-<span class="k">const</span> total = (sel: Selecao, grupoId: string): number =&gt;
-  Object.values(sel[grupoId] ?? {}).reduce((a, b) =&gt; a + b, 0);
-
-<span class="c">/**
- * Seleção inicial da ficha (protótipo, 25/11 · "o que o atual faz melhor, faça melhor também"):
- * - grupo obrigatório de UMA opção só ("Pão", "Pegue seu Ogrostela") já vem marcado e aparece como "Já vem com";
- * - grupo obrigatório de 1 escolha em que só UMA opção é grátis e as outras custam (Fome normal × Fome de Ogro,
- *   Batata P × G) já vem com a grátis: o cliente só toca se quiser mudar. Nunca pré-marca opção paga.
- * Bebida (todas grátis) continua sem pré-seleção: o sabor é escolha do cliente.
- */</span>
-<span class="k">export</span> <span class="k">function</span> selecaoPadrao(produto: Produto): Selecao {
-  <span class="k">const</span> sel: Record&lt;string, Record&lt;string, number&gt;&gt; = {};
-  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> produto.grupos) {
-    <span class="k">if</span> (g.visivelSe || g.min &lt; 1) continue;
-    <span class="k">if</span> (g.opcoes.length === 1 &amp;&amp; g.max === 1) { sel[g.id] = { [g.opcoes[0].id]: 1 }; continue; }
-    <span class="k">if</span> (g.min === 1 &amp;&amp; g.max === 1) {
-      <span class="k">const</span> gratis = g.opcoes.filter(o =&gt; o.preco === 0);
-      <span class="k">if</span> (gratis.length === 1 &amp;&amp; g.opcoes.length &gt; 1) sel[g.id] = { [gratis[0].id]: 1 };
-    }
-  }
-  <span class="k">return</span> sel;
-}
-
-<span class="c">/** Grupos que vêm resolvidos (uma opção só): a tela mostra numa linha "Já vem com", sem pedir toque. */</span>
-<span class="k">export</span> <span class="k">const</span> jaVemCom = (produto: Produto): ReadonlyArray&lt;GrupoOpcoes&gt; =&gt;
-  produto.grupos.filter(g =&gt; g.min &gt;= 1 &amp;&amp; g.max === 1 &amp;&amp; g.opcoes.length === 1 &amp;&amp; !g.visivelSe);
-
-<span class="c">/** Grupos que aparecem agora (respeita `visivelSe`, ex.: bebida só depois do "vira combo"). */</span>
-<span class="k">export</span> <span class="k">function</span> gruposVisiveis(produto: Produto, sel: Selecao): GrupoOpcoes[] {
-  <span class="k">return</span> produto.grupos.filter(g =&gt; !g.visivelSe || (sel[g.visivelSe.grupoId]?.[g.visivelSe.opcaoId] ?? 0) &gt; 0);
-}
-
-<span class="c">/** Texto do que falta, na ordem dos grupos. Vazio = pode adicionar. */</span>
-<span class="k">export</span> <span class="k">function</span> oQueFalta(produto: Produto, sel: Selecao): string {
-  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
-    <span class="k">const</span> n = total(sel, g.id);
-    <span class="k">if</span> (n &lt; g.min) {
-      <span class="k">if</span> (g.min === 1 &amp;&amp; g.max === 1) <span class="k">return</span> <span class="s">`Escolhe: ${g.titulo}`</span>;
-      <span class="k">return</span> <span class="s">`Escolhe mais ${g.min - n}`</span>;
-    }
-  }
-  <span class="k">return</span> <span class="s">''</span>;
-}
-
-<span class="c">/** Pode somar mais uma unidade desta opção sem passar do máximo do grupo? */</span>
-<span class="k">export</span> <span class="k">function</span> podeAumentar(grupo: GrupoOpcoes, sel: Selecao, opcaoId: string): boolean {
-  <span class="k">if</span> (total(sel, grupo.id) &gt;= grupo.max) <span class="k">return</span> <span class="k">false</span>;
-  <span class="k">return</span> grupo.repetir || (sel[grupo.id]?.[opcaoId] ?? 0) === 0;
-}
-
-<span class="c">/**
- * Aplica um toque numa opção e devolve a NOVA seleção (imutável, bom para signals/OnPush).
- * - Rádio (max 1, sem repetir): marcar outra opção substitui a anterior; tocar de novo desmarca
- *   quando o grupo é opcional (min 0), como um checkbox.
- * - Desmarcou o "vira combo"? A bebida do combo sai junto: ninguém paga por grupo escondido.
- */</span>
-<span class="k">export</span> <span class="k">function</span> alternar(produto: Produto, grupo: GrupoOpcoes, sel: Selecao, opcaoId: string, delta: 1 | -1): Selecao {
-  <span class="k">const</span> atual: Record&lt;string, number&gt; = { ...(sel[grupo.id] ?? {}) };
-  <span class="k">if</span> (grupo.max === 1 &amp;&amp; !grupo.repetir) {
-    <span class="k">const</span> marcada = (atual[opcaoId] ?? 0) &gt; 0;
-    <span class="k">const</span> proximo = delta === 1 &amp;&amp; !(marcada &amp;&amp; grupo.min === 0) ? { [opcaoId]: 1 } : {};
-    <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: proximo });
-  }
-  <span class="k">if</span> (delta === 1 &amp;&amp; !podeAumentar(grupo, sel, opcaoId)) <span class="k">return</span> sel;
-  <span class="k">const</span> novo = Math.max(0, (atual[opcaoId] ?? 0) + delta);
-  <span class="k">if</span> (novo === 0) delete atual[opcaoId];
-  else atual[opcaoId] = novo;
-  <span class="k">return</span> normalizar(produto, { ...sel, [grupo.id]: atual });
-}
-
-<span class="c">/** Remove escolhas de grupos que deixaram de ser visíveis. */</span>
-<span class="k">export</span> <span class="k">function</span> normalizar(produto: Produto, sel: Selecao): Selecao {
-  <span class="k">const</span> visiveis = <span class="k">new</span> Set(gruposVisiveis(produto, sel).map(g =&gt; g.id));
-  <span class="k">return</span> Object.fromEntries(Object.entries(sel).filter(([id]) =&gt; visiveis.has(id)));
-}
-
-<span class="c">/** Preço unitário estimado: base + soma das opções × quantidade. O servidor confirma (B6). */</span>
-<span class="k">export</span> <span class="k">function</span> precoUnitario(produto: Produto, sel: Selecao): Centavos {
-  <span class="k">let</span> valor = produto.preco;
-  <span class="k">for</span> (<span class="k">const</span> g <span class="k">of</span> gruposVisiveis(produto, sel)) {
-    <span class="k">for</span> (<span class="k">const</span> o <span class="k">of</span> g.opcoes) valor += o.preco * (sel[g.id]?.[o.id] ?? 0);
-  }
-  <span class="k">return</span> valor;
-}
-
-<span class="c">/** Chave estável do item na sacola: mesma escolha = mesmo item (soma quantidade). */</span>
-<span class="k">export</span> <span class="k">function</span> chaveItem(produtoId: string, sel: Selecao, ajustes: ReadonlyArray&lt;string&gt; = []): string {
-  <span class="k">const</span> ordenada = Object.keys(sel).sort().map(g =&gt; [g, Object.entries(sel[g]).sort(([a], [b]) =&gt; a.localeCompare(b))]);
-  <span class="k">return</span> <span class="s">`${produtoId}|${JSON.stringify(ordenada)}|${[...ajustes].sort().join(',')}`</span>;
-}
-</code></pre></details>
+      <article class="dif" data-st="bloq">
+        <div class="dif-top"><span class="dif-n">16</span><div><h3>App instalável e sem internet (PWA)</h3><div class="meta"><span class="chip st-bad">Sem código Angular ainda</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Sem manifesto e sem service worker: não instala na tela nem abre sem internet (verificado em 25/11).</div><div class="novo"><b>Protótipo</b>Instala com o logo oficial e atalhos (Pedir de novo, Monte seu hambúrguer); abre sem internet na 2ª visita; convite para instalar só depois do 1º pedido.</div></div>
+        <p class="arqs">No Angular: <code>@angular/service-worker</code> (<code>ng add @angular/pwa</code>) com a mesma regra: HTML rede primeiro, fotos em cache, vídeo fora. Depende da aprovação de dependência (A3).</p>
       </article>
 
     </div>
-    <p class="arqs" style="margin-top:1rem">Ainda sem código: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix estão bloqueados até os contratos B8–B10.</p>
-  </section>
-
-  <section id="arquitetura">
-    <div class="sec-h"><span class="n">03</span><h2>Como o código está organizado</h2></div>
-    <p class="sec-sub">Quatro camadas. As regras não conhecem Angular: por isso passam nos testes sem framework e servem mesmo que a Databite decida fazer o Cardápio novo em React.</p>
-    <div class="arq">
-      <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção, cupom, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>10 arquivos + 4 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
-      <div class="camada"><h3>state/</h3><p>Sacola com signals, com persistência, "Desfazer" e editar. Link de campanha pendente.</p><ul><li>Armazenamento trocável por token de injeção</li></ul></div>
-      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 32 eventos.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
-      <div class="camada"><h3>ui/</h3><p>Diretivas de vídeo e de impressão, animação da sacola, componente "Completa teu pedido?" (OnPush).</p><ul><li>Respeita "menos movimento" e economia de dados</li></ul></div>
-    </div>
+    <p class="arqs" style="margin-top:1rem">O protótipo também tem, ainda sem código Angular: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix seguem bloqueados até os contratos B8–B10.</p>
   </section>
 
   <section id="atual-melhor">
-    <div class="sec-h"><span class="n">04</span><h2>O que o atual faz melhor (e agora o protótipo também)</h2></div>
-    <p class="sec-sub">Os quatro pontos em que o Cardápio atual ganhava entraram no protótipo em 25/11. Usamos os dados reais dele e fomos um passo além em cada um.</p>
-    <ul class="lista">
-      <li><b>Grupos de opções com mínimo e máximo, vindos do cardápio.</b> O protótipo agora usa os grupos <b>reais</b> do Cardápio Digital: Tamanho da fome (carne de 120 g ou 180 g, +R$ 7,90), batata, bebida, "Leva junto com desconto", sachês e burgers do combo. Os simulados "Vira combo +R$ 15" e "Turbina teu burger" saíram. <i>A mais:</i> grupo de uma opção só vem marcado ("Já vem com"); a única opção grátis (Fome normal, batata P) vem marcada; lista longa e opcional começa recolhida; dá para pedir 2 da mesma bebida. O <code>selecao.ts</code> já segue esse modelo.</li>
-      <li><b>Cada produto com URL própria</b> (<code>#/loja/botafogo/mcmanis</code>). <i>A mais:</i> o "voltar" do celular fecha a ficha sem sair do cardápio nem perder a rolagem; o botão de compartilhar manda o link do produto; e o link de campanha se apoia nisso.</li>
-      <li><b>"Monte seu hambúrguer"</b>, com os grupos e preços reais: pão, carne 120 g ou 180 g, 1 a 2 queijos, 1 a 3 molhos e 1 a 6 complementos. <i>A mais:</i> o burger vai sendo montado na tela, camada por camada, conforme a escolha. O atual mostra a foto de outro burger.</li>
-      <li><b>Mais variedade de bebida e "Ampliar imagem".</b> Entraram Pepsi (lata, Black, 1,5 l e 2 l), Antarctica Soda, Guaraná em 1,5 l e 2 l, água com e sem gás e H2OH! Limoneto. Agora são 9 bebidas. <i>A mais:</i> a foto ampliada (até 1200 px, cerca de 45 KB em AVIF) só baixa quando o cliente toca, e um toque aproxima no ponto tocado.</li>
-    </ul>
-    <p class="sec-sub">Ver no protótipo: <a href="../cardapio-digital/#/loja/botafogo/monte-seu-hamburguer">Monte seu hambúrguer</a> · <a href="../cardapio-digital/#/loja/botafogo/mcmanis">McManis com as opções reais</a> · <a href="../cardapio-digital/#/loja/botafogo/p-rpe">Pepsi</a>. No código Angular: diferenciais 13 e 14 (domain/monte.ts, ui/monte-preview, ui/zoom-foto, selecaoPadrao).</p>
+    <div class="sec-h"><span class="n">03</span><h2>O que o atual fazia melhor</h2></div>
+    <p class="sec-sub">Na 1ª comparação, o Cardápio atual ganhava em cinco pontos. Os cinco entraram no protótipo, e com alguma melhora.</p>
+    <div class="tabela"><table>
+      <thead><tr><th>O atual tinha</th><th>O protótipo agora faz</th><th>Código</th></tr></thead>
+      <tbody>
+        <tr><td>Opções reais, com mínimo, máximo e preço</td><td>As mesmas opções, mais "Já vem com" e a opção grátis já marcada</td><td>selecao.ts</td></tr>
+        <tr><td>URL própria por produto</td><td>URL legível, compartilhar, e voltar do celular fecha a ficha</td><td>link-direto.ts</td></tr>
+        <tr><td>"Monte seu hambúrguer"</td><td>Montado na tela em camadas, com o preço real</td><td>monte.ts</td></tr>
+        <tr><td>Mais bebidas</td><td>Pepsi (lata, Black, 1,5 l, 2 l), Antarctica Soda, tamanhos de Guaraná, água com e sem gás, H2OH Limoneto</td><td>Dados do cardápio (B3)</td></tr>
+        <tr><td>Ampliar imagem</td><td>Foto grande só quando o cliente pede; toque aproxima</td><td>zoom-foto.component.ts</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="arquitetura">
+    <div class="sec-h"><span class="n">04</span><h2>Como o código está organizado</h2></div>
+    <p class="sec-sub">Quatro camadas. As regras não conhecem Angular: por isso passam nos testes sem framework e servem mesmo que a Databite decida fazer o Cardápio novo em React.</p>
+    <div class="arq">
+      <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção e "Já vem com", Monte seu hambúrguer, cupom, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>11 arquivos + 5 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
+      <div class="camada"><h3>state/</h3><p>Sacola com signals, com persistência, "Desfazer" e editar. Link de campanha pendente.</p><ul><li>Armazenamento trocável por token de injeção</li></ul></div>
+      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 44 eventos, igual ao do protótipo.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
+      <div class="camada"><h3>ui/</h3><p>Diretivas de vídeo e de impressão, animação da sacola, "Completa teu pedido?", burger montado em camadas e foto ampliada (OnPush).</p><ul><li>Respeita "menos movimento" e economia de dados</li></ul></div>
+    </div>
   </section>
 
   <section id="status">
@@ -1703,6 +1671,7 @@
       <thead><tr><th>Gate</th><th>Status</th><th>Evidência</th></tr></thead>
       <tbody>
         <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>34 de 34, exit 0, Node 26.12, 25/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
+        <tr><td>Eventos do código × protótipo</td><td><span class="chip st-ok">PASS</span></td><td>44 de 44 nomes iguais, conferidos por script em 25/11.</td></tr>
         <tr><td>Build, lint e typecheck do Angular</td><td><span class="chip st-warn">Não rodado</span></td><td>O Angular não está instalado aqui. O código assume Angular 17+ (standalone, signals, @if/@for) até a Databite confirmar a versão.</td></tr>
         <tr><td>Testes de componente</td><td><span class="chip st-warn">Não rodado</span></td><td>Dependem do TestBed do Angular.</td></tr>
         <tr><td>Paridade visual</td><td><span class="chip st-warn">Não rodado</span></td><td>Falta montar as telas (fatia F2).</td></tr>
@@ -1758,7 +1727,7 @@
       <li data-id="B1"><b>Contrato de lojas:</b> lista, status e horários.</li>
       <li data-id="B2"><b>ID da loja</b> na API.</li>
       <li data-id="B3"><b>Contrato do cardápio</b> por loja.</li>
-      <li data-id="B4"><b>Contrato de opções:</b> mínimo, máximo, obrigatório, combo.</li>
+      <li data-id="B4"><b>Contrato de opções:</b> mínimo, máximo, obrigatório e um campo de tipo de ingrediente (para o burger montado na tela).</li>
       <li data-id="B8"><b>Criar pedido</b> com chave de idempotência.</li>
       <li data-id="C1"><b>Como a API representa dinheiro</b> e arredonda desconto.</li>
       <li data-id="G1"><b>Ponto focal técnico</b> do lado deles.</li>
@@ -1766,6 +1735,7 @@
   </section>
 
 </main>
+
 
 <footer>
   <div class="wrap">
