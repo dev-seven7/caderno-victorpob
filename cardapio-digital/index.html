@@ -469,26 +469,13 @@ textarea.campo{min-height:70px;resize:vertical}
 .zoom.perto .zoom__foto img{max-width:none;max-height:none;width:240%;cursor:zoom-out}
 .zoom .fechar{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px}
 .zoom__dica{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));text-align:center;color:#bbb;font-size:13px;pointer-events:none}
-/* "Monte seu hambúrguer": o burger montado em camadas */
-.pilha{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;padding:18px 0;background:radial-gradient(circle at 50% 40%,#2c2c2c,#141414)}
-.cm{display:block;width:62%;height:8px;border-radius:6px;background:var(--c);animation:cai .35s cubic-bezier(.2,.9,.3,1.2) both}
-@keyframes cai{from{transform:translateY(-14px);opacity:0}}
-.cm--pao-topo{height:54px;width:66%;border-radius:60% 60% 12px 12px / 90% 90% 12px 12px;background:radial-gradient(ellipse at 40% 25%,#F6C873,#D98E2B 60%,#B86E1A)}
-.cm--pao-base{height:22px;width:64%;border-radius:8px 8px 16px 16px;background:linear-gradient(#E9A64A,#C97F24)}
-.cm--carne{height:20px;width:68%;border-radius:10px;background:radial-gradient(ellipse at 50% 30%,#7A4529,#4A2615)}
-.cm--carne.grossa{height:28px}
-.cm--queijo{height:7px;width:72%;border-radius:2px 2px 8px 8px}
-.cm--folha{height:9px;width:74%;border-radius:40% 40% 50% 50%}
-.cm--molho{height:5px;width:60%;border-radius:4px}
-.cm--bacon{height:7px;width:70%;background:repeating-linear-gradient(90deg,var(--c) 0 14px,#C86A52 14px 20px)}
-.cm--picles,.cm--cebola,.cm--tomate{height:6px}
-.cm--vazio{height:20px;width:62%;border:2px dashed #666;background:none;color:#888;font:700 11px var(--corpo);display:grid;place-items:center;font-style:normal;animation:none}
-.sheet__img--monte{aspect-ratio:16/10}
-.ph--monte{padding:0;background:#141414}
-.pilha--mini{padding:8px 0;gap:1px}
-.pilha--mini .cm{animation:none}
-.pilha--mini .cm--pao-topo{height:24px}.pilha--mini .cm--pao-base{height:10px}.pilha--mini .cm--carne{height:10px}
-.pilha--mini .cm--queijo,.pilha--mini .cm--folha,.pilha--mini .cm--bacon{height:4px}.pilha--mini .cm--molho,.pilha--mini .cm--tomate{height:3px}/* convite para instalar (PWA) */
+/* "Monte seu hambúrguer": camadas reais (SVG) */
+@keyframes cai{from{transform:translateY(-40px);opacity:0}}
+.sheet__img--monte{aspect-ratio:16/10;background:radial-gradient(circle at 50% 45%,#34302c,#151515 70%)}
+.pilha-real{display:block;width:100%;height:100%;padding:10px 0}
+.pilha-real .pr-c{animation:cai .4s cubic-bezier(.2,.9,.3,1.15) both}
+.pr-vazio rect{fill:rgba(255,255,255,.04);stroke:#8a8a8a;stroke-width:4;stroke-dasharray:14 10}
+.pr-vazio text{fill:#d0d0d0;font:700 32px var(--corpo);text-anchor:middle}
 .app-convite{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
 .app-convite img{border-radius:14px}
 .app-convite h2{font-size:22px}
@@ -1295,9 +1282,9 @@ const CATS = [
   { id: "dividir", n: "Combos pra dividir", d: "Pra quando a fome é de mais de um ogro." },
   { id: "combos", n: "Combos", d: "Burger + batata + bebida. Não complica." },
   { id: "burgers", n: "Burgers do Ogro", d: "Tudo no pão brioche. Blend bovino da casa." },
-  { id: "acomp", n: "Jimmy Acompanhar", d: "" },
-  { id: "doce", n: "Sobremesas", d: "" },
-  { id: "beber", n: "Jimmy Beber", d: "" }
+  { id: "acomp", n: "Jimmy Acompanhar", d: "Batata belga crocante por fora e macia por dentro, nuggets com o barbecue do Ogro e as maioneses da casa. Você sabe o que combina." },
+  { id: "doce", n: "Sobremesas", d: "Brownie com gotas de chocolate e cookies. Pra fechar o dia do teu jeito." },
+  { id: "beber", n: "Jimmy Beber", d: "Lata gelada, garrafa pra dividir ou long neck pra acompanhar. Quem escolhe é você." }
 ];
 // t: tipo -> burger | combo | escolha | simples | refri
 const P = [
@@ -1323,7 +1310,7 @@ const P = [
   { id: "cnd", c: "combos", n: "Combo Notdog", d: "Costela desfiada, cebola caramelizada, american cheese e maionese de alho na baguete + batata + bebida.", p: 46.90, img: "c-notdog", t: "combo" },
   { id: "cxc", c: "combos", n: "Combo X-Cocó", d: "Empanado de frango, cheddar, alface, tomate e maionese de alho no brioche + batata + bebida.", p: 45.90, img: "c-xcoco", t: "combo" },
   // burgers
-  { id: "mon", c: "burgers", n: "Monte seu hambúrguer", d: "Do teu jeito: escolhe a carne, os queijos, os molhos e os complementos. O burger vai sendo montado na tela.", p: 31.50, img: null, t: "monte", ic: "DIY" },
+  { id: "mon", c: "burgers", n: "Monte seu hambúrguer", d: "Do teu jeito: escolhe a carne, os queijos, os molhos e os complementos. O burger vai sendo montado na tela.", p: 31.50, img: "monte", t: "monte" },
   { id: "bmc", c: "burgers", n: "McManis", d: "Carro-chefe da casa. Blend bovino, american cheese, cebola caramelizada e maionese artesanal de alho confitado no pão brioche.", p: 44.90, img: "mcmanis", t: "burger", top: 2 },
   { id: "bfe", c: "burgers", n: "Ogro Festival Burger", d: "Blend bovino, fatias de bacon, cheddar inglês e barbecue com especiarias no pão brioche.", p: 45.90, img: "festival", t: "burger", top: 3 },
   { id: "bos", c: "burgers", n: "Ogrostela", d: "O maioral tem nome. Blend bovino, cheddar inglês derretido, maionese smoke, costela desfiada e barbecue no pão brioche.", p: 50.90, img: "ogrostela", t: "burger", top: 4 },
@@ -1503,7 +1490,7 @@ function selecionou(el) {
 }
 function cardProd(p, idx, lista) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
-  const img = p.id === "mon" ? `<div class="ph ph--monte">${pilhaMonte({ g: { [OPCOES.mon.g.find(g => g.t === "Carne").id]: "Carne 120g", [OPCOES.mon.g.find(g => g.t === "Queijos").id]: ["American Cheese"], [OPCOES.mon.g.find(g => g.t === "Complementos").id]: ["Alface 15g", "Tomate 2 Rodelas", "Bacon Fatiado 2 Fatias"], [OPCOES.mon.g.find(g => g.t === "Molhos").id]: ["Maionese de Alho Confitada"] } }, true)}</div>` : temVid(p) ? vidTag(p, true) : p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" decoding="async" width="112" height="112"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  const img = temVid(p) ? vidTag(p, true) : p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" decoding="async" width="112" height="112"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
   return `<button class="prod" data-p="${p.id}" data-list="${lista}" data-idx="${idx}" aria-label="${esc(p.n)}, ${brl(p.p)}">
     <div><h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${!baseDe(p) || gruposDe(p).some(g => g.ops.some(o => o[1] > 0)) ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
     <div class="prod__img">${img}${q ? `<span class="prod__qtd">${q}×</span>` : ""}<span class="prod__mais" aria-hidden="true">+</span></div>
@@ -1777,27 +1764,36 @@ function abrirProduto(id, editKey, origem, semEmpurrar) {
   track("view_item", { item_id: p.id, item_name: p.n, origem }, { value: p.p, items: [itemGA(p)] });
   ItemT.iniciar(p, origem);
 }
-/* "Monte seu hambúrguer": o burger vai sendo montado na tela conforme o cliente escolhe (o atual mostra uma foto
-   de outro burger). Camadas na ordem da montagem: pão, molho, carne, queijo, complementos, molho, pão. */
-const CAMADA = [
-  [/maionese de alho/, "molho", "#F2EAD3"], [/smoke/, "molho", "#D9B98A"], [/ketchup/, "molho", "#C0302A"], [/barbecue/, "molho", "#5B2418"],
-  [/american cheese/, "queijo", "#F5C242"], [/cheddar/, "queijo", "#E8892B"],
-  [/alface/, "folha", "#6FB04A"], [/tomate/, "tomate", "#D9472B"], [/picles/, "picles", "#7C9A3A"],
-  [/cebola roxa/, "cebola", "#8E4A8C"], [/cebola caramelizada/, "cebola", "#8A5A2B"], [/bacon/, "bacon", "#9E3B2A"]
-];
-function pilhaMonte(sel, mini) {
-  const g = OPCOES.mon.g, v = id => (sel.g || {})[id];
-  const pega = t => { const gr = g.find(x => x.t === t); const val = gr && v(gr.id); return !val ? [] : Array.isArray(val) ? val : [val]; };
-  const camada = n => { const c = CAMADA.find(([re]) => re.test(norm(n))); return c ? `<i class="cm cm--${c[1]}" style="--c:${c[2]}" title="${esc(n)}"></i>` : ""; };
-  const molhos = pega("Molhos"), carne = pega("Carne")[0];
-  const html = [`<i class="cm cm--pao-topo"></i>`,
-    ...molhos.slice(1).map(camada), ...pega("Complementos").map(camada), ...pega("Queijos").map(camada),
-    carne ? `<i class="cm cm--carne${/180/.test(carne) ? " grossa" : ""}"></i>` : `<i class="cm cm--vazio">carne</i>`,
-    ...molhos.slice(0, 1).map(camada), `<i class="cm cm--pao-base"></i>`].join("");
-  const desc = [carne, ...pega("Queijos"), ...molhos, ...pega("Complementos")].filter(Boolean).join(", ");
-  return `<div class="pilha${mini ? " pilha--mini" : ""}" role="img" aria-label="${esc(desc ? "Teu burger: " + desc : "Monte teu burger")}">${html}</div>`;
-}
-// mídia da ficha: o vídeo do burger fica o mesmo enquanto a pessoa escolhe opções (não reinicia a cada toque)
+/* "Monte seu hambúrguer": o burger vai sendo montado na tela com camadas REAIS, recortadas das fotos oficiais do
+   cardápio (pão e carne do P.C.Q, carne 180 g do X Bacon, american do McManis, cheddar e salada do GPT, picles e ketchup
+   do Quarter, barbecue do Ogro Festival, cebola roxa do Cabrón · _trabalho/gerar-camadas-monte.py). O atual mostra a
+   foto de outro burger. Ordem de cima para baixo: pão, molhos extras, salada, picles, cebolas, bacon, queijos, carne,
+   1º molho, pão. Desenho em SVG: se ajusta sozinho ao espaço, sem medir a tela. */
+const MONTE_TAM = {"pao-topo":[640,206],"carne-120":[663,67],"carne-180":[662,93],"american":[676,65],"cheddar":[677,47],"maionese":[663,42],"smoke":[665,42],"barbecue":[664,44],"ketchup":[658,35],"bacon":[736,68],"alface":[686,62],"tomate":[673,39],"cebola-car":[664,79],"cebola-roxa":[665,42],"picles":[656,59],"pao-base":[640,90]};
+const MONTE_OPCAO = [[/maionese de alho/, "maionese"], [/smoke/, "smoke"], [/ketchup/, "ketchup"], [/barbecue/, "barbecue"],
+  [/american cheese/, "american"], [/cheddar/, "cheddar"], [/alface/, "alface"], [/tomate/, "tomate"], [/picles/, "picles"],
+  [/cebola roxa/, "cebola-roxa"], [/cebola caramelizada/, "cebola-car"], [/bacon/, "bacon"], [/180/, "carne-180"], [/120/, "carne-120"]];
+const ORDEM_COMPL = ["alface", "tomate", "picles", "cebola-roxa", "cebola-car", "bacon"];
+function pilhaMonte(sel, jaTinha = new Set()) {
+  const g = OPCOES.mon.g, v = t => { const gr = g.find(x => x.t === t); const val = gr && (sel.g || {})[gr.id]; return !val ? [] : Array.isArray(val) ? val : [val]; };
+  const arq = n => (MONTE_OPCAO.find(([re]) => re.test(norm(n))) || [])[1];
+  const molhos = v("Molhos").map(arq), carne = v("Carne")[0];
+  const compl = v("Complementos").map(arq).sort((a, b) => ORDEM_COMPL.indexOf(a) - ORDEM_COMPL.indexOf(b));
+  const camadas = ["pao-topo", ...molhos.slice(1), ...compl, ...v("Queijos").map(arq), carne ? arq(carne) : "vazio", ...molhos.slice(0, 1), "pao-base"].filter(Boolean);
+  const W = 780; let y = 0; const pos = [];
+  camadas.forEach((c, k) => {
+    const [w, h] = c === "vazio" ? [600, 70] : MONTE_TAM[c];
+    if (k && c !== "vazio" && camadas[k - 1] !== "vazio") y -= Math.round(h * .28) + (camadas[k - 1] === "pao-topo" ? 14 : 0);
+    else if (c === "vazio") y += 8;
+    pos.push([c, (W - w) / 2, y, w, h]); y += h;
+  });
+  const desc = [carne, ...v("Queijos"), ...v("Molhos"), ...v("Complementos")].filter(Boolean).join(", ");
+  // de baixo para cima (a camada de cima cobre a de baixo); o lugar da carne vazio fica por cima de tudo, legível
+  const corpo = pos.slice().reverse().sort((a, b) => (a[0] === "vazio") - (b[0] === "vazio")).map(([c, x, yy, w, h], i) => c === "vazio"
+    ? `<g class="pr-vazio"><rect x="${x + 20}" y="${yy + 6}" width="${w - 40}" height="${h - 12}" rx="22"/><text x="${W / 2}" y="${yy + h / 2 + 8}">escolhe a carne</text></g>`
+    : `<image href="img/m-${c}.webp" x="${x}" y="${yy}" width="${w}" height="${h}" class="${jaTinha.has(c) ? "" : "pr-c"}" data-c="${c}"/>`).join("");
+  return `<svg class="pilha-real" viewBox="-10 -16 ${W + 20} ${y + 32}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(desc ? "Teu burger: " + desc : "Monte teu burger")}">${corpo}</svg>`;
+}// mídia da ficha: o vídeo do burger fica o mesmo enquanto a pessoa escolhe opções (não reinicia a cada toque)
 function midiaSheet(p) {
   const w = document.createElement("div"); w.className = "sheet__img";
   if (temVid(p)) {
@@ -1875,7 +1871,7 @@ function atualizarPeSheet() {
 const nomeG = gid => (gruposDe(SH.p).find(g => g.id === gid) || {}).t || gid;
 function depoisDeEscolher() {
   renderSheet();
-  if (SH.p.id === "mon") { const pl = SH.midia.querySelector(".pilha"); if (pl) pl.outerHTML = pilhaMonte(SH.sel); }
+  if (SH.p.id === "mon") { const pl = SH.midia.querySelector(".pilha-real"); if (pl) pl.outerHTML = pilhaMonte(SH.sel, new Set([...pl.querySelectorAll("image")].map(x => x.dataset.c))); }
 }
 $("#sheet").addEventListener("change", e => {
   const t = e.target; if (!SH) return;
