@@ -23,6 +23,11 @@
    - Adicionais (bacon/cheddar/carne extra) e "vira combo +R$ 15" são simulados
    - Cupom aceito na demo: OGRO10 (10% · mín. R$ 60). Confirmar com a Alline quais cupons valem fora de SG
    - Pix/QR é de demonstração; nenhum pedido é enviado
+  RODADA 4 (25/11/2026):
+   - Burgers animados: img/v-*.webm/.mp4, feitos da foto oficial por _trabalho/gerar-videos-burgers.py (sem IA no produto,
+     regra 6 da higgsfield-ogro). Para burger novo: foto + linha em BURGERS no script + chave em VIDS aqui.
+   - Rastreamento completo por produto (GA4 e-commerce no dataLayer + Meta via fbq). Painel: abrir o link com ?debug=1.
+     Falta no ar: GTM da loja no Databite, GA4/Pixel reais, purchase só depois do backend confirmar e CAPI com o mesmo event_id.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -409,7 +414,45 @@ textarea.campo{min-height:70px;resize:vertical}
 .rodape a{color:var(--concreto)}
 .rodape .assina{color:var(--kraft)}
 
+/* burger animado (vídeo feito da foto oficial): mesmo lugar e tamanho da foto */
+.prod__img video,.sheet__img video{width:100%;height:100%;object-fit:cover;display:block;background:#111}
+.card-top video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#111}
+
+/* painel de rastreamento (só com ?debug=1) */
+.trk-bt{position:fixed;left:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:96;background:var(--preto);color:#fff;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;gap:6px;align-items:center}
+.trk-bt b{background:var(--kraft);color:var(--preto);border-radius:99px;padding:0 7px;font-size:12px}
+.trk{position:fixed;z-index:97;left:0;right:0;bottom:0;height:72vh;background:#111;color:#eee;display:flex;flex-direction:column;border-radius:18px 18px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.4);font-size:13px}
+.trk[hidden]{display:none}
+.trk-cab{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2a2a2a}
+.trk-cab button{color:#fff;font-size:18px;width:32px;height:32px}
+.trk-abas{display:flex;gap:6px;padding:8px 14px;overflow-x:auto}
+.trk-abas button{flex:none;border-radius:99px;padding:6px 12px;background:#222;color:#ccc;font-weight:700;font-size:12px}
+.trk-abas button[aria-selected=true]{background:var(--kraft);color:var(--preto)}
+.trk-corpo{flex:1;overflow:auto;padding:6px 14px 14px;overscroll-behavior:contain}
+.trk-ev{border-bottom:1px solid #222}
+.trk-ev summary{display:flex;gap:8px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.trk-ev summary::-webkit-details-marker{display:none}
+.trk-ev time{color:#777;font-size:11px;flex:none}
+.trk-ev b{color:var(--kraft);flex:none}
+.trk-ev span{color:#bbb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.trk-ev i{margin-left:auto;flex:none;font-style:normal;font-size:10px;background:#5a1f1f;color:#f3b0b0;border-radius:6px;padding:1px 6px}
+.trk-ev pre{background:#000;border-radius:8px;padding:8px;font-size:11px;overflow:auto;color:#cfe;margin-bottom:8px;white-space:pre-wrap;word-break:break-word}
+.trk-aviso{background:#3a2c0c;color:#f5dc9a;border-radius:10px;padding:8px 10px;margin:6px 0}
+.trk-nota{color:#999;margin:6px 0 10px}
+.trk-nota code,.trk-tab code{color:var(--kraft)}
+.trk-vazio{color:#888;padding:20px 0;text-align:center}
+.trk-tab{overflow-x:auto}
+.trk-tab table{border-collapse:collapse;width:100%;font-size:12px}
+.trk-tab th,.trk-tab td{padding:6px 8px;border-bottom:1px solid #262626;text-align:right;white-space:nowrap}
+.trk-tab th:first-child,.trk-tab td:first-child{text-align:left}
+.trk-tab.txt th,.trk-tab.txt td{text-align:left;white-space:normal;vertical-align:top}
+.trk-tab th{color:#999;font-weight:700;position:sticky;top:0;background:#111}
+.trk-pe{display:flex;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #2a2a2a;flex-wrap:wrap}
+.trk-pe button{flex:1;background:#222;color:#eee;border-radius:10px;padding:9px 10px;font-weight:700;font-size:12px}
+
 @media (min-width:640px){
+  .trk{left:16px;right:auto;bottom:16px;top:76px;height:auto;width:min(560px,calc(100% - 32px));border-radius:18px}
+  .trk-bt{bottom:24px;left:24px}
   .lojas{grid-template-columns:1fr 1fr}
   .grade{grid-template-columns:1fr 1fr}
   .carrossel{grid-auto-columns:260px}
@@ -684,7 +727,7 @@ textarea.campo{min-height:70px;resize:vertical}
   <p>Usamos cookies essenciais pra guardar tua loja e tua sacola. Os de análise e marketing só ligam se você permitir.</p>
   <div class="pref" id="ck-pref" hidden>
     <label><input type="checkbox" checked disabled><span><b>Essenciais</b><small>Loja escolhida, sacola e CEP. Sem eles o pedido não funciona.</small></span></label>
-    <label><input type="checkbox" id="ck-an"><span><b>Análise</b><small>Contam visitas e cliques pra melhorar o cardápio (GA4).</small></span></label>
+    <label><input type="checkbox" id="ck-an"><span><b>Análise</b><small>Contam visitas, cliques e o tempo em cada produto pra melhorar o cardápio (GA4).</small></span></label>
     <label><input type="checkbox" id="ck-mk"><span><b>Marketing</b><small>Medem anúncios (Meta Pixel).</small></span></label>
   </div>
   <div class="acoes">
@@ -728,13 +771,226 @@ const Store = {
 // sem animação se a pessoa pediu "menos movimento" ou está em economia de dados: fica a imagem parada
 const semAnimacao = matchMedia("(prefers-reduced-motion: reduce)").matches || !!(navigator.connection && navigator.connection.saveData);
 
-/* ---------- consentimento + medição ---------- */
+/* ---------- consentimento + medição ----------
+   Rastreamento completo por produto, no formato GA4 e-commerce (dataLayer, lido pelo GTM) + Meta Pixel (se houver fbq).
+   - Só envia com consentimento de Análise (Meta só com Marketing). Sem consentimento nada sai do aparelho.
+   - Todo evento leva event_id (deduplicação com a CAPI), store_id (ogro_<unidade>), session_id e a tela.
+   - Painel de demonstração: abrir com ?debug=1 no link (fica ligado neste aparelho; ?debug=0 desliga).
+   Mapa completo dos eventos: lista MAPA_EVENTOS logo abaixo (também aparece no painel). */
 window.dataLayer = window.dataLayer || [];
 let consent = Store.getC("ogro_consent");
-function track(event, params = {}) {
-  if (!consent || !consent.an) return;
-  window.dataLayer.push({ event, ...params, store_id: S.loja || undefined });
+const qDebug = (location.search.match(/[?&]debug=([01])/) || [])[1];
+if (qDebug) Store.set("ogro_debug", +qDebug);
+const DEBUG = Store.get("ogro_debug") === 1;
+const SID = (() => { try { let s = sessionStorage.getItem("ogro_sid"); if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 7); sessionStorage.setItem("ogro_sid", s); } return s; } catch (e) { return "s" + Date.now().toString(36); } })();
+let evSeq = 0;
+const storeId = id => id ? "ogro_" + id.replace(/-/g, "_") : undefined;
+const viewAtual = () => { const h = location.hash || "#/"; return h.startsWith("#/loja") ? "cardapio" : h === "#/checkout" ? "checkout" : h.startsWith("#/pedido") ? "pedido" : "home"; };
+const META = { view_item: "ViewContent", view_menu: "ViewContent", add_to_cart: "AddToCart", begin_checkout: "InitiateCheckout", add_payment_info: "AddPaymentInfo", purchase: "Purchase", search: "Search" };
+const MAPA_EVENTOS = [
+  // [evento GA4, quando dispara, Meta, conversão?]
+  ["virtual_page_view", "Troca de tela (início, cardápio, checkout, pedido)", "PageView", ""],
+  ["select_store", "Escolheu a loja", "", ""],
+  ["view_menu", "Abriu o cardápio de uma loja", "ViewContent", ""],
+  ["view_promotion", "Banner ficou ≥ 50% na tela por 1 s", "", ""],
+  ["select_promotion", "Tocou num banner", "", ""],
+  ["view_category", "Categoria do cardápio passou pela tela", "", ""],
+  ["select_category", "Tocou numa categoria", "", ""],
+  ["view_item_list", "Card de produto ≥ 50% na tela por 1 s (impressão, em lote)", "", ""],
+  ["select_item", "Tocou no card de um produto (lista e posição)", "", ""],
+  ["view_item", "Abriu a ficha do produto", "ViewContent", ""],
+  ["select_option", "Escolheu bebida, burger do combo ou adicional", "", ""],
+  ["upsell_combo", "Marcou “vira combo”", "", ""],
+  ["tempo_no_item", "Fechou a ficha: segundos na ficha, segundos de vídeo e se adicionou", "", ""],
+  ["exposicao_itens", "Saiu do cardápio: segundos que cada produto ficou visível", "", ""],
+  ["tempo_engajado", "Marcos de 15, 30, 60, 120 e 300 s ativos na tela", "", ""],
+  ["scroll_profundidade", "Rolou 25, 50, 75 e 90% da tela", "", ""],
+  ["tempo_na_pagina", "Saiu da tela: segundos ativos, totais e rolagem máxima", "", ""],
+  ["search", "Buscou no cardápio", "Search", ""],
+  ["add_to_cart", "Pôs na sacola (ficha, sugestão ou repetir)", "AddToCart", "sim"],
+  ["remove_from_cart", "Tirou da sacola", "", ""],
+  ["view_cart", "Abriu a sacola", "", ""],
+  ["coupon_apply", "Aplicou cupom", "", ""],
+  ["begin_checkout", "Abriu o checkout", "InitiateCheckout", "sim"],
+  ["add_payment_info", "Escolheu a forma de pagamento", "AddPaymentInfo", ""],
+  ["purchase", "Pedido confirmado (no ar: só depois do backend confirmar)", "Purchase", "sim"],
+  ["rating", "Deu nota ao pedido", "", ""]
+];
+function metaParams(ev) {
+  const e = ev.ecommerce || {}, it = e.items || [];
+  return { content_type: "product", content_ids: it.map(i => i.item_id), contents: it.map(i => ({ id: i.item_id, quantity: i.quantity || 1 })), value: e.value, currency: "BRL", search_string: ev.search_term };
 }
+function track(event, params = {}, ecommerce) {
+  const enviado = !!(consent && consent.an);
+  const ev = { event, event_id: `ogro_${SID}_${++evSeq}`, store_id: storeId(typeof S !== "undefined" ? S.loja : null), session_id: SID, tela: viewAtual(), ...params };
+  if (ecommerce) ev.ecommerce = { currency: "BRL", ...ecommerce };
+  Object.keys(ev).forEach(k => ev[k] === undefined && delete ev[k]);
+  if (enviado) {
+    if (ecommerce) window.dataLayer.push({ ecommerce: null }); // limpa o objeto anterior (recomendação do GA4)
+    window.dataLayer.push(ev);
+    if (consent.mk && typeof window.fbq === "function" && META[event]) window.fbq("track", META[event], metaParams(ev), { eventID: ev.event_id });
+  }
+  Painel.registrar(ev, enviado);
+}
+// item no formato GA4 (o mesmo serve para Meta: content_ids)
+function itemGA(p, extra = {}) {
+  const cat = CATS.find(c => c.id === p.c);
+  return { item_id: p.id, item_name: p.n, item_brand: "Ogro Steaks", item_category: cat ? cat.n : p.c, item_category2: p.t, price: p.p, quantity: 1, ...extra };
+}
+const itemCart = i => itemGA(PID[i.id], { price: +i.u.toFixed(2), quantity: i.q, item_variant: (descSel(i) || "").slice(0, 100) || undefined });
+const valorDe = items => +items.reduce((a, i) => a + i.price * (i.quantity || 1), 0).toFixed(2);
+
+/* impressões e tempo visível de cada card (IntersectionObserver: ≥ 50% na tela por ≥ 1 s) */
+const Expo = (() => {
+  const vis = new Map(), vistos = new Set(), fila = new Map(), tempo = new Map();
+  let filaT;
+  const chave = el => el.dataset.p || el.dataset.fav || el.dataset.add;
+  function acumula(el, agora) {
+    const t0 = vis.get(el); if (t0 == null) return; vis.delete(el); clearTimeout(el._imp);
+    const ms = agora - t0; if (ms < 250) return;
+    const id = chave(el); tempo.set(id, (tempo.get(id) || 0) + ms);
+  }
+  const obs = new IntersectionObserver(es => {
+    const agora = performance.now();
+    es.forEach(e => {
+      const el = e.target;
+      if (e.isIntersecting && e.intersectionRatio >= .5 && !document.hidden) {
+        if (!vis.has(el)) { vis.set(el, agora); el._imp = setTimeout(() => impressao(el), 1000); }
+      } else acumula(el, agora);
+    });
+  }, { threshold: [0, .5] });
+  function impressao(el) {
+    const id = chave(el), lista = el.dataset.list || "outros", k = lista + "|" + id;
+    if (!PID[id] || vistos.has(k)) return; vistos.add(k);
+    if (!fila.has(lista)) fila.set(lista, []);
+    fila.get(lista).push(itemGA(PID[id], { item_list_id: lista, item_list_name: NOMES_LISTA[lista] || lista, index: +(el.dataset.idx || 0) }));
+    clearTimeout(filaT); filaT = setTimeout(enviarFila, 1200);
+  }
+  function enviarFila() {
+    fila.forEach((items, lista) => { for (let i = 0; i < items.length; i += 20) { const lote = items.slice(i, i + 20); track("view_item_list", { item_list_id: lista, item_list_name: NOMES_LISTA[lista] || lista }, { item_list_id: lista, item_list_name: NOMES_LISTA[lista] || lista, items: lote }); } });
+    fila.clear();
+  }
+  return {
+    observar(root) { $$("[data-list]", root).forEach(el => obs.observe(el)); },
+    pausar() { const agora = performance.now(); [...vis.keys()].forEach(el => acumula(el, agora)); },
+    retomar() { $$("[data-list]").forEach(el => { obs.unobserve(el); obs.observe(el); }); },
+    // fecha a visita da tela: manda o tempo visível de cada produto e zera
+    fechar(tela) {
+      this.pausar(); enviarFila();
+      const items = [...tempo.entries()].filter(([id, ms]) => PID[id] && ms >= 1000).sort((a, b) => b[1] - a[1]).slice(0, 25)
+        .map(([id, ms], idx) => itemGA(PID[id], { index: idx, tempo_visivel_s: Math.round(ms / 100) / 10 }));
+      if (items.length) track("exposicao_itens", { tela_origem: tela, itens_vistos: items.length }, { items });
+      tempo.clear(); vistos.clear();
+    }
+  };
+})();
+const NOMES_LISTA = { home_mais_pedidos: "Início · Mais pedidos", mais_pedidos: "Cardápio · Mais pedidos", sacola_sugestoes: "Sacola · Combina com teu pedido", busca: "Cardápio · Busca" };
+
+/* tempo na tela (só conta com a aba aberta e alguém mexendo nos últimos 30 s) + rolagem */
+const Eng = (() => {
+  const MARCOS = [15, 30, 60, 120, 300], ROL = [25, 50, 75, 90];
+  let tela = null, ativo = 0, total = 0, ativoAte = 0, marcos = new Set(), rol = new Set(), rolMax = 0, t0 = Date.now();
+  const mexeu = () => { ativoAte = Date.now() + 30000; };
+  ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"].forEach(ev => addEventListener(ev, mexeu, { passive: true }));
+  setInterval(() => {
+    if (!tela || document.hidden) return;
+    total++;
+    if (Date.now() < ativoAte) { ativo++; MARCOS.forEach(m => { if (ativo >= m && !marcos.has(m)) { marcos.add(m); track("tempo_engajado", { segundos: m, loja: S.loja || undefined }); } }); }
+  }, 1000);
+  addEventListener("scroll", () => {
+    if (!tela) return;
+    const h = document.documentElement.scrollHeight - innerHeight; if (h < 200) return;
+    const pct = Math.round(scrollY / h * 100); rolMax = Math.max(rolMax, pct);
+    ROL.forEach(r => { if (pct >= r && !rol.has(r)) { rol.add(r); track("scroll_profundidade", { percent_scrolled: r }); } });
+  }, { passive: true });
+  return {
+    iniciar(nova) { this.fechar(); tela = nova; ativo = 0; total = 0; marcos = new Set(); rol = new Set(); rolMax = 0; t0 = Date.now(); mexeu(); },
+    fechar() { if (tela && total >= 2) track("tempo_na_pagina", { tela_origem: tela, segundos_engajados: ativo, segundos_totais: Math.round((Date.now() - t0) / 1000), rolagem_max_pct: rolMax }); tela = null; }
+  };
+})();
+
+/* tempo dentro da ficha do produto (e quanto do vídeo do burger foi visto) */
+const ItemT = {
+  at: null,
+  iniciar(p, origem) { this.at = { p, origem, ms: 0, de: document.hidden ? 0 : performance.now(), vid: 0 }; },
+  pausar() { const a = this.at; if (a && a.de) { a.ms += performance.now() - a.de; a.de = 0; } },
+  retomar() { const a = this.at; if (a && !a.de) a.de = performance.now(); },
+  fim(resultado) {
+    const a = this.at; if (!a) return; this.pausar(); this.at = null;
+    track("tempo_no_item", { item_id: a.p.id, item_name: a.p.n, origem: a.origem, resultado, segundos: Math.round(a.ms / 100) / 10, segundos_video: Math.round(a.vid / 100) / 10, tempo_ms: Math.round(a.ms) });
+  }
+};
+document.addEventListener("visibilitychange", () => { if (document.hidden) { Expo.pausar(); ItemT.pausar(); } else { Expo.retomar(); ItemT.retomar(); } });
+addEventListener("pagehide", () => { ItemT.fim("saiu_do_site"); Expo.fechar(viewAtual()); Eng.fechar(); });
+
+/* painel de demonstração (só com ?debug=1): eventos ao vivo, números por produto e o mapa de eventos */
+const Painel = (() => {
+  const K = "ogro_trk_stats";
+  let st = Store.get(K) || { itens: {}, eventos: 0, desde: Date.now() };
+  const log = []; let aba = "vivo", aberto = false, raf = 0, salvarT;
+  const it = id => (st.itens[id] = st.itens[id] || { imp: 0, vis: 0, cli: 0, abre: 0, itemMs: 0, vidMs: 0, add: 0, addQ: 0, comp: 0 });
+  const salvar = () => { clearTimeout(salvarT); salvarT = setTimeout(() => Store.set(K, st), 500); };
+  const resumo = ev => ev.item_name || (ev.ecommerce && ev.ecommerce.items && ev.ecommerce.items.length ? ev.ecommerce.items.slice(0, 3).map(i => i.item_name + (i.tempo_visivel_s ? ` ${i.tempo_visivel_s}s` : "")).join(", ") + (ev.ecommerce.items.length > 3 ? ` +${ev.ecommerce.items.length - 3}` : "") : "") || ev.item_list_name || ev.promotion_name || ev.category || ev.search_term || ev.page_path || (ev.segundos != null ? ev.segundos + " s" : "") || (ev.percent_scrolled ? ev.percent_scrolled + "%" : "") || ev.store || "";
+  function registrar(ev, enviado) {
+    if (!enviado && !DEBUG) return;
+    log.unshift({ ev, enviado, t: new Date() }); if (log.length > 120) log.length = 120;
+    st.eventos++;
+    const items = (ev.ecommerce && ev.ecommerce.items) || [];
+    if (ev.event === "view_item_list") items.forEach(i => it(i.item_id).imp++);
+    if (ev.event === "select_item") items.forEach(i => it(i.item_id).cli++);
+    if (ev.event === "view_item") items.forEach(i => it(i.item_id).abre++);
+    if (ev.event === "exposicao_itens") items.forEach(i => it(i.item_id).vis += i.tempo_visivel_s * 1000);
+    if (ev.event === "tempo_no_item") { const x = it(ev.item_id); x.itemMs += ev.tempo_ms || 0; x.vidMs += (ev.segundos_video || 0) * 1000; }
+    if (ev.event === "add_to_cart") items.forEach(i => { const x = it(i.item_id); x.add++; x.addQ += i.quantity || 1; });
+    if (ev.event === "purchase") items.forEach(i => it(i.item_id).comp += i.quantity || 1);
+    salvar();
+    const b = document.getElementById("trk-n"); if (b) b.textContent = st.eventos;
+    if (aberto) { cancelAnimationFrame(raf); raf = requestAnimationFrame(desenhar); }
+  }
+  const seg = ms => ms >= 60000 ? `${Math.floor(ms / 60000)}m${String(Math.round(ms % 60000 / 1000)).padStart(2, "0")}` : (Math.round(ms / 100) / 10).toFixed(1).replace(".", ",") + "s";
+  const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
+  function linhasProdutos() {
+    return P.map(p => ({ p, x: st.itens[p.id] })).filter(r => r.x).sort((a, b) => (b.x.cli - a.x.cli) || (b.x.imp - a.x.imp));
+  }
+  function desenhar() {
+    const c = document.getElementById("trk-corpo"); if (!c) return;
+    $$("#trk-abas button").forEach(b => b.setAttribute("aria-selected", b.dataset.aba === aba));
+    if (aba === "vivo") {
+      c.innerHTML = (consent && consent.an ? "" : `<p class="trk-aviso">Sem consentimento de Análise: os eventos abaixo <b>não</b> foram enviados. Toca em “Permitir todos” no aviso de cookies para ver o envio de verdade.</p>`) +
+        (log.length ? log.map(({ ev, enviado, t }) => `<details class="trk-ev"><summary><time>${t.toLocaleTimeString("pt-BR")}</time><b>${esc(ev.event)}</b><span>${esc(String(resumo(ev)).slice(0, 70))}</span>${enviado ? "" : `<i>não enviado</i>`}</summary><pre>${esc(JSON.stringify(ev, null, 2))}</pre></details>`).join("") : `<p class="trk-vazio">Mexe no cardápio: cada toque, rolagem e tempo parado aparece aqui.</p>`);
+    } else if (aba === "produtos") {
+      const ls = linhasProdutos();
+      c.innerHTML = `<p class="trk-nota">Neste aparelho, desde ${new Date(st.desde).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. No ar, os mesmos números saem do GA4 (relatório de itens) somando todos os clientes.</p>` +
+        (ls.length ? `<div class="trk-tab"><table><thead><tr><th>Produto</th><th title="Card ≥ 50% na tela por 1 s">Impr.</th><th title="Tempo total que o card ficou visível">Visível</th><th title="Toques no card">Cliques</th><th title="Cliques ÷ impressões">CTR</th><th title="Tempo médio com a ficha aberta">Na ficha</th><th title="Tempo de vídeo do burger assistido">Vídeo</th><th>Sacola</th><th title="Pôs na sacola ÷ abriu a ficha">Conv.</th><th>Pedido</th></tr></thead><tbody>${ls.map(({ p, x }) => `<tr><td>${esc(p.n)}</td><td>${x.imp}</td><td>${seg(x.vis)}</td><td>${x.cli}</td><td>${pct(x.cli, x.imp)}</td><td>${x.abre ? seg(x.itemMs / x.abre) : "–"}</td><td>${x.vidMs ? seg(x.vidMs) : "–"}</td><td>${x.addQ}</td><td>${pct(x.add, x.abre)}</td><td>${x.comp}</td></tr>`).join("")}</tbody></table></div>` : `<p class="trk-vazio">Ainda sem dados. Abre uma loja e rola o cardápio.</p>`);
+    } else {
+      c.innerHTML = `<p class="trk-nota">Todo evento leva <code>event_id</code>, <code>store_id</code> (ex.: <code>ogro_botafogo</code>), <code>session_id</code> e <code>tela</code>. Os de produto levam <code>ecommerce.items</code> no padrão GA4. Meta só recebe com consentimento de Marketing e com o mesmo <code>event_id</code> (deduplicação com a CAPI).</p><div class="trk-tab txt"><table><thead><tr><th>Evento (GA4 / dataLayer)</th><th>Quando dispara</th><th>Meta</th><th>Conversão</th></tr></thead><tbody>${MAPA_EVENTOS.map(([e, q, m, cv]) => `<tr><td><code>${e}</code></td><td>${q}</td><td>${m || "–"}</td><td>${cv || ""}</td></tr>`).join("")}</tbody></table></div>`;
+    }
+  }
+  function csv() {
+    const linhas = [["produto", "item_id", "impressoes", "visivel_s", "cliques", "ctr", "fichas_abertas", "tempo_medio_ficha_s", "video_s", "adicionou", "qtd_sacola", "conv_ficha_sacola", "qtd_pedido"]];
+    linhasProdutos().forEach(({ p, x }) => linhas.push([p.n, p.id, x.imp, (x.vis / 1000).toFixed(1), x.cli, x.imp ? (x.cli / x.imp).toFixed(3) : "", x.abre, x.abre ? (x.itemMs / x.abre / 1000).toFixed(1) : "", (x.vidMs / 1000).toFixed(1), x.add, x.addQ, x.abre ? (x.add / x.abre).toFixed(3) : "", x.comp]));
+    const blob = new Blob(["﻿" + linhas.map(l => l.map(v => `"${String(v).replace(/"/g, '""')}"`).join(";")).join("\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `ogro-rastreamento-produtos-${new Date().toISOString().slice(0, 10)}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  function montar() {
+    if (!DEBUG) return;
+    document.body.insertAdjacentHTML("beforeend", `<button class="trk-bt" id="trk-bt" aria-label="Abrir painel de rastreamento">📊 Rastreamento <b id="trk-n">${st.eventos}</b></button>
+      <aside class="trk" id="trk" role="dialog" aria-label="Painel de rastreamento (demonstração)" hidden>
+        <div class="trk-cab"><strong>Rastreamento · demo</strong><button id="trk-x" aria-label="Fechar painel">✕</button></div>
+        <div class="trk-abas" id="trk-abas" role="tablist"><button data-aba="vivo" role="tab">Ao vivo</button><button data-aba="produtos" role="tab">Por produto</button><button data-aba="mapa" role="tab">Mapa de eventos</button></div>
+        <div class="trk-corpo" id="trk-corpo"></div>
+        <div class="trk-pe"><button id="trk-csv">Exportar CSV</button><button id="trk-dl">Copiar dataLayer</button><button id="trk-zerar">Zerar números</button></div>
+      </aside>`);
+    const box = $("#trk");
+    $("#trk-bt").onclick = () => { aberto = box.hidden; box.hidden = !aberto; if (aberto) desenhar(); };
+    $("#trk-x").onclick = () => { aberto = false; box.hidden = true; };
+    $("#trk-abas").onclick = e => { const b = e.target.closest("[data-aba]"); if (b) { aba = b.dataset.aba; desenhar(); } };
+    $("#trk-csv").onclick = csv;
+    $("#trk-dl").onclick = async () => { const t = JSON.stringify(window.dataLayer, null, 2); try { await navigator.clipboard.writeText(t); toast(`dataLayer copiado (${window.dataLayer.length} entradas).`); } catch (e) { console.log(t); toast("Não deu pra copiar: o dataLayer foi pro console."); } };
+    $("#trk-zerar").onclick = () => { st = { itens: {}, eventos: 0, desde: Date.now() }; log.length = 0; Store.set(K, st); $("#trk-n").textContent = 0; desenhar(); };
+  }
+  return { registrar, montar };
+})();
 
 /* ---------- dados ---------- */
 const LOJAS = [
@@ -840,6 +1096,21 @@ function statusLoja(id) { return aberta(id) ? { on: true, txt: `Aberta · até $
 
 
 const IMG = k => k ? `img/${k}.webp` : null;
+// Burgers animados: img/v-<img>.webm/.mp4 (720×540, ficha e "mais pedidos") e v-<img>-q (240×240, card).
+// Feitos da FOTO OFICIAL (_trabalho/gerar-videos-burgers.py): o burger é a foto real, só a câmera e o vapor se mexem.
+const VIDS = new Set(["mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam"]);
+const temVid = p => !semAnimacao && p.t === "burger" && VIDS.has(p.img);
+const vidTag = (p, q) => `<video muted loop playsinline preload="none" poster="${IMG(p.img)}" data-v="v-${p.img}${q ? "-q" : ""}" aria-hidden="true"></video>`;
+// só toca o que está na tela; carrega o arquivo na primeira vez que aparece
+const vidObs = new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target;
+  if (e.isIntersecting && !document.hidden) {
+    if (!v.dataset.ok) { v.dataset.ok = 1; v.innerHTML = `<source src="img/${v.dataset.v}.webm" type="video/webm"><source src="img/${v.dataset.v}.mp4" type="video/mp4">`; v.load(); }
+    v.play().catch(() => {});
+  } else v.pause();
+}), { threshold: .5 });
+const observarVids = root => $$("video[data-v]", root).forEach(v => vidObs.observe(v));
+document.addEventListener("visibilitychange", () => $$("video[data-v]").forEach(v => { if (document.hidden) v.pause(); else { vidObs.unobserve(v); vidObs.observe(v); } }));
 const BEBIDAS_LATA = ["Coca-Cola lata 350ml", "Coca-Cola sem açúcar lata 350ml", "Fanta Laranja lata 350ml", "Fanta Guaraná lata 350ml", "Fanta Uva lata 350ml"]; // as da foto oficial do Cardápio Digital
 const ADD = [["Bacon extra", 6], ["Cheddar extra", 4], ["Carne extra (blend)", 14], ["Cebola caramelizada", 4], ["Maionese do Ogro (pote)", 4]];
 const ESCOLHA_BURGERS = ["McManis", "Ogro Festival", "P.C.Q", "Quarter Ogro", "X Bacon", "Texano", "Ogro GPT", "Notdog", "X-Cocó"];
@@ -993,7 +1264,7 @@ function renderContinuar() {
 function repetir() {
   const ult = Store.get("ogro_ultimo"); if (!ult) return;
   S.cart = ult.itens.filter(i => PID[i.id]); S.loja = ult.loja; Store.setC("ogro_loja", S.loja); salvarCart();
-  track("repeat_order");
+  const its = S.cart.map(itemCart); track("add_to_cart", { origem: "repetir_pedido" }, { value: valorDe(its), items: its });
   location.hash = "#/loja/" + S.loja; setTimeout(abrirGaveta, 300);
 }
 
@@ -1029,7 +1300,8 @@ function melhorLoja() {
 function renderFavs() {
   const alvo = melhorLoja(), l = alvo && LOJAS.find(x => x.id === alvo);
   $("#favs").innerHTML = P.filter(p => p.top).sort((a, b) => a.top - b.top).map((p, i) => `
-    <button class="card-top" data-fav="${p.id}"><span class="rank">#${i + 1}</span><img src="${IMG(p.img)}" alt="" loading="lazy" decoding="async" width="260" height="195"><div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span><br><span class="cta">${l ? "Pedir da " + esc(l.n) + " →" : "Escolher a loja →"}</span></div></button>`).join("");
+    <button class="card-top" data-fav="${p.id}" data-list="home_mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : `<img src="${IMG(p.img)}" alt="" loading="lazy" decoding="async" width="260" height="195">`}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span><br><span class="cta">${l ? "Pedir da " + esc(l.n) + " →" : "Escolher a loja →"}</span></div></button>`).join("");
+  observarVids($("#favs")); Expo.observar($("#favs"));
 }
 function chamarLojas(msg) {
   $("#todas").scrollIntoView({ behavior: "smooth" });
@@ -1039,16 +1311,23 @@ function chamarLojas(msg) {
 $("#hero-desce").addEventListener("click", e => { e.preventDefault(); chamarLojas(); track("hero_ver_lojas"); });
 $("#favs").addEventListener("click", e => {
   const b = e.target.closest("[data-fav]"); if (!b) return;
-  const alvo = melhorLoja(); track("select_item", { item_id: b.dataset.fav, origem: "home_favoritos" });
-  if (alvo) { location.hash = "#/loja/" + alvo; setTimeout(() => abrirProduto(b.dataset.fav), 380); }
+  const alvo = melhorLoja(); selecionou(b);
+  if (alvo) { location.hash = "#/loja/" + alvo; setTimeout(() => abrirProduto(b.dataset.fav, null, "home_mais_pedidos"), 380); }
   else chamarLojas("Escolhe tua loja primeiro. Esse tem em todas.");
 });
 
 /* ---------- LOJA ---------- */
-function cardProd(p) {
+// clique num card: select_item com a lista e a posição de onde veio
+function selecionou(el) {
+  const id = el.dataset.p || el.dataset.fav || el.dataset.add, p = PID[id]; if (!p) return "";
+  const lista = el.dataset.list || "outros", nome = NOMES_LISTA[lista] || lista;
+  track("select_item", { item_list_id: lista, item_list_name: nome }, { item_list_id: lista, item_list_name: nome, items: [itemGA(p, { item_list_id: lista, item_list_name: nome, index: +(el.dataset.idx || 0) })] });
+  return lista;
+}
+function cardProd(p, idx, lista) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
-  const img = p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" decoding="async" width="112" height="112">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
-  return `<button class="prod" data-p="${p.id}" aria-label="${esc(p.n)}, ${brl(p.p)}">
+  const img = temVid(p) ? vidTag(p, true) : p.img ? `<img src="${IMG(p.arte ? p.img + "-q" : p.img)}" alt="" loading="lazy" decoding="async" width="112" height="112">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  return `<button class="prod" data-p="${p.id}" data-list="${lista}" data-idx="${idx}" aria-label="${esc(p.n)}, ${brl(p.p)}">
     <div><h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${p.t === "escolha" || p.t === "combo" || p.t === "burger" ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
     <div class="prod__img">${img}${q ? `<span class="prod__qtd">${q}×</span>` : ""}<span class="prod__mais" aria-hidden="true">+</span></div>
   </button>`;
@@ -1080,15 +1359,18 @@ function renderMenu(q) {
   if (!nq) {
     const top = P.filter(p => p.top).sort((a, b) => a.top - b.top);
     html += `<section class="cat" id="cat-top" style="content-visibility:visible"><h2 class="disp">Mais pedidos</h2><p>O que mais sai das chapas do Ogro.</p><div class="carrossel">${top.map((p, i) => `
-      <button class="card-top" data-p="${p.id}"><span class="rank">#${i + 1}</span><img src="${IMG(p.img)}" alt="" ${i < 2 ? "" : 'loading="lazy"'} decoding="async" width="260" height="195"><div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span></div></button>`).join("")}</div></section>`;
+      <button class="card-top" data-p="${p.id}" data-list="mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : `<img src="${IMG(p.img)}" alt="" ${i < 2 ? "" : 'loading="lazy"'} decoding="async" width="260" height="195">`}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span></div></button>`).join("")}</div></section>`;
   }
   let n = 0;
   CATS.filter(c => c.id !== "top").forEach(c => {
     const ps = P.filter(p => p.c === c.id && hit(p)); n += ps.length;
-    if (ps.length) html += `<section class="cat" id="cat-${c.id}"><h2 class="disp">${c.n}</h2>${c.d ? `<p>${c.d}</p>` : ""}<div class="grade">${ps.map(cardProd).join("")}</div></section>`;
+    const lista = nq ? "busca" : "cardapio_" + c.id;
+    if (!nq) NOMES_LISTA[lista] = "Cardápio · " + c.n;
+    if (ps.length) html += `<section class="cat" id="cat-${c.id}"><h2 class="disp">${c.n}</h2>${c.d ? `<p>${c.d}</p>` : ""}<div class="grade">${ps.map((p, i) => cardProd(p, i, lista)).join("")}</div></section>`;
   });
   if (nq && !n) html = `<p class="nada">Nada com “${esc(q)}”. Tenta “bacon”, “costela” ou “frango”.</p>`;
   $("#lj-menu").innerHTML = html;
+  observarVids($("#lj-menu")); Expo.observar($("#lj-menu"));
   $("#lj-cats").style.display = nq ? "none" : "";
   $("#lj-banner-w").hidden = !!nq;
 }
@@ -1129,6 +1411,7 @@ function montarDots() {
 }
 montarDots();
 let bAtual = 0, bTimer, bPausa = false, bVisivel = false, bArrastou = false;
+const bVistos = new Set(); // banners já contados nesta visita ao cardápio (zera ao abrir a loja)
 function carregar(v, i) { if (semAnimacao || v.dataset.ok) return; v.dataset.ok = 1; const a = BANNERS[i].arq; v.innerHTML = `<source src="img/${a}.webm" type="video/webm"><source src="img/${a}.mp4" type="video/mp4">`; v.preload = "auto"; v.load(); }
 function agendar() {
   clearTimeout(bTimer);
@@ -1143,7 +1426,10 @@ function ativarB(i) {
   dots.forEach((d, k) => { d.classList.toggle("on", k === i); d.setAttribute("aria-current", k === i ? "true" : "false"); });
   vids.forEach((v, k) => {
     const naTela = k >= i && k < i + porVez();
-    if (naTela && bVisivel) { carregar(v, k); if (v.paused) { try { v.currentTime = 0; } catch (e) {} v.play().catch(() => {}); } }
+    if (naTela && bVisivel) {
+      carregar(v, k); if (v.paused) { try { v.currentTime = 0; } catch (e) {} v.play().catch(() => {}); }
+      if (!bVistos.has(k)) { bVistos.add(k); const b = BANNERS[k]; setTimeout(() => { if (bVisivel && bAtual <= k && k < bAtual + porVez()) track("view_promotion", { promotion_id: b.arq, promotion_name: b.nome, creative_slot: String(k + 1) }); else bVistos.delete(k); }, 1000); }
+    }
     else v.pause();
   });
   const prox = (i + porVez()) % NB; if (bVisivel) carregar(vids[prox], prox); // já deixa o próximo pronto
@@ -1184,11 +1470,11 @@ trilho.addEventListener("click", e => {
   if (bArrastou) { e.preventDefault(); e.stopPropagation(); bArrastou = false; return; }
   const s = e.target.closest("[data-b]"); if (!s) return;
   const b = BANNERS[+s.dataset.b];
-  track("select_promotion", { promotion_name: b.nome, creative_slot: +s.dataset.b + 1 });
+  track("select_promotion", { promotion_id: b.arq, promotion_name: b.nome, creative_slot: String(+s.dataset.b + 1) });
   if (b.acao === "cupom") {
     if (S.cart.length) { abrirGaveta(); setTimeout(() => { const c = $("#cupom"); c && (c.focus(), c.scrollIntoView({ block: "center", behavior: "smooth" })); }, 320); }
     else toast("Monta teu pedido. O campo do cupom fica na sacola, antes de fechar.", "Ver mais pedidos", () => $("#cat-top").scrollIntoView({ behavior: "smooth" }), 5000);
-  } else abrirProduto(b.acao);
+  } else abrirProduto(b.acao, null, "banner_" + b.nome);
 }, true);
 $("#carro-ant").onclick = () => { irB(bAtual - 1); pausarB(); retomarB(); };
 $("#carro-prox").onclick = () => { irB(bAtual + 1); pausarB(); retomarB(); };
@@ -1203,12 +1489,14 @@ mqDois.addEventListener("change", () => { montarDots(); bAtual = Math.min(bAtual
 addEventListener("resize", () => { const ps = passo(); if (ps) trilho.scrollLeft = bAtual * ps; });
 
 // scroll-spy das categorias
-let spyObs;
+let spyObs, catVistas = new Set();
 function spy() {
   if (spyObs) spyObs.disconnect();
+  catVistas = new Set();
   spyObs = new IntersectionObserver(es => {
     es.forEach(e => { if (e.isIntersecting) {
       const id = e.target.id.replace("cat-", "");
+      if (!catVistas.has(id)) { catVistas.add(id); const c = CATS.find(x => x.id === id); track("view_category", { category: c ? c.n : id }); }
       $$("#lj-cats .chip").forEach(c => c.classList.toggle("on", c.dataset.cat === id));
       // rola só a faixa de categorias na horizontal; nunca a página
       const nav = $("#lj-cats"), on = $(`#lj-cats [data-cat="${id}"]`);
@@ -1245,19 +1533,33 @@ function faltando(p, sel) {
   }
   return "";
 }
-function abrirProduto(id, editKey) {
+function abrirProduto(id, editKey, origem) {
   const p = PID[id]; if (!p) return;
+  ItemT.fim("trocou_de_item");
   const ed = editKey ? S.cart.find(i => i.k === editKey) : null;
-  SH = { p, q: ed ? ed.q : 1, sel: ed ? JSON.parse(JSON.stringify(ed.sel)) : {}, editKey };
+  SH = { p, q: ed ? ed.q : 1, sel: ed ? JSON.parse(JSON.stringify(ed.sel)) : {}, editKey, midia: null };
   renderSheet(true);
   abrir($("#sheet"));
-  track("view_item", { item_id: p.id, item_name: p.n, value: p.p });
+  origem = origem || (editKey ? "sacola_editar" : "direto");
+  track("view_item", { item_id: p.id, item_name: p.n, origem }, { value: p.p, items: [itemGA(p)] });
+  ItemT.iniciar(p, origem);
+}
+// mídia da ficha: o vídeo do burger fica o mesmo enquanto a pessoa escolhe opções (não reinicia a cada toque)
+function midiaSheet(p) {
+  const w = document.createElement("div"); w.className = "sheet__img";
+  if (temVid(p)) {
+    w.innerHTML = `<video muted loop playsinline autoplay preload="auto" poster="${IMG(p.img)}" aria-label="${esc(p.n)} animado"><source src="img/v-${p.img}.webm" type="video/webm"><source src="img/v-${p.img}.mp4" type="video/mp4"></video>`;
+    const v = w.querySelector("video"); let ult = 0;
+    v.addEventListener("timeupdate", () => { let d = v.currentTime - ult; if (d < 0) d += v.duration || 0; ult = v.currentTime; if (d > 0 && d < 1.5 && ItemT.at && ItemT.at.p === p) ItemT.at.vid += d * 1000; });
+  } else w.innerHTML = p.img ? `<img src="${IMG(p.img)}" alt="${esc(p.n)}" width="520" height="325">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
+  w.insertAdjacentHTML("beforeend", `<button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-x"/></svg></button>`);
+  return w;
 }
 function renderSheet(first) {
   const { p, sel } = SH;
   const corpo = $("#sheet-corpo"); const st = corpo.scrollTop;
   const gs = grupos(p, sel);
-  let h = `<div class="sheet__img">${p.img ? `<img src="${IMG(p.img)}" alt="${esc(p.n)}" width="520" height="325">` : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}<button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-x"/></svg></button></div>
+  let h = `<div id="sh-midia"></div>
     <div class="sheet__info"><h2 class="disp" id="sh-nome">${esc(p.n)}</h2>${p.d ? `<p>${esc(p.d)}</p>` : ""}<p style="font-weight:800;color:var(--preto);font-size:18px;margin-top:8px">${brl(p.p)}</p></div>`;
   if (p.t === "burger") {
     h += `<div class="grupo"><label class="combo-up"><img src="img/batata.webp" alt="" width="64" height="64" loading="lazy"><div><strong>Vira combo +${brl(COMBO_UP)}</strong>Batata P + refri lata. Sai mais em conta que separado.</div><input type="checkbox" data-combo ${sel.combo ? "checked" : ""}></label></div>`;
@@ -1280,6 +1582,9 @@ function renderSheet(first) {
   });
   if (p.t !== "simples" || p.c === "dividir") h += `<div class="grupo"><div class="grupo__h"><h3>Alguma observação?<small>Ex.: sem cebola, ponto da carne</small></h3></div><textarea class="campo" id="sh-obs" maxlength="140" placeholder="Opcional">${esc(sel.obs || "")}</textarea></div>`;
   corpo.innerHTML = h;
+  if (!SH.midia) SH.midia = midiaSheet(p);
+  $("#sh-midia").replaceWith(SH.midia);
+  const v = SH.midia.querySelector("video"); if (v) v.play().catch(() => {});
   if (!first) corpo.scrollTop = st; else corpo.scrollTop = 0;
   atualizarPeSheet();
 }
@@ -1294,15 +1599,16 @@ function atualizarPeSheet() {
 }
 $("#sheet").addEventListener("change", e => {
   const t = e.target; if (!SH) return;
-  if (t.matches("[data-combo]")) { SH.sel.combo = t.checked; if (!t.checked) delete SH.sel.bebida; renderSheet(); if (t.checked) track("upsell_combo", { item_id: SH.p.id }); return; }
-  if (t.dataset.gr) { SH.sel[t.dataset.gr] = t.value; renderSheet(); return; }
-  if (t.dataset.gc) { const a = new Set(SH.sel[t.dataset.gc] || []); t.checked ? a.add(t.value) : a.delete(t.value); SH.sel[t.dataset.gc] = [...a]; atualizarPeSheet(); }
+  if (t.matches("[data-combo]")) { SH.sel.combo = t.checked; if (!t.checked) delete SH.sel.bebida; renderSheet(); track(t.checked ? "upsell_combo" : "select_option", { item_id: SH.p.id, item_name: SH.p.n, grupo: "combo", opcao: t.checked ? "vira_combo" : "tirou_combo" }); return; }
+  if (t.dataset.gr) { SH.sel[t.dataset.gr] = t.value; renderSheet(); track("select_option", { item_id: SH.p.id, item_name: SH.p.n, grupo: t.dataset.gr, opcao: t.value, acao: "escolheu" }); return; }
+  if (t.dataset.gc) { const a = new Set(SH.sel[t.dataset.gc] || []); t.checked ? a.add(t.value) : a.delete(t.value); SH.sel[t.dataset.gc] = [...a]; atualizarPeSheet(); track("select_option", { item_id: SH.p.id, item_name: SH.p.n, grupo: t.dataset.gc, opcao: t.value, acao: t.checked ? "marcou" : "desmarcou" }); }
 });
 $("#sheet").addEventListener("input", e => { if (e.target.id === "sh-obs" && SH) SH.sel.obs = e.target.value; });
 $("#sheet").addEventListener("click", e => {
   const b = e.target.closest("[data-cn]"); if (b && SH) {
     const [g, nome, d] = b.dataset.cn.split("|"); const o = SH.sel[g] = SH.sel[g] || {};
-    o[nome] = Math.max(0, (o[nome] || 0) + +d); if (!o[nome]) delete o[nome]; renderSheet(); return;
+    o[nome] = Math.max(0, (o[nome] || 0) + +d); if (!o[nome]) delete o[nome]; renderSheet();
+    track("select_option", { item_id: SH.p.id, item_name: SH.p.n, grupo: g, opcao: nome, acao: +d > 0 ? "mais_um" : "menos_um" }); return;
   }
   if (e.target.closest("[data-fechar]")) fecharTudo();
 });
@@ -1314,9 +1620,12 @@ $("#sh-add").onclick = () => {
   if (editKey) S.cart = S.cart.filter(i => i.k !== editKey);
   const ex = S.cart.find(i => i.k === k);
   if (ex) ex.q += q; else S.cart.push({ k, id: p.id, q, sel, u: precoUnit(p, sel) });
+  const origem = ItemT.at ? ItemT.at.origem : undefined;
+  ItemT.fim(editKey ? "atualizou" : "adicionou");
   salvarCart(); fecharTudo(); atualizarSacola(true);
   marcarQtds();
-  track("add_to_cart", { item_id: p.id, item_name: p.n, quantity: q, value: precoUnit(p, sel) * q });
+  const itAdd = [itemCart({ id: p.id, q, sel, u: precoUnit(p, sel) })];
+  track("add_to_cart", { origem, editou: editKey ? true : undefined }, { value: valorDe(itAdd), items: itAdd });
   const temAcomp = S.cart.some(i => PID[i.id].c === "acomp" || PID[i.id].c === "combos" || PID[i.id].c === "dividir" || i.sel.combo);
   if (p.t === "burger" && !temAcomp) toast(`${p.n} na sacola.`, "+ Batata frita", () => addRapido("abf"), 5000);
   else toast(editKey ? "Item atualizado." : `${q}× ${p.n} na sacola.`, "Ver sacola", abrirGaveta);
@@ -1325,7 +1634,7 @@ function addRapido(id) {
   const p = PID[id]; if (p.t !== "simples") return abrirProduto(id);
   const k = id + "|{}"; const ex = S.cart.find(i => i.k === k);
   if (ex) ex.q++; else S.cart.push({ k, id, q: 1, sel: {}, u: p.p });
-  salvarCart(); atualizarSacola(true); track("add_to_cart", { item_id: id, item_name: p.n, quantity: 1, value: p.p, origem: "sugestao" });
+  salvarCart(); atualizarSacola(true); track("add_to_cart", { origem: $("#gaveta").classList.contains("on") ? "sacola_sugestoes" : "toast_batata" }, { value: p.p, items: [itemGA(p)] });
   if ($("#gaveta").classList.contains("on")) renderGaveta(); else toast(`${p.n} na sacola.`, "Ver sacola", abrirGaveta);
 }
 
@@ -1374,29 +1683,33 @@ function renderGaveta() {
       <div><h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
         <div class="item__pe"><div class="stepper"><button data-q="${i.k}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${i.k}|1" aria-label="Mais um">+</button></div>
         ${p.t !== "simples" ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
-    ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map(p => `<button class="sug__i" data-add="${p.id}">${p.img ? `<img src="${IMG(p.img)}" alt="" loading="lazy" width="140" height="80">` : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
+    ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map((p, i) => `<button class="sug__i" data-add="${p.id}" data-list="sacola_sugestoes" data-idx="${i}">${p.img ? `<img src="${IMG(p.img)}" alt="" loading="lazy" width="140" height="80">` : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
     <div><div class="cupom"><input class="campo" id="cupom" placeholder="Tem cupom?" value="${S.cupom || ""}" aria-label="Cupom" autocomplete="off"><button class="btn btn--dark" id="cupom-b">${S.cupom ? "Trocar" : "Aplicar"}</button></div>
       <div id="cupom-msg">${S.cupom ? (t.falta ? `<p class="cupom-msg">Faltam <b>${brl(t.falta)}</b> pro cupom ${S.cupom} valer.</p><div class="prog"><i style="width:${Math.min(100, (t.sub / CUPONS[S.cupom].min) * 100)}%"></i></div>` : `<p class="cupom-msg ok">✓ ${S.cupom} aplicado: ${CUPONS[S.cupom].txt}</p>`) : ""}</div></div>
     <div class="totais"><div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}<div><span>Entrega${distLoja(l) == null ? " (estimada)" : ""}</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div></div>`;
   pe.innerHTML = `<button class="btn btn--red" id="gv-fechar-ped"><span>Fechar pedido</span><span>${brl(t.total)}</span></button>`;
+  Expo.observar(c);
 }
-function abrirGaveta() { renderGaveta(); abrir($("#gaveta")); track("view_cart", { value: totais().sub }); }
+function abrirGaveta() { renderGaveta(); abrir($("#gaveta")); const its = S.cart.map(itemCart); track("view_cart", {}, { value: valorDe(its), items: its }); }
 $("#gaveta").addEventListener("click", e => {
   const q = e.target.closest("[data-q]");
   if (q) {
     const [k, d] = q.dataset.q.split("|"); const i = S.cart.find(x => x.k === k); if (!i) return;
     i.q += +d;
-    if (i.q <= 0) { const idx = S.cart.indexOf(i), bkp = { ...i, q: 1 }; S.cart.splice(idx, 1); toast(`${PID[i.id].n} saiu da sacola.`, "Desfazer", () => { S.cart.splice(idx, 0, bkp); salvarCart(); renderGaveta(); atualizarSacola(); }, 5000); track("remove_from_cart", { item_id: i.id }); }
+    const um = [itemCart({ ...i, q: 1 })];
+    if (+d > 0) track("add_to_cart", { origem: "sacola_mais_um" }, { value: valorDe(um), items: um });
+    if (+d < 0) track("remove_from_cart", { origem: "sacola" }, { value: valorDe(um), items: um });
+    if (i.q <= 0) { const idx = S.cart.indexOf(i), bkp = { ...i, q: 1 }; S.cart.splice(idx, 1); toast(`${PID[i.id].n} saiu da sacola.`, "Desfazer", () => { S.cart.splice(idx, 0, bkp); salvarCart(); renderGaveta(); atualizarSacola(); }, 5000); }
     salvarCart(); renderGaveta(); atualizarSacola(); return;
   }
-  const a = e.target.closest("[data-add]"); if (a) return addRapido(a.dataset.add);
-  const ed = e.target.closest("[data-edit]"); if (ed) { const it = S.cart.find(x => x.k === ed.dataset.edit); fecharTudo(); setTimeout(() => abrirProduto(it.id, it.k), 220); return; }
+  const a = e.target.closest("[data-add]"); if (a) { selecionou(a); return addRapido(a.dataset.add); }
+  const ed = e.target.closest("[data-edit]"); if (ed) { const it = S.cart.find(x => x.k === ed.dataset.edit); fecharTudo(); setTimeout(() => abrirProduto(it.id, it.k, "sacola_editar"), 220); return; }
   const ir = e.target.closest("[data-ir]"); if (ir) { fecharTudo(); location.hash = ir.dataset.ir; return; }
   if (e.target.closest("#cupom-b")) {
     const v = $("#cupom").value.trim().toUpperCase();
     if (!v) { S.cupom = null; Store.del("ogro_cupom"); renderGaveta(); return; }
-    if (CUPONS[v]) { S.cupom = v; Store.set("ogro_cupom", v); renderGaveta(); track("coupon_apply", { coupon: v }); }
-    else { $("#cupom-msg").innerHTML = `<p class="cupom-msg err">Esse cupom não existe ou já venceu. Confere as letras?</p>`; $("#cupom").classList.add("erro"); }
+    if (CUPONS[v]) { S.cupom = v; Store.set("ogro_cupom", v); renderGaveta(); track("coupon_apply", { coupon: v, valido: true }); }
+    else { track("coupon_apply", { coupon: v.slice(0, 20), valido: false }); $("#cupom-msg").innerHTML = `<p class="cupom-msg err">Esse cupom não existe ou já venceu. Confere as letras?</p>`; $("#cupom").classList.add("erro"); }
     return;
   }
   if (e.target.closest("#gv-fechar-ped")) { fecharTudo(); location.hash = "#/checkout"; }
@@ -1406,7 +1719,7 @@ $("#gaveta").addEventListener("keydown", e => { if (e.target.id === "cupom" && e
 /* ---------- abrir/fechar camadas ---------- */
 let ultimoFoco;
 function abrir(el) { ultimoFoco = document.activeElement; $("#veu").classList.add("on"); el.classList.add("on"); document.body.style.overflow = "hidden"; setTimeout(() => { const f = el.querySelector("button, input"); f && f.focus({ preventScroll: true }); }, 280); }
-function fecharTudo() { $$(".sheet.on, .gaveta.on, .nudge.on").forEach(x => x.classList.remove("on")); $("#veu").classList.remove("on"); document.body.style.overflow = ""; ultimoFoco && ultimoFoco.focus && ultimoFoco.focus({ preventScroll: true }); }
+function fecharTudo() { if ($("#sheet").classList.contains("on")) { ItemT.fim("fechou_sem_adicionar"); const v = SH && SH.midia && SH.midia.querySelector("video"); if (v) v.pause(); } $$(".sheet.on, .gaveta.on, .nudge.on").forEach(x => x.classList.remove("on")); $("#veu").classList.remove("on"); document.body.style.overflow = ""; ultimoFoco && ultimoFoco.focus && ultimoFoco.focus({ preventScroll: true }); }
 $("#veu").onclick = fecharTudo;
 $("#gv-fechar").onclick = fecharTudo;
 document.addEventListener("keydown", e => { if (e.key === "Escape") fecharTudo(); });
@@ -1434,7 +1747,7 @@ function renderCheckout() {
   else { $$("input[name=quando]")[0].disabled = false; $("#quando-agora").textContent = tempoKm(distLoja(l)); }
   renderResumo();
   window.scrollTo(0, 0);
-  track("begin_checkout", { value: totais().total });
+  const its = S.cart.map(itemCart); track("begin_checkout", { coupon: S.cupom || undefined }, { value: +totais().total.toFixed(2), coupon: S.cupom || undefined, items: its });
 }
 function renderResumo() {
   const t = totais(), l = lojaAtual();
@@ -1451,7 +1764,7 @@ async function autoCep(cep) {
 }
 $("#f-cep").addEventListener("input", e => { e.target.value = mascaraCep(e.target.value); const c = e.target.value.replace(/\D/g, ""); if (c.length === 8) { $("#f-rua").value = ""; $("#f-bairro").value = ""; autoCep(c); } });
 $("#f-tel").addEventListener("input", e => e.target.value = mascTel(e.target.value));
-$("#form-ck").addEventListener("change", e => { if (e.target.name === "pag") { $("#troco-w").hidden = e.target.value !== "dinheiro"; track("add_payment_info", { payment_type: e.target.value }); } });
+$("#form-ck").addEventListener("change", e => { if (e.target.name === "pag") { $("#troco-w").hidden = e.target.value !== "dinheiro"; const its = S.cart.map(itemCart); track("add_payment_info", { payment_type: e.target.value }, { value: +totais().total.toFixed(2), payment_type: e.target.value, items: its }); } });
 $("#rs-editar").onclick = abrirGaveta;
 function validar() {
   const regras = [["#f-nome", v => v.trim().length >= 2, "Diz teu nome"], ["#f-tel", v => v.replace(/\D/g, "").length >= 10, "WhatsApp com DDD"], ["#f-cep", v => v.replace(/\D/g, "").length === 8, "CEP com 8 números"], ["#f-num", v => v.trim(), "Número da casa"], ["#f-rua", v => v.trim().length > 2, "Falta a rua"], ["#f-bairro", v => v.trim().length > 1, "Falta o bairro"]];
@@ -1474,7 +1787,9 @@ $("#btn-confirmar").onclick = () => {
   const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now() };
   Store.set("ogro_pedido", pedido);
   Store.set("ogro_ultimo", { loja: S.loja, itens: S.cart });
-  track("purchase", { transaction_id: num, value: t.total, currency: "BRL", coupon: S.cupom || undefined, payment_type: pag });
+  // No ar o purchase só sai depois que o backend confirma o pedido (nunca no clique). Aqui é simulação.
+  const itsC = S.cart.map(itemCart);
+  track("purchase", { event_id: `${storeId(S.loja)}_pedido_${num}`, payment_type: pag, agendado: quando !== "agora" }, { transaction_id: num, value: +t.total.toFixed(2), tax: 0, shipping: +t.taxa.toFixed(2), discount: t.desc ? +t.desc.toFixed(2) : undefined, coupon: S.cupom || undefined, items: itsC });
   S.cart = []; S.cupom = null; salvarCart(); Store.del("ogro_cupom"); atualizarSacola();
   location.hash = "#/pedido/" + num;
 };
@@ -1539,8 +1854,19 @@ function resetIdle() { clearTimeout(idleT); idleT = setTimeout(() => mostrarNudg
 document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY < 8) mostrarNudge("saida"); });
 
 /* ---------- ROTEADOR ---------- */
+let telaAnt = null;
 function rota() {
   const h = location.hash || "#/";
+  if (h.startsWith("#cat-")) { $("#v-loja").classList.add("on"); return; }
+  // fecha a medição da tela anterior (tempo visível dos produtos + tempo na tela) antes de trocar
+  const telaNova = viewAtual() + (h.match(/^#\/loja\/([\w-]+)/) ? ":" + h.split("/")[2] : "");
+  const novaTela = telaAnt !== telaNova;
+  if (novaTela) {
+    Expo.fechar(telaAnt || "inicio"); Eng.fechar();
+    const path = "/" + (h.replace(/^#\/?/, "").replace(/\/OG-\d+$/, "") || "");
+    track("virtual_page_view", { page_path: path, page_title: document.title + " · " + viewAtual(), page_location: location.origin + location.pathname + "#" + path.slice(1) });
+    Eng.iniciar(telaNova); telaAnt = telaNova;
+  }
   $$(".view").forEach(v => v.classList.remove("on"));
   fecharTudo();
   const m = h.match(/^#\/loja\/([\w-]+)/);
@@ -1548,12 +1874,12 @@ function rota() {
     if (S.loja && S.loja !== m[1] && S.cart.length) {
       if (!confirm("Tua sacola é da outra loja. Trocar de loja e levar os itens junto?")) { location.hash = "#/loja/" + S.loja; return; }
     }
+    const trocou = S.loja !== m[1] || novaTela;
     S.loja = m[1]; Store.setC("ogro_loja", S.loja);
     $("#v-loja").classList.add("on"); renderLoja(); spy();
-    track("select_store", { store: S.loja });
+    if (trocou) { bVistos.clear(); if (bVisivel) ativarB(bAtual); track("select_store", { store: S.loja }); track("view_menu", { store: S.loja, aberta: aberta(S.loja) }); }
   } else if (h === "#/checkout") { $("#v-checkout").classList.add("on"); renderCheckout(); }
   else if (h.startsWith("#/pedido")) { $("#v-pedido").classList.add("on"); renderPedido(); }
-  else if (h.startsWith("#cat-")) { $("#v-loja").classList.add("on"); return; }
   else { $("#v-home").classList.add("on"); renderFiltros(); renderLojas(); renderContinuar(); renderTopo(); renderFavs(); if (S.cep) $("#cep").value = mascaraCep(S.cep); window.scrollTo(0, 0); }
   if (!$("#v-home").classList.contains("on")) heroVid.pause();
   const l = lojaAtual();
@@ -1567,10 +1893,10 @@ addEventListener("hashchange", rota);
 /* ---------- eventos globais ---------- */
 document.addEventListener("click", e => {
   const lj = e.target.closest("[data-loja]"); if (lj) { location.hash = "#/loja/" + lj.dataset.loja; return; }
-  const pr = e.target.closest("[data-p]"); if (pr) { abrirProduto(pr.dataset.p); return; }
+  const pr = e.target.closest("[data-p]"); if (pr) { const lista = selecionou(pr); abrirProduto(pr.dataset.p, null, lista); return; }
   const f = e.target.closest("[data-f]"); if (f) { S.filtro = f.dataset.f; renderFiltros(); renderLojas(); return; }
   const av = e.target.closest("[data-avisa]"); if (av) { toast("Combinado. Quando a loja de São Gonçalo abrir, a gente te avisa."); track("notify_store", { store: av.dataset.avisa }); return; }
-  const cat = e.target.closest("#lj-cats [data-cat]"); if (cat) { e.preventDefault(); const s = $("#cat-" + cat.dataset.cat); s && s.scrollIntoView({ behavior: "smooth" }); return; }
+  const cat = e.target.closest("#lj-cats [data-cat]"); if (cat) { e.preventDefault(); track("select_category", { category: cat.textContent }); const s = $("#cat-" + cat.dataset.cat); s && s.scrollIntoView({ behavior: "smooth" }); return; }
   if (e.target.closest("#lj-perto")) { const p = LOJAS.filter(l => !l.breve).map(l => ({ l, d: distLoja(l) })).sort((a, b) => a.d - b.d)[0]; if (p) location.hash = "#/loja/" + p.l.id; }
 });
 $("#btn-sacola").onclick = abrirGaveta;
@@ -1625,6 +1951,7 @@ $("#abrir-cookies").onclick = () => { $("#cookies").hidden = false; };
 if (!consent) setTimeout(() => { $("#cookies").hidden = false; }, 900);
 
 /* ---------- início ---------- */
+Painel.montar();
 const rasc = Store.get("ogro_rascunho");
 if (rasc) Object.entries(rasc).forEach(([k, v]) => { const el = $("#f-" + k); if (el && v) el.value = v; });
 rota();
