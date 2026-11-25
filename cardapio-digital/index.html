@@ -29,6 +29,7 @@
    - Formatos (25/11, bancada SSIM): fotos AVIF com WebP de reserva (_trabalho/gerar-fotos-avif.py, −24%);
      vídeos AV1 → VP9 → H.264 (−35 a −64%). JPEG XL medido e descartado: empata com WebP e o Edge não abre.
    - Rastreamento completo por produto (GA4 e-commerce no dataLayer + Meta via fbq). Painel: abrir o link com ?debug=1.
+   - UX 25/11 (2): filtros por tipo (FILTROS), foto voando até a sacola, banners e topo em AV1 + posters AVIF.
    - UX 25/11: link direto #/loja/<loja>/<produto>?cupom=&utm_* (gerador na aba Links do painel), ajustes em botões
      na ficha (tirados dos ingredientes) e passo "Completa teu pedido?" antes do pagamento (1 vez por sacola).
      Falta no ar: GTM da loja no Databite, GA4/Pixel reais, purchase só depois do backend confirmar e CAPI com o mesmo event_id.
@@ -36,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap">
-<link rel="preload" as="image" href="img/mcmanis.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/mcmanis.avif" type="image/avif" fetchpriority="high">
 <style>
 :root{
   --vermelho:#8B1A1A; --barra:#B22222; --preto:#1A1A1A; --grafite-800:#303030; --grafite-700:#454545;
@@ -437,6 +438,15 @@ textarea.campo{min-height:70px;resize:vertical}
 .cp__i.ok{border-color:var(--verde)}
 .cp__ok{color:var(--verde);font-weight:800;font-size:13px;white-space:nowrap}
 .cp .link{justify-self:center;font-size:13px}
+/* foto voando até a sacola */
+.voa{position:fixed;z-index:95;border-radius:50%;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.35);pointer-events:none;will-change:transform}
+/* filtros por tipo no topo do cardápio */
+.filtros-menu{display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:14px 0 2px}
+.filtros-menu::-webkit-scrollbar{display:none}
+.filtros-menu span{font-size:13px;font-weight:700;color:var(--cinza);flex:none}
+.filtros-menu .chip{font-size:13px;padding:6px 12px}
+.filtros-menu .chip[aria-pressed=true]::after{content:" ✕"}
+.filtro-res{font-size:14px;color:var(--grafite-700);padding-top:10px}
 /* observação em botões (ficha do produto) */
 .obs-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .obs-chips .chip{font-size:13px;padding:6px 12px}
@@ -543,7 +553,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
       </div>
       <!-- Burger animado: takes reais da chapa (smash, queijo, brioche) + McManis pronto. Poster = foto, vídeo só carrega se não houver economia de dados / menos movimento -->
       <div class="hero__burger" aria-hidden="true">
-        <video id="hero-vid" muted loop playsinline preload="none" poster="img/mcmanis.webp" width="540" height="540"></video>
+        <video id="hero-vid" muted loop playsinline preload="none" width="540" height="540"></video>
         <svg class="hero__anel" viewBox="0 0 200 200"><defs><path id="anel-p" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/></defs><text textLength="536" lengthAdjust="spacing"><textPath href="#anel-p" textLength="536" lengthAdjust="spacing">FEITO NA CHAPA · NA HORA · DE UM OGRO PRA OUTRO ·</textPath></text></svg>
       </div>
 
@@ -852,6 +862,7 @@ const MAPA_EVENTOS = [
   ["pix_copiar / pix_paguei", "Copiou o código Pix · tocou em Já paguei (com segundos no Pix)", "", ""],
   ["nudge_show / nudge_click", "Lembrete de sacola guardada: apareceu (inatividade ou saída) e o que a pessoa escolheu", "", ""],
   ["filtro_regiao · geolocalizacao · ver_horarios · continuar_pedido", "Escolha de região · uso da localização (ok, negado, falhou) · abriu os horários · retomou a sacola guardada", "", ""],
+  ["filtro_cardapio", "Ligou ou tirou um filtro do cardápio (Frango, Costela, Bacon, Até R$ 40, Pra dividir), com nº de resultados", "", ""],
   ["search (resultados)", "A busca leva quantos produtos achou: 0 = o cliente procurou algo que não tem", "", ""],
   ["erro_tecnico", "Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)", "", ""],
   ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""]
@@ -1184,7 +1195,8 @@ const fotoTag = (k, attrs) => VIDS.has(k)
   ? `<picture><source srcset="img/${k}.avif" type="image/avif"><img src="img/${k}.webp" ${attrs}></picture>`
   : `<img src="${IMG(k)}" ${attrs}>`;
 let avifOk = false; // o poster do <video> é uma URL só (não aceita <picture>): testa o AVIF uma vez e escolhe
-{ const t = new Image(); t.onload = () => { avifOk = t.width > 0; }; t.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAD5bWV0YQAAAAAAAAAvaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAFBpY3R1cmVIYW5kbGVyAAAAAA5waXRtAAAAAAABAAAAHmlsb2MAAAAARAAAAQABAAAAAQAAASEAAAAUAAAAKGlpbmYAAAAAAAEAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAAGppcHJwAAAAS2lwY28AAAAUaXNwZQAAAAAAAAACAAAAAgAAABBwaXhpAAAAAAMICAgAAAAMYXYxQ4EADAAAAAATY29scm5jbHgAAgACAAIAAAAAF2lwbWEAAAAAAAAAAQABBAECgwQAAAAcbWRhdAoFGAA2wCAyCx/wAABYAAAAAK8w"; }
+let avisaAvif; const avifPronto = new Promise(r => { avisaAvif = r; });
+{ const t = new Image(); t.onload = () => { avifOk = t.width > 0; avisaAvif(); }; t.onerror = () => avisaAvif(); t.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAD5bWV0YQAAAAAAAAAvaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAFBpY3R1cmVIYW5kbGVyAAAAAA5waXRtAAAAAAABAAAAHmlsb2MAAAAARAAAAQABAAAAAQAAASEAAAAUAAAAKGlpbmYAAAAAAAEAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAAGppcHJwAAAAS2lwY28AAAAUaXNwZQAAAAAAAAACAAAAAgAAABBwaXhpAAAAAAMICAgAAAAMYXYxQ4EADAAAAAATY29scm5jbHgAAgACAAIAAAAAF2lwbWEAAAAAAAAAAQABBAECgwQAAAAcbWRhdAoFGAA2wCAyCx/wAABYAAAAAK8w"; }
 const posterDe = k => `img/${k}.${avifOk && VIDS.has(k) ? "avif" : "webp"}`;
 const fontesVid = base => `<source src="img/${base}.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'><source src="img/${base}.webm" type='video/webm; codecs="vp9"'><source src="img/${base}.mp4" type="video/mp4">`;
 // poster só quando o card chega perto da tela (antes, os 47 posters baixavam todos ao abrir o cardápio)
@@ -1379,7 +1391,7 @@ function renderTopo() {
   $("#hero-abertas").textContent = ab ? `${n} ${n === 1 ? "loja aberta" : "lojas abertas"} agora` : `Lojas abrem a partir das ${prox ? hhmm(prox.getHours() * 60 + prox.getMinutes()) : "—"} · já dá pra agendar`;
   $("#hero-pulso").classList.toggle("off", !ab);
   if (!semAnimacao) {
-    if (!heroVid.dataset.ok) { heroVid.dataset.ok = 1; heroVid.innerHTML = `<source src="img/hero-chapa.webm" type="video/webm"><source src="img/hero-chapa.mp4" type="video/mp4">`; heroVid.preload = "auto"; heroVid.load(); }
+    if (!heroVid.dataset.ok) { heroVid.dataset.ok = 1; heroVid.innerHTML = fontesVid("hero-chapa"); heroVid.preload = "auto"; heroVid.load(); }
     heroVid.play().catch(() => {});
   }
 }
@@ -1439,15 +1451,24 @@ function renderLoja() {
   else if (d != null && d > RAIO) { av.hidden = false; av.innerHTML = `<span>📍</span><span>Essa loja fica a ${d.toFixed(0)} km do teu CEP. <button class="link" id="lj-perto">Ver a mais perto</button></span>`; }
   else av.hidden = true;
   $("#lj-cats").innerHTML = CATS.map((c, i) => `<a class="chip${i === 0 ? " on" : ""}" href="#cat-${c.id}" data-cat="${c.id}">${c.n}</a>`).join("");
-  renderMenu("");
+  S.filtroMenu = null; renderMenu("");
   $("#busca-menu").value = "";
   window.scrollTo(0, 0);
 }
+// Filtros por tipo, tirados do próprio cardápio (nome, descrição, preço, categoria). Um por vez; tocar de novo tira.
+// A linha fica no topo do cardápio e NÃO esconde banner nem categorias: a página não pula quando filtra.
+const FILTROS = [
+  { id: "frango", n: "Frango", f: p => norm(p.n + " " + p.d).includes("frango") },
+  { id: "costela", n: "Costela", f: p => norm(p.n + " " + p.d).includes("costela") },
+  { id: "bacon", n: "Bacon", f: p => norm(p.n + " " + p.d).includes("bacon") },
+  { id: "ate40", n: "Até R$ 40", f: p => p.p <= 40 },
+  { id: "dividir", n: "Pra dividir", f: p => p.c === "dividir" }
+];
 function renderMenu(q) {
-  const nq = norm(q.trim());
-  const hit = p => !nq || norm(p.n + " " + p.d).includes(nq);
-  let html = "";
-  if (!nq) {
+  const nq = norm(q.trim()), fil = nq ? null : FILTROS.find(x => x.id === S.filtroMenu); // buscando, o filtro fica de lado
+  const hit = p => (!nq || norm(p.n + " " + p.d).includes(nq)) && (!fil || fil.f(p));
+  let html = nq ? "" : `<div class="filtros-menu" role="group" aria-label="Filtrar o cardápio"><span>Filtrar</span>${FILTROS.map(x => `<button type="button" class="chip" data-filtro="${x.id}" aria-pressed="${x.id === S.filtroMenu}">${x.n}</button>`).join("")}</div>`;
+  if (!nq && !fil) {
     const top = P.filter(p => p.top).sort((a, b) => a.top - b.top);
     html += `<section class="cat" id="cat-top" style="content-visibility:visible"><h2 class="disp">Mais pedidos</h2><p>O que mais sai das chapas do Ogro.</p><div class="carrossel">${top.map((p, i) => `
       <button class="card-top" data-p="${p.id}" data-list="mais_pedidos" data-idx="${i}"><span class="rank">#${i + 1}</span>${temVid(p) ? vidTag(p) : fotoTag(p.img, `alt="" ${i < 2 ? "" : 'loading="lazy"'} decoding="async" width="260" height="195"`)}<div><h3>${esc(p.n)}</h3><span class="prod__preco">${brl(p.p)}</span></div></button>`).join("")}</div></section>`;
@@ -1455,15 +1476,21 @@ function renderMenu(q) {
   let n = 0;
   CATS.filter(c => c.id !== "top").forEach(c => {
     const ps = P.filter(p => p.c === c.id && hit(p)); n += ps.length;
-    const lista = nq ? "busca" : "cardapio_" + c.id;
+    const lista = nq ? "busca" : fil ? "filtro_" + fil.id : "cardapio_" + c.id;
+    if (fil) NOMES_LISTA[lista] = "Cardápio · Filtro " + fil.n;
     if (!nq) NOMES_LISTA[lista] = "Cardápio · " + c.n;
     if (ps.length) html += `<section class="cat" id="cat-${c.id}"><h2 class="disp">${c.n}</h2>${c.d ? `<p>${c.d}</p>` : ""}<div class="grade">${ps.map((p, i) => cardProd(p, i, lista)).join("")}</div></section>`;
   });
   if (nq && !n) html = `<p class="nada">Nada com “${esc(q)}”. Tenta “bacon”, “costela” ou “frango”.</p>`;
+  else if (fil && !n) html += `<p class="nada">Nada em ${fil.n} nesta loja. <button class="link" data-filtro="${fil.id}">Tirar o filtro</button></p>`;
+  else if (fil) html = html.replace("</div>", `</div><p class="filtro-res">${n} ${n === 1 ? "opção" : "opções"} em <b>${fil.n}</b> · <button class="link" data-filtro="${fil.id}">ver tudo</button></p>`);
   $("#lj-menu").innerHTML = html;
   observarVids($("#lj-menu")); Expo.observar($("#lj-menu"));
   $("#lj-cats").style.display = nq ? "none" : "";
+  // com filtro, só some o chip de categoria que ficou sem produto (a faixa não muda de altura)
+  $$("#lj-cats [data-cat]").forEach(c => { c.hidden = !!fil && !$("#cat-" + c.dataset.cat); });
   $("#lj-banner-w").hidden = !!nq;
+  return n;
 }
 // atualiza só o selo "2×" dos cards, sem redesenhar o cardápio (não mexe na rolagem)
 function marcarQtds() {
@@ -1487,7 +1514,12 @@ const BANNERS = [
 ];
 const trilho = $("#carro-trilho"), dotsBox = $("#carro-dots"), NB = BANNERS.length;
 const pequeno = innerWidth < 700;
-trilho.innerHTML = BANNERS.map((b, i) => `<button class="carro__slide" data-b="${i}" role="group" aria-roledescription="banner" aria-label="${i + 1} de ${NB}. ${esc(b.alt)}"><video muted loop playsinline preload="none" poster="img/${b.arq}${pequeno ? "-600" : ""}.webp" width="1200" height="480" aria-hidden="true"></video></button>`).join("");
+trilho.innerHTML = BANNERS.map((b, i) => `<button class="carro__slide" data-b="${i}" role="group" aria-roledescription="banner" aria-label="${i + 1} de ${NB}. ${esc(b.alt)}"><video muted loop playsinline preload="none" width="1200" height="480" aria-hidden="true"></video></button>`).join("");
+// posters dos banners e do topo: AVIF quando o navegador abre, senão WebP (o teste do AVIF leva milissegundos)
+avifPronto.then(() => {
+  $$("video", trilho).forEach((v, i) => { v.poster = `img/${BANNERS[i].arq}${pequeno ? "-600" : ""}.${avifOk ? "avif" : "webp"}`; });
+  heroVid.poster = posterDe("mcmanis");
+});
 // celular: 1 banner por vez · desktop (>=768px): 2 lado a lado, na largura exata do cardápio
 const mqDois = matchMedia("(min-width:768px)");
 const porVez = () => (mqDois.matches ? 2 : 1);
@@ -1503,7 +1535,7 @@ function montarDots() {
 montarDots();
 let bAtual = 0, bTimer, bPausa = false, bVisivel = false, bArrastou = false;
 const bVistos = new Set(); // banners já contados nesta visita ao cardápio (zera ao abrir a loja)
-function carregar(v, i) { if (semAnimacao || v.dataset.ok) return; v.dataset.ok = 1; const a = BANNERS[i].arq; v.innerHTML = `<source src="img/${a}.webm" type="video/webm"><source src="img/${a}.mp4" type="video/mp4">`; v.preload = "auto"; v.load(); }
+function carregar(v, i) { if (semAnimacao || v.dataset.ok) return; v.dataset.ok = 1; v.innerHTML = fontesVid(BANNERS[i].arq); v.preload = "auto"; v.load(); }
 function agendar() {
   clearTimeout(bTimer);
   const d = dots[bAtual]; dots.forEach(x => x.classList.remove("corre"));
@@ -1738,20 +1770,39 @@ $("#sh-add").onclick = () => {
   if (ex) ex.q += q; else S.cart.push({ k, id: p.id, q, sel, u: precoUnit(p, sel) });
   const origem = ItemT.at ? ItemT.at.origem : undefined;
   ItemT.fim(editKey ? "atualizou" : "adicionou");
-  salvarCart(); fecharTudo(); atualizarSacola(true);
+  const deOnde = SH.midia && SH.midia.getBoundingClientRect(); // antes de fechar a ficha
+  salvarCart(); fecharTudo(); atualizarSacola(!voarParaSacola(deOnde, p.img));
   marcarQtds();
   const itAdd = [itemCart({ id: p.id, q, sel, u: precoUnit(p, sel) })];
   track("add_to_cart", { origem, editou: editKey ? true : undefined }, { value: valorDe(itAdd), items: itAdd });
   const temAcomp = S.cart.some(i => PID[i.id].c === "acomp" || PID[i.id].c === "combos" || PID[i.id].c === "dividir" || i.sel.combo);
-  if (p.t === "burger" && !temAcomp) toast(`${p.n} na sacola.`, "+ Batata frita", () => addRapido("abf"), 5000);
+  if (p.t === "burger" && !temAcomp) toast(`${p.n} na sacola.`, "+ Batata frita", () => addRapido("abf", $("#toast-b").getBoundingClientRect()), 5000);
   else toast(editKey ? "Item atualizado." : `${q}× ${p.n} na sacola.`, "Ver sacola", abrirGaveta);
 };
-function addRapido(id) {
+// A foto do produto voa da ficha (ou do aviso) até o ícone da sacola, que pulsa quando ela chega; vibração curta no celular.
+// Sem animação nem vibração para quem pediu menos movimento. Devolve true se animou (aí o pulso fica para a chegada).
+function pulsarSacola() { const b = $("#btn-sacola"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
+function voarParaSacola(r, k) {
+  if (semAnimacao || !r || !r.width || !k || !Element.prototype.animate) return false;
+  const a = $("#btn-sacola").getBoundingClientRect(), s = 76;
+  const x0 = r.left + r.width / 2, y0 = r.top + r.height / 2, dx = a.left + a.width / 2 - x0, dy = a.top + a.height / 2 - y0;
+  const im = document.createElement("img"); im.src = posterDe(k); im.alt = ""; im.className = "voa";
+  Object.assign(im.style, { left: x0 - s / 2 + "px", top: y0 - s / 2 + "px", width: s + "px", height: s + "px" });
+  document.body.appendChild(im);
+  im.animate([
+    { transform: "translate(0,0) scale(1)", opacity: 1 },
+    { transform: `translate(${dx * .45}px,${dy * .45 - 70}px) scale(.75)`, opacity: 1, offset: .5 },
+    { transform: `translate(${dx}px,${dy}px) scale(.22)`, opacity: .5 }
+  ], { duration: 620, easing: "cubic-bezier(.45,0,.55,1)" }).onfinish = () => { im.remove(); pulsarSacola(); };
+  try { navigator.vibrate && navigator.vibrate(12); } catch (e) {}
+  return true;
+}
+function addRapido(id, deOnde) {
   const p = PID[id]; if (p.t !== "simples") return abrirProduto(id);
   const k = id + "|{}"; const ex = S.cart.find(i => i.k === k);
   if (ex) ex.q++; else S.cart.push({ k, id, q: 1, sel: {}, u: p.p });
   const naGaveta = $("#gaveta").classList.contains("on");
-  salvarCart(); atualizarSacola(true); track("add_to_cart", { origem: naGaveta ? (S.naCompleta ? "completa_pedido" : "sacola_sugestoes") : "toast_batata" }, { value: p.p, items: [itemGA(p)] });
+  salvarCart(); atualizarSacola(naGaveta || !voarParaSacola(deOnde, p.img)); track("add_to_cart", { origem: naGaveta ? (S.naCompleta ? "completa_pedido" : "sacola_sugestoes") : "toast_batata" }, { value: p.p, items: [itemGA(p)] });
   if (naGaveta) (S.naCompleta ? renderCompleta() : renderGaveta()); else toast(`${p.n} na sacola.`, "Ver sacola", abrirGaveta);
 }
 
@@ -2105,6 +2156,12 @@ document.addEventListener("click", e => {
   const pr = e.target.closest("[data-p]"); if (pr) { const lista = selecionou(pr); abrirProduto(pr.dataset.p, null, lista); return; }
   const f = e.target.closest("[data-f]"); if (f) { S.filtro = f.dataset.f; renderFiltros(); renderLojas(); track("filtro_regiao", { regiao: S.filtro, lojas_mostradas: $$("#lojas .loja").length }); return; }
   const av = e.target.closest("[data-avisa]"); if (av) { toast("Combinado. Quando a loja de São Gonçalo abrir, a gente te avisa."); track("notify_store", { store: av.dataset.avisa }); return; }
+  const fl = e.target.closest("[data-filtro]"); if (fl) {
+    S.filtroMenu = S.filtroMenu === fl.dataset.filtro ? null : fl.dataset.filtro;
+    const n = renderMenu($("#busca-menu").value); spy();
+    track("filtro_cardapio", { filtro: S.filtroMenu || "nenhum", resultados: S.filtroMenu ? n : undefined });
+    return;
+  }
   const cat = e.target.closest("#lj-cats [data-cat]"); if (cat) { e.preventDefault(); track("select_category", { category: cat.textContent }); const s = $("#cat-" + cat.dataset.cat); s && s.scrollIntoView({ behavior: "smooth" }); return; }
   if (e.target.closest("#lj-perto")) { const p = LOJAS.filter(l => !l.breve).map(l => ({ l, d: distLoja(l) })).sort((a, b) => a.d - b.d)[0]; if (p) location.hash = "#/loja/" + p.l.id; }
 });
