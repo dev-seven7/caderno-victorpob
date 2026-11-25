@@ -1382,14 +1382,15 @@
   </section>
 
   <section id="atual-melhor">
-    <div class="sec-h"><span class="n">04</span><h2>O que o atual faz melhor</h2></div>
-    <p class="sec-sub">E o código mantém.</p>
+    <div class="sec-h"><span class="n">04</span><h2>O que o atual faz melhor (e agora o protótipo também)</h2></div>
+    <p class="sec-sub">Os quatro pontos em que o Cardápio atual ganhava entraram no protótipo em 25/11. Usamos os dados reais dele e fomos um passo além em cada um.</p>
     <ul class="lista">
-      <li><b>Grupos de opções vindos da API, com mínimo e máximo.</b> O protótipo tinha regras fixas por tipo de produto; o <code>selecao.ts</code> adota o modelo do atual.</li>
-      <li><b>Cada produto com URL própria.</b> O link de campanha se apoia nisso.</li>
-      <li><b>"Monte seu hambúrguer".</b> O protótipo não tem.</li>
-      <li><b>Mais variedade de bebida e "Ampliar imagem".</b></li>
+      <li><b>Grupos de opções com mínimo e máximo, vindos do cardápio.</b> O protótipo agora usa os grupos <b>reais</b> do Cardápio Digital: Tamanho da fome (carne de 120 g ou 180 g, +R$ 7,90), batata, bebida, "Leva junto com desconto", sachês e burgers do combo. Os simulados "Vira combo +R$ 15" e "Turbina teu burger" saíram. <i>A mais:</i> grupo de uma opção só vem marcado ("Já vem com"); a única opção grátis (Fome normal, batata P) vem marcada; lista longa e opcional começa recolhida; dá para pedir 2 da mesma bebida. O <code>selecao.ts</code> já segue esse modelo.</li>
+      <li><b>Cada produto com URL própria</b> (<code>#/loja/botafogo/mcmanis</code>). <i>A mais:</i> o "voltar" do celular fecha a ficha sem sair do cardápio nem perder a rolagem; o botão de compartilhar manda o link do produto; e o link de campanha se apoia nisso.</li>
+      <li><b>"Monte seu hambúrguer"</b>, com os grupos e preços reais: pão, carne 120 g ou 180 g, 1 a 2 queijos, 1 a 3 molhos e 1 a 6 complementos. <i>A mais:</i> o burger vai sendo montado na tela, camada por camada, conforme a escolha. O atual mostra a foto de outro burger.</li>
+      <li><b>Mais variedade de bebida e "Ampliar imagem".</b> Entraram Pepsi (lata, Black, 1,5 l e 2 l), Antarctica Soda, Guaraná em 1,5 l e 2 l, água com e sem gás e H2OH! Limoneto. Agora são 9 bebidas. <i>A mais:</i> a foto ampliada (até 1200 px, cerca de 45 KB em AVIF) só baixa quando o cliente toca, e um toque aproxima no ponto tocado.</li>
     </ul>
+    <p class="sec-sub">Ver no protótipo: <a href="../cardapio-digital/#/loja/botafogo/monte-seu-hamburguer">Monte seu hambúrguer</a> · <a href="../cardapio-digital/#/loja/botafogo/mcmanis">McManis com as opções reais</a> · <a href="../cardapio-digital/#/loja/botafogo/p-rpe">Pepsi</a>. Falta no código Angular: o "Monte seu hambúrguer" montado na tela e a foto ampliada (fatia F11/F5).</p>
   </section>
 
   <section id="status">
