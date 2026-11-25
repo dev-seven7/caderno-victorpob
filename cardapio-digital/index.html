@@ -7,6 +7,11 @@
 <meta name="description" content="Pede o Ogro direto da loja que chega mais rápido em você. Todas as unidades, cardápio completo e pedido em poucos toques.">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="img/ogro-quadrado-cor.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Ogro">
 <meta property="og:title" content="Cardápio Digital · Ogro Steaks">
 <meta property="og:description" content="Pede direto da loja do Ogro mais perto de você. Só delivery.">
 <meta property="og:image" content="img/mcmanis.webp">
@@ -95,7 +100,7 @@ a{color:inherit}
 .pulso.off{background:#E06666;animation:none}
 @keyframes pulsoV{70%{box-shadow:0 0 0 8px rgba(91,211,138,0)}100%{box-shadow:0 0 0 0 rgba(91,211,138,0)}}
 .hero h1{font-size:clamp(30px,8.6vw,64px);color:var(--branco)}
-.hero h1 em{font-style:normal;color:var(--barra)}
+.hero h1 em{font-style:normal;color:#D32F2F} /* vermelho da marca clareado só sobre o preto: 3,5:1 (AA texto grande); #B22222 dava 2,6:1 */
 .hero__burger{position:relative;width:118px;aspect-ratio:1;justify-self:end}
 .hero__burger video{position:absolute;inset:13px;width:calc(100% - 26px);height:calc(100% - 26px);border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--barra),0 12px 30px rgba(0,0,0,.6);background:#111}
 .hero__anel{position:absolute;inset:0;width:100%;height:100%;animation:gira 16s linear infinite;fill:var(--kraft);font:800 14px var(--corpo);letter-spacing:.06em}
@@ -177,7 +182,7 @@ a{color:inherit}
 .pill{display:inline-flex;align-items:center;gap:6px;background:var(--grafite-800);border-radius:99px;padding:6px 11px;font-size:13px;font-weight:600}
 .pill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
 .lj-horas{font-size:13px;color:var(--concreto)}
-.lj-horas summary{cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px;width:max-content;list-style:none}
+.lj-horas summary{cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px;width:max-content;list-style:none;padding:4px 0;min-height:28px}
 .lj-horas summary::-webkit-details-marker{display:none}
 .lj-horas summary::after{content:" ▾"}
 .lj-horas[open] summary::after{content:" ▴"}
@@ -207,10 +212,13 @@ a{color:inherit}
 .carro__seta svg{width:18px;height:18px;fill:none;stroke:var(--preto);stroke-width:2.4}
 .carro__seta--e{left:10px}.carro__seta--d{right:10px}
 @media (hover:hover){.carro__seta{display:grid}.carro:hover .carro__seta,.carro__seta:focus-visible{opacity:1}}
-.carro__dots{display:flex;justify-content:center;gap:6px;padding-top:8px}
-.carro__dot{width:8px;height:8px;border-radius:99px;background:var(--concreto-200);overflow:hidden;position:relative;transition:width .25s;padding:0}
-.carro__dot.on{width:28px;background:var(--concreto)}
-.carro__dot i{position:absolute;inset:0;background:var(--barra);transform-origin:left;transform:scaleX(0)}
+/* bolinhas: o desenho continua com 8 px, mas o alvo de toque tem 24 px (WCAG 2.2 · 2.5.8) */
+.carro__dots{display:flex;justify-content:center;gap:0;padding-top:2px}
+.carro__dot{width:24px;height:24px;border-radius:99px;background:none;position:relative;transition:width .25s;padding:0}
+.carro__dot::before{content:"";position:absolute;inset:8px;border-radius:99px;background:var(--concreto-200)}
+.carro__dot.on{width:40px}
+.carro__dot.on::before{background:var(--concreto)}
+.carro__dot i{position:absolute;inset:8px;border-radius:99px;background:var(--barra);transform-origin:left;transform:scaleX(0)}
 .carro__dot.on i{transform:scaleX(1)}
 .carro__dot.on.corre i{animation:enche var(--d,6s) linear both}
 @keyframes enche{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -480,7 +488,14 @@ textarea.campo{min-height:70px;resize:vertical}
 .pilha--mini{padding:8px 0;gap:1px}
 .pilha--mini .cm{animation:none}
 .pilha--mini .cm--pao-topo{height:24px}.pilha--mini .cm--pao-base{height:10px}.pilha--mini .cm--carne{height:10px}
-.pilha--mini .cm--queijo,.pilha--mini .cm--folha,.pilha--mini .cm--bacon{height:4px}.pilha--mini .cm--molho,.pilha--mini .cm--tomate{height:3px}/* foto voando até a sacola */
+.pilha--mini .cm--queijo,.pilha--mini .cm--folha,.pilha--mini .cm--bacon{height:4px}.pilha--mini .cm--molho,.pilha--mini .cm--tomate{height:3px}/* convite para instalar (PWA) */
+.app-convite{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
+.app-convite img{border-radius:14px}
+.app-convite h2{font-size:22px}
+.app-convite p{font-size:14px;color:var(--grafite-700)}
+.app-convite__acoes{grid-column:1/-1;display:flex;gap:14px;align-items:center}
+.app-convite__acoes .btn{flex:1}
+/* foto voando até a sacola */
 .voa{position:fixed;z-index:95;border-radius:50%;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.35);pointer-events:none;will-change:transform}
 /* filtros por tipo no topo do cardápio */
 .filtros-menu{display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:14px 0 2px}
@@ -757,6 +772,12 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
       <div class="estrelas" id="estrelas" role="group" aria-label="Nota de 1 a 5"></div>
       <p id="aval-msg" style="font-size:14px;color:var(--grafite-700)"></p>
     </div>
+    <!-- convite para instalar: só depois do 1º pedido, só se ainda não instalou, e "Agora não" é respeitado -->
+    <div class="bloco app-convite" id="app-convite" hidden>
+      <img src="img/icone-192.png" alt="" width="56" height="56">
+      <div><h2 class="disp">O Ogro na tua tela</h2><p id="app-convite-p">Da próxima vez é um toque: abre direto na tua loja, com o último pedido pronto pra repetir.</p></div>
+      <div class="app-convite__acoes"><button class="btn btn--red" id="app-instalar">Instalar</button><button class="link" id="app-agora-nao">Agora não</button></div>
+    </div>
     <button class="btn btn--dark btn--full" id="btn-novo">Pedir de novo</button>
   </div>
 </section>
@@ -871,6 +892,7 @@ let consent = Store.getC("ogro_consent");
 const qDebug = (location.search.match(/[?&]debug=([01])/) || [])[1];
 if (qDebug) Store.set("ogro_debug", +qDebug);
 const DEBUG = Store.get("ogro_debug") === 1;
+const MODO_APP = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; // aberto pelo ícone instalado
 const SID = (() => { try { let s = sessionStorage.getItem("ogro_sid"); if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 7); sessionStorage.setItem("ogro_sid", s); } return s; } catch (e) { return "s" + Date.now().toString(36); } })();
 let evSeq = 0;
 let UTM = (() => { try { return JSON.parse(sessionStorage.getItem("ogro_utm")) || null; } catch (e) { return null; } })(); // origem da campanha (link direto), segue em todos os eventos da sessão
@@ -890,6 +912,7 @@ const MAPA_EVENTOS = [
   ["select_item", "Tocou no card de um produto (lista e posição)", "", ""],
   ["view_item", "Abriu a ficha do produto", "ViewContent", ""],
   ["select_option", "Escolheu uma opção da ficha (grupo = nome real do grupo: Tamanho da fome, Bebida gelada, Molhos...) ou um ajuste", "", ""],
+  ["pwa_convite · pwa_instalar · pwa_instalado", "Convite para instalar (só depois do 1º pedido) · resposta (aceitou, recusou, agora não) · app instalado. Todo evento aberto pelo app leva app: true", "", ""],
   ["share", "Compartilhou o produto pela ficha (nativo do celular ou link copiado)", "", ""],
   ["ampliar_imagem", "Abriu a foto grande do produto", "", ""],
   ["tempo_no_item", "Fechou a ficha: segundos na ficha, segundos de vídeo e se adicionou", "", ""],
@@ -923,7 +946,7 @@ function metaParams(ev) {
 }
 function track(event, params = {}, ecommerce) {
   const enviado = !!(consent && consent.an);
-  const ev = { event, event_id: `ogro_${SID}_${++evSeq}`, store_id: storeId(typeof S !== "undefined" ? S.loja : null), session_id: SID, tela: viewAtual(), ...(UTM || {}), ...params };
+  const ev = { event, event_id: `ogro_${SID}_${++evSeq}`, store_id: storeId(typeof S !== "undefined" ? S.loja : null), session_id: SID, tela: viewAtual(), app: MODO_APP || undefined, ...(UTM || {}), ...params };
   if (ecommerce) ev.ecommerce = { currency: "BRL", ...ecommerce };
   Object.keys(ev).forEach(k => ev[k] === undefined && delete ev[k]);
   if (enviado) {
@@ -2080,9 +2103,21 @@ $("#gaveta").addEventListener("keydown", e => { if (e.target.id === "cupom" && e
 
 /* ---------- abrir/fechar camadas ---------- */
 let ultimoFoco;
-function abrir(el) { ultimoFoco = document.activeElement; $("#veu").classList.add("on"); el.classList.add("on"); document.body.style.overflow = "hidden"; setTimeout(() => { const f = el.querySelector("button, input"); f && f.focus({ preventScroll: true }); }, 280); }
+const FUNDO = () => $$("header.topo, main, footer.rodape, #barra-sacola");
+function prenderFoco(on) { FUNDO().forEach(x => { x.inert = on; }); }
+document.addEventListener("keydown", e => {
+  if (e.key !== "Tab") return;
+  const camada = !$("#zoom").hidden ? $("#zoom") : $(".sheet.on, .gaveta.on, .nudge.on"); if (!camada) return;
+  const foc = [...camada.querySelectorAll("button:not([disabled]), [href], input:not([disabled]), select, textarea, summary, [tabindex]:not([tabindex=\"-1\"])")].filter(x => x.offsetParent || x === document.activeElement);
+  const t = $("#toast"); if (t.classList.contains("on") && !$("#toast-b").hidden) foc.push($("#toast-b"));
+  if (!foc.length) return;
+  const i = foc.indexOf(document.activeElement);
+  if (e.shiftKey && (i <= 0)) { e.preventDefault(); foc[foc.length - 1].focus(); }
+  else if (!e.shiftKey && (i === -1 || i === foc.length - 1)) { e.preventDefault(); foc[0].focus(); }
+});
+function abrir(el) { prenderFoco(true); ultimoFoco = document.activeElement; $("#veu").classList.add("on"); el.classList.add("on"); document.body.style.overflow = "hidden"; setTimeout(() => { const f = el.querySelector("button, input"); f && f.focus({ preventScroll: true }); }, 280); }
 function fecharTudo() { fecharZoom(); if ($("#sheet").classList.contains("on")) { ItemT.fim("fechou_sem_adicionar"); const v = SH && SH.midia && SH.midia.querySelector("video"); if (v) v.pause();
-    if (SH && SH.url) { const u = SH.url; SH.url = null; if (location.hash === u && history.state && history.state.ficha) { S.ignorarHash = true; history.back(); } } } $$(".sheet.on, .gaveta.on, .nudge.on").forEach(x => x.classList.remove("on")); $("#veu").classList.remove("on"); document.body.style.overflow = ""; ultimoFoco && ultimoFoco.focus && ultimoFoco.focus({ preventScroll: true }); }
+    if (SH && SH.url) { const u = SH.url; SH.url = null; if (location.hash === u && history.state && history.state.ficha) { S.ignorarHash = true; history.back(); } } } $$(".sheet.on, .gaveta.on, .nudge.on").forEach(x => x.classList.remove("on")); prenderFoco(false); $("#veu").classList.remove("on"); document.body.style.overflow = ""; ultimoFoco && ultimoFoco.focus && ultimoFoco.focus({ preventScroll: true }); }
 $("#veu").onclick = fecharTudo;
 $("#gv-fechar").onclick = fecharTudo;
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !fecharZoom()) fecharTudo(); });
@@ -2191,6 +2226,7 @@ function renderPedido() {
     tick(); pixTimer = setInterval(tick, 1000);
     $("#btn-paguei").onclick = () => { track("pix_paguei", { transaction_id: p.num, segundos_no_pix: 600 - Math.max(0, s) }); p.pago = true; Store.set("ogro_pedido", p); $("#ped-pix").hidden = true; clearInterval(pixTimer); at = 1; desenhar(); avancar(); toast("Pix confirmado. A loja já começou."); };
   } else avancar();
+  mostrarConviteApp();
   $("#estrelas").innerHTML = [1, 2, 3, 4, 5].map(n => `<button data-e="${n}" aria-label="${n} estrela${n > 1 ? "s" : ""}">★</button>`).join("");
   $("#aval-msg").textContent = "";
   window.scrollTo(0, 0);
@@ -2370,6 +2406,27 @@ if (!consent) setTimeout(() => { $("#cookies").hidden = false; }, 900);
 
 /* ---------- início ---------- */
 Painel.montar();
+/* ---------- PWA: instalar na tela + abrir rápido na 2ª visita ---------- */
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+let pedidoInstalar = null;
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); pedidoInstalar = e; });
+addEventListener("appinstalled", () => { track("pwa_instalado"); Store.set("ogro_app", "instalado"); $("#app-convite").hidden = true; });
+const ehIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+function mostrarConviteApp() {
+  const box = $("#app-convite"), st = Store.get("ogro_app");
+  const pode = !MODO_APP && st !== "instalado" && !(st && st.nao && Date.now() - st.nao < 30 * 864e5) && (pedidoInstalar || ehIOS);
+  box.hidden = !pode; if (!pode) return;
+  if (!pedidoInstalar && ehIOS) { $("#app-convite-p").textContent = "No Safari: toca em Compartilhar e depois em “Adicionar à Tela de Início”. Da próxima vez é um toque."; $("#app-instalar").hidden = true; }
+  track("pwa_convite", { plataforma: pedidoInstalar ? "android_desktop" : "ios" });
+}
+$("#app-instalar").onclick = async () => {
+  if (!pedidoInstalar) return; pedidoInstalar.prompt();
+  const { outcome } = await pedidoInstalar.userChoice; pedidoInstalar = null;
+  track("pwa_instalar", { resultado: outcome }); if (outcome === "accepted") $("#app-convite").hidden = true;
+};
+$("#app-agora-nao").onclick = () => { Store.set("ogro_app", { nao: Date.now() }); $("#app-convite").hidden = true; track("pwa_instalar", { resultado: "agora_nao" }); };
+addEventListener("offline", () => toast("Sem internet agora. Tua sacola fica guardada aqui.", null, null, 5000));
+addEventListener("online", () => toast("Internet de volta.", null, null, 2500));
 const rasc = Store.get("ogro_rascunho");
 if (rasc) Object.entries(rasc).forEach(([k, v]) => { const el = $("#f-" + k); if (el && v) el.value = v; });
 rota();
