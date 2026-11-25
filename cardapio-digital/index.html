@@ -1245,7 +1245,7 @@ const VIDS = new Set([
   "mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam",
   "c-mcmanis", "c-festival", "c-ogrostela", "c-texano", "c-gpt", "c-xbacon", "c-hiper", "c-quarter", "c-pcq", "c-notdog", "c-xcoco",
   "batata", "canoa", "nuggets", "p-ama", "p-d2b", "p-d2m", "p-d3b", "p-d4p", "p-dcl", "p-dga", "p-dmo", "p-dnu",
-  "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto", "p-rpe", "p-rso"]);
+  "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto", "p-rpe", "p-rso", "monte"]);  // monte = vídeo do burger se montando (só no card; a ficha monta ao vivo)
 const temVid = p => !semAnimacao && VIDS.has(p.img);
 /* Formatos (bancada de 25/11, mesma nitidez medida por SSIM):
    - foto: AVIF 24% menor que WebP (890 → 680 KB nos 47); JPEG XL empatou com o WebP e o Edge não abre → não entrou.
@@ -1796,13 +1796,13 @@ function pilhaMonte(sel, jaTinha = new Set()) {
 }// mídia da ficha: o vídeo do burger fica o mesmo enquanto a pessoa escolhe opções (não reinicia a cada toque)
 function midiaSheet(p) {
   const w = document.createElement("div"); w.className = "sheet__img";
-  if (temVid(p)) {
+  if (temVid(p) && p.id !== "mon") {   // o Monte tem vídeo só no card; na ficha ele é montado ao vivo
     w.innerHTML = `<video muted loop playsinline autoplay preload="auto" poster="${posterDe(p.img)}" aria-label="${esc(p.n)} animado">${fontesVid("v-" + p.img)}</video>`;
     const v = w.querySelector("video"); let ult = 0;
     v.addEventListener("timeupdate", () => { let d = v.currentTime - ult; if (d < 0) d += v.duration || 0; ult = v.currentTime; if (d > 0 && d < 1.5 && ItemT.at && ItemT.at.p === p) ItemT.at.vid += d * 1000; });
   } else if (p.id === "mon") { w.classList.add("sheet__img--monte"); w.innerHTML = pilhaMonte(SH.sel); }
   else w.innerHTML = p.img ? fotoTag(p.img, `alt="${esc(p.n)}" width="520" height="325"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
-  if (VIDS.has(p.img)) { w.dataset.zoom = p.img; w.insertAdjacentHTML("beforeend", `<button class="amplia" data-zoom-bt aria-label="Ampliar a foto de ${esc(p.n)}"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Ampliar</button>`); }
+  if (VIDS.has(p.img) && p.id !== "mon") { w.dataset.zoom = p.img; w.insertAdjacentHTML("beforeend", `<button class="amplia" data-zoom-bt aria-label="Ampliar a foto de ${esc(p.n)}"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Ampliar</button>`); }
   w.insertAdjacentHTML("beforeend", `<button class="compartilha" data-share aria-label="Compartilhar ${esc(p.n)}"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg></button><button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-x"/></svg></button>`);
   return w;
 }
