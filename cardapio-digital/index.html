@@ -29,6 +29,8 @@
    - Formatos (25/11, bancada SSIM): fotos AVIF com WebP de reserva (_trabalho/gerar-fotos-avif.py, −24%);
      vídeos AV1 → VP9 → H.264 (−35 a −64%). JPEG XL medido e descartado: empata com WebP e o Edge não abre.
    - Rastreamento completo por produto (GA4 e-commerce no dataLayer + Meta via fbq). Painel: abrir o link com ?debug=1.
+   - UX 25/11: link direto #/loja/<loja>/<produto>?cupom=&utm_* (gerador na aba Links do painel), ajustes em botões
+     na ficha (tirados dos ingredientes) e passo "Completa teu pedido?" antes do pagamento (1 vez por sacola).
      Falta no ar: GTM da loja no Databite, GA4/Pixel reais, purchase só depois do backend confirmar e CAPI com o mesmo event_id.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -419,6 +421,27 @@ textarea.campo{min-height:70px;resize:vertical}
 /* burger animado (vídeo feito da foto oficial): mesmo lugar e tamanho da foto */
 .prod__img video,.sheet__img video{width:100%;height:100%;object-fit:cover;display:block;background:#111}
 .card-top video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#111}
+/* "Completa teu pedido?" (passo da sacola antes do pagamento) */
+.cp{display:grid;gap:12px}
+.cp h3{font-size:28px}
+.cp__sub{color:var(--grafite-700);font-size:14px;margin-top:-6px}
+.cp__cupom{background:#FFF3D6;color:#5a4410;border-radius:10px;padding:8px 10px;font-size:13px}
+.cp__cupom.ok{background:#E5F4E4;color:var(--verde);font-weight:700}
+.cp__l{display:grid;gap:10px}
+.cp__i{background:#fff;border-radius:var(--r);padding:10px;display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;border:2px solid transparent;transition:border-color .2s}
+.cp__i .item__img{width:64px;height:64px}
+.cp__i small{display:block;color:var(--cinza);font-size:12px}
+.cp__i b{display:block;font-size:15px;line-height:1.2}
+.cp__i span{font-weight:800;font-size:14px}
+.cp__i .btn{padding:9px 12px;font-size:13px}
+.cp__i.ok{border-color:var(--verde)}
+.cp__ok{color:var(--verde);font-weight:800;font-size:13px;white-space:nowrap}
+.cp .link{justify-self:center;font-size:13px}
+/* observação em botões (ficha do produto) */
+.obs-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.obs-chips .chip{font-size:13px;padding:6px 12px}
+.obs-chips .chip[aria-pressed=true]{background:var(--preto);border-color:var(--preto);color:#fff}
+.obs-chips .chip[aria-pressed=true]::before{content:"✓ "}
 picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o mesmo CSS de antes */
 
 /* painel de rastreamento (só com ?debug=1) */
@@ -451,6 +474,10 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 .trk-tab.txt th,.trk-tab.txt td{text-align:left;white-space:normal;vertical-align:top}
 .trk-tab th{color:#999;font-weight:700;position:sticky;top:0;background:#111}
 .trk-pe{display:flex;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #2a2a2a;flex-wrap:wrap}
+.trk-form{display:grid;gap:10px;margin-top:4px}
+.trk-form label{display:grid;gap:4px;font-size:12px;color:#aaa;font-weight:700}
+.trk-form select,.trk-form input{background:#1d1d1d;color:#eee;border:1px solid #333;border-radius:8px;padding:8px 10px;font-size:13px;width:100%}
+.trk-form #lk-out{color:var(--kraft);font-family:ui-monospace,monospace;font-size:12px}
 .trk-pe button{flex:1;background:#222;color:#eee;border-radius:10px;padding:9px 10px;font-weight:700;font-size:12px}
 
 @media (min-width:640px){
@@ -787,6 +814,7 @@ if (qDebug) Store.set("ogro_debug", +qDebug);
 const DEBUG = Store.get("ogro_debug") === 1;
 const SID = (() => { try { let s = sessionStorage.getItem("ogro_sid"); if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 7); sessionStorage.setItem("ogro_sid", s); } return s; } catch (e) { return "s" + Date.now().toString(36); } })();
 let evSeq = 0;
+let UTM = (() => { try { return JSON.parse(sessionStorage.getItem("ogro_utm")) || null; } catch (e) { return null; } })(); // origem da campanha (link direto), segue em todos os eventos da sessão
 const storeId = id => id ? "ogro_" + id.replace(/-/g, "_") : undefined;
 const viewAtual = () => { const h = location.hash || "#/"; return h.startsWith("#/loja") ? "cardapio" : h === "#/checkout" ? "checkout" : h.startsWith("#/pedido") ? "pedido" : "home"; };
 const META = { view_item: "ViewContent", view_menu: "ViewContent", add_to_cart: "AddToCart", begin_checkout: "InitiateCheckout", add_payment_info: "AddPaymentInfo", purchase: "Purchase", search: "Search" };
@@ -817,7 +845,9 @@ const MAPA_EVENTOS = [
   ["begin_checkout", "Abriu o checkout", "InitiateCheckout", "sim"],
   ["add_payment_info", "Escolheu a forma de pagamento", "AddPaymentInfo", ""],
   ["purchase", "Pedido confirmado (no ar: só depois do backend confirmar)", "Purchase", "sim"],
-  ["rating", "Deu nota ao pedido", "", ""]
+  ["rating", "Deu nota ao pedido", "", ""],
+  ["deep_link", "Entrou por link direto (produto, loja, cupom, utm_*). As utm_* seguem em todos os eventos da sessão", "", ""],
+  ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""]
 ];
 function metaParams(ev) {
   const e = ev.ecommerce || {}, it = e.items || [];
@@ -825,7 +855,7 @@ function metaParams(ev) {
 }
 function track(event, params = {}, ecommerce) {
   const enviado = !!(consent && consent.an);
-  const ev = { event, event_id: `ogro_${SID}_${++evSeq}`, store_id: storeId(typeof S !== "undefined" ? S.loja : null), session_id: SID, tela: viewAtual(), ...params };
+  const ev = { event, event_id: `ogro_${SID}_${++evSeq}`, store_id: storeId(typeof S !== "undefined" ? S.loja : null), session_id: SID, tela: viewAtual(), ...(UTM || {}), ...params };
   if (ecommerce) ev.ecommerce = { currency: "BRL", ...ecommerce };
   Object.keys(ev).forEach(k => ev[k] === undefined && delete ev[k]);
   if (enviado) {
@@ -847,7 +877,7 @@ const valorDe = items => +items.reduce((a, i) => a + i.price * (i.quantity || 1)
 const Expo = (() => {
   const vis = new Map(), vistos = new Set(), fila = new Map(), tempo = new Map();
   let filaT;
-  const chave = el => el.dataset.p || el.dataset.fav || el.dataset.add;
+  const chave = el => el.dataset.p || el.dataset.fav || el.dataset.add || el.dataset.cesc;
   function acumula(el, agora) {
     const t0 = vis.get(el); if (t0 == null) return; vis.delete(el); clearTimeout(el._imp);
     const ms = agora - t0; if (ms < 250) return;
@@ -887,7 +917,7 @@ const Expo = (() => {
     }
   };
 })();
-const NOMES_LISTA = { home_mais_pedidos: "Início · Mais pedidos", mais_pedidos: "Cardápio · Mais pedidos", sacola_sugestoes: "Sacola · Combina com teu pedido", busca: "Cardápio · Busca" };
+const NOMES_LISTA = { completa_pedido: "Sacola · Completa teu pedido", home_mais_pedidos: "Início · Mais pedidos", mais_pedidos: "Cardápio · Mais pedidos", sacola_sugestoes: "Sacola · Combina com teu pedido", busca: "Cardápio · Busca" };
 
 /* tempo na tela (só conta com a aba aberta e alguém mexendo nos últimos 30 s) + rolagem */
 const Eng = (() => {
@@ -948,7 +978,7 @@ const Painel = (() => {
     if (ev.event === "purchase") items.forEach(i => it(i.item_id).comp += i.quantity || 1);
     salvar();
     const b = document.getElementById("trk-n"); if (b) b.textContent = st.eventos;
-    if (aberto) { cancelAnimationFrame(raf); raf = requestAnimationFrame(desenhar); }
+    if (aberto && aba !== "links") { cancelAnimationFrame(raf); raf = requestAnimationFrame(desenhar); } // não apaga o formulário de links
   }
   const seg = ms => ms >= 60000 ? `${Math.floor(ms / 60000)}m${String(Math.round(ms % 60000 / 1000)).padStart(2, "0")}` : (Math.round(ms / 100) / 10).toFixed(1).replace(".", ",") + "s";
   const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
@@ -965,6 +995,28 @@ const Painel = (() => {
       const ls = linhasProdutos();
       c.innerHTML = `<p class="trk-nota">Neste aparelho, desde ${new Date(st.desde).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. No ar, os mesmos números saem do GA4 (relatório de itens) somando todos os clientes.</p>` +
         (ls.length ? `<div class="trk-tab"><table><thead><tr><th>Produto</th><th title="Card ≥ 50% na tela por 1 s">Impr.</th><th title="Tempo total que o card ficou visível">Visível</th><th title="Toques no card">Cliques</th><th title="Cliques ÷ impressões">CTR</th><th title="Tempo médio com a ficha aberta">Na ficha</th><th title="Tempo de vídeo do burger assistido">Vídeo</th><th>Sacola</th><th title="Pôs na sacola ÷ abriu a ficha">Conv.</th><th>Pedido</th></tr></thead><tbody>${ls.map(({ p, x }) => `<tr><td>${esc(p.n)}</td><td>${x.imp}</td><td>${seg(x.vis)}</td><td>${x.cli}</td><td>${pct(x.cli, x.imp)}</td><td>${x.abre ? seg(x.itemMs / x.abre) : "–"}</td><td>${x.vidMs ? seg(x.vidMs) : "–"}</td><td>${x.addQ}</td><td>${pct(x.add, x.abre)}</td><td>${x.comp}</td></tr>`).join("")}</tbody></table></div>` : `<p class="trk-vazio">Ainda sem dados. Abre uma loja e rola o cardápio.</p>`);
+    } else if (aba === "links") {
+      const base = location.origin + location.pathname;
+      c.innerHTML = `<p class="trk-nota">Link para disparo de WhatsApp, direct do “comenta OGRO”, bio ou QR: abre a ficha do produto e já guarda o cupom na sacola. As utm_* identificam a campanha em todos os eventos.</p>
+        <div class="trk-form">
+          <label>Loja<select id="lk-loja"><option value="">A mais perto do cliente (ou a última que ele usou)</option>${LOJAS.filter(l => !l.breve).map(l => `<option value="${l.id}">${esc(l.n)}</option>`).join("")}</select></label>
+          <label>Produto<select id="lk-prod">${P.map(p => `<option value="${esc(slug(p.img && VIDS.has(p.img) ? p.img : p.n))}">${esc(p.n)}</option>`).join("")}</select></label>
+          <label>Cupom (opcional)<input id="lk-cupom" placeholder="OGRO10" autocomplete="off"></label>
+          <label>Origem<select id="lk-src"><option value="whatsapp">WhatsApp (disparo)</option><option value="instagram">Instagram (direct)</option><option value="tiktok">TikTok</option><option value="qr">QR impresso</option><option value="">sem utm</option></select></label>
+          <label>Campanha (opcional)<input id="lk-camp" placeholder="ex.: disparo-0312-ogrostela" autocomplete="off"></label>
+          <label>Link<input id="lk-out" readonly></label>
+          <div class="trk-pe" style="padding:0;border:0"><button id="lk-copiar">Copiar link</button><button id="lk-abrir">Testar</button></div>
+        </div>`;
+      const gerar = () => {
+        const loja = $("#lk-loja").value, prod = $("#lk-prod").value, cupom = $("#lk-cupom").value.trim().toUpperCase(), src = $("#lk-src").value, camp = slug($("#lk-camp").value);
+        const q = new URLSearchParams(); if (cupom) q.set("cupom", cupom);
+        if (src) { q.set("utm_source", src); q.set("utm_medium", src === "qr" ? "impresso" : "social"); if (camp) q.set("utm_campaign", camp); }
+        $("#lk-out").value = base + (loja ? `#/loja/${loja}/${prod}` : `#/p/${prod}`) + (q.toString() ? "?" + q : "");
+      };
+      c.oninput = c.onchange = e => { if (e.target.id && e.target.id.startsWith("lk-") && e.target.id !== "lk-out") gerar(); };
+      gerar();
+      $("#lk-copiar").onclick = async () => { try { await navigator.clipboard.writeText($("#lk-out").value); toast("Link copiado."); } catch (e) { $("#lk-out").select(); } };
+      $("#lk-abrir").onclick = () => { location.href = $("#lk-out").value; };
     } else {
       c.innerHTML = `<p class="trk-nota">Todo evento leva <code>event_id</code>, <code>store_id</code> (ex.: <code>ogro_botafogo</code>), <code>session_id</code> e <code>tela</code>. Os de produto levam <code>ecommerce.items</code> no padrão GA4. Meta só recebe com consentimento de Marketing e com o mesmo <code>event_id</code> (deduplicação com a CAPI).</p><div class="trk-tab txt"><table><thead><tr><th>Evento (GA4 / dataLayer)</th><th>Quando dispara</th><th>Meta</th><th>Conversão</th></tr></thead><tbody>${MAPA_EVENTOS.map(([e, q, m, cv]) => `<tr><td><code>${e}</code></td><td>${q}</td><td>${m || "–"}</td><td>${cv || ""}</td></tr>`).join("")}</tbody></table></div>`;
     }
@@ -980,7 +1032,7 @@ const Painel = (() => {
     document.body.insertAdjacentHTML("beforeend", `<button class="trk-bt" id="trk-bt" aria-label="Abrir painel de rastreamento">📊 Rastreamento <b id="trk-n">${st.eventos}</b></button>
       <aside class="trk" id="trk" role="dialog" aria-label="Painel de rastreamento (demonstração)" hidden>
         <div class="trk-cab"><strong>Rastreamento · demo</strong><button id="trk-x" aria-label="Fechar painel">✕</button></div>
-        <div class="trk-abas" id="trk-abas" role="tablist"><button data-aba="vivo" role="tab">Ao vivo</button><button data-aba="produtos" role="tab">Por produto</button><button data-aba="mapa" role="tab">Mapa de eventos</button></div>
+        <div class="trk-abas" id="trk-abas" role="tablist"><button data-aba="vivo" role="tab">Ao vivo</button><button data-aba="produtos" role="tab">Por produto</button><button data-aba="mapa" role="tab">Mapa de eventos</button><button data-aba="links" role="tab">Links</button></div>
         <div class="trk-corpo" id="trk-corpo"></div>
         <div class="trk-pe"><button id="trk-csv">Exportar CSV</button><button id="trk-dl">Copiar dataLayer</button><button id="trk-zerar">Zerar números</button></div>
       </aside>`);
@@ -1216,7 +1268,7 @@ const S = {
   cupom: Store.get("ogro_cupom") || null,
   filtro: "Todas"
 };
-const salvarCart = () => { Store.set("ogro_sacola", S.cart); Store.set("ogro_sacola_ts", Date.now()); };
+const salvarCart = () => { Store.set("ogro_sacola", S.cart); Store.set("ogro_sacola_ts", Date.now()); if (!S.cart.length) S.completaVista = false; };
 const lojaAtual = () => LOJAS.find(l => l.id === S.loja);
 function distLoja(l) {
   const o = S.geo || (S.cep && cepCoord(S.cep)) ? (S.geo || { lat: cepCoord(S.cep)[0], lng: cepCoord(S.cep)[1] }) : null;
@@ -1342,7 +1394,7 @@ $("#favs").addEventListener("click", e => {
 /* ---------- LOJA ---------- */
 // clique num card: select_item com a lista e a posição de onde veio
 function selecionou(el) {
-  const id = el.dataset.p || el.dataset.fav || el.dataset.add, p = PID[id]; if (!p) return "";
+  const id = el.dataset.p || el.dataset.fav || el.dataset.add || el.dataset.cesc, p = PID[id]; if (!p) return "";
   const lista = el.dataset.list || "outros", nome = NOMES_LISTA[lista] || lista;
   track("select_item", { item_list_id: lista, item_list_name: nome }, { item_list_id: lista, item_list_name: nome, items: [itemGA(p, { item_list_id: lista, item_list_name: nome, index: +(el.dataset.idx || 0) })] });
   return lista;
@@ -1556,6 +1608,20 @@ function faltando(p, sel) {
   }
   return "";
 }
+// Ajustes em 1 toque, tirados dos ingredientes do próprio produto (só aparece "Sem picles" em quem tem picles).
+// Vão para a cozinha junto com a observação livre. A lista exata por produto deve vir da ficha técnica no produto final.
+function obsChips(p) {
+  const d = norm(p.n + " " + p.d), out = [];
+  if (d.includes("cebola")) out.push("Sem cebola");
+  if (d.includes("picles")) out.push("Sem picles");
+  if (d.includes("alface") || d.includes("tomate")) out.push("Sem salada");
+  if (d.includes("bacon")) out.push("Sem bacon");
+  if (d.includes("maionese") || d.includes("avocadonese")) out.push("Sem maionese");
+  if (d.includes("barbecue")) out.push("Sem barbecue");
+  if (d.includes("ketchup")) out.push("Sem ketchup");
+  if (/maionese|barbecue|ketchup|molho/.test(d)) out.push("Molho à parte");
+  return out;
+}
 function abrirProduto(id, editKey, origem) {
   const p = PID[id]; if (!p) return;
   ItemT.fim("trocou_de_item");
@@ -1603,7 +1669,12 @@ function renderSheet(first) {
     });
     h += `</div>`;
   });
-  if (p.t !== "simples" || p.c === "dividir") h += `<div class="grupo"><div class="grupo__h"><h3>Alguma observação?<small>Ex.: sem cebola, ponto da carne</small></h3></div><textarea class="campo" id="sh-obs" maxlength="140" placeholder="Opcional">${esc(sel.obs || "")}</textarea></div>`;
+  if (p.t !== "simples" || p.c === "dividir") {
+    const chips = obsChips(p), tags = sel.tags || [];
+    h += `<div class="grupo"><div class="grupo__h"><h3>Do teu jeito<small>${chips.length ? "Toca no que não quer. Opcional." : "Opcional."}</small></h3></div>
+      ${chips.length ? `<div class="obs-chips" role="group" aria-label="Ajustes do pedido">${chips.map(c => `<button type="button" class="chip" data-tag="${esc(c)}" aria-pressed="${tags.includes(c)}">${esc(c)}</button>`).join("")}</div>` : ""}
+      <textarea class="campo" id="sh-obs" maxlength="140" placeholder="${chips.length ? "Mais alguma coisa? (opcional)" : "Alguma observação? Ex.: ponto da carne (opcional)"}" aria-label="Observação">${esc(sel.obs || "")}</textarea></div>`;
+  }
   corpo.innerHTML = h;
   if (!SH.midia) SH.midia = midiaSheet(p);
   $("#sh-midia").replaceWith(SH.midia);
@@ -1628,6 +1699,12 @@ $("#sheet").addEventListener("change", e => {
 });
 $("#sheet").addEventListener("input", e => { if (e.target.id === "sh-obs" && SH) SH.sel.obs = e.target.value; });
 $("#sheet").addEventListener("click", e => {
+  const tg = e.target.closest("[data-tag]"); if (tg && SH) {
+    const a = new Set(SH.sel.tags || []), v = tg.dataset.tag, on = !a.has(v);
+    on ? a.add(v) : a.delete(v); SH.sel.tags = [...a]; if (!SH.sel.tags.length) delete SH.sel.tags;
+    tg.setAttribute("aria-pressed", on); // sem redesenhar a ficha: o vídeo e a rolagem ficam onde estão
+    track("select_option", { item_id: SH.p.id, item_name: SH.p.n, grupo: "ajuste", opcao: v, acao: on ? "marcou" : "desmarcou" }); return;
+  }
   const b = e.target.closest("[data-cn]"); if (b && SH) {
     const [g, nome, d] = b.dataset.cn.split("|"); const o = SH.sel[g] = SH.sel[g] || {};
     o[nome] = Math.max(0, (o[nome] || 0) + +d); if (!o[nome]) delete o[nome]; renderSheet();
@@ -1657,8 +1734,9 @@ function addRapido(id) {
   const p = PID[id]; if (p.t !== "simples") return abrirProduto(id);
   const k = id + "|{}"; const ex = S.cart.find(i => i.k === k);
   if (ex) ex.q++; else S.cart.push({ k, id, q: 1, sel: {}, u: p.p });
-  salvarCart(); atualizarSacola(true); track("add_to_cart", { origem: $("#gaveta").classList.contains("on") ? "sacola_sugestoes" : "toast_batata" }, { value: p.p, items: [itemGA(p)] });
-  if ($("#gaveta").classList.contains("on")) renderGaveta(); else toast(`${p.n} na sacola.`, "Ver sacola", abrirGaveta);
+  const naGaveta = $("#gaveta").classList.contains("on");
+  salvarCart(); atualizarSacola(true); track("add_to_cart", { origem: naGaveta ? (S.naCompleta ? "completa_pedido" : "sacola_sugestoes") : "toast_batata" }, { value: p.p, items: [itemGA(p)] });
+  if (naGaveta) (S.naCompleta ? renderCompleta() : renderGaveta()); else toast(`${p.n} na sacola.`, "Ver sacola", abrirGaveta);
 }
 
 /* ---------- SACOLA ---------- */
@@ -1676,6 +1754,7 @@ function descSel(i) {
   if (s.burgers) out.push(Object.entries(s.burgers).map(([n, q]) => `${q}× ${n}`).join(", "));
   if (s.bebida) out.push(typeof s.bebida === "string" ? s.bebida : Object.entries(s.bebida).map(([n, q]) => `${q}× ${n}`).join(", "));
   if (s.add && s.add.length) out.push("+ " + s.add.join(", "));
+  if (s.tags && s.tags.length) out.push(s.tags.join(", "));
   if (s.obs) out.push(`“${s.obs}”`);
   return out.join(" · ");
 }
@@ -1691,6 +1770,7 @@ function atualizarSacola(bump) {
   if (bump) { $("#btn-sacola").classList.remove("bump"); void $("#btn-sacola").offsetWidth; $("#btn-sacola").classList.add("bump"); }
 }
 function renderGaveta() {
+  S.naCompleta = false;
   const c = $("#gv-corpo"), pe = $("#gv-pe"), l = lojaAtual();
   if (!S.cart.length) {
     c.innerHTML = `<div class="vazia"><b>Sacola vazia</b>Bora resolver isso.</div>`;
@@ -1713,7 +1793,54 @@ function renderGaveta() {
   pe.innerHTML = `<button class="btn btn--red" id="gv-fechar-ped"><span>Fechar pedido</span><span>${brl(t.total)}</span></button>`;
   Expo.observar(c);
 }
-function abrirGaveta() { renderGaveta(); abrir($("#gaveta")); const its = S.cart.map(itemCart); track("view_cart", {}, { value: valorDe(its), items: its }); }
+/* ---------- "Completa teu pedido?" ----------
+   Um passo antes do pagamento, 1 vez por sacola, só com o que FALTA (bebida, batata, sobremesa) e só se faltar.
+   Sem urgência inventada: um toque adiciona; "Seguir pro pagamento" fica sempre à mão. */
+function faltasDoPedido() {
+  const tem = f => S.cart.some(i => f(PID[i.id], i));
+  const out = [];
+  if (!tem((p, i) => p.c === "beber" || p.t === "combo" || i.sel.combo || (p.c === "dividir" && /coca|refri|bebida/i.test(p.d))))
+    out.push({ id: "rla", por: "Faltou a bebida gelada" });
+  if (!tem((p, i) => p.c === "acomp" || p.c === "combos" || p.c === "dividir" || i.sel.combo))
+    out.push({ id: "abf", por: "Burger pede batata" });
+  if (!tem(p => p.c === "doce")) out.push({ id: "sbr", por: "Pra fechar o dia" });
+  return out;
+}
+function renderCompleta() {
+  S.naCompleta = true;
+  const c = $("#gv-corpo"), pe = $("#gv-pe"), t = totais();
+  const naSacola = id => S.cart.some(i => i.id === id);
+  c.innerHTML = `<div class="cp">
+      <h3 class="disp">Completa teu pedido?</h3>
+      <p class="cp__sub">Só se fizer sentido pra tua fome. Um toque e já entra.</p>
+      ${S.cupom && t.falta ? `<p class="cp__cupom">Faltam <b>${brl(t.falta)}</b> pro cupom ${esc(S.cupom)} valer.</p>` : S.cupom && t.desc ? `<p class="cp__cupom ok">✓ Cupom ${esc(S.cupom)} valendo: − ${brl(t.desc)}</p>` : ""}
+      <div class="cp__l">${S.completaIds.map(({ id, por }, idx) => { const p = PID[id], ok = naSacola(id); return `<div class="cp__i${ok ? " ok" : ""}">
+        <div class="item__img">${fotoTag(p.img, `alt="" loading="lazy" width="64" height="64"`)}</div>
+        <div><small>${esc(por)}</small><b>${esc(p.n)}</b><span>${brl(p.p)}</span></div>
+        ${ok ? `<span class="cp__ok">✓ Na sacola</span>` : p.t === "simples"
+          ? `<button class="btn btn--dark" data-add="${p.id}" data-list="completa_pedido" data-idx="${idx}" aria-label="Adicionar ${esc(p.n)}">+ Adicionar</button>`
+          : `<button class="btn btn--dark" data-cesc="${p.id}" data-list="completa_pedido" data-idx="${idx}">Escolher</button>`}
+      </div>`; }).join("")}</div>
+      <button class="link" data-voltar>Voltar pra sacola</button>
+    </div>`;
+  pe.innerHTML = `<button class="btn btn--red" id="gv-seguir"><span>Seguir pro pagamento</span><span>${brl(t.total)}</span></button>`;
+  Expo.observar(c);
+}
+function fecharPedido() {
+  const faltas = faltasDoPedido();
+  if (!S.completaVista && faltas.length) {
+    S.completaVista = true; S.completaIds = faltas; S.completaAntes = S.cart.reduce((a, i) => a + i.q, 0);
+    renderCompleta(); $("#gv-corpo").scrollTop = 0;
+    track("completa_pedido", { acao: "mostrou", faltas: faltas.map(x => x.id).join(",") });
+    return;
+  }
+  irProCheckout();
+}
+function irProCheckout() {
+  if (S.naCompleta) { const add = S.cart.reduce((a, i) => a + i.q, 0) - (S.completaAntes || 0); track("completa_pedido", { acao: "seguiu", itens_adicionados: Math.max(0, add) }); }
+  fecharTudo(); location.hash = "#/checkout";
+}
+function abrirGaveta() { $("#toast").classList.remove("on"); renderGaveta(); abrir($("#gaveta")); const its = S.cart.map(itemCart); track("view_cart", {}, { value: valorDe(its), items: its }); }
 $("#gaveta").addEventListener("click", e => {
   const q = e.target.closest("[data-q]");
   if (q) {
@@ -1726,6 +1853,9 @@ $("#gaveta").addEventListener("click", e => {
     salvarCart(); renderGaveta(); atualizarSacola(); return;
   }
   const a = e.target.closest("[data-add]"); if (a) { selecionou(a); return addRapido(a.dataset.add); }
+  const ce = e.target.closest("[data-cesc]"); if (ce) { e.stopPropagation(); selecionou(ce); fecharTudo(); setTimeout(() => abrirProduto(ce.dataset.cesc, null, "completa_pedido"), 220); return; }
+  if (e.target.closest("[data-voltar]")) { renderGaveta(); return; }
+  if (e.target.closest("#gv-seguir")) { irProCheckout(); return; }
   const ed = e.target.closest("[data-edit]"); if (ed) { const it = S.cart.find(x => x.k === ed.dataset.edit); fecharTudo(); setTimeout(() => abrirProduto(it.id, it.k, "sacola_editar"), 220); return; }
   const ir = e.target.closest("[data-ir]"); if (ir) { fecharTudo(); location.hash = ir.dataset.ir; return; }
   if (e.target.closest("#cupom-b")) {
@@ -1735,7 +1865,7 @@ $("#gaveta").addEventListener("click", e => {
     else { track("coupon_apply", { coupon: v.slice(0, 20), valido: false }); $("#cupom-msg").innerHTML = `<p class="cupom-msg err">Esse cupom não existe ou já venceu. Confere as letras?</p>`; $("#cupom").classList.add("erro"); }
     return;
   }
-  if (e.target.closest("#gv-fechar-ped")) { fecharTudo(); location.hash = "#/checkout"; }
+  if (e.target.closest("#gv-fechar-ped")) fecharPedido();
 });
 $("#gaveta").addEventListener("keydown", e => { if (e.target.id === "cupom" && e.key === "Enter") { e.preventDefault(); $("#cupom-b").click(); } });
 
@@ -1877,8 +2007,39 @@ function resetIdle() { clearTimeout(idleT); idleT = setTimeout(() => mostrarNudg
 document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY < 8) mostrarNudge("saida"); });
 
 /* ---------- ROTEADOR ---------- */
+/* ---------- LINK DIRETO (disparo de WhatsApp, direct do "comenta OGRO", bio, QR) ----------
+   #/loja/<loja>/<produto>?cupom=OGRO10&utm_source=whatsapp&utm_campaign=...  → abre a loja, a ficha do produto e guarda o cupom
+   #/p/<produto>?cupom=...                                                      → loja mais perto/última; sem loja, pede pra escolher e abre depois
+   <produto> = id (bmc), chave da foto (mcmanis, c-mcmanis) ou nome em slug (ogrostela). Também lê ?cupom= e utm_* fora do #. */
+const slug = s => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const acharProduto = x => { x = slug(x || ""); return x && P.find(p => p.id === x || slug(p.img || "") === x || slug(p.n) === x); };
+function lerLinkDireto() {
+  const h = location.hash || "", qi = h.indexOf("?");
+  const qs = new URLSearchParams((qi >= 0 ? h.slice(qi + 1) : "") + "&" + location.search.slice(1));
+  const caminho = qi >= 0 ? h.slice(0, qi) : h;
+  const m = caminho.match(/^#\/(?:loja\/([\w-]+)\/([\w.-]+)|p\/([\w.-]+))\/?$/);
+  const cupom = (qs.get("cupom") || "").trim().toUpperCase();
+  const utm = {}; ["utm_source", "utm_medium", "utm_campaign", "utm_content"].forEach(k => { const v = qs.get(k); if (v) utm[k] = v.slice(0, 60); });
+  if (!m && !cupom && !Object.keys(utm).length && qi < 0) return;
+  if (Object.keys(utm).length) { UTM = utm; try { sessionStorage.setItem("ogro_utm", JSON.stringify(utm)); } catch (e) {} }
+  const prod = m && acharProduto(m[2] || m[3]);
+  let loja = m && m[1] && LOJAS.find(l => l.id === m[1] && !l.breve) ? m[1] : null;
+  if (m && m[3]) loja = melhorLoja();
+  // limpa o endereço (recarregar não reabre a ficha nem reaplica o cupom); ?debug continua valendo
+  const limpo = loja ? "#/loja/" + loja : (m ? "#/" : (qi >= 0 ? caminho : h) || "#/");
+  const busca = location.search.replace(/([?&])(cupom|utm_[a-z]+)=[^&]*/g, "$1").replace(/[?&]+$/, "").replace(/\?&+/, "?");
+  history.replaceState(null, "", location.pathname + busca + limpo);
+  if (cupom) {
+    if (CUPONS[cupom]) { S.cupom = cupom; Store.set("ogro_cupom", cupom); const c = CUPONS[cupom]; S.avisoCupom = `Cupom ${cupom} guardado na sacola: ${c.pct}% a partir de ${brl(c.min)}.`; }
+    else S.avisoCupom = `O cupom ${cupom} não vale aqui. Confere no direct do Ogro.`;
+  }
+  if (prod) { if (loja) S.abrirDepois = prod.id; else S.pendente = prod.id; }
+  track("deep_link", { item_id: prod ? prod.id : undefined, loja_link: m && m[1] ? m[1] : undefined, coupon: cupom || undefined, cupom_valido: cupom ? !!CUPONS[cupom] : undefined, sem_loja: prod && !loja ? true : undefined });
+}
+
 let telaAnt = null;
 function rota() {
+  lerLinkDireto();
   const h = location.hash || "#/";
   if (h.startsWith("#cat-")) { $("#v-loja").classList.add("on"); return; }
   // fecha a medição da tela anterior (tempo visível dos produtos + tempo na tela) antes de trocar
@@ -1901,6 +2062,8 @@ function rota() {
     S.loja = m[1]; Store.setC("ogro_loja", S.loja);
     $("#v-loja").classList.add("on"); renderLoja(); spy();
     if (trocou) { bVistos.clear(); if (bVisivel) ativarB(bAtual); track("select_store", { store: S.loja }); track("view_menu", { store: S.loja, aberta: aberta(S.loja) }); }
+    const abrirId = S.abrirDepois || S.pendente; S.abrirDepois = S.pendente = null;
+    if (abrirId) setTimeout(() => abrirProduto(abrirId, null, "link_direto"), 350);
   } else if (h === "#/checkout") { $("#v-checkout").classList.add("on"); renderCheckout(); }
   else if (h.startsWith("#/pedido")) { $("#v-pedido").classList.add("on"); renderPedido(); }
   else { $("#v-home").classList.add("on"); renderFiltros(); renderLojas(); renderContinuar(); renderTopo(); renderFavs(); if (S.cep) $("#cep").value = mascaraCep(S.cep); window.scrollTo(0, 0); }
@@ -1910,6 +2073,9 @@ function rota() {
   if (l) $("#topo-loja-n").textContent = "Ogro " + l.n;
   atualizarSacola();
   resetIdle();
+  if (S.pendente && $("#v-home").classList.contains("on")) { const p = PID[S.pendente]; setTimeout(() => chamarLojas(`Escolhe tua loja: o ${p.n} tem em todas.`), 300); }
+  // aviso do cupom depois do "escolhe tua loja" (um toast não cobre o outro)
+  if (S.avisoCupom) { const m = S.avisoCupom; S.avisoCupom = null; setTimeout(() => toast(m, null, null, 5500), S.pendente && $("#v-home").classList.contains("on") ? 3700 : 900); }
 }
 addEventListener("hashchange", rota);
 
