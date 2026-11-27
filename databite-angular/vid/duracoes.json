@@ -24,43 +24,75 @@
   "kb": 273
  },
  "prototipo-desktop-busca": {
-  "segundos": 21.0,
-  "kb": 936
+  "segundos": 21.5,
+  "kb": 1014
  },
  "prototipo-desktop-foto": {
-  "segundos": 21.4,
-  "kb": 640
+  "segundos": 20.9,
+  "kb": 624
  },
  "prototipo-desktop-sacola": {
-  "segundos": 31.1,
-  "kb": 606
+  "segundos": 30.9,
+  "kb": 640
  },
  "prototipo-desktop-link": {
-  "segundos": 13.5,
-  "kb": 604
+  "segundos": 13.4,
+  "kb": 577
  },
  "prototipo-desktop-depois": {
-  "segundos": 45.7,
-  "kb": 499
+  "segundos": 44.5,
+  "kb": 546
  },
  "prototipo-mobile-busca": {
-  "segundos": 21.6,
-  "kb": 680
+  "segundos": 21.7,
+  "kb": 712
  },
  "prototipo-mobile-foto": {
-  "segundos": 19.9,
-  "kb": 463
+  "segundos": 19.7,
+  "kb": 458
  },
  "prototipo-mobile-sacola": {
   "segundos": 28.5,
-  "kb": 479
+  "kb": 484
  },
  "prototipo-mobile-link": {
   "segundos": 13.7,
-  "kb": 433
+  "kb": 426
  },
  "prototipo-mobile-depois": {
-  "segundos": 44.6,
-  "kb": 556
+  "segundos": 43.3,
+  "kb": 568
+ },
+ "prototipo-desktop-entrada": {
+  "segundos": 17.7,
+  "kb": 991
+ },
+ "prototipo-desktop-pedido": {
+  "segundos": 23.6,
+  "kb": 867
+ },
+ "prototipo-desktop-monte": {
+  "segundos": 26.2,
+  "kb": 387
+ },
+ "prototipo-desktop-pontos": {
+  "segundos": 32.1,
+  "kb": 650
+ },
+ "prototipo-mobile-entrada": {
+  "segundos": 17.3,
+  "kb": 681
+ },
+ "prototipo-mobile-pedido": {
+  "segundos": 23.4,
+  "kb": 675
+ },
+ "prototipo-mobile-monte": {
+  "segundos": 23.5,
+  "kb": 294
+ },
+ "prototipo-mobile-pontos": {
+  "segundos": 32.7,
+  "kb": 549
  }
 }

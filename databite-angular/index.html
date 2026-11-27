@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cardápio Digital · atual × protótipo × Angular | Ogro</title>
-<meta name="description" content="Piloto 1 da esteira Databite Angular: os 16 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
+<meta name="description" content="Piloto 1 da esteira Databite Angular: os 18 diferenciais do protótipo do Cardápio Digital do Ogro, lado a lado com o Cardápio atual, com o código TypeScript/Angular e os testes." />
 <meta name="robots" content="noindex, nofollow" />
 <meta property="og:title" content="Cardápio Digital · atual × protótipo × Angular" />
-<meta property="og:description" content="16 diferenciais, 13 já em código, todos os testes das regras passando." />
+<meta property="og:description" content="18 diferenciais, 14 já em código, todos os testes das regras passando." />
 <meta property="og:image" content="img/prototipo-home.webp" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FF5500'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -197,18 +197,18 @@
   <div class="wrap">
     <span class="kicker">Piloto 1 · Databite Angular Migration Engine</span>
     <h1 class="display">Cardápio Digital: atual × <em>protótipo</em> × Angular</h1>
-    <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. Comparação feita em 25/11, às 14h30, com a versão do protótipo que está no ar.</p>
+    <p class="lead">O que o protótipo do Ogro faz a mais que o Cardápio Digital de hoje, e cada diferencial já escrito em TypeScript/Angular para o time da Databite revisar e integrar. Comparação feita em 27/11 com a versão do protótipo que está no ar: cardápio já atualizado para dezembro, com os Pontos Ogro e o Ogro Bells.</p>
     <div class="chips">
       <span class="chip st-info">Prototype only</span>
-      <span class="chip st-ok">Regras: 34/34 testes</span>
+      <span class="chip st-ok">Regras: 44/44 testes</span>
       <span class="chip st-warn">Angular: build não rodado</span>
       <span class="chip st-bad">Cardápio atual é React 18.2</span>
     </div>
     <div class="kpis">
-      <div class="kpi"><b>16</b><small>diferenciais do protótipo</small></div>
-      <div class="kpi"><b>13<span>/16</span></b><small>já em código</small></div>
-      <div class="kpi"><b>34<span>/34</span></b><small>testes das regras passando</small></div>
-      <div class="kpi"><b>44</b><small>eventos de medição, iguais no protótipo e no código</small></div>
+      <div class="kpi"><b>18</b><small>diferenciais do protótipo</small></div>
+      <div class="kpi"><b>14<span>/18</span></b><small>já em código</small></div>
+      <div class="kpi"><b>44<span>/44</span></b><small>testes das regras passando</small></div>
+      <div class="kpi"><b>48</b><small>eventos de medição, iguais no protótipo e no código</small></div>
     </div>
   </div>
 </header>
@@ -216,7 +216,7 @@
 <nav aria-label="Seções">
   <div class="wrap">
     <a href="#lado-a-lado">Veja em vídeo</a>
-    <a href="#diferenciais">16 diferenciais</a>
+    <a href="#diferenciais">18 diferenciais</a>
     <a href="#atual-melhor">O que veio do atual</a>
     <a href="#arquitetura">Arquitetura</a>
     <a href="#status">Status e testes</a>
@@ -228,7 +228,7 @@
 
   <section id="lado-a-lado">
     <div class="sec-h"><span class="n">01</span><h2>Veja o cliente usando</h2></div>
-    <p class="sec-sub">O mesmo caminho nos dois cardápios, em 8 momentos. Momentos 1 a 3: mesmo CEP e loja Botafogo (fechada no horário). Momentos 4 a 8: loja Lapa, aberta. Quando o atual não tem o recurso, a tela dele diz isso. Gravado em 25/11 em tempo real, sem cortes e sem acelerar. O círculo laranja é o toque do cliente.</p>
+    <p class="sec-sub">O mesmo caminho nos dois cardápios, em 9 momentos. Momentos 1 a 3: mesmo CEP e loja Botafogo (fechada no horário). Momentos 4 a 9: loja Lapa, aberta. Quando o atual não tem o recurso, a tela dele diz isso. Atual gravado em 25/11; protótipo regravado em 27/11. Tudo em tempo real, sem cortes e sem acelerar. O círculo laranja é o toque do cliente.</p>
 
     <div class="cmp" id="cmp">
       <div class="cmp-ctrl">
@@ -245,6 +245,7 @@
           <button type="button" role="tab" data-cap="sacola" aria-selected="false"><b>6</b> Sacola e cupom</button>
           <button type="button" role="tab" data-cap="link" aria-selected="false"><b>7</b> Link do WhatsApp</button>
           <button type="button" role="tab" data-cap="depois" aria-selected="false"><b>8</b> Depois de pedir</button>
+          <button type="button" role="tab" data-cap="pontos" aria-selected="false"><b>9</b> Pontos e cashback</button>
         </div>
         <div class="cmp-acoes">
           <button type="button" class="btn-v" id="cmp-play" aria-label="Pausar">❚❚ Pausar</button>
@@ -271,13 +272,13 @@
   </section>
 
   <section id="diferenciais">
-    <div class="sec-h"><span class="n">02</span><h2>Os 16 diferenciais, com o código</h2></div>
+    <div class="sec-h"><span class="n">02</span><h2>Os 18 diferenciais, com o código</h2></div>
     <p class="sec-sub">Cada card compara o Cardápio atual com o protótipo e abre o código que implementa o diferencial. Sacola, cupom e checkout do atual não foram testados: a loja estava fechada e não fazemos pedido real.</p>
     <div class="filtros" role="group" aria-label="Filtrar diferenciais">
-      <button class="f-btn" data-f="todos" aria-pressed="true">Todos (16)</button>
-      <button class="f-btn" data-f="ok" aria-pressed="false">Testado (9)</button>
+      <button class="f-btn" data-f="todos" aria-pressed="true">Todos (18)</button>
+      <button class="f-btn" data-f="ok" aria-pressed="false">Testado (10)</button>
       <button class="f-btn" data-f="parcial" aria-pressed="false">Em código, sem teste (4)</button>
-      <button class="f-btn" data-f="bloq" aria-pressed="false">Sem código ainda (3)</button>
+      <button class="f-btn" data-f="bloq" aria-pressed="false">Sem código ainda (4)</button>
     </div>
 
     <div class="difs">
@@ -1460,6 +1461,10 @@
   { ga4: <span class="s">'pwa_convite'</span>, quando: <span class="s">'Convite para instalar o app apareceu (só depois do 1º pedido)'</span> },
   { ga4: <span class="s">'pwa_instalar'</span>, quando: <span class="s">'Resposta ao convite (aceitou, recusou, agora não)'</span> },
   { ga4: <span class="s">'pwa_instalado'</span>, quando: <span class="s">'App instalado. Todo evento aberto pelo app leva app: true'</span> },
+  { ga4: <span class="s">'pontos_painel'</span>, quando: <span class="s">'Abriu o painel Pontos Ogro (de onde: topo, entrada, sacola, checkout, pedido)'</span> },
+  { ga4: <span class="s">'pontos_usar'</span>, quando: <span class="s">'Ligou ou desligou o desconto em pontos (pontos e R$)'</span> },
+  { ga4: <span class="s">'pontos_troca'</span>, quando: <span class="s">'Trocou pontos por um produto (item e pontos)'</span> },
+  { ga4: <span class="s">'pontos_creditados'</span>, quando: <span class="s">'Pontos entraram na entrega (saldo e nível). O purchase leva pontos_ganhos, pontos_usados, desconto_pontos e nivel_pontos'</span> },
   { ga4: <span class="s">'erro_tecnico'</span>, quando: <span class="s">'Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)'</span> },
 ];</code></pre></details>
       </article>
@@ -1685,13 +1690,130 @@
         <p class="arqs">No Angular: <code>@angular/service-worker</code> (<code>ng add @angular/pwa</code>) com a mesma regra: HTML rede primeiro, fotos em cache, vídeo fora. Depende da aprovação de dependência (A3).</p>
       </article>
 
+      <article class="dif" data-st="ok">
+        <div class="dif-top"><span class="dif-n">17</span><div><h3>Pontos Ogro: cashback que traz o cliente de volta</h3><div class="meta"><span class="chip st-ok">10 testes ok</span><span class="chip st-info">A carteira é do servidor (B17)</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Sem programa de pontos ou cashback: nada disso no código do Cardápio atual (verificado em 27/11).</div><div class="novo"><b>Protótipo</b>R$ 1 em produto = 1 ponto; 100 pontos = R$ 5. Níveis pela frequência: 5%, 6% e 7,5% de volta. Usa a partir de 100 pontos, até 30% dos produtos, acima do pedido mínimo da loja. 11 trocas por produto (da água ao Combo McManis) rendem ~20% mais que o desconto. Os pontos entram na entrega e valem 90 dias desde o último pedido. Aparece no topo, na ficha ("rende +45 pontos"), na sacola, no checkout e no pedido.</div></div>
+        <details class="cod"><summary>Ver código · pontos.ts</summary><span class="arq-nome">src/app/features/cardapio/domain/pontos.ts</span><pre><code><span class="k">import</span> <span class="k">type</span> { Centavos, Produto } <span class="k">from</span> <span class="s">'./models'</span>;
+
+<span class="c">/**
+ * DIFERENCIAL 17 · Pontos Ogro (cashback em pontos).
+ *
+ * R$ 1 pago em produto = 1 ponto; 100 pontos = R$ 5 de desconto (5% de volta).
+ * O nível sobe com a frequência: 5%, 6% e 7,5%. A troca por produto rende ~20% mais
+ * que o desconto. Os pontos entram na entrega e valem 90 dias desde o último pedido.
+ * Só o canal próprio pontua (iFood e 99Food não): é o que paga o programa.
+ *
+ * ESTIMATIVA DE TELA. A carteira (saldo, extrato, validade) mora no servidor, presa ao
+ * WhatsApp do cliente, e quem credita é a loja ao marcar "entregue" (contratos novos, B17).
+ * Estas funções só calculam o que a tela mostra; o servidor confere tudo de novo.
+ */</span>
+<span class="k">export</span> <span class="k">interface</span> Nivel {
+  <span class="k">readonly</span> id: <span class="s">'ogro'</span> | <span class="s">'casa'</span> | <span class="s">'chapa'</span>;
+  <span class="k">readonly</span> nome: string;
+  <span class="c">/** Pedidos nos últimos 90 dias para entrar no nível. */</span>
+  <span class="k">readonly</span> minPedidos: number;
+  <span class="c">/** Pontos por real, em décimos (10 = 1 ponto, 12 = 1,2, 15 = 1,5): sem float. */</span>
+  <span class="k">readonly</span> multDecimos: number;
+}
+
+<span class="k">export</span> <span class="k">const</span> REGRA_PONTOS = {
+  <span class="c">/** Quanto vale 1 ponto no desconto. */</span>
+  centavosPorPonto: <span class="n">5</span>,
+  <span class="c">/** Mínimo de pontos para usar como desconto. */</span>
+  minimoUso: <span class="n">100</span>,
+  <span class="c">/** Os pontos cobrem no máximo esta fração dos produtos (depois do cupom). */</span>
+  tetoUsoPercentual: <span class="n">30</span>,
+  validadeDias: <span class="n">90</span>,
+  boasVindas: <span class="n">50</span>,
+  niveis: [
+    { id: <span class="s">'ogro'</span>, nome: <span class="s">'Ogro'</span>, minPedidos: <span class="n">0</span>, multDecimos: <span class="n">10</span> },
+    { id: <span class="s">'casa'</span>, nome: <span class="s">'Ogro de Casa'</span>, minPedidos: <span class="n">3</span>, multDecimos: <span class="n">12</span> },
+    { id: <span class="s">'chapa'</span>, nome: <span class="s">'Dono da Chapa'</span>, minPedidos: <span class="n">6</span>, multDecimos: <span class="n">15</span> },
+  ] <span class="k">as</span> ReadonlyArray&lt;Nivel&gt;,
+} <span class="k">as</span> <span class="k">const</span>;
+
+<span class="k">export</span> <span class="k">function</span> nivelPorPedidos(pedidos90dias: number): Nivel {
+  <span class="k">return</span> [...REGRA_PONTOS.niveis].reverse().find((n) =&gt; pedidos90dias &gt;= n.minPedidos)!;
+}
+
+<span class="c">/** Próximo nível, ou null no topo. */</span>
+<span class="k">export</span> <span class="k">function</span> proximoNivel(pedidos90dias: number): Nivel | <span class="k">null</span> {
+  <span class="k">return</span> REGRA_PONTOS.niveis.find((n) =&gt; n.minPedidos &gt; pedidos90dias) ?? <span class="k">null</span>;
+}
+
+<span class="c">/** % de volta do nível (5, 6, 7.5). */</span>
+<span class="k">export</span> <span class="k">function</span> percentualDeVolta(nivel: Nivel): number {
+  <span class="k">return</span> (nivel.multDecimos * REGRA_PONTOS.centavosPorPonto) / <span class="n">10</span>;
+}
+
+<span class="k">export</span> <span class="k">interface</span> PontosGanhos {
+  <span class="k">readonly</span> base: number;
+  <span class="k">readonly</span> bonus: number;
+  <span class="k">readonly</span> total: number;
+}
+
+<span class="c">/**
+ * Pontos que o pedido rende. `pagoEmProdutos` já sem cupom e sem os pontos usados;
+ * a taxa de entrega nunca entra.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> pontosGanhos(pagoEmProdutos: Centavos, pedidos90dias: number, primeiroPedido: boolean): PontosGanhos {
+  <span class="k">const</span> mult = nivelPorPedidos(pedidos90dias).multDecimos;
+  <span class="k">const</span> base = Math.floor((Math.max(<span class="n">0</span>, pagoEmProdutos) * mult) / <span class="n">1000</span>);
+  <span class="k">const</span> bonus = primeiroPedido ? REGRA_PONTOS.boasVindas : <span class="n">0</span>;
+  <span class="k">return</span> { base, bonus, total: base + bonus };
+}
+
+<span class="k">export</span> <span class="k">interface</span> UsoPontos {
+  <span class="c">/** Quantos pontos dá para usar neste pedido (0 = a chave não aparece). */</span>
+  <span class="k">readonly</span> podeUsar: number;
+  <span class="k">readonly</span> desconto: Centavos;
+  <span class="c">/** Por que não dá para usar, para a tela explicar. */</span>
+  <span class="k">readonly</span> motivo: <span class="s">'ok'</span> | <span class="s">'saldo-baixo'</span> | <span class="s">'abaixo-do-minimo-da-loja'</span>;
+}
+
+<span class="c">/**
+ * Quanto do saldo entra como desconto: a partir de 100 pontos, até 30% dos produtos
+ * (depois do cupom) e só com o pedido acima do mínimo da loja.
+ */</span>
+<span class="k">export</span> <span class="k">function</span> usoPontos(saldoDisponivel: number, produtosDepoisDoCupom: Centavos, pedidoMinimoLoja: Centavos): UsoPontos {
+  <span class="k">if</span> (produtosDepoisDoCupom &lt; pedidoMinimoLoja) <span class="k">return</span> { podeUsar: <span class="n">0</span>, desconto: <span class="n">0</span>, motivo: <span class="s">'abaixo-do-minimo-da-loja'</span> };
+  <span class="k">const</span> teto = Math.floor((produtosDepoisDoCupom * REGRA_PONTOS.tetoUsoPercentual) / <span class="n">100</span> / REGRA_PONTOS.centavosPorPonto);
+  <span class="k">const</span> pontos = Math.min(Math.max(<span class="n">0</span>, saldoDisponivel), teto);
+  <span class="k">if</span> (pontos &lt; REGRA_PONTOS.minimoUso) <span class="k">return</span> { podeUsar: <span class="n">0</span>, desconto: <span class="n">0</span>, motivo: <span class="s">'saldo-baixo'</span> };
+  <span class="k">return</span> { podeUsar: pontos, desconto: pontos * REGRA_PONTOS.centavosPorPonto, motivo: <span class="s">'ok'</span> };
+}
+
+<span class="c">/**
+ * Menor preço possível na ficha: preço base + o mínimo obrigatório de cada grupo pela
+ * opção mais barata. É o que a troca por pontos cobre; o que passar disso o cliente paga
+ * (no refrigerante o preço mora no sabor, por isso não dá para usar só o preço base).
+ */</span>
+<span class="k">export</span> <span class="k">function</span> precoMinimo(produto: Produto): Centavos {
+  <span class="k">return</span> produto.grupos.reduce((total, g) =&gt; {
+    <span class="k">if</span> (!g.min || !g.opcoes.length) <span class="k">return</span> total;
+    <span class="k">return</span> total + g.min * Math.min(...g.opcoes.map((o) =&gt; o.preco));
+  }, produto.preco);
+}
+
+<span class="c">/** Valor que a troca abate do item: nunca mais que o item custa. */</span>
+<span class="k">export</span> <span class="k">function</span> abatimentoTroca(produto: Produto, precoEscolhido: Centavos): Centavos {
+  <span class="k">return</span> Math.min(precoEscolhido, precoMinimo(produto));
+}</code></pre></details>
+      </article>
+
+      <article class="dif" data-st="bloq">
+        <div class="dif-top"><span class="dif-n">18</span><div><h3>Banner animado sem pesar</h3><div class="meta"><span class="chip st-bad">Carrossel depende de B13</span></div></div></div>
+        <div class="vs"><div><b>Atual</b>Banner em GIF: o do Ogro Bells tem 4,7 MB, 10 quadros por segundo e 96 cores.</div><div class="novo"><b>Protótipo</b>O mesmo banner em AV1: 188 KB (96% menor), 25 quadros por segundo e cor cheia, mais nítido que o VP9 de reserva; MP4 para aparelho antigo; capa em AVIF. Só baixa quando aparece na tela.</div></div>
+        <p class="arqs">No Angular: a mesma fonte AV1 → VP9 → MP4 da diretiva do card 3 (<code>ui/video-produto.directive.ts</code>), aplicada ao carrossel quando o contrato de banners (B13) existir.</p>
+      </article>
+
     </div>
     <p class="arqs" style="margin-top:1rem">O protótipo também tem, ainda sem código Angular: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix seguem bloqueados até os contratos B8–B10.</p>
   </section>
 
   <section id="atual-melhor">
     <div class="sec-h"><span class="n">03</span><h2>O que veio do Cardápio atual</h2></div>
-    <p class="sec-sub">Cinco coisas que o Cardápio atual já faz bem. O protótipo faz as cinco, com alguma melhora.</p>
+    <p class="sec-sub">Seis coisas que o Cardápio atual já faz bem. O protótipo faz as seis, com alguma melhora.</p>
     <div class="tabela"><table>
       <thead><tr><th>O atual faz</th><th>O protótipo faz</th><th>Código</th></tr></thead>
       <tbody>
@@ -1700,6 +1822,7 @@
         <tr><td>"Monte seu hambúrguer"</td><td>Montado na tela com recortes das fotos do cardápio, com o preço real</td><td>monte.ts</td></tr>
         <tr><td>Mais bebidas</td><td>Pepsi (lata, Black, 1,5 l, 2 l), Antarctica Soda, tamanhos de Guaraná, água com e sem gás, H2OH Limoneto</td><td>Dados do cardápio (B3)</td></tr>
         <tr><td>Ampliar imagem</td><td>Foto grande só quando o cliente pede; toque aproxima</td><td>zoom-foto.component.ts</td></tr>
+        <tr><td>Preço real de cada item na ficha</td><td>O card mostra o mesmo preço da ficha real (ex.: Combo McManis R$ 71,70, Ogro GPT R$ 57,90), e a troca por pontos cobre exatamente esse valor</td><td>pontos.ts (precoMinimo)</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -1708,9 +1831,9 @@
     <div class="sec-h"><span class="n">04</span><h2>Como o código está organizado</h2></div>
     <p class="sec-sub">Quatro camadas. As regras não conhecem Angular: por isso passam nos testes sem framework e servem mesmo que a Databite decida fazer o Cardápio novo em React.</p>
     <div class="arq">
-      <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção e "Já vem com", Monte seu hambúrguer, cupom, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>11 arquivos + 5 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
+      <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção e "Já vem com", Monte seu hambúrguer, cupom, Pontos Ogro, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>12 arquivos + 6 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
       <div class="camada"><h3>state/</h3><p>Sacola com signals, com persistência, "Desfazer" e editar. Link de campanha pendente.</p><ul><li>Armazenamento trocável por token de injeção</li></ul></div>
-      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 44 eventos, igual ao do protótipo.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
+      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 48 eventos, igual ao do protótipo.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
       <div class="camada"><h3>ui/</h3><p>Diretivas de vídeo e de impressão, animação da sacola, "Completa teu pedido?", burger montado com as camadas reais (SVG) e foto ampliada (OnPush).</p><ul><li>Respeita "menos movimento" e economia de dados</li></ul></div>
     </div>
   </section>
@@ -1721,8 +1844,8 @@
     <div class="tabela"><table>
       <thead><tr><th>Gate</th><th>Status</th><th>Evidência</th></tr></thead>
       <tbody>
-        <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>34 de 34, exit 0, Node 26.12, 25/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
-        <tr><td>Eventos do código × protótipo</td><td><span class="chip st-ok">PASS</span></td><td>44 de 44 nomes iguais, conferidos por script em 25/11.</td></tr>
+        <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>44 de 44, exit 0, Node 26.12, 27/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
+        <tr><td>Eventos do código × protótipo</td><td><span class="chip st-ok">PASS</span></td><td>48 de 48 nomes iguais ao mapa do protótipo, conferidos por script em 27/11.</td></tr>
         <tr><td>Build, lint e typecheck do Angular</td><td><span class="chip st-warn">Não rodado</span></td><td>O Angular não está instalado aqui. O código assume Angular 17+ (standalone, signals, @if/@for) até a Databite confirmar a versão.</td></tr>
         <tr><td>Testes de componente</td><td><span class="chip st-warn">Não rodado</span></td><td>Dependem do TestBed do Angular.</td></tr>
         <tr><td>Paridade visual</td><td><span class="chip st-warn">Não rodado</span></td><td>Falta montar as telas (fatia F2).</td></tr>
@@ -1743,6 +1866,16 @@
   ok   monte seu hambúrguer › começa só com o pão e o lugar da carne; pede a carne primeiro
   ok   monte seu hambúrguer › monta na ordem certa com as camadas reais: salada e queijo em cima da carne, 1º molho embaixo
   ok   monte seu hambúrguer › segundo molho vai por cima; respeita o máximo de queijos
+  ok   pontos · ganhar › R$ 100 em produto rende 100 pontos no nível Ogro
+  ok   pontos · ganhar › 1º pedido ganha +50 de boas-vindas
+  ok   pontos · ganhar › níveis 5%, 6% e 7,5% sem erro de float
+  ok   pontos · ganhar › diz o próximo nível e para no topo
+  ok   pontos · usar › 240 pontos viram R$ 12,00 quando o teto de 30% cobre
+  ok   pontos · usar › teto de 30% dos produtos
+  ok   pontos · usar › abaixo do pedido mínimo da loja não usa
+  ok   pontos · usar › menos de 100 pontos não usa
+  ok   pontos · trocar por produto › no refri o preço mora no sabor: a troca cobre R$ 9,90
+  ok   pontos · trocar por produto › no combo, "Fome de Ogro" é paga à parte
   ok   dinheiro em centavos › não erra centavo em soma de float
   ok   cupom › abaixo do mínimo mostra quanto falta
   ok   cupom › acima do mínimo calcula 10% em centavos inteiros
@@ -1764,12 +1897,12 @@
   ok   selecao › respeita o máximo do grupo
   ok   selecao › a mesma escolha gera a mesma chave, em qualquer ordem
 
-5 arquivos · 34 testes · 34 passaram · 0 falharam</code></pre></details>
+6 arquivos · 44 testes · 44 passaram · 0 falharam</code></pre></details>
   </section>
 
   <section id="databite">
     <div class="sec-h"><span class="n">06</span><h2>O que falta da Databite</h2></div>
-    <p class="sec-sub">Com estas 10 respostas o código sai do protótipo e entra no repositório deles.</p>
+    <p class="sec-sub">Com estas 11 respostas o código sai do protótipo e entra no repositório deles.</p>
     <div class="aviso" style="margin-bottom:1rem">Verificado em 25/11: o Cardápio Digital atual é <b>React 18.2</b>, não Angular. A primeira decisão é deles: o Cardápio novo sai em Angular, como CRM e PDV, ou em React, como o atual?</div>
     <ol class="p0">
       <li data-id="A1"><b>Angular ou React</b> para o Cardápio novo.</li>
@@ -1781,6 +1914,7 @@
       <li data-id="B4"><b>Contrato de opções:</b> mínimo, máximo, obrigatório e um campo de tipo de ingrediente (para o burger montado na tela).</li>
       <li data-id="B8"><b>Criar pedido</b> com chave de idempotência.</li>
       <li data-id="C1"><b>Como a API representa dinheiro</b> e arredonda desconto.</li>
+      <li data-id="B17"><b>Carteira de pontos:</b> saldo, extrato, validade e crédito na entrega, presos ao WhatsApp do cliente.</li>
       <li data-id="G1"><b>Ponto focal técnico</b> do lado deles.</li>
     </ol>
   </section>
@@ -1790,7 +1924,7 @@
 
 <footer>
   <div class="wrap">
-    Caderno do Victor · Ogro Steaks · 25/11/2026 · Issue <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/54">cs-ogro-steaks#54</a> · Protótipo: <a href="../cardapio-digital/">cardapio-digital</a> · <a href="../">voltar ao caderno</a>
+    Caderno do Victor · Ogro Steaks · 27/11/2026 · Issue <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/54">cs-ogro-steaks#54</a> · Protótipo: <a href="../cardapio-digital/">cardapio-digital</a> · <a href="../">voltar ao caderno</a>
   </div>
 </footer>
 
@@ -1829,7 +1963,7 @@
       },
       sacola: {
         atual: ['A sacola é uma página com pagamento, cupom, itens, nota fiscal e "Confirmar pedido"', 'OGRO10 com R$ 44,90 na sacola: "Cupom inválido.", sem dizer se falta valor', 'Pagamento já vem escolhido: "Na entrega - Master Crédito"'],
-        prototipo: ['O cupom mostra quanto falta: "Faltam R$ 15,10 pro OGRO10 valer"', 'Mais um McManis e o desconto entra na hora', 'Tirou sem querer? "Desfazer" devolve o item'],
+        prototipo: ['O cupom mostra quanto falta: "Faltam R$ 15,10 pro OGRO10 valer"', 'Mais um McManis e o desconto entra na hora', 'Mostra quantos pontos o pedido rende', 'Tirou sem querer? "Desfazer" devolve o item'],
       },
       link: {
         atual: null,
@@ -1839,7 +1973,12 @@
       depois: {
         atual: null,
         semVideo: 'Não gravado: no Cardápio atual, mostrar esta etapa exigiria fazer um pedido real na loja.',
-        prototipo: ['O CEP preenche a rua sozinho', 'Pix com QR e copia-e-cola, com prazo na tela', 'Acompanha o pedido: recebido, pago, na chapa, saiu, entregue', 'Demonstração: nenhum pedido é enviado'],
+        prototipo: ['O CEP preenche a rua sozinho', 'Pix com QR e copia-e-cola, com prazo na tela', 'Acompanha o pedido: recebido, pago, na chapa, saiu, entregue', 'Os pontos do pedido aparecem "a caminho"', 'Demonstração: nenhum pedido é enviado'],
+      },
+      pontos: {
+        atual: null,
+        semVideo: 'O Cardápio atual não tem programa de pontos nem cashback: não há o que gravar. Verificado no código do site em 27/11.',
+        prototipo: ['Na entrega, os pontos entram contando: "+X pontos na conta"', 'O painel mostra o nível (5%, 6%, 7,5% de volta) e quanto falta pro próximo', '11 trocas por produto, da água ao Combo McManis', 'Com saldo, um toque usa os pontos e o total cai na hora (240 pontos = − R$ 12,00)'],
       },
     };
     const SITES = ['atual', 'prototipo'];
