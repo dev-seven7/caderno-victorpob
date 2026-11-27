@@ -368,7 +368,7 @@ textarea.campo{min-height:70px;resize:vertical}
 .seguro svg{width:16px;height:16px;fill:none;stroke:var(--verde);stroke-width:2;flex:none}
 
 /* PEDIDO */
-.ped{padding-top:20px;padding-bottom:40px;display:grid;gap:16px}
+.ped{padding-top:20px;padding-bottom:40px;display:grid;gap:16px;max-width:720px;margin-inline:auto}
 [hidden]{display:none!important}
 .ped__ok{background:var(--preto);color:#fff;border-radius:20px;padding:22px 18px;text-align:center;display:grid;gap:6px;justify-items:center}
 .ped__ok h1{font-size:clamp(34px,9vw,54px)}
@@ -561,6 +561,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 }
 /* ---------- PONTOS OGRO ---------- */
 .topo__loja{min-width:0;flex-shrink:1}
+@media (max-width:420px){.topo__loja .pre{display:none}}
 .topo__pts{display:flex;align-items:center;gap:5px;height:34px;padding:0 10px 0 7px;border-radius:99px;background:var(--grafite-800);color:#fff;font-weight:800;font-size:13px;flex:none;transition:transform .2s}
 .topo__loja[hidden]+.topo__pts{margin-left:auto}
 .topo__pts svg,.pts-ic{width:20px;height:20px;flex:none}
@@ -637,6 +638,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 .ped-pts__l .pts-ic{width:40px;height:40px}
 .ped-pts__l b{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:24px;line-height:1.05}
 .ped-pts__l span{font-size:13px;color:var(--grafite-700)}
+.ped-pts__l b span{font-size:inherit;color:inherit}
 .ped-pts.ok{background:#FFF7E3}
 .ped-pts .prog i{background:var(--amarelo)}
 .ped-pts .link{justify-self:start;font-size:13px}
@@ -691,7 +693,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 
       <div class="pts-home" id="pts-home">
         <svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg>
-        <div><strong id="pts-home-t">Pedido aqui vira ponto</strong><span id="pts-home-s">R$ 1 = 1 ponto. 100 pontos = R$ 5.</span></div>
+        <div><strong id="pts-home-t">Pedido aqui vira ponto</strong><span id="pts-home-s">R$ 1 = 1 ponto. 100 pontos = R$ 5.</span></div>
         <button class="btn btn--kraft" id="pts-home-b">Ver como</button>
       </div>
 
@@ -900,6 +902,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
   <div class="gaveta__corpo" id="pt-corpo"></div>
 </aside>
 
+<p class="sr" id="pts-sr" aria-live="polite"></p>
 <div class="toast" id="toast" role="status"><span id="toast-t"></span><button id="toast-b" hidden></button></div>
 
 <!-- foto ampliada ("Ampliar imagem") -->
@@ -1342,7 +1345,7 @@ const IMG = k => k ? `img/${k}.webp` : null;
 // com vapor nos quentes e reflexo de luz nas bebidas geladas. Produto novo = linha no script + chave aqui.
 const VIDS = new Set([
   "mcmanis", "festival", "ogrostela", "texano", "gpt", "xbacon", "hiper-mcmanis", "pcq", "quarter", "notdog", "xcoco", "p-bca", "p-bbr", "p-bam",
-  "c-mcmanis", "c-festival", "c-ogrostela", "c-texano", "c-gpt", "c-xbacon", "c-hiper", "c-quarter", "c-pcq", "c-notdog", "c-xcoco",
+  "ogro-bells", "c-mcmanis", "c-festival", "c-ogrostela", "c-texano", "c-gpt", "c-xbacon", "c-hiper", "c-quarter", "c-pcq", "c-notdog", "c-xcoco",
   "batata", "canoa", "nuggets", "p-ama", "p-d2b", "p-d2m", "p-d3b", "p-d4p", "p-dcl", "p-dga", "p-dmo", "p-dnu",
   "p-sbr", "p-scb", "p-scc-foto", "p-rla", "p-r60", "p-rgu", "p-rh2", "p-rag", "p-rco-foto", "p-rst-foto", "p-rpe", "p-rso", "monte"]);  // monte = vídeo do burger se montando (só no card; a ficha monta ao vivo)
 const temVid = p => !semAnimacao && VIDS.has(p.img);
@@ -1409,6 +1412,7 @@ const P = [
   { id: "cnd", c: "combos", n: "Combo Notdog", d: "Costela desfiada, cebola caramelizada, american cheese e maionese de alho na baguete + batata + bebida.", p: 46.90, img: "c-notdog", t: "combo" },
   { id: "cxc", c: "combos", n: "Combo X-Cocó", d: "Empanado de frango, cheddar, alface, tomate e maionese de alho no brioche + batata + bebida.", p: 45.90, img: "c-xcoco", t: "combo" },
   // burgers
+  { id: "bob", c: "burgers", n: "Ogro Bells", d: "Novidade de Natal. Blend bovino na chapa, muçarela de búfala, tomate e maionese da casa no pão brioche.", p: 48.90, img: "ogro-bells", t: "burger", novo: 1 }, // preço sugerido (27/11), falta o aval dos sócios
   { id: "mon", c: "burgers", n: "Monte seu hambúrguer", d: "Do teu jeito: escolhe a carne, os queijos, os molhos e os complementos. O burger vai sendo montado na tela.", p: 31.50, img: "monte", t: "monte" },
   { id: "bmc", c: "burgers", n: "McManis", d: "Carro-chefe da casa. Blend bovino, american cheese, cebola caramelizada e maionese artesanal de alho confitado no pão brioche.", p: 44.90, img: "mcmanis", t: "burger", top: 2 },
   { id: "bfe", c: "burgers", n: "Ogro Festival Burger", d: "Blend bovino, fatias de bacon, cheddar inglês e barbecue com especiarias no pão brioche.", p: 45.90, img: "festival", t: "burger", top: 3 },
@@ -1445,6 +1449,8 @@ const P = [
   { id: "rst", c: "beber", n: "Stella Artois puro malte 330ml", d: "Venda para maiores de 18 anos.", p: 11.90, img: "p-rst-foto", t: "simples", ic: "ST" }
 ];
 const PID = Object.fromEntries(P.map(p => [p.id, p]));
+// Ogro Bells ainda não está no Cardápio Digital real: usa os mesmos grupos do McManis (Tamanho da fome, sachês, leva junto)
+if (!OPCOES.bob && OPCOES.bmc) OPCOES.bob = { base: 48.9, g: OPCOES.bmc.g };
 const CUPONS = { OGRO10: { pct: 10, min: 60, txt: "10% off" } };
 
 /* ---------- estado ---------- */
@@ -1674,7 +1680,7 @@ function cardProd(p, idx, lista) {
   const q = S.cart.filter(i => i.id === p.id).reduce((a, i) => a + i.q, 0);
   const img = temVid(p) ? vidTag(p, true) : p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" decoding="async" width="112" height="112"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`;
   return `<button class="prod" data-p="${p.id}" data-list="${lista}" data-idx="${idx}" aria-label="${esc(p.n)}, ${brl(p.p)}">
-    <div><h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${!baseDe(p) || gruposDe(p).some(g => g.ops.some(o => o[1] > 0)) ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
+    <div>${p.novo ? `<span class="badge">Novo</span>` : ""}<h3>${esc(p.n)}</h3>${p.d ? `<p>${esc(p.d)}</p>` : ""}<span class="prod__preco">${!baseDe(p) || gruposDe(p).some(g => g.ops.some(o => o[1] > 0)) ? "<small>a partir de</small>" : ""}${brl(p.p)}</span></div>
     <div class="prod__img">${img}${q ? `<span class="prod__qtd">${q}×</span>` : ""}<span class="prod__mais" aria-hidden="true">+</span></div>
   </button>`;
 }
@@ -1748,6 +1754,8 @@ function marcarQtds() {
 // Para pôr banner novo: arquivos em img/ (arq.webm, arq.mp4, arq.webp, arq-600.webp) + uma linha aqui.
 // acao: "cupom" abre a sacola no campo do cupom; um id de produto abre o produto.
 const BANNERS = [
+  { arq: "banner-ogro-bells", dur: 6500, acao: "bob", nome: "banner_ogro_bells",
+    alt: "Novidade de Natal: Ogro Bells, com muçarela de búfala e tomate. O Natal de quem sabe o que é bom. Toque para pedir o seu." },
   { arq: "banner-cupom", dur: 6300, acao: "cupom", nome: "banner_cupom",
     alt: "Você tem um cupom para usar no seu pedido Ogro? Veja como usar: escolha a loja, faça o pedido, coloque na sacola o burger ligado ao cupom e digite o cupom na sacola. Toque para abrir a sacola." },
   { arq: "banner-dupla-monstro", dur: 7000, acao: "dmo", nome: "banner_dupla_monstro",
@@ -2414,7 +2422,7 @@ function renderPedido() {
   $("#ped-pix").hidden = !pix;
   ETAPAS[1][2] = p.pag === "pix" ? "Pix recebido." : p.pag === "cartao" ? "Paga no cartão quando chegar." : "Paga em dinheiro quando chegar.";
   let at = p.pag === "pix" && !p.pago ? 0 : 1;
-  const desenhar = () => { const fim = at === ETAPAS.length - 1; if (fim && p.pts && Pontos.creditar(p.num)) ptsChegaram(); cartaoPontosPedido(p, fim); $("#lt").innerHTML = ETAPAS.map(([ic, t, s], i) => `<li class="${i < at || fim ? "ok" : i === at ? "at" : ""}"><i>${i < at || fim ? "✓" : ic}</i><div>${t}<small>${i <= at ? s : ""}</small></div></li>`).join(""); $("#ped-aval").hidden = at < ETAPAS.length - 1; };
+  const desenhar = () => { const fim = at === ETAPAS.length - 1; const cred = fim && p.pts ? Pontos.creditar(p.num) : 0; cartaoPontosPedido(p, fim, !!cred); if (cred) ptsChegaram(); $("#lt").innerHTML = ETAPAS.map(([ic, t, s], i) => `<li class="${i < at || fim ? "ok" : i === at ? "at" : ""}"><i>${i < at || fim ? "✓" : ic}</i><div>${t}<small>${i <= at ? s : ""}</small></div></li>`).join(""); $("#ped-aval").hidden = at < ETAPAS.length - 1; };
   desenhar();
   clearInterval(ltTimer); clearInterval(pixTimer);
   const avancar = () => { ltTimer = setInterval(() => { if (at < ETAPAS.length - 1) { at++; desenhar(); } else clearInterval(ltTimer); }, 4000); }; // demo acelerada
@@ -2464,7 +2472,7 @@ function caixaPontos(t, onde) {
   if (!S.cart.length) return "";
   const disp = Pontos.disponivel(), g = t.ganha;
   let h = `<div class="pts-box">
-    <div class="pts-box__l">${icPts()}<div><b>${g.total ? `Esse pedido rende +${fmtPts(g.total)} pontos` : "Pontos Ogro"}</b>${g.total ? `= ${ptsEmR(g.total)} pro próximo pedido. Entram quando chegar.` : "Cada R$ 1 em produto vira 1 ponto."}</div></div>`;
+    <div class="pts-box__l">${icPts()}<div><b>${g.total ? `Esse pedido rende +${fmtPts(g.total)} pontos` : "Pontos Ogro"}</b>${g.total ? `= ${ptsEmR(g.total)} pro próximo pedido. Entram quando chegar.` : "Cada R$ 1 em produto vira 1 ponto."}</div></div>`;
   if (g.bonus) h += `<small>Já conta +${g.bonus} de boas-vindas: é teu 1º pedido pelo Cardápio Digital. 🎁</small>`;
   if (t.ptsPode >= PTS.min) {
     h += `<label class="pts-usar"><span><b>Usar ${fmtPts(t.ptsPode)} pontos</b>− ${ptsEmR(t.ptsPode)} neste pedido${t.ptsPode < disp ? `. Vale até 30% dos produtos, sobram ${fmtPts(disp - t.ptsPode)}` : ""}</span><input type="checkbox" data-pts-usar="${onde}"${S.usarPts ? " checked" : ""} aria-label="Usar ${fmtPts(t.ptsPode)} pontos neste pedido"></label>`;
@@ -2483,18 +2491,22 @@ function textoNivel(curto) {
   return `${curto ? "" : `${n90} de ${prox.min} pedidos nos últimos 90 dias. `}Mais ${f} pedido${f > 1 ? "s" : ""} e tu vira <b>${prox.n}</b>: ${pctNivel(prox)} de volta.`;
 }
 const barraNivel = () => { const prox = Pontos.proxNivel(), n90 = Pontos.pedidos90(); return prox ? `<div class="prog" role="img" aria-label="${n90} de ${prox.min} pedidos"><i style="width:${n90 / prox.min * 100}%"></i></div>` : ""; };
-function cartaoPontosPedido(p, fim) {
+function cartaoPontosPedido(p, fim, animar) {
   const box = $("#ped-pts"), x = p.pts;
   if (!x || (!x.ganha && !x.usados)) { box.hidden = true; return; }
   const W = Pontos.W, entregue = fim || !W.pend.some(y => y.num === p.num);
   box.hidden = false; box.classList.toggle("ok", entregue);
   const topo = !x.ganha ? `<b>Pontos usados</b><span>Saldo: ${fmtPts(W.saldo)} pontos.</span>`
-    : entregue ? `<b>+${fmtPts(x.ganha)} pontos na conta</b><span>Saldo: ${fmtPts(W.saldo)} pontos = ${ptsEmR(W.saldo)} pro próximo pedido.</span>`
+    : entregue ? `<b>+<span data-conta="${x.ganha}">${animar && !semAnimacao ? 0 : fmtPts(x.ganha)}</span> pontos na conta</b><span>Saldo: ${fmtPts(W.saldo)} pontos = ${ptsEmR(W.saldo)} pro próximo pedido.</span>`
     : `<b>+${fmtPts(x.ganha)} pontos a caminho</b><span>Entram quando o pedido chegar${x.bonus ? `, já com +${x.bonus} de boas-vindas` : ""}.</span>`;
   box.innerHTML = `<div class="ped-pts__l">${icPts()}<div>${topo}</div></div>
     ${x.usados ? `<p style="font-size:13px">Neste pedido tu usou ${fmtPts(x.usados)} pontos.</p>` : ""}
     <p style="font-size:13px;color:var(--grafite-700)">${textoNivel(true)}</p>${barraNivel()}
     <button class="link" data-pts-abrir="pedido">Ver meus pontos</button>`;
+  const c = box.querySelector("[data-conta]");
+  if (c && animar && !semAnimacao) { const alvo = +c.dataset.conta, t0 = performance.now();
+    const passo = t => { const k = Math.min(1, (t - t0) / 900); c.textContent = fmtPts(alvo * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(passo); };
+    requestAnimationFrame(passo); box.animate && box.animate([{ transform: "scale(.98)" }, { transform: "scale(1.015)" }, { transform: "none" }], { duration: 500, easing: "ease-out" }); }
 }
 function ptsChegaram() {
   renderSeloPontos();
@@ -2508,7 +2520,7 @@ function renderSeloPontos() {
   const t = $("#pts-home-t"), s = $("#pts-home-s"), b = $("#pts-home-b");
   if (n) { t.textContent = `Tu tem ${fmtPts(n)} pontos`; s.textContent = `Valem ${ptsEmR(n)} no próximo pedido. Usa direto na sacola.`; b.textContent = "Ver pontos"; }
   else if (cam) { t.textContent = `+${fmtPts(cam)} pontos a caminho`; s.textContent = "Entram quando o pedido chegar."; b.textContent = "Ver pontos"; }
-  else { t.textContent = "Pedido aqui vira ponto"; s.textContent = `R$ 1 = 1 ponto. 100 pontos = R$ 5. No 1º pedido, +${PTS.boasVindas} de presente.`; b.textContent = "Ver como"; }
+  else { t.textContent = "Pedido aqui vira ponto"; s.textContent = `R$ 1 = 1 ponto. 100 pontos = R$ 5. No 1º pedido, +${PTS.boasVindas} de presente.`; b.textContent = "Ver como"; }
 }
 let ptsOrigem = null;
 function abrirPontos(origem) {
@@ -2523,17 +2535,17 @@ function renderPainelPontos() {
       <span class="pt-nivel"><i></i>${nv.n} · ${pctNivel(nv)} de volta</span>
       <div class="n">${fmtPts(W.saldo)}<small>pontos</small></div>
       <div class="v">= ${ptsEmR(W.saldo)} pro próximo pedido</div>
-      <p>${W.saldo && W.venc ? `Valem até ${dataCurta(W.venc)}. Cada pedido renova todos por mais ${PTS.validade} dias.` : "Cada R$ 1 em produto vira 1 ponto. 100 pontos = R$ 5."}${extras ? `<br>${extras}` : ""}</p>
+      <p>${W.saldo && W.venc ? `Valem até ${dataCurta(W.venc)}. Cada pedido renova todos por mais ${PTS.validade} dias.` : "Cada R$ 1 em produto vira 1 ponto. 100 pontos = R$ 5."}${extras ? `<br>${extras}` : ""}</p>
     </div>`;
   if ((ptsOrigem === "sacola" || ptsOrigem === "checkout") && S.cart.length) h += `<button class="btn btn--red btn--full" data-pts-voltar><span>${ptsOrigem === "sacola" ? "Voltar pra sacola" : "Voltar pro pedido"}</span><svg><use href="#i-seta"/></svg></button>`;
   h += `<div class="pt-card"><h3>Teu nível</h3><p>${textoNivel()}</p>${barraNivel()}
       <div class="pt-niveis">${NIVEIS.map(v => `<div class="${v.id === nv.id ? "at" : ""}"><span><b>${v.n}</b><br><small>${v.min ? `${v.min}+ pedidos em 90 dias` : "Desde o 1º pedido"}</small></span><span>${v.mult.toLocaleString("pt-BR")} pt por R$</span><em>${pctNivel(v)}</em></div>`).join("")}</div></div>`;
-  h += `<div class="pt-card"><h3>Troca que rende mais</h3><p>Trocar por produto vale mais que o desconto: cada ponto rende uns R$ 0,06, em vez de R$ 0,05.</p>
+  h += `<div class="pt-card"><h3>Troca que rende mais</h3><p>Trocar por produto vale mais que o desconto: cada ponto rende uns R$ 0,06, em vez de R$ 0,05.</p>
       <div class="pt-trocas">${TROCAS.map(tr => { const p = PID[tr.id], ok = disp >= tr.pts; return `<div class="pt-troca"><div class="item__img">${fotoTag(p.img, `alt="" loading="lazy" width="56" height="56"`)}</div><div><b>${esc(p.n)}</b><span>${fmtPts(tr.pts)} pontos · vale ${brl(p.p)}</span></div>${ok ? `<button class="btn btn--dark" data-trocar="${tr.id}" aria-label="Trocar ${fmtPts(tr.pts)} pontos por ${esc(p.n)}">Trocar</button>` : `<span>Faltam ${fmtPts(tr.pts - disp)}</span>`}</div>`; }).join("")}</div></div>`;
   h += `<div class="pt-card"><h3>Como funciona</h3><ol class="pt-passos">
-      <li><span><b>Pede pelo Cardápio Digital</b>Cada R$ 1 em produto vira 1 ponto. Pedido de R$ 100 = 100 pontos.</span></li>
+      <li><span><b>Pede pelo Cardápio Digital</b>Cada R$ 1 em produto vira 1 ponto. Pedido de R$ 100 = 100 pontos.</span></li>
       <li><span><b>O pedido chega, os pontos entram</b>Ficam no teu WhatsApp e valem em qualquer loja do Ogro.</span></li>
-      <li><span><b>Usa do teu jeito</b>100 pontos = R$ 5 de desconto direto na sacola. Ou troca por um produto, que rende mais.</span></li></ol></div>`;
+      <li><span><b>Usa do teu jeito</b>100 pontos = R$ 5 de desconto direto na sacola. Ou troca por um produto, que rende mais.</span></li></ol></div>`;
   h += `<div class="pt-card"><h3>Extrato</h3>${W.ext.length ? `<ul class="pt-ext">${W.ext.slice(0, 12).map(e => `<li><span>${esc(e.txt)}<small>${dataCurta(e.ts)}</small></span><span class="${e.pts >= 0 ? "mais" : "menos"}">${e.pts >= 0 ? "+" : "−"}${fmtPts(Math.abs(e.pts))}</span></li>`).join("")}</ul>` : `<p>Ainda sem movimento. O 1º pedido já chega com +${PTS.boasVindas} pontos de boas-vindas.</p>`}</div>`;
   h += `<details class="pt-card pt-regras"><summary>As regras, sem letra miúda</summary><ul>
       <li>Pontua o valor pago em produtos. A taxa de entrega não pontua.</li>
@@ -2561,7 +2573,7 @@ document.addEventListener("change", e => {
   track("pontos_usar", { acao: u.checked ? "ligou" : "desligou", pontos: t.ptsPode, valor: +(t.ptsPode * PTS.real).toFixed(2), onde: u.dataset.ptsUsar });
   if (u.dataset.ptsUsar === "sacola") renderGaveta(); else renderResumo();
   const novo = $(`[data-pts-usar="${u.dataset.ptsUsar}"]`); if (novo) novo.focus({ preventScroll: true });
-  toast(u.checked ? `${fmtPts(t.ptsPode)} pontos aplicados: − ${ptsEmR(t.ptsPode)}.` : "Pontos guardados pra próxima.");
+  const sr = $("#pts-sr"); if (sr) sr.textContent = u.checked ? `${fmtPts(t.ptsPode)} pontos aplicados: menos ${ptsEmR(t.ptsPode)}. Novo total ${brl(totais().total)}.` : "Pontos guardados pra próxima.";
 });
 $("#pt-corpo").addEventListener("click", e => {
   const tr = e.target.closest("[data-trocar]");
@@ -2644,7 +2656,7 @@ function rota() {
   if (!$("#v-home").classList.contains("on")) heroVid.pause();
   const l = lojaAtual();
   $("#topo-loja").hidden = !l || !!(h === "#/" || h === "");
-  if (l) $("#topo-loja-n").textContent = "Ogro " + l.n;
+  if (l) $("#topo-loja-n").innerHTML = `<span class="pre">Ogro </span>${esc(l.n)}`;
   atualizarSacola(); renderSeloPontos();
   resetIdle();
   if (S.pendente && $("#v-home").classList.contains("on")) { const p = PID[S.pendente]; setTimeout(() => chamarLojas(`Escolhe tua loja: o ${p.n} tem em todas.`), 300); }

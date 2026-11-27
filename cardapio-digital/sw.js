@@ -6,7 +6,7 @@
    - Nada de pedido, cupom ou dado do cliente passa por aqui: o protótipo não envia nada, e no produto final
      a API da Databite fica fora do cache (só GET de arquivo estático é guardado).
    Atualizar a versão abaixo invalida tudo de uma vez. */
-const VERSAO = "ogro-cd-2026-11-27-pontos-b";
+const VERSAO = "ogro-cd-2026-11-27-bells";
 const CASCA = ["./", "./index.html", "./manifest.webmanifest", "./img/ogro-horizontal-branco.svg", "./img/ogro-quadrado-cor-negativo.svg", "./img/icone-192.png"];
 const MAX_FOTOS = 160;
 
