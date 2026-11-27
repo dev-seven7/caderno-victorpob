@@ -1,0 +1,877 @@
+{
+ "gerado_em": "2026-11-27 20:51",
+ "repo": "dev-seven7/cs-ogro-steaks",
+ "demandas": [
+  {
+   "n": 58,
+   "titulo": "🧭 🥩 OGRO · Workspace geral do Ogro (caderno-victorpob/geral) no molde do painel da Temakeria (Victor)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Base e operação",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-27",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 57,
+   "titulo": "🚨 🥩 OGRO · Black P.C.Q R$ 1,00 · bug no valor mínimo gerou reclamação no direct · testar oferta/cupom antes + criar SAC da unidade",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Black Friday",
+   "donos": [],
+   "criada": "2026-11-27",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 56,
+   "titulo": "LP São Gonçalo: cadastro pelo Tally → n8n → planilha (26/11)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [],
+   "criada": "2026-11-26",
+   "atualizada": "2026-11-26",
+   "dias_sem_mov": 1
+  },
+  {
+   "n": 55,
+   "titulo": "📣 🥩 OGRO · Meta Ads · Funil SG + Black P.C.Q montados em rascunho na CA7 · falta cartão para publicar",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Mídia e tracking",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-25",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 54,
+   "titulo": "Piloto Databite: Cardápio Digital do protótipo para Angular (diagnóstico feito)",
+   "estado": "open",
+   "situacao": "Atenção",
+   "status_board": "Attention",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Cardápio Digital",
+   "donos": [],
+   "criada": "2026-11-25",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 53,
+   "titulo": "🎥 🥩 OGRO · Pauta da gravação de 24/11 · Ogro Bells + takes da Black (fita crepe e carimbo)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-23",
+   "atualizada": "2026-11-23",
+   "dias_sem_mov": 4
+  },
+  {
+   "n": 52,
+   "titulo": "🧭 🥩 OGRO · Cardápio Digital · Protótipo de UX reimaginado (todas as lojas na entrada + compra sem abandono) (Victor)",
+   "estado": "open",
+   "situacao": "Em revisão",
+   "status_board": "In review",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Cardápio Digital",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-23",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 51,
+   "titulo": "Reels raios formam a logo · Black, inauguração SG e teaser 09/12",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [],
+   "criada": "2026-11-23",
+   "atualizada": "2026-11-23",
+   "dias_sem_mov": 4
+  },
+  {
+   "n": 50,
+   "titulo": "🧭 🥩 OGRO · Calendário editorial + disparos de WhatsApp · Fevereiro/2027 (Pós-bloco · Carnaval · Fable)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-19",
+   "atualizada": "2026-11-19",
+   "dias_sem_mov": 8
+  },
+  {
+   "n": 49,
+   "titulo": "🧭 🥩 OGRO · Calendário editorial + disparos de WhatsApp · Janeiro/2027 (Janeiro sem fogão · BBB · Oscar)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-19",
+   "atualizada": "2026-11-19",
+   "dias_sem_mov": 8
+  },
+  {
+   "n": 48,
+   "titulo": "Publicar o caderno de 18/11 do Ogro no GitHub Pages (caderno-victorpob)",
+   "estado": "open",
+   "situacao": "Em revisão",
+   "status_board": "In review",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Base e operação",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-19",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 45,
+   "titulo": "📊 🥩 OGRO · Tracking SG · GA4 + Meta Pixel via GTM · Lead até 25/11 e Purchase até 04/12 (Victor)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Mídia e tracking",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-17",
+   "atualizada": "2026-11-25",
+   "dias_sem_mov": 2
+  },
+  {
+   "n": 44,
+   "titulo": "🧭 🥩 OGRO · Quadros aprovados · completar episódios dez/26 → fev/27 + criativos de fundo (alinhamento Bárbara 13/11) (4h)",
+   "estado": "open",
+   "situacao": "No board, sem status",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [],
+   "criada": "2026-11-13",
+   "atualizada": "2026-11-19",
+   "dias_sem_mov": 8
+  },
+  {
+   "n": 43,
+   "titulo": "Brand-kit Ogro Steaks: completar pro Protocolo-19 (até 17/11)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-16",
+   "dias_sem_mov": 11
+  },
+  {
+   "n": 41,
+   "titulo": "🧭 🥩 OGRO · Calendário editorial de dezembro · primeiro feed no modelo novo (quadros fixos + Natal + virada) (4h)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 40,
+   "titulo": "📱 🥩 OGRO · Pauta da gravação de fim de novembro (Jimmy + Igor) · cobrir dez/jan + \"Já deu por hoje\" especial de Natal (4h)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-23",
+   "dias_sem_mov": 4
+  },
+  {
+   "n": 39,
+   "titulo": "🧭 🥩 OGRO · Caderno do Victor · aplicar os ajustes da Manu e trazer pro repo (tirar o link público do ar) (2h)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Base e operação",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-19",
+   "dias_sem_mov": 8
+  },
+  {
+   "n": 38,
+   "titulo": "📱 🥩 OGRO · Corrida do Pelé 14/11 · pauta de captação + Reels pós-evento no CapCut (4h)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Conteúdo",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-17",
+   "dias_sem_mov": 10
+  },
+  {
+   "n": 37,
+   "titulo": "🎨 🥩 OGRO · São Gonçalo · Briefings dos 15 criativos do funil ToFu/MoFu/BoFu (4h)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Lançamento SG",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-25",
+   "dias_sem_mov": 2
+  },
+  {
+   "n": 36,
+   "titulo": "🧭 🥩 OGRO · Plano de conteúdo da semana 12–20/11 · inauguração SG + Corrida do Pelé + BF (Victor)",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Lançamento SG",
+   "donos": [
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-11-12",
+   "atualizada": "2026-11-18",
+   "dias_sem_mov": 9
+  },
+  {
+   "n": 34,
+   "titulo": "OGRO · Parceiros · Controle mensal · Novembro/2026",
+   "estado": "open",
+   "situacao": "Fora do board",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Parcerias e comunidade",
+   "donos": [
+    "dev-manoela",
+    "luizamenesesseven7"
+   ],
+   "criada": "2026-11-06",
+   "atualizada": "2026-11-06",
+   "dias_sem_mov": 21
+  },
+  {
+   "n": 33,
+   "titulo": "OGRO · Calendário de Conteúdo · Novembro",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "dev-manoela",
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-11-04",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 30,
+   "titulo": "OGRO · São Gonçalo · Impressos e brindes de inauguração",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-15",
+   "atualizada": "2026-11-23",
+   "dias_sem_mov": 4
+  },
+  {
+   "n": 29,
+   "titulo": "OGRO · São Gonçalo · Criativos de inauguração + budget de tráfego",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-15",
+   "atualizada": "2026-11-25",
+   "dias_sem_mov": 2
+  },
+  {
+   "n": 28,
+   "titulo": "OGRO · São Gonçalo · Landing de captação + produto isca",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-15",
+   "atualizada": "2026-11-17",
+   "dias_sem_mov": 10
+  },
+  {
+   "n": 27,
+   "titulo": "OGRO · São Gonçalo · Giveaway de inauguração",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-15",
+   "atualizada": "2026-11-17",
+   "dias_sem_mov": 10
+  },
+  {
+   "n": 19,
+   "titulo": "OGRO · Tráfego pago · Criativos pra ativação da conta de anúncios (Meta)",
+   "estado": "open",
+   "situacao": "Em revisão",
+   "status_board": "In review",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Mídia e tracking",
+   "donos": [
+    "dev-manoela",
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-09-28",
+   "atualizada": "2026-10-06",
+   "dias_sem_mov": 52
+  },
+  {
+   "n": 18,
+   "titulo": "🎨 🥩 OGRO · Mídia Kit / Kit de Boas-Vindas para novos franqueados",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-09-21",
+   "atualizada": "2026-11-24",
+   "dias_sem_mov": 3
+  },
+  {
+   "n": 17,
+   "titulo": "🧭 🥩 OGRO · Curso gravado de treinamento · franqueados + funcionários (avaliação + reciclagem)",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-21",
+   "atualizada": "2026-11-11",
+   "dias_sem_mov": 16
+  },
+  {
+   "n": 16,
+   "titulo": "🧭 🥩 OGRO · Protocolo de Lançamento · playbook de 5 fases (D-10 → D+14)",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-21",
+   "atualizada": "2026-11-11",
+   "dias_sem_mov": 16
+  },
+  {
+   "n": 15,
+   "titulo": "🧭 🥩 OGRO · Projetos da Bárbara (CMO Ogro) · Protocolo de Lançamento + Curso de Treinamento + Kit de Boas-Vindas",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-21",
+   "atualizada": "2026-11-11",
+   "dias_sem_mov": 16
+  },
+  {
+   "n": 14,
+   "titulo": "🧭 🥩 OGRO · São Gonçalo · Lançamento da unidade (pré-inauguração + inauguração + pós)",
+   "estado": "open",
+   "situacao": "Backlog",
+   "status_board": "Backlog",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Lançamento SG",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-17",
+   "atualizada": "2026-11-27",
+   "dias_sem_mov": 0
+  },
+  {
+   "n": 9,
+   "titulo": "Ogro Steaks · Auditoria completa da conta (S7)",
+   "estado": "open",
+   "situacao": "Em andamento",
+   "status_board": "In progress",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Base e operação",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-11-12",
+   "dias_sem_mov": 15
+  },
+  {
+   "n": 8,
+   "titulo": "OGRO · Estratégia · SWOT + plano de conteúdo foco produto (food porn, bastidores, séries) + TikTok família",
+   "estado": "open",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-11-11",
+   "dias_sem_mov": 16
+  },
+  {
+   "n": 7,
+   "titulo": "OGRO · Atendimento · manual pros franqueados + sistema de feedback (Campos com 9% de reclamação)",
+   "estado": "open",
+   "situacao": "Pronta pra começar",
+   "status_board": "Ready",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Marca e franquia",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-09-11",
+   "dias_sem_mov": 77
+  },
+  {
+   "n": 6,
+   "titulo": "OGRO · Comunidade no Instagram · canal com conteúdo regular e exclusivo + embaixadores",
+   "estado": "open",
+   "situacao": "Pronta pra começar",
+   "status_board": "Ready",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-11-24",
+   "dias_sem_mov": 3
+  },
+  {
+   "n": 5,
+   "titulo": "OGRO · Influenciadores · base de dados (Rio + urbano/rap + dubladores) e outreach",
+   "estado": "open",
+   "situacao": "Em andamento",
+   "status_board": "In progress",
+   "prioridade": "P2-Media",
+   "no_board": true,
+   "frente": "Parcerias e comunidade",
+   "donos": [
+    "dev-manoela",
+    "victorpobgruporobfood"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-11-25",
+   "dias_sem_mov": 2
+  },
+  {
+   "n": 1,
+   "titulo": "Ogro Steaks · Onboarding (full service)",
+   "estado": "open",
+   "situacao": "Em andamento",
+   "status_board": "In progress",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Base e operação",
+   "donos": [
+    "dev-manoela",
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-08-31",
+   "atualizada": "2026-11-13",
+   "dias_sem_mov": 14
+  },
+  {
+   "n": 32,
+   "titulo": "OGRO · Rotina Social semanal · Luiza + Otávio · 26 a 30/10",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-26",
+   "atualizada": "2026-11-07",
+   "dias_sem_mov": 20
+  },
+  {
+   "n": 31,
+   "titulo": "🎨 OGRO · Destaques UNIDADES + HORÁRIOS · 12 unidades (out26)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7"
+   ],
+   "criada": "2026-10-20",
+   "atualizada": "2026-11-09",
+   "dias_sem_mov": 18
+  },
+  {
+   "n": 26,
+   "titulo": "OGRO · Rotina Social semanal · Luiza + Otávio · 15 a 23/10",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-15",
+   "atualizada": "2026-10-26",
+   "dias_sem_mov": 32
+  },
+  {
+   "n": 25,
+   "titulo": "OGRO · Meta · Gate: dependências (criativos, copys, BM, verba)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Mídia e tracking",
+   "donos": [],
+   "criada": "2026-10-07",
+   "atualizada": "2026-11-09",
+   "dias_sem_mov": 18
+  },
+  {
+   "n": 24,
+   "titulo": "OGRO · Meta · Pixel central, pedido real e budget (Luiz + Celso)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Mídia e tracking",
+   "donos": [],
+   "criada": "2026-10-07",
+   "atualizada": "2026-11-09",
+   "dias_sem_mov": 18
+  },
+  {
+   "n": 23,
+   "titulo": "OGRO · Meta · Subida de campanhas e conjuntos (#01 #02 #03)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Mídia e tracking",
+   "donos": [],
+   "criada": "2026-10-07",
+   "atualizada": "2026-11-09",
+   "dias_sem_mov": 18
+  },
+  {
+   "n": 22,
+   "titulo": "OGRO · Rotina Social semanal · Luiza + Otávio · 05 a 11/10",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-10-05",
+   "atualizada": "2026-10-15",
+   "dias_sem_mov": 43
+  },
+  {
+   "n": 21,
+   "titulo": "OGRO · Parceiros · Controle mensal · Outubro/2026",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Parcerias e comunidade",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-10-01",
+   "atualizada": "2026-11-11",
+   "dias_sem_mov": 16
+  },
+  {
+   "n": 20,
+   "titulo": "OGRO · Calendário de Conteúdo · Outubro",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "dev-manoela",
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-09-30",
+   "atualizada": "2026-11-07",
+   "dias_sem_mov": 20
+  },
+  {
+   "n": 13,
+   "titulo": "OGRO · Destaques + Bio do Instagram · atualização",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7"
+   ],
+   "criada": "2026-09-16",
+   "atualizada": "2026-10-08",
+   "dias_sem_mov": 50
+  },
+  {
+   "n": 12,
+   "titulo": "OGRO · Calendário de Conteúdo · Setembro",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": null,
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-09-16",
+   "atualizada": "2026-10-05",
+   "dias_sem_mov": 53
+  },
+  {
+   "n": 11,
+   "titulo": "OGRO · Definir responsável pelo cardápio",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Base e operação",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-09-11",
+   "dias_sem_mov": 77
+  },
+  {
+   "n": 10,
+   "titulo": "OGRO · Rotina Social semanal · Luiza + Otávio",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [
+    "luizamenesesseven7",
+    "Otavioseven7"
+   ],
+   "criada": "2026-09-11",
+   "atualizada": "2026-10-05",
+   "dias_sem_mov": 53
+  },
+  {
+   "n": 4,
+   "titulo": "Ogro Steaks · Consolidação das 3 calls de 09/09 (estratégia, perfil e setup)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": "Done",
+   "prioridade": "P1-Alta",
+   "no_board": true,
+   "frente": "Conteúdo",
+   "donos": [],
+   "criada": "2026-09-10",
+   "atualizada": "2026-11-24",
+   "dias_sem_mov": 3
+  },
+  {
+   "n": 3,
+   "titulo": "🥩 Ogro Steaks · Onboarding · Call 02 (09/09, 14h-16h)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Base e operação",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-08-31",
+   "atualizada": "2026-09-08",
+   "dias_sem_mov": 80
+  },
+  {
+   "n": 2,
+   "titulo": "🥩 Ogro Steaks · Onboarding · Call 01 (31/08, 13h30-15h30)",
+   "estado": "closed",
+   "situacao": "Concluída",
+   "status_board": null,
+   "prioridade": null,
+   "no_board": false,
+   "frente": "Base e operação",
+   "donos": [
+    "dev-manoela"
+   ],
+   "criada": "2026-08-31",
+   "atualizada": "2026-09-08",
+   "dias_sem_mov": 80
+  }
+ ]
+}

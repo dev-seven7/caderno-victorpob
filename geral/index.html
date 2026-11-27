@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Workspace Ogro Steaks · Geral</title>
+<meta name="description" content="Workspace estratégico do Ogro Steaks: acompanhar, planejar e produzir, a partir do caderno do Victor e dos cards do GitHub.">
+<link rel="icon" href="marca/ogro-quadrado-cor-negativo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Identidade Ogro (repos/brand-ogro + onboarding-ogro.html): grafite domina, vermelho Ogro/Barra é o acento das áreas,
+   kraft é o acento de texto sobre o escuro (o vermelho em texto pequeno no grafite não passa no contraste). Anton + Archivo. */
+:root { color-scheme: dark;
+  --vermelho: #8B1A1A; --barra: #B22222; --kraft: #C4A46C; --concreto: #C8C0B8; --concreto-100: #EBE8E5;
+  --ink: #1A1A1A; --panel: #232120; --panel-2: #2B2826; --line: #3A3633; --fg: #FFFFFF; --muted: #B3AAA2;
+  --ok: #4CC38A; --warn: #F2B544; --bad: #FF6B5E;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif; --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ink); color: var(--fg); }
+body { background-image: var(--tex); font: 500 14px/1.5 var(--sans); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 20px; }
+.hero { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; padding: 26px 28px; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(100deg, rgba(26,26,26,.98) 0%, rgba(26,26,26,.9) 55%, rgba(139,26,26,.55) 100%), var(--tex) var(--ink); }
+.hero img { order: 2; width: clamp(96px, 13vw, 132px); height: auto; aspect-ratio: 1; flex: none; margin-left: auto; }
+.hero-txt { flex: 1 1 280px; min-width: 0; display: grid; gap: 4px; }
+.eyebrow { font: 800 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--kraft); }
+h1 { font: 400 clamp(40px, 6.4vw, 72px)/.92 var(--display); text-transform: uppercase; letter-spacing: .005em; margin: 0; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--kraft); }
+.lede { margin: 8px 0 0; font: 600 15px/1.45 var(--sans); max-width: 78ch; color: #EDEAE6; }
+.lede b { color: var(--kraft); font-weight: 900; }
+.stamp { font-size: 12px; color: var(--muted); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ink); padding-block: 8px; }
+.tab-grp { font: 900 10px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 0 4px 0 10px; }
+.tab-grp:first-child { padding-left: 0; }
+.tab { font: 800 12px/1 var(--sans); text-transform: uppercase; letter-spacing: .07em; padding: 11px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+.tab:hover { border-color: var(--kraft); }
+.tab:focus-visible, .chip:focus-visible, .btn:focus-visible, a:focus-visible, .card.go:focus-visible { outline: 2px solid var(--kraft); outline-offset: 2px; }
+.tab.on { background: var(--barra); border-color: var(--barra); color: #fff; }
+.sec { display: grid; gap: 18px; }
+h2 { font: 400 34px/1 var(--display); text-transform: uppercase; margin: 0; }
+h3 { font: 900 12px/1.2 var(--sans); text-transform: uppercase; letter-spacing: .09em; margin: 0; }
+.note { font-size: 13px; color: var(--muted); margin: 0; max-width: 82ch; }
+.note a, a.lk { color: var(--kraft); font-weight: 800; text-decoration: none; } .note a:hover, a.lk:hover { text-decoration: underline; }
+.note b { color: var(--fg); }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+.cols { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; display: grid; gap: 10px; align-content: start; }
+.card.go { cursor: pointer; } .card.go:hover { border-color: var(--kraft); }
+.card-h, .goal-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.k-label { font: 700 11px var(--sans); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.k { font: 400 34px/1.05 var(--display); font-variant-numeric: tabular-nums; }
+.k.ac { color: var(--kraft); }
+.k-sub { font-size: 12px; color: var(--muted); }
+.go-more { font: 900 11px var(--sans); color: var(--kraft); text-transform: uppercase; letter-spacing: .06em; }
+.tw { overflow-x: auto; min-width: 0; }
+.wrap > *, .sec > *, .card > * { min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font: 900 11px var(--sans); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 8px 10px; border-bottom: 2px solid var(--barra); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td a { color: var(--kraft); font-weight: 900; text-decoration: none; } td a:hover { text-decoration: underline; }
+.sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font: 900 11px var(--sans); white-space: nowrap; border: 1px solid; }
+.pill.ok { color: var(--ok); } .pill.warn { color: var(--warn); } .pill.bad { color: var(--bad); } .pill.muted { color: var(--muted); border-color: var(--line); }
+.pill.brand { color: #fff; background: var(--barra); border-color: var(--barra); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.bars { display: grid; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: minmax(110px, 30%) 1fr auto; gap: 10px; align-items: center; font-size: 12.5px; }
+.bar-track { height: 14px; border-radius: 4px; background: var(--panel-2); overflow: hidden; display: flex; }
+.bar-track span { display: block; height: 100%; }
+.bar-row b { font-variant-numeric: tabular-nums; min-width: 28px; text-align: right; }
+.dates { display: grid; gap: 10px; }
+.date { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+.date.passou { opacity: .5; }
+.date-day { font: 400 30px/1 var(--display); text-align: center; color: var(--kraft); }
+.date-day small { display: block; font: 900 10px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.date-txt { min-width: 0; display: grid; gap: 3px; } .date-txt span { font-size: 12px; color: var(--muted); }
+.goal { display: grid; gap: 8px; }
+.goal-val { font: 400 28px/1 var(--display); font-variant-numeric: tabular-nums; }
+.goal-bar { position: relative; height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.goal-bar span { position: absolute; inset: 0 auto 0 0; background: var(--barra); border-radius: 999px; }
+.goal-bar.ok span { background: var(--ok); }
+.goal-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); } .goal-meta b { color: var(--fg); }
+.metas-lista { display: grid; gap: 14px; }
+.area-h { font: 900 12px var(--sans); text-transform: uppercase; letter-spacing: .1em; color: var(--kraft); margin: 6px 0 0; }
+.norte { display: grid; gap: 6px; padding-left: 18px; margin: 0; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.chips .lbl2 { font: 700 11px var(--sans); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-right: 4px; }
+.chip { font: 800 11px/1 var(--sans); padding: 8px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+.chip:hover { border-color: var(--kraft); } .chip.on { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+.qlinks { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.qlinks a { font: 800 11px/1 var(--sans); padding: 8px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--ink); color: var(--fg); text-decoration: none; }
+.qlinks a:hover { border-color: var(--kraft); color: var(--kraft); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; counter-reset: passo; }
+.step { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px 14px; display: grid; gap: 6px; }
+.step::before { counter-increment: passo; content: counter(passo); position: absolute; top: -10px; left: 14px; width: 22px; height: 22px; border-radius: 50%; background: var(--barra); color: #fff; font: 900 12px/22px var(--sans); text-align: center; }
+.step b { font: 900 13px var(--sans); text-transform: uppercase; letter-spacing: .06em; }
+.acao { display: grid; grid-template-columns: 58px 1fr auto; gap: 12px; align-items: start; padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+.acao.atrasada { border-color: #6a2a24; }
+.acao-dia { font: 400 26px/1 var(--display); text-align: center; color: var(--kraft); }
+.acao-dia small { display: block; font: 900 10px var(--sans); color: var(--muted); text-transform: uppercase; margin-top: 2px; }
+.acao-txt { min-width: 0; display: grid; gap: 5px; }
+.acao-txt a { color: var(--fg); font-weight: 900; text-decoration: none; } .acao-txt a:hover { color: var(--kraft); }
+.acao-side { display: grid; gap: 6px; justify-items: end; }
+.mchip { font: 700 11px var(--sans); padding: 3px 8px; border-radius: 4px; background: #3a2a1f; color: #E8C98F; border: 0; cursor: pointer; }
+.mchip:hover { background: var(--kraft); color: var(--ink); }
+.goal.flash { border-color: var(--kraft); box-shadow: 0 0 0 2px var(--kraft); }
+.rad { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); align-items: start; }
+.rad.alta { border-left: 4px solid var(--bad); } .rad.media { border-left: 4px solid var(--warn); } .rad.baixa { border-left: 4px solid var(--line); }
+.rad-ic { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 900 15px var(--sans); background: var(--panel-2); }
+.rad-txt { min-width: 0; display: grid; gap: 5px; }
+.rad-acao { font-size: 13px; } .rad-acao b { color: var(--kraft); }
+.rad-foot { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+.rad-foot a { color: var(--kraft); font-weight: 900; text-decoration: none; }
+.chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.node { padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); display: grid; gap: 4px; align-content: start; }
+.node.medido { border-color: #2c5a43; } .node.parcial { border-color: #6b5321; } .node.falta { border-style: dashed; background: transparent; }
+.node b { font: 900 12px var(--sans); text-transform: uppercase; letter-spacing: .05em; }
+.node .nv { font: 800 18px/1.15 var(--sans); } .node.falta .nv { color: var(--muted); }
+.node a { color: var(--kraft); font-weight: 900; text-decoration: none; font-size: 12px; }
+.q { display: grid; gap: 6px; padding: 14px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
+.q-p { font: 800 16px/1.4 var(--sans); }
+.layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+.layer { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--barra); border-radius: 10px; padding: 12px; display: grid; gap: 4px; }
+.layer b { font: 900 12px var(--sans); text-transform: uppercase; letter-spacing: .06em; }
+.dim { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: start; }
+.dim-score { font: 400 42px/1 var(--display); color: var(--kraft); text-align: center; }
+.dim-score small { display: block; font: 900 10px var(--sans); color: var(--muted); letter-spacing: .08em; }
+.dim ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+.tag { display: inline-block; font: 900 10px var(--sans); text-transform: uppercase; letter-spacing: .06em; padding: 2px 7px; border-radius: 4px; margin-right: 6px; }
+.tag.feito { background: var(--ok); color: #000; } .tag.prop { background: var(--line); color: var(--fg); } .tag.blk { background: #4a1c19; color: #FF9A92; } .tag.adj { background: #3d2f12; color: var(--warn); }
+.ws { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.mk-selo { grid-template-columns: 140px 1fr; gap: 24px; align-items: start; }
+.mk-selo img { width: 140px; height: 140px; }
+@media (max-width: 560px) { .mk-selo { grid-template-columns: 1fr; } }
+.sw { display: grid; grid-template-columns: 54px 1fr; gap: 12px; align-items: center; }
+.sw i { display: block; width: 54px; height: 54px; border-radius: 10px; border: 1px solid var(--line); }
+.sw code { font: 600 12px ui-monospace, Menlo, monospace; color: var(--muted); }
+.pc-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+.pc { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pc-top { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.pc h4 { margin: 0; font: 900 15px/1.25 var(--sans); }
+.pc-meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.btn { font: 900 12px var(--sans); text-transform: uppercase; letter-spacing: .06em; border: 0; border-radius: 999px; padding: 11px 15px; cursor: pointer; background: var(--barra); color: #fff; text-decoration: none; display: inline-block; }
+.btn.gh { background: transparent; border: 1px solid var(--line); color: var(--fg); }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.crit { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.crit.st-no { background: linear-gradient(90deg, #3a1714, transparent 70%); }
+.crit .ct { font-weight: 900; } .crit .how { font-size: 13px; color: #D9D2CB; } .crit .src { font-size: 11.5px; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; height: max-content; }
+.seg button { font: 900 11px var(--sans); text-transform: uppercase; background: var(--panel-2); color: var(--muted); border: 0; border-right: 1px solid var(--line); padding: 8px 10px; cursor: pointer; min-width: 44px; }
+.seg button:last-child { border-right: 0; }
+.seg button.on[data-v="ok"] { background: var(--ok); color: #000; } .seg button.on[data-v="no"] { background: var(--bad); color: #000; } .seg button.on[data-v="na"] { background: var(--muted); color: #000; }
+.verd { border-radius: 12px; padding: 16px; display: grid; gap: 8px; border: 1px solid var(--line); background: var(--panel); }
+.verd .v { font: 400 30px/1.05 var(--display); text-transform: uppercase; }
+.verd.ok { border-color: var(--ok); } .verd.ok .v { color: var(--ok); } .verd.bad { border-color: var(--bad); } .verd.bad .v { color: var(--bad); } .verd.warn { border-color: var(--warn); } .verd.warn .v { color: var(--warn); }
+.ap-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 900px) { .ap-grid { grid-template-columns: minmax(0, 1fr); } }
+.ap-side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); display: grid; gap: 12px; }
+@media (max-width: 900px) { .ap-side { position: static; } }
+.bloco-h { display: flex; align-items: baseline; gap: 10px; border-bottom: 2px solid var(--barra); padding-bottom: 6px; margin-top: 8px; }
+footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 4px; }
+footer a { color: var(--kraft); }
+.err { color: var(--bad); }
+[hidden] { display: none !important; }
+@media (max-width: 760px) { .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; } .tabs::-webkit-scrollbar { display: none; } .tab, .tab-grp { flex: none; } }
+@media (max-width: 520px) { .hero { padding: 18px; } .hero img { width: 72px; } .date { grid-template-columns: 52px 1fr; } .date > :last-child { grid-column: 2; } .acao { grid-template-columns: 48px 1fr; } .acao-side { grid-column: 2; justify-items: start; grid-auto-flow: column; } .bar-row { grid-template-columns: 1fr auto; } .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; } }
+@media (prefers-reduced-motion: no-preference) { .card { transition: border-color .2s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <img src="marca/ogro-quadrado-cor-negativo.svg" alt="Logo Ogro Steaks, versão oficial em negativo">
+    <div class="hero-txt">
+      <span class="eyebrow">Workspace estratégico · Rio de Janeiro · só delivery</span>
+      <h1>Ogro <em>Steaks</em></h1>
+      <p class="lede" id="lede"></p>
+      <span class="stamp" id="stamp"></span>
+      <nav class="qlinks" id="qlinks" aria-label="Acesso rápido"></nav>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Seções do workspace">
+    <span class="tab-grp">Acompanhar</span>
+    <button type="button" class="tab on" data-tab="geral">Visão geral</button>
+    <button type="button" class="tab" data-tab="inteligencia">Inteligência</button>
+    <button type="button" class="tab" data-tab="desempenho">Desempenho</button>
+    <button type="button" class="tab" data-tab="demandas">Demandas</button>
+    <span class="tab-grp">Planejar</span>
+    <button type="button" class="tab" data-tab="metas">Metas</button>
+    <button type="button" class="tab" data-tab="plano">Plano</button>
+    <button type="button" class="tab" data-tab="estrategia">Estratégia</button>
+    <button type="button" class="tab" data-tab="datas">Datas</button>
+    <button type="button" class="tab" data-tab="pautas">Trends e pautas</button>
+    <span class="tab-grp">Produzir</span>
+    <button type="button" class="tab" data-tab="producao">Produção e agenda</button>
+    <button type="button" class="tab" data-tab="marca">Marca</button>
+    <button type="button" class="tab" data-tab="aprovacao">Aprovação</button>
+  </nav>
+
+  <!-- ============ VISÃO GERAL ============ -->
+  <section class="sec" id="geral">
+    <div class="grid" id="kpis"></div>
+    <div class="card"><div class="goal-top"><h3>O que fazer agora</h3><button type="button" class="chip" data-ir="inteligencia">Ver o radar completo</button></div><div class="metas-lista" id="agora"></div></div>
+    <div class="cols">
+      <div class="card"><div class="card-h"><h3>Funil de São Gonçalo · 33 peças</h3><button type="button" class="chip" data-ir="producao">Ver produção</button></div><div class="bars" id="funil-mini"></div>
+        <div class="legend"><span><i style="background:var(--ok)"></i>Certa</span><span><i style="background:var(--warn)"></i>Ajustar</span><span><i style="background:var(--line)"></i>A produzir</span></div></div>
+      <div class="card"><div class="card-h"><h3>Próximas datas</h3><button type="button" class="chip" data-ir="datas">Todas</button></div><div class="dates" id="datas-mini"></div></div>
+    </div>
+    <div class="card"><h3>Saúde dos dados</h3>
+      <p class="note">Cada fonte que alimenta o workspace, quando foi atualizada e se está em dia. Fonte que ainda não entra aparece como "não ligada", com o que destrava. Nada aqui é preenchido com estimativa.</p>
+      <div class="tw"><table><thead><tr><th>Fonte</th><th>Atualiza</th><th>Última atualização</th><th>Situação</th></tr></thead><tbody id="t-saude"></tbody></table></div></div>
+  </section>
+
+  <!-- ============ INTELIGÊNCIA ============ -->
+  <section class="sec" id="inteligencia" hidden>
+    <h2>Inteligência</h2>
+    <p class="note">Aqui o workspace deixa de só mostrar o que aconteceu. Ele aponta desvios e oportunidades, cada um com uma ação, um dono e um card, e questiona as decisões do plano. Leitura feita em 27/11/2026 a partir do caderno, dos cards do GitHub e do que ficou registrado nas sessões de trabalho.</p>
+
+    <h3 class="area-h">1 · Previsão</h3>
+    <p class="note">Ainda não dá pra prever como dezembro fecha: nenhuma fonte de resultado entra sozinha no workspace. A única referência real de uma inauguração só delivery é a Temakeria Araruama (out/26), e é dela que saem as metas de São Gonçalo.</p>
+    <div class="cols">
+      <div class="card"><h3>Referência · Temakeria Araruama (01 a 21/10)</h3><div class="grid" id="ref-ara"></div>
+        <p class="note">Fonte: report do Celso de 22/10 (cs-temakeria-universitaria#234), citado na seção 02 do caderno. Divisão usada: 25% topo · 40% meio · 35% fundo.</p></div>
+      <div class="card"><h3>Ainda sem previsão</h3><div class="tw"><table><thead><tr><th>Meta</th><th>O que falta</th></tr></thead><tbody id="t-prevpend"></tbody></table></div></div>
+    </div>
+
+    <h3 class="area-h">2 · Radar: o sistema aponta, o time decide</h3>
+    <div class="chips" id="f-radar"><span class="lbl2">Tipo</span></div>
+    <div class="metas-lista" id="radar"></div>
+
+    <h3 class="area-h">3 · Conselho da IA</h3>
+    <div class="card"><div class="goal-top"><h3>Leitura do momento</h3><span class="k-sub">27/11/2026 · AKIRA, a partir do caderno e dos cards</span></div><p class="lede" id="cons-leitura" style="margin:0"></p></div>
+    <h3>Perguntas que desafiam o plano</h3>
+    <div class="cols" id="cons-perg"></div>
+    <div class="cols">
+      <div class="card"><h3>Oportunidades</h3><div class="metas-lista" id="cons-op"></div></div>
+      <div class="card"><h3>Próximos movimentos</h3><div class="metas-lista" id="cons-mov"></div></div>
+    </div>
+    <div class="card"><h3>Premissas a validar</h3><ul class="norte" id="cons-prem"></ul></div>
+
+    <h3 class="area-h">4 · Do marketing ao negócio</h3>
+    <p class="note">A cadeia que liga o que o Ogro publica ao pedido que entra. Verde é medido, amarelo é parcial, tracejado ainda não é medido. Cada elo que falta mostra o que o destrava.</p>
+    <div class="chain" id="cadeia"></div>
+
+    <h3 class="area-h">5 · Confiabilidade e continuidade</h3>
+    <div class="cols">
+      <div class="card"><h3>Dependências manuais a eliminar</h3><div class="tw"><table><thead><tr><th>Dependência</th><th>Risco</th><th>Próximo passo</th></tr></thead><tbody id="t-dep"></tbody></table></div></div>
+      <div class="card"><h3>Segurança</h3><ul class="norte">
+        <li>A página é pública e não entra no Google (noindex). Sem e-mail, telefone, valor de contrato nem dado de cliente.</li>
+        <li>Senhas, tokens e IDs de conta ficam no cofre (1Password), nunca no código nem aqui.</li>
+        <li>O workspace só lê e mostra. Publicar, agendar, disparar e gastar verba continuam exigindo pedido de uma pessoa.</li>
+      </ul></div>
+    </div>
+
+    <h3 class="area-h">6 · Mesma arquitetura do painel da Temakeria</h3>
+    <p class="note">Segue o molde do <a href="https://dev-seven7.github.io/tmk-painel/" target="_blank" rel="noopener">painel do Emeric</a>: os mesmos modos e abas. Por enquanto as camadas de coleta automática não existem no Ogro, então a página é um retrato que o Victor republica.</p>
+    <div class="layers">
+      <div class="layer"><b>1 · Coleta</b><span class="k-sub">Hoje: GitHub (cards e board) pelo <code>atualizar.py</code>. Falta: Postiz, Meta Ads, planilha da LP e pedidos</span></div>
+      <div class="layer"><b>2 · Dados</b><span class="k-sub"><code>dados.json</code> com as demandas e a data de geração</span></div>
+      <div class="layer"><b>3 · Inteligência</b><span class="k-sub">Radar, cadeia de valor e referência da Araruama, revisados à mão</span></div>
+      <div class="layer"><b>4 · Conselho</b><span class="k-sub">Leitura e perguntas escritas pelo AKIRA, citando a fonte</span></div>
+      <div class="layer"><b>5 · Ação</b><span class="k-sub">Cada item aponta para um card com dono. O card continua sendo o registro oficial</span></div>
+    </div>
+  </section>
+
+  <!-- ============ DESEMPENHO ============ -->
+  <section class="sec" id="desempenho" hidden>
+    <h2>Desempenho</h2>
+    <p class="note">Instagram, Meta Ads e pedidos ainda não entram sozinhos. Enquanto isso, esta aba mostra o que já está decidido e medido: a verba aprovada, o tracking do lançamento e o que cada fonte precisa pra ligar.</p>
+    <div class="cols">
+      <div class="card"><div class="card-h"><h3>Verba de mídia · 26/11 → 17/12</h3><span class="pill brand">R$ 9.000</span></div><div class="bars" id="verba-bars"></div>
+        <p class="note">Meta Ads, conta CA7, aprovado pelo Victor em 26/11. Os tetos não podem ser passados. #03 e #05 ficaram em verba diária: a Meta não troca diário por total em campanha já publicada.</p></div>
+      <div class="card"><h3>Tracking do lançamento</h3><div class="tw"><table><thead><tr><th>Evento</th><th>Onde</th><th>Situação</th></tr></thead><tbody id="t-track"></tbody></table></div>
+        <p class="note">Card <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/45" target="_blank" rel="noopener">#45</a>: Lead até 25/11 e Purchase até 04/12. O GTM do site está na versão 6 (a 5 quebra o site).</p></div>
+    </div>
+    <div class="card"><h3>Campanhas montadas na CA7</h3><div class="tw"><table><thead><tr><th>Bloco</th><th>Período</th><th>Campanha · conjunto</th><th>Público ou objetivo</th><th class="n">Verba</th></tr></thead><tbody id="t-camp"></tbody></table></div>
+      <p class="note">Tudo em rascunho e sem cartão até a última leitura do card <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/55" target="_blank" rel="noopener">#55</a>. Anúncio de engajamento usa post de sucesso que já existe no @ogro.steaks. Peça sem o Jimmy ou sem burger do Ogro não vira anúncio.</p></div>
+    <div class="card"><h3>Instagram, vendas e cardápio</h3>
+      <div class="chain" id="desemp-falta"></div></div>
+  </section>
+
+  <!-- ============ DEMANDAS ============ -->
+  <section class="sec" id="demandas" hidden>
+    <h2>Demandas</h2>
+    <p class="note" id="dem-sub">Cards do repositório <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues" target="_blank" rel="noopener">cs-ogro-steaks</a> no GitHub, com o status do <a href="https://github.com/orgs/dev-seven7/projects/1" target="_blank" rel="noopener">board S7</a>. "Dias sem movimento" conta desde a última atualização do card.</p>
+    <div class="cols">
+      <div class="card"><h3>Abertas por frente</h3>
+        <div class="legend"><span><i style="background:var(--barra)"></i>Em dia</span><span><i style="background:var(--warn)"></i>7 a 30 dias parada</span><span><i style="background:var(--bad)"></i>Mais de 30 dias</span></div>
+        <div class="bars" id="dem-frente"></div></div>
+      <div class="card"><h3>Por situação</h3>
+        <div class="tw"><table><thead><tr><th>Situação</th><th class="n">Cards</th></tr></thead><tbody id="t-sit"></tbody></table></div>
+        <p class="note">Lei 3: toda tarefa vira issue no board. Card "fora do board" ainda precisa entrar no projeto S7.</p></div>
+    </div>
+    <div class="card" style="gap:10px"><div class="chips" id="f-dem"><span class="lbl2">Mostrar</span></div></div>
+    <div class="card"><h3>Todas as demandas</h3>
+      <div class="tw"><table><thead><tr><th>Card</th><th>Demanda</th><th>Frente</th><th>Situação</th><th>Com quem</th><th class="n">Dias sem movimento</th></tr></thead><tbody id="t-dem"></tbody></table></div></div>
+  </section>
+
+  <!-- ============ METAS ============ -->
+  <section class="sec" id="metas" hidden>
+    <h2>Metas</h2>
+    <p class="note">Metas de dezembro de 2026 e do 1º trimestre de 2027. Onde existe dado real, a base é ele. Onde não existe, a base é a Araruama ou a regra combinada, e isso fica escrito. <b>Proposta do Victor para validar com a Manu e o Matheus.</b></p>
+    <div class="card"><h3>Para onde a marca vai</h3><ul class="norte" id="norte"></ul></div>
+    <div class="grid" id="metas-resumo"></div>
+    <div class="metas-lista" id="metas-lista"></div>
+    <p class="note">Status: <b style="color:var(--ok)">no alvo</b> quando já bate a meta; <b style="color:var(--warn)">regra</b> quando é compromisso de processo, conferido à mão; "sem dado" quando a fonte ainda não alimenta o workspace.</p>
+  </section>
+
+  <!-- ============ PLANO ============ -->
+  <section class="sec" id="plano" hidden>
+    <h2>Plano</h2>
+    <p class="note">Como as metas viram trabalho: cada ação é um card do GitHub com dono, prazo e a meta que move. A situação vem do board na hora em que o <code>dados.json</code> é gerado. Clique numa meta para ver como ela está.</p>
+    <div class="flow" id="flow"></div>
+    <div class="card"><div class="goal-top"><h3>Ações concluídas</h3><span class="k-sub" id="plano-prog-txt"></span></div><div class="goal-bar ok"><span id="plano-prog"></span></div></div>
+    <div class="card" style="gap:10px">
+      <div class="chips" id="f-area"><span class="lbl2">Área</span></div>
+      <div class="chips" id="f-sitp"><span class="lbl2">Situação</span></div>
+    </div>
+    <div class="metas-lista" id="plano-lista"></div>
+    <h3 class="area-h">Já em funcionamento</h3>
+    <div class="cols" id="melhorias"></div>
+  </section>
+
+  <!-- ============ ESTRATÉGIA ============ -->
+  <section class="sec" id="estrategia" hidden>
+    <h2>Estratégia</h2>
+    <div class="card"><h3>As campanhas de nov/26 a fev/27</h3>
+      <p class="note">Cada mês tem uma verdade humana e uma função no funil: dezembro capta, janeiro converte, fevereiro faz voltar. Sem Papai Noel e sem gorrinho. O Ogro entra como a recompensa de quem fechou o dia.</p>
+      <div class="ws" id="campanhas"></div></div>
+    <div class="card"><h3>Os quadros aprovados (valem até fev/27)</h3>
+      <p class="note">A Bárbara avisou em 13/11 que os quadros aprovados na apresentação de set/26 valem até fevereiro. Os episódios novos saem dentro deles (card <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues/44" target="_blank" rel="noopener">#44</a>).</p>
+      <div class="tw"><table><thead><tr><th>Quadro</th><th>Ritmo</th><th>O que é</th></tr></thead><tbody id="t-quadros"></tbody></table></div></div>
+    <p class="note">Avaliação de 27/11/2026: os métodos que seguimos, lidos contra as metas e contra o que já aconteceu na conta. Nota de 1 (frágil) a 5 (sólido).</p>
+    <div class="cols" id="dims"></div>
+  </section>
+
+  <!-- ============ DATAS ============ -->
+  <section class="sec" id="datas" hidden>
+    <h2>Datas importantes</h2>
+    <p class="note">Comerciais, de cultura pop e da operação. Cultura pop sai 1 dia antes da estreia (post, TikTok e WhatsApp), exceto Duna (sábado, 19/12). A antecedência é quantos dias antes a peça precisa estar pronta.</p>
+    <div class="chips" id="f-datas"><span class="lbl2">Tipo</span></div>
+    <div class="dates" id="datas-full"></div>
+  </section>
+
+  <!-- ============ PAUTAS ============ -->
+  <section class="sec" id="pautas" hidden>
+    <h2>Trends e pautas</h2>
+    <p class="note">Relevância de 0 a 100 = encaixe na marca (35%) + momento (25%) + alcance potencial (25%) + facilidade de produzir (15%), cada nota de 1 a 5. Referência visual clara, sem logo, personagem, fonte ou música de terceiro.</p>
+    <div class="card"><h3>Trends e hypes correlatos</h3>
+      <div class="tw"><table><thead><tr><th>Trend</th><th>Tipo</th><th>Como o Ogro entra</th><th>Relevância</th><th>Vale até</th></tr></thead><tbody id="t-trends"></tbody></table></div></div>
+    <div class="card"><h3>Pautas sugeridas e como medir</h3>
+      <div class="tw"><table><thead><tr><th>Quando</th><th>Pauta</th><th>Formato</th><th>Maslow</th><th>Indicador</th><th>Meta</th></tr></thead><tbody id="t-pautas"></tbody></table></div>
+      <p class="note">Dezembro é a base: as metas por peça de janeiro e fevereiro saem do Insights de dezembro, sem chute agora (seção 08 do caderno).</p></div>
+  </section>
+
+  <!-- ============ PRODUÇÃO ============ -->
+  <section class="sec" id="producao" hidden>
+    <h2>Produção e agenda</h2>
+    <div class="cols">
+      <div class="card"><h3>Funil de SG por etapa</h3><div class="bars" id="funil-etapas"></div>
+        <p class="note">Revisão do Drive de 25/11 (quadros a cada 0,5 s) e artes estáticas de 26/11. O nome do anúncio na Meta é o nome do arquivo.</p></div>
+      <div class="card"><h3>Agenda dos próximos 10 dias</h3><div class="tw"><table><thead><tr><th>Dia</th><th>O quê</th><th>Canal</th><th>Quem</th></tr></thead><tbody id="t-agenda"></tbody></table></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>O que ainda falta no funil de SG</h3><a class="lk" href="https://github.com/dev-seven7/cs-ogro-steaks/issues/37" target="_blank" rel="noopener">Card #37</a></div>
+      <div class="tw"><table><thead><tr><th>Peça</th><th>Formato</th><th>O que é</th><th>Depende de</th><th>Quem</th></tr></thead><tbody id="t-falta"></tbody></table></div></div>
+    <div class="card"><h3>Peças em produção agora</h3>
+      <div class="tw"><table><thead><tr><th>Peça</th><th>Para</th><th>Versão</th><th>Situação</th><th>Card</th></tr></thead><tbody id="t-pecas"></tbody></table></div>
+      <p class="note">Todo vídeo é revisado inteiro antes de subir (quadros a cada 0,5 s e comparação com a foto oficial). Burger fora do cardápio vai pros reprovados.</p></div>
+  </section>
+
+  <!-- ============ MARCA ============ -->
+  <section class="sec" id="marca" hidden>
+    <h2>Marca</h2>
+    <p class="note">O guia que toda peça segue, a partir do manual da Bárbara e do <a href="https://github.com/dev-seven7/brand-ogro" target="_blank" rel="noopener">brand-ogro</a>.</p>
+    <div class="card"><h3>Essência</h3><ul class="norte" id="mk-ess"></ul></div>
+    <div class="card mk-selo"><img src="marca/ogro-quadrado-cor-negativo.svg" alt="Logo Ogro Steaks, versão em negativo"><div><h3>O logo</h3><ul class="norte" id="mk-selo"></ul></div></div>
+    <div class="cols">
+      <div class="card"><h3>Paleta</h3><div class="metas-lista" id="mk-pal"></div></div>
+      <div class="card"><h3>Tipografia</h3><div class="tw"><table><thead><tr><th>Papel</th><th>Fonte</th><th>Regra</th></tr></thead><tbody id="mk-tip"></tbody></table></div>
+        <h3>As 4 perguntas · todas têm que dar sim</h3><ul class="norte" id="mk-4"></ul></div>
+    </div>
+    <div class="cols">
+      <div class="card"><h3>Fala assim</h3><ul class="norte" id="mk-sim"></ul></div>
+      <div class="card"><h3>Nunca</h3><ul class="norte" id="mk-nao"></ul></div>
+    </div>
+    <div class="cols">
+      <div class="card"><h3>Regras de toda peça</h3><ul class="norte" id="mk-reg"></ul></div>
+      <div class="card"><h3>Vídeo e publicação</h3><ul class="norte" id="mk-pub"></ul></div>
+    </div>
+  </section>
+
+  <!-- ============ APROVAÇÃO ============ -->
+  <section class="sec" id="aprovacao" hidden>
+    <h2>Aprovação</h2>
+    <p class="note">O que está esperando o aval de alguém, com o card onde a resposta fica registrada. Responda <b style="color:var(--ok)">Sim</b> ou <b style="color:var(--bad)">Não</b> com um comentário direto no card: aqui não grava nada.</p>
+    <div class="chips" id="ap-filtro"><span class="lbl2">Com quem</span></div>
+    <div class="pc-grid" id="ap-pecas"></div>
+    <h3 class="area-h">Checagem de peça antes de mandar pra aprovação</h3>
+    <p class="note">Critérios das regras de marca e do que já deu errado. <span class="tag blk">trava</span> reprova a peça. <span class="tag adj">ajuste</span> volta com correção. A marcação fica só no seu navegador.</p>
+    <div class="ap-grid">
+      <div class="ap-side"><div class="verd" id="verd"><span class="k-label">Veredito</span><span class="v" id="verd-v">Comece a checar</span><span class="k-sub" id="verd-c"></span><div class="btns"><button type="button" class="btn gh" id="ck-limpa">Limpar</button></div></div></div>
+      <div class="card" id="crits"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Fontes: caderno do Victor (<a href="../" target="_blank" rel="noopener">caderno-victorpob</a>, seções 01 a 09), cards de <a href="https://github.com/dev-seven7/cs-ogro-steaks/issues" target="_blank" rel="noopener">dev-seven7/cs-ogro-steaks</a> e board S7. Modelo: painel da Temakeria, do Emeric.</span>
+    <span>Para atualizar as demandas: <code>python -I geral/atualizar.py</code> no repo e push (card #58).</span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const HOJE = new Date(); HOJE.setHours(0, 0, 0, 0);
+const GH = "https://github.com/dev-seven7/cs-ogro-steaks/issues/";
+const PESSOAS = { "dev-manoela": "Manu", "luizamenesesseven7": "Luiza", "Otavioseven7": "Otávio", "victorpobgruporobfood": "Victor" };
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const card = n => `<a href="${GH}${n}" target="_blank" rel="noopener">#${n}</a>`;
+const cards = t => esc(t).replace(/#([1-9]\d{0,2})/g, (m, n) => card(n));
+const d = s => { const [y, m, dd] = s.split("-").map(Number); return new Date(y, m - 1, dd); };
+const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"], MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const fmt = s => { const x = d(s); return String(x.getDate()).padStart(2, "0") + "/" + String(x.getMonth() + 1).padStart(2, "0"); };
+const faltam = s => Math.round((d(s) - HOJE) / 864e5);
+
+/* ---------- conteúdo (do caderno e dos cards; revisar ao republicar) ---------- */
+const LINKS = [
+  ["Caderno", "../"], ["Cardápio Digital · protótipo", "../cardapio-digital/"], ["Databite Angular", "../databite-angular/"],
+  ["Board S7", "https://github.com/orgs/dev-seven7/projects/1"], ["Cards do Ogro", "https://github.com/dev-seven7/cs-ogro-steaks/issues"],
+  ["@ogro.steaks", "https://www.instagram.com/ogro.steaks/"], ["Site", "https://www.ogrosteaks.com.br/"], ["LP São Gonçalo", "https://www.ogrosteaks.com.br/sao-goncalo"]
+];
+
+const FUNIL = [ // placar de 25/11 + estáticos de 26/11
+  { etapa: "1A · Expectativa", obs: "até 04/12 · leva ao perfil", certa: 6, ajustar: 0, falta: 1 },
+  { etapa: "1B · Descoberta", obs: "a partir de 04/12 · cardápio", certa: 5, ajustar: 1, falta: 0 },
+  { etapa: "2 · Diferenciais", obs: "meio · LP Presente SG", certa: 10, ajustar: 0, falta: 0 },
+  { etapa: "3 · Cupom OGROSG", obs: "fundo · cardápio SG", certa: 7, ajustar: 0, falta: 3 }
+];
+const FALTA = [
+  ["T10", "Vídeo", "Influenciador de SG (ToFu Expectativa)", "Influs fechados (a Luiza sai em 04/12)", "Influ grava · Otávio corta"],
+  ["D5", "Vídeo", "O Ogro já entrega aí · ajuste", "Bairro dentro da margem, 1080×1920, nome no padrão", "Otávio"],
+  ["F5", "Vídeo", "De um ogro pra outro (BoFu)", "Gravação com Jimmy ou Igor (01 a 03/12)", "Otávio"],
+  ["F9", "Vídeo", "São Gonçalo aprovou (BoFu)", "Primeiras avaliações reais, depois de 04/12", "Otávio"],
+  ["F10", "Vídeo", "A rodada do Ogro (BoFu)", "Gravação de 01 a 03/12", "Otávio"],
+  ["4:5", "Todos os vídeos", "Versão 1080×1350 para o feed", "O guia pede as duas versões", "Otávio"]
+];
+const PECAS = [
+  ["Reels de lançamento · Ogro Bells", "09/12", "v5 (16,6 s)", "Ajustes do Victor: ângulo diferente a cada corte; Jimmy só comendo, pede gravação nova", 53],
+  ["Vida de Ogro · ep. 1 (The Sims × Ogro)", "sáb 05/12", "v3", "Cliente de moletom amarelo, Jimmy só na cozinha; nome do jogo só em hashtag até liberar", 41],
+  ["Banner Ogro Bells · Cardápio Digital", "a partir de 01/12", "identidade de Natal", "Sem preço; foto v5 IA até sair a oficial", 52],
+  ["Reels Black P.C.Q · Save the Date + dia 27", "26 e 27/11", "v3", "Publicados na Black", 33],
+  ["Reels SG \"Salva esse vídeo\"", "pré-inauguração", "—", "Jimmy em off + card pra salvar", 29],
+  ["Disparos de WhatsApp W01 a W33", "26/11 → 28/02", "v6 (20/11)", "Esperando o aval do cliente e da Meta (modelos)", 41]
+];
+const AGENDA = [
+  ["2026-11-27", "Black · P.C.Q por R$ 1,00 só no Cardápio Digital + disparo W02", "Feed, stories, WhatsApp, Ads #04", "Victor, Manu"],
+  ["2026-11-28", "Pós-Black liga (#06, só Ogro Steaks) · Vida de Ogro: vaga do sábado", "Ads, feed", "Victor"],
+  ["2026-11-30", "Teaser do Ogro Bells: \"Ouviu isso? 🔔\"", "Feed, stories", "Victor, Otávio"],
+  ["2026-12-01", "Operação e treino em SG · banner do Bells pode subir no Cardápio Digital", "Operação, CD", "Igor, Victor"],
+  ["2026-12-02", "Gravação da 2ª leva de SG (bastidor do treino, Rodada do Ogro)", "Gravação", "Otávio, Jimmy, Igor"],
+  ["2026-12-03", "Sorteio do giveaway (5 combos McManis) · influs recebem", "Feed, stories", "Luiza, Victor"],
+  ["2026-12-04", "Inauguração SG · fundo de funil OGROSG + descoberta ligados · e-mail/WhatsApp pra base da LP", "Tudo", "Victor"],
+  ["2026-12-05", "Vida de Ogro · ep. 1", "Feed, TikTok", "Victor"],
+  ["2026-12-06", "Teaser BL1 do Bells", "Feed, stories", "Victor"],
+  ["2026-12-08", "Teaser BL2 + TikTok do Bells · cadastro do Bells no CD (sócios)", "Feed, TikTok, CD", "Victor, sócios"]
+];
+
+const DATAS = [
+  ["2026-11-27", "Black Friday · \"Saiu do controle\"", "P.C.Q por R$ 1,00 só no Cardápio Digital, 1 por carrinho, com pedido mínimo. SG fora.", "comercial", 7],
+  ["2026-11-28", "Pós-Black · só Ogro Steaks", "Remarketing de quem viu a Black (28/11 a 02/12)", "comercial", 2],
+  ["2026-11-30", "Mistério do produto novo", "\"Ouviu isso? 🔔\" · nada de nome, foto ou ingrediente até 09/12", "operação", 3],
+  ["2026-12-01", "Operação de SG começa", "Treino da equipe e gravação da 2ª leva (01 a 03/12)", "operação", 7],
+  ["2026-12-04", "Inauguração de São Gonçalo", "100% delivery, 21 bairros · OGROSG 20% (mín. R$ 90), OGRO10 nos impressos, MCMANIS na LP · a Luiza sai e o Ogro fica com o Victor", "operação", 14],
+  ["2026-12-05", "Vida de Ogro · estreia da série de sábado", "12 episódios até 27/02 · sexta, sábado e domingo nunca sem feed, stories e TikTok", "conteúdo", 5],
+  ["2026-12-09", "Ogro Bells + Dia do Profissional da Culinária", "Lançamento do burger novo · post da premiação dos games (TGA1, véspera de 10/12)", "comercial", 10],
+  ["2026-12-16", "Vingadores · véspera da estreia", "Combos pra Dividir: \"Seu destino na chapa\"", "cultura pop", 5],
+  ["2026-12-17", "Fim da verba de SG", "#03 e #05 desligam · relatório do 1º ciclo", "operação", 1],
+  ["2026-12-19", "Duna · sábado", "Quem Fez o Seu em 60 fps: a tempestade de tempero", "cultura pop", 5],
+  ["2026-12-24", "Série de bruxos · véspera da estreia (25/12)", "Feitiço sem firula + Golden Ticket · post e WhatsApp", "cultura pop", 5],
+  ["2026-12-25", "Natal", "\"Já deu por 2026\" · o Natal de quem sabe o que é bom", "comercial", 10],
+  ["2026-12-26", "Operação Chega de Uva-Passa", "SEMPASSAS 10% (26 a 28/12) · comenta \"chega\" no Reels", "comercial", 5],
+  ["2026-12-31", "Virada", "Fecha o \"Já deu por 2026\"", "comercial", 5],
+  ["2027-01-10", "BBB 27 · véspera da estreia", "Janeiro sem fogão · paredão do Ogro", "cultura pop", 5],
+  ["2027-01-20", "São Sebastião (feriado no Rio) + indicados ao Oscar", "Post da véspera do Oscar (21/01)", "comercial", 5],
+  ["2027-01-27", "Jogo de terror de escolhas · véspera", "OGROFINAL 10% · cada escolha muda o final (UD1)", "cultura pop", 5],
+  ["2027-02-06", "Carnaval (06 a 10/02)", "Pós-bloco · POSBLOCO 10% · comenta \"bloco\"", "comercial", 7],
+  ["2027-02-22", "Fable · véspera (23/02)", "\"Toda fábula tem um ogro\" · OGROFABULA 10% (FB1)", "cultura pop", 5],
+  ["2027-03-04", "Fim do OGROSG, OGRO10 e MCMANIS", "Lembrete de último dia em 03/03", "operação", 2]
+];
+
+const RADAR = [
+  { tipo: "risco", prio: "alta", tit: "O funil de SG pode não ir ao ar a tempo", ev: "As campanhas de SG e da Black estão montadas em rascunho na CA7, mas sem cartão para publicar. Em 27/11, faltavam 7 dias para a inauguração.", acao: "Liberar o pagamento na conta CA7 e publicar #01 e #02 já. Sem isso, a pré-captação da LP some.", dono: "Matheus / franqueado", card: 55 },
+  { tipo: "gargalo", prio: "alta", tit: "Oferta foi ao ar sem teste e o cliente não tem onde reclamar", ev: "Na Black, um bug deixou alguns levarem o P.C.Q sem o pedido mínimo. Quem pagou certo se sentiu enganado e foi ao direct. O cupom divulgado (BLACKOGRO) e o do sistema (OGROBLACK) também não batiam.", acao: "Checklist de teste (com e sem mínimo, nome do cupom, limite) antes do OGROSG, do MCMANIS e do Bells. Criar o SAC da unidade, visível no Cardápio Digital.", dono: "Victor + Igor / Alline", card: 57 },
+  { tipo: "risco", prio: "alta", tit: "Cupons de SG ativos e testados antes de 04/12", ev: "OGROSG (20%, mín. R$ 90), OGRO10 (10%, mín. R$ 60) e MCMANIS (brinde, mín. R$ 50) estão definidos desde 20/11, mas a confirmação de que estão ativos e com limite por CPF não está no card.", acao: "Pedido de teste de cada cupom no cardápio de SG, com print no card, até 03/12.", dono: "Igor / Alline", card: 14 },
+  { tipo: "gargalo", prio: "media", tit: "Vídeos do fundo de funil dependem da gravação de 01 a 03/12", ev: "F5 e F10 só existem depois da gravação, F9 depois das primeiras avaliações, T10 depende de influenciador. Nenhum vídeo tem versão 4:5.", acao: "Travar a gravação na pauta (dia, hora, Jimmy e Igor) e pedir a 4:5 dos vídeos que já estão certos.", dono: "Otávio / Victor", card: 37 },
+  { tipo: "risco", prio: "media", tit: "Transição da Luiza em 04/12", ev: "A Luiza sai no dia da inauguração. Influenciadores de SG, giveaway e rotina social passam para o Victor.", acao: "Handoff no card #5 até 03/12: quem recebeu, quem posta, o que foi pago e por quem.", dono: "Luiza → Victor", card: 5 },
+  { tipo: "risco", prio: "media", tit: "Ogro Bells sem receita, foto oficial, preço e cadastro", ev: "O lançamento é 09/12 e o mistério já começa em 30/11. O preço de R$ 48,90 é sugestão, sem aval.", acao: "Sócios fecham preço, foto oficial e cadastro no Cardápio Digital até 08/12.", dono: "Sócios / Igor", card: 53 },
+  { tipo: "gargalo", prio: "media", tit: "Purchase ainda não é medido", ev: "O Lead já conta na LP (Tally → n8n → planilha, e o Pixel). A compra no Cardápio Digital ainda não chega ao Meta nem ao GA4.", acao: "Purchase no Cardápio Digital até 04/12, testado no Testar eventos.", dono: "Victor / Databite", card: 45 },
+  { tipo: "processo", prio: "media", tit: "Cards fora do board", ev: "", acao: "Adicionar ao projeto S7 com status e prioridade (Lei 3).", dono: "Victor", card: null, auto: "fora" },
+  { tipo: "risco", prio: "baixa", tit: "Cashback do 1º pedido sem validação técnica", ev: "Trava 04 da auditoria: falta confirmar se o crédito do 1º pedido dispara sozinho para puxar o 2º.", acao: "Rodar um pedido teste com cashback antes de comunicar.", dono: "Sistema / financeiro", card: 14 },
+  { tipo: "oportunidade", prio: "media", tit: "Pontos Ogro como motor de recompra de fevereiro", ev: "A regra está pronta no protótipo (R$ 1 = 1 ponto, 100 pontos = R$ 5, até 30% do produto, níveis 5%, 6% e 7,5%).", acao: "Levar a regra à Manu, ao Igor e à Alline. Fevereiro é o mês da recompra.", dono: "Victor", card: 52 },
+  { tipo: "oportunidade", prio: "media", tit: "Lead da LP direto no CRM", ev: "Os cadastros caem na planilha. Sem CRM não dá pra saber quem cadastrou e pediu.", acao: "Pedir à DataByte endpoint, chave e campos do CRM.", dono: "Victor / DataByte", card: 56 },
+  { tipo: "oportunidade", prio: "baixa", tit: "Reels de influenciador como anúncio", ev: "O pacote do maior guia gastronômico da região permite usar os Reels como anúncio por 60 dias.", acao: "Subir como anúncio de parceria na #03 de SG quando o Reels sair.", dono: "Victor", card: 5 }
+];
+const CONSELHO = {
+  leitura: "O plano está bem desenhado e mal destravado. O funil de SG tem 28 das 33 peças certas, verba aprovada e LP no ar com o Lead medido, mas as campanhas seguem em rascunho sem cartão a 7 dias da abertura (#55). Na Araruama, o tráfego começou 9 dias antes. A Black mostrou o segundo ponto fraco: oferta que vai ao ar sem teste vira reclamação no direct, e o cliente não tem SAC (#57). Dezembro empilha SG (04/12), o Bells (09/12), três estreias de cultura pop e o Natal, com a Luiza saindo no dia da inauguração. O gargalo não é ideia nem peça. É acesso, teste e gente.",
+  perguntas: [
+    { p: "Se o pagamento da CA7 só sair em 01/12, a pré-captação de SG vira 3 dias. A meta de 150 cadastros na pré ainda vale?", pq: "Na Araruama foram 152 cadastros em 7 dias de pré, a R$ 644. Com 3 dias e o leilão mais caro da semana da Black, a mesma verba compra menos.", fonte: "Seção 02 do caderno; #55" },
+    { p: "O OGROSG dá 20% com mínimo de R$ 90, o dobro do teto dos outros cupons. O ticket da Araruama foi R$ 97. O 2º pedido, sem cupom, se paga?", pq: "Se o cupom puxa o ticket só até o mínimo, a margem do 1º pedido cai. A conta só fecha com recompra, e a recompra ainda não é medida (sem CRM, #56).", fonte: "Régua de cupons, seção 08; #29" },
+    { p: "Quem testa cada oferta no Cardápio Digital, com e sem mínimo, antes de ir ao ar? E quem responde o cliente quando der errado?", pq: "Na Black, cada cliente pagou um preço diferente pela mesma oferta. Em SG o cliente ainda não conhece o Ogro: a primeira experiência vale mais.", fonte: "#57" },
+    { p: "O calendário de dez a fev cabe na produção real?", pq: "São 3 meses de feed dia a dia, stories todo dia, TikTok, 33 disparos e 12 episódios de Vida de Ogro. A partir de 04/12, a edição é o Otávio e o resto é o Victor.", fonte: "Seção 08; #41, #49, #50" }
+  ],
+  op: [
+    ["Vida de Ogro cobre o sábado, que é dia de venda, sem depender de trend.", 41],
+    ["O protótipo do Cardápio Digital já resolve o \"em andamento\" que assusta o cliente (status ao vivo e hora de chegada).", 52],
+    ["Os ganchos que já funcionaram na Araruama (\"mas em outubro, chegou\") são a mesma linha do \"o Ogro chegou\".", 29]
+  ],
+  mov: [
+    ["Hoje: pedir o cartão da CA7 e publicar #01 e #02.", 55],
+    ["Até 01/12: checklist de teste de oferta aprovado e usado no OGROSG.", 57],
+    ["Até 03/12: handoff da Luiza no card dos influenciadores.", 5],
+    ["Até 08/12: Bells com preço, foto e cadastro.", 53]
+  ],
+  prem: [
+    "Sexta, sábado e domingo são os dias de maior venda no delivery. Falta o relatório de pedidos por dia da semana (Igor).",
+    "A Araruama serve de base para SG: mesma lógica de praça nova só delivery, mas outra marca e outro ticket.",
+    "O Cardápio Digital próprio converte melhor que os apps para quem já conhece o Ogro. Sem Purchase medido, ainda é hipótese.",
+    "Cupom na comunicação não puxa venda sozinho: no Ogro ele é recompensa de quem participa, nunca a manchete."
+  ]
+};
+const CADEIA = [
+  { n: "Alcance no Instagram", s: "falta", v: "não medido", t: "Leitura do Postiz ou do Insights (Postiz já tem o canal do Ogro)" },
+  { n: "Visitas ao perfil", s: "falta", v: "rascunho", t: "Campanha #01 publicada na CA7", c: 55 },
+  { n: "Cadastro na LP de SG", s: "parcial", v: "medido na planilha e no Pixel", t: "Entrar no workspace e no CRM", c: 56 },
+  { n: "Abriu o cardápio", s: "parcial", v: "view_item no GTM v6", t: "Ler o GA4 no workspace", c: 45 },
+  { n: "Pedido", s: "falta", v: "não medido", t: "Purchase no Cardápio Digital até 04/12", c: 45 },
+  { n: "Recompra", s: "falta", v: "não medido", t: "CRM DataByte + Pontos Ogro", c: 56 }
+];
+const DEP = [
+  ["Cartão na conta de anúncios", "Nada publica sem ele", "Matheus / franqueado (#55)"],
+  ["Cadastro de cupom e preço no sistema", "Bug de regra, como na Black", "Checklist de teste + print no card (#57)"],
+  ["Workspace atualizado à mão", "Retrato fica velho", "Rodar o atualizar.py a cada publicação do caderno"],
+  ["Aval da Bárbara nas peças com IA", "M4 e F3 rodam sem aval", "Aprovação no card #37"],
+  ["Acesso ao Brand Book privado", "Peça fora do padrão", "TI / sócios liberam o login do Victor"]
+];
+const ARA = [["R$ 3,7 mil", "investidos"], ["694", "cadastros a R$ 2,46"], ["88", "pedidos no Pixel a R$ 22"], ["R$ 97", "ticket médio"], ["152", "cadastros na pré (7 dias)"], ["14 → 8,6", "pedidos/dia na 2ª semana"]];
+const PREVPEND = [["Cadastros na LP de SG", "Planilha da LP lida pelo workspace"], ["Pedidos e CPA de SG", "Purchase no Cardápio Digital + leitura do Meta Ads"], ["Seguidores e alcance", "Leitura do Postiz (dezembro vira a base)"], ["Ticket e recompra", "Relatório de pedidos do Igor ou CRM DataByte"]];
+
+const VERBA = [["SG pré-lançamento", "26/11 → 03/12", 3500], ["SG pós-inauguração", "04/12 → 17/12", 3500], ["Black", "26 e 27/11", 1000], ["Pós-Black", "28/11 → 02/12", 1000]];
+const CAMP = [
+  ["SG pré", "26/11 → 03/12", "#01 Engajamento", "visitas ao perfil (posts de sucesso)", "R$ 1.000"],
+  ["SG pré", "26/11 → 03/12", "#02.2 Leads · frio", "cadastro na LP de SG", "R$ 2.500"],
+  ["SG pré", "29/11 → 03/12", "#02.1 Leads · morno", "cadastro na LP de SG", "mesma verba"],
+  ["SG pós", "04/12 → 17/12", "#03 Tráfego LP · frio", "descoberta", "R$ 192/dia"],
+  ["SG pós", "04/12 → 17/12", "#05 Tráfego Cardápio · quente", "cadastrou ou começou pedido", "R$ 57/dia"],
+  ["Black", "26 e 27/11", "#04.1 a #04.3", "aquecimento, oferta P.C.Q e remarketing", "R$ 1.000"],
+  ["Pós-Black", "28/11 → 02/12", "#06.1 a #06.3", "já pediu, clicou e assistiu (30 dias)", "R$ 1.000"]
+];
+const TRACK = [["Lead", "LP de SG (Tally → n8n → planilha + Pixel)", "ok", "no ar desde 26/11"], ["view_item", "Site (GTM v6)", "ok", "ativo"], ["ViewContent / AddToCart", "Cardápio Digital", "warn", "parcial"], ["Purchase", "Cardápio Digital", "bad", "falta · até 04/12"], ["CAPI", "Pixel do Ogro", "warn", "token existe no cofre; falta dedup por event_id"]];
+const DESFALTA = [
+  { n: "Instagram", s: "falta", v: "não ligado", t: "Rotina de leitura do Postiz, como na Temakeria" },
+  { n: "Meta Ads", s: "falta", v: "rascunho", t: "Publicar e dar leitura à conta CA7", c: 55 },
+  { n: "Pedidos e vendas", s: "falta", v: "não ligado", t: "Relatório do Igor ou Purchase no CD", c: 45 },
+  { n: "Leads de SG", s: "parcial", v: "planilha", t: "Ler a planilha da LP", c: 56 }
+];
+
+const NORTE = [
+  "Burger de verdade, só delivery, no Rio de Janeiro: o Ogro é a recompensa de quem fechou o dia, não um programa de salão.",
+  "Cardápio Digital próprio como casa do cliente: cada pedido entra na base (WhatsApp, cashback, Pontos Ogro, recompra).",
+  "São Gonçalo como a inauguração modelo, que vira o Protocolo de Lançamento das próximas unidades (#16).",
+  "Toda peça termina no topo da pirâmide: o cliente se reconhece como alguém que sabe o que é bom."
+];
+const METAS = [
+  { id: "cad_pre", area: "Lançamento SG", nome: "Cadastros na LP de SG antes da abertura", base: "152 em 7 dias", bq: "Araruama, pré", dez: "150 até 03/12", q1: "—", fmt: "sem", pq: "É a base que recebe o e-mail e o WhatsApp no dia 04/12. Na Araruama, o disparo pra ~300 leads no dia da abertura funcionou." },
+  { id: "cpl", area: "Lançamento SG", nome: "Custo por cadastro", base: "R$ 2,46", bq: "Araruama, 01 a 21/10", dez: "até R$ 3,00", q1: "até R$ 3,00", fmt: "sem", pq: "Folga de 20% sobre a Araruama, porque a semana da Black deixa o leilão mais caro." },
+  { id: "pedidos", area: "Lançamento SG", nome: "Pedidos de SG no Pixel (04 a 31/12)", base: "88", bq: "Araruama, 01 a 21/10, com 4 dias perdidos pelo Pixel", dez: "100", q1: "120 por mês", fmt: "sem", pq: "A Araruama fez 88 com o Pixel cego de 09 a 12/10. Com o Purchase testado antes do Dia D, 100 é a mesma praça sem o buraco." },
+  { id: "cpa", area: "Mídia", nome: "Custo por pedido (CPA)", base: "R$ 22", bq: "Araruama", dez: "até R$ 25", q1: "até R$ 22", fmt: "sem", pq: "O OGROSG puxa a margem do 1º pedido para baixo. O CPA precisa caber na margem do 2º." },
+  { id: "ritmo", area: "Lançamento SG", nome: "Pedidos por dia na 2ª semana", base: "8,6", bq: "Araruama, caiu de 14 com a mesma verba", dez: "10 ou mais", q1: "—", fmt: "sem", pq: "A segunda leva de criativo entra justamente na 2ª semana, quando o ritmo costuma cair." },
+  { id: "ticket", area: "Negócio", nome: "Ticket médio em SG", base: "R$ 97", bq: "Araruama", dez: "R$ 95 ou mais", q1: "R$ 95 ou mais", fmt: "sem", pq: "O mínimo do OGROSG é R$ 90. Se o ticket encosta no mínimo, o cupom está segurando o pedido em vez de puxar." },
+  { id: "seguidores", area: "Instagram", nome: "Seguidores ganhos por post e por formato", base: "—", bq: "ainda não medido", dez: "vira a base", q1: "sai de dezembro", fmt: "sem", pq: "Ninguém segue marca porque ela pede. A meta de janeiro e fevereiro sai do Insights de dezembro, sem chute agora." },
+  { id: "mix", area: "Conteúdo", nome: "Mix do feed", base: "55 / 30 / 15", bq: "vídeo / carrossel / imagem", dez: "55 / 30 / 15", q1: "55 / 30 / 15", fmt: "regra", pq: "Vídeo dá alcance, carrossel dá conversa e salvamento, imagem segura a frequência sem gravação." },
+  { id: "dias", area: "Conteúdo", nome: "Sexta, sábado e domingo com feed, stories e TikTok", base: "100%", bq: "regra de 27/11", dez: "100%", q1: "100%", fmt: "regra", pq: "São os dias de venda do delivery. Sexta = Já deu por hoje, sábado = Vida de Ogro, domingo = Domingo do Ogro." },
+  { id: "wpp", area: "Base própria", nome: "Disparos de WhatsApp por semana", base: "2", bq: "proposta aprovada em 17/11", dez: "2 (máx. 3)", q1: "2 (máx. 3)", fmt: "regra", pq: "Mais que 3 por semana, a pessoa bloqueia. Nunca segunda nem sábado." },
+  { id: "teste", area: "Processo", nome: "Ofertas testadas no Cardápio Digital antes do ar", base: "0 de 1", bq: "Black, 27/11", dez: "100%", q1: "100%", fmt: "regra", pq: "Com e sem mínimo, nome do cupom igual ao divulgado e limite por CPF, com print no card (#57)." }
+];
+const ACOES_EXTRA = { // prazo e metas por card (o resto vem do dados.json)
+  14: ["2026-12-04", ["cad_pre", "pedidos", "ritmo"]], 55: ["2026-11-28", ["cad_pre", "cpl", "cpa"]], 57: ["2026-12-01", ["teste"]], 45: ["2026-12-04", ["pedidos", "cpa"]],
+  37: ["2026-12-03", ["pedidos", "ritmo"]], 29: ["2026-12-04", ["cad_pre", "cpl"]], 56: ["2026-12-11", ["pedidos", "ticket"]], 52: ["2026-12-04", ["ticket", "pedidos"]],
+  53: ["2026-12-08", ["mix", "dias"]], 41: ["2026-11-30", ["mix", "dias", "seguidores"]], 49: ["2026-12-20", ["mix", "dias"]], 50: ["2027-01-20", ["mix", "dias"]],
+  44: ["2026-12-15", ["mix"]], 5: ["2026-12-03", ["pedidos"]], 30: ["2026-12-03", ["pedidos"]], 27: ["2026-12-03", ["cad_pre"]], 28: ["2026-11-25", ["cad_pre"]],
+  33: ["2026-11-30", ["dias"]], 58: ["2026-11-27", []], 54: ["2026-12-18", ["pedidos"]], 6: ["2027-01-31", ["seguidores"]], 40: ["2026-11-30", ["mix", "dias"]], 48: ["2026-11-27", []]
+};
+const PASSOS = [["Norte", "Burger de verdade, só delivery, Cardápio Digital como casa do cliente, SG como modelo."], ["Metas", "11 alvos de dezembro e do 1º trimestre, cada um com a base escrita."], ["Ações", "Cards no board com dono, prazo e a meta que cada um move."], ["Medição", "Hoje à mão. Próximo: Postiz, Meta Ads e Purchase entrando sozinhos."]];
+const MELHORIAS = [
+  ["LP de SG pelo Tally", "Cadastro → n8n → planilha, com o Lead no Pixel. No ar desde 26/11.", 56],
+  ["GTM do site na versão 6", "view_item ativo. A v5 quebra o site: exportar e comparar antes de publicar.", 45],
+  ["Caderno público", "Plano inteiro num link, atualizado a cada rodada.", 48],
+  ["Protótipo do Cardápio Digital", "Todas as lojas na entrada, vídeo em 47 de 47 produtos, acompanhamento do pedido e Pontos Ogro.", 52],
+  ["Revisão de vídeo quadro a quadro", "Quadros a cada 0,5 s e comparação com a foto oficial antes de subir.", 37],
+  ["Régua de cupons", "Teto de 10% nos cupons de data, OGROSG como exceção, cupom nunca no vídeo nem no direct.", 41]
+];
+
+const CAMPANHAS = [
+  ["Novembro · Black", "\"Saiu do controle\"", "P.C.Q por R$ 1,00 só no Cardápio Digital, combos fortes e cashback pra dezembro. Pós-Black só fala de Ogro."],
+  ["Dezembro · Captação", "\"Já deu por 2026\"", "O cansaço de decidir, cozinhar e resolver. SG em 04/12, Ogro Bells em 09/12, Uva-Passa no pós-Natal."],
+  ["Janeiro · Conversão", "\"Janeiro sem fogão\"", "Calor, férias e o janeiro que não acaba. BBB, São Sebastião, Oscar e o jogo de terror de escolhas."],
+  ["Fevereiro · Recompra", "\"Pós-bloco\"", "Carnaval e o ano que começa depois dele. Quem já pediu volta pelo cashback, pelo vale \"Um Mês de Ogro\" e pelos pontos."]
+];
+const QUADROS = [
+  ["Isso Deu Ogro", "quinzenal", "História e perrengues da marca, com Jimmy e Igor."],
+  ["Papo de Ogro", "quinzenal", "Autoridade: Jimmy e Igor falam do que sabem."],
+  ["Já Deu Por Hoje", "toda sexta", "O fim do dia com creators e sócios."],
+  ["Ogro Responde", "semanal", "Tela dividida lendo reviews reais."],
+  ["Fazer o Quê, Exageramos", "mensal", "Entrega especial para clientes."],
+  ["Quem Fez o Seu", "série", "Cozinha em 60 fps, ASMR, macro e POV."],
+  ["Vida de Ogro", "todo sábado", "The Sims × Ogro, 12 episódios de 05/12 a 27/02. Jimmy sempre com take real."]
+];
+const DIMS = [
+  { n: 4, t: "Conteúdo e criativo", txt: "Quadros aprovados até fev/27, régua do topo da pirâmide, voz da Bárbara revisada em todas as copies e revisão de vídeo quadro a quadro.", li: [["", "Lacuna: o vídeo de lançamento do Bells precisou de 5 versões para ter impacto"], ["feito", "Régua de vídeo: até 25 s, gancho nos 2 primeiros segundos, corte a cada 1 a 2 s"], ["feito", "Jimmy em toda peça, take diferente por peça"]] },
+  { n: 2, t: "Medição e aprendizado", txt: "O Lead da LP já é medido. Alcance, pedido e recompra ainda não entram em lugar nenhum.", li: [["", "Lacuna: Purchase no Cardápio Digital (#45)"], ["prop", "Leitura do Postiz no workspace, como na Temakeria"], ["prop", "Retro semanal de sexta com o relatório de SG"]] },
+  { n: 3, t: "Canal próprio e conversão", txt: "O Cardápio Digital é o destino de tudo e o protótipo resolve os pontos de abandono. Mas o atual não tem cashback nem acompanhamento do pedido.", li: [["", "Lacuna: sem SAC da unidade (#57) e sem CRM (#56)"], ["feito", "Protótipo com acompanhamento do pedido e Pontos Ogro (#52)"], ["prop", "Migração pela Databite (#54)"]] },
+  { n: 2, t: "Mídia paga", txt: "O método é bom (funil por temperatura, só nos 21 bairros, verba com teto), mas nada roda sem cartão.", li: [["feito", "Funil SG + Black + Pós-Black montados com público e verba"], ["", "Lacuna: conta CA7 sem pagamento (#55)"]] },
+  { n: 2, t: "Processo e vazão", txt: "Muita coisa nasce fora do board, e o teste de oferta não fazia parte do processo.", li: [["", "Lacuna: cards fora do projeto S7 (Lei 3)"], ["prop", "Checklist de teste de oferta antes de qualquer cupom (#57)"], ["prop", "Handoff da Luiza no card até 03/12"]] }
+];
+
+const TRENDS = [
+  ["Ogro Bells (lançamento próprio)", "produto", "Mistério com sino até 09/12, depois impacto: escuro, boom e macro do burger", [5, 5, 4, 3], "2026-12-09"],
+  ["Premiação dos games (10/12)", "games", "Prêmios do sofá: melhor modo cooperativo é o combo pra dividir (TGA1)", [4, 4, 4, 4], "2026-12-10"],
+  ["Vingadores (17/12)", "cinema", "Seu destino na chapa: dois burgers selando ao mesmo tempo", [4, 5, 4, 3], "2026-12-17"],
+  ["Duna (17/12)", "cinema", "Tempestade de tempero em 60 fps sobre o Texano", [4, 4, 4, 2], "2026-12-20"],
+  ["Série de bruxos (25/12)", "série", "Feitiço sem firula + carta que chega pelo motoboy", [4, 5, 5, 3], "2027-01-10"],
+  ["BBB 27 (11/01)", "TV", "Paredão do Ogro: o voto muda o destaque do cardápio", [4, 5, 5, 4], "2027-04-15"],
+  ["Jogo de terror de escolhas (28/01)", "games", "Cada escolha muda o final: geladeira ou cardápio (UD1)", [4, 4, 3, 4], "2027-01-31"],
+  ["Fable (23/02)", "games", "Toda fábula tem um ogro: o nosso mora na chapa (FB1)", [5, 4, 4, 4], "2027-02-28"]
+];
+const PAUTAS = [
+  ["sex 04/12", "O Ogro chegou em São Gonçalo", "Reels", "Estima", "Pedidos com OGROSG", "100 pedidos no mês"],
+  ["sáb 05/12", "Vida de Ogro · ep. 1", "Reels + TikTok", "Pertencimento", "Compartilhamentos", "Dezembro é a base"],
+  ["qua 09/12", "Ogro Bells · lançamento", "Reels ≤ 20 s", "Autorrealização", "Pedidos do Bells no CD", "Dezembro é a base"],
+  ["seg 16/12", "Seu destino na chapa", "Reels + enquete", "Estima", "Respostas da enquete", "Dezembro é a base"],
+  ["sáb 26/12", "Operação Chega de Uva-Passa", "Reels", "Estima", "Comentários \"chega\" e uso do SEMPASSAS", "Dezembro é a base"],
+  ["dom", "Mural do Ogro", "Carrossel", "Estima", "Marcações da semana", "Dezembro é a base"],
+  ["fixo", "Pedir no Ogro em 4 passos", "Carrossel fixado", "Segurança", "Salvamentos", "Dezembro é a base"]
+];
+
+const MARCA = {
+  ess: ["\"O Ogro não produz conteúdo. Produz cenas reconhecíveis.\" (manual da Bárbara)", "Fala como pessoa, não como empresa: direta, honesta, segura, acessível e levemente irônica.", "Surpreende pela consistência, não pela invenção. Se parecer publicidade, perde eficiência.", "Arco de todo conteúdo: identificação → tensão → resolução → fechamento simples."],
+  selo: ["Sempre o arquivo oficial do brand-ogro. Nunca o nome digitado em fonte, nunca gerado por IA.", "No fundo escuro, a versão em negativo. A colorida some no preto.", "Logo entra na pós-produção, não no prompt."],
+  pal: [["#8B1A1A", "Vermelho Ogro", "Cor da marca: tarjas, carimbos e áreas de destaque"], ["#B22222", "Vermelho Barra", "Botões e barras; texto branco por cima"], ["#1A1A1A", "Grafite", "Fundo dominante e texto sobre o claro"], ["#C8C0B8", "Concreto", "Fundo claro das artes, textura"], ["#C4A46C", "Kraft", "Papel da sacola, acento quente"]],
+  tip: [["Títulos", "Anton (provisória)", "Caixa alta é a tipografia da arte, não grito"], ["Texto", "Archivo (provisória)", "Corpo, legenda de tela, interface"]],
+  q4: ["Reforça o posicionamento?", "Parece humano, não publicitário?", "Facilita a decisão do cliente?", "Mantém a coerência do Ogro?"],
+  sim: ["\"isso resolve teu dia\" · \"de um ogro pra outro\" · \"não complica\"", "\"o Ogro\" (nunca \"a Ogro\")", "burger de verdade · do zero · processo · generoso · suculento · crocante", "recompensa · conforto · só delivery, direto na sua casa", "no Rio de Janeiro (cidade só quando a peça é daquela unidade, como SG) · #riodejaneiro"],
+  nao: ["\"!\" e caixa alta gritada na legenda", "imperdível, corra, não perca, só hoje · urgência inventada", "gourmet, sofisticado, premium, excelência, inovação", "exagero publicitário (\"colosso\", \"o melhor do mundo\") · burger como culpa", "combinação fora do cardápio · fato que não aconteceu", "competir por preço ou abrir anúncio com cupom · salão, \"vem comer aqui\" · atacar concorrente"],
+  reg: ["Toda peça mostra o Jimmy, com take real (nunca IA), e um take diferente por peça.", "Burger que está no cardápio usa a foto oficial. Pão é brioche.", "Cupom nunca no vídeo e nunca no direct: o cupom de SG é só pelo formulário da LP.", "Toda copy com 1 a 3 emojis e terminando no topo da pirâmide (estima e autorrealização).", "Cultura pop com referência visual clara, sem logo, personagem, fonte ou música de terceiro.", "Peça de anúncio não leva data na tela."],
+  pub: ["Feed 55% vídeo, 30% carrossel, 15% imagem, com o formato escrito no calendário.", "Vídeo de feed e TikTok com até 25 s, gancho nos 2 primeiros segundos e corte a cada 1 a 2 s.", "Lançamento: cerca de 20 s, mistério no escuro, boom, macros apetitosas e o cardápio só na fala.", "Cultura pop sai 1 dia antes da estreia.", "Responder os comentários na primeira hora: comentário bom vira Ogro Responde."]
+};
+const APROV = [
+  { t: "Calendário de dez/26 a fev/27", quem: "Bárbara", o: "3 meses de feed dia a dia, stories, TikTok e impressos, dentro dos quadros aprovados.", c: 41 },
+  { t: "33 disparos de WhatsApp (26/11 → 28/02)", quem: "Cliente + Meta", o: "Texto e arte pelo cliente; cada modelo de mensagem passa pela revisão da Meta antes do 1º envio.", c: 41 },
+  { t: "M4 e F3 do funil de SG (com IA)", quem: "Bárbara", o: "Os dois estão certos na revisão de 25/11, mas usam imagem gerada por IA.", c: 37 },
+  { t: "Regra dos Pontos Ogro", quem: "Manu, Igor e Alline", o: "R$ 1 = 1 ponto, 100 pontos = R$ 5, até 30% do produto, níveis de 5%, 6% e 7,5%, acima do pedido mínimo.", c: 52 },
+  { t: "Preço e foto oficial do Ogro Bells", quem: "Sócios", o: "Sugestão de R$ 48,90 no protótipo. Receita: brioche, carne na chapa, muçarela de búfala, tomate e maionese.", c: 53 },
+  { t: "Nome do jogo no Vida de Ogro", quem: "Bárbara e Victor", o: "Hoje o nome do jogo só vai em hashtag. Liberar ou manter assim.", c: 41 },
+  { t: "Artes Dupla Monstro e Combo McManis (banners do CD)", quem: "Bárbara", o: "Geradas para o carrossel de banners do Cardápio Digital.", c: 52 },
+  { t: "Influenciadores pagos de SG", quem: "Matheus", o: "Pagamento passa pelo Matheus e pelo financeiro. O resto segue em permuta.", c: 5 }
+];
+const CRIT = [
+  ["blk", "Mostra o Jimmy com take real (não IA)", "Take diferente das outras peças da semana.", "Victor + Matheus, 26/11"],
+  ["blk", "Burger do cardápio confere com a foto oficial", "Pão brioche, recheio certo. Nada fora do cardápio.", "Regra do Higgsfield / revisão quadro a quadro"],
+  ["blk", "Logo oficial aplicado na pós", "Arquivo do brand-ogro, versão certa para o fundo.", "brand-ogro"],
+  ["blk", "Sem cupom no vídeo e sem cupom no direct", "Código e % só no formulário da LP ou no texto do WhatsApp.", "Regra de 26/11"],
+  ["blk", "Oferta testada no Cardápio Digital", "Com e sem mínimo, nome do cupom igual ao da peça, print no card.", "#57"],
+  ["adj", "Passa nas 4 perguntas do manual", "Posicionamento, humano, facilita a decisão, coerência.", "Manual da Bárbara"],
+  ["adj", "Termina no topo da pirâmide", "Estima ou autorrealização, sem aspiracional artificial.", "Skill ogro-topo-da-piramide"],
+  ["adj", "\"o Ogro\", #riodejaneiro e 1 a 3 emojis", "Sem \"!\", sem urgência inventada, sem salão.", "Voz autêntica do Ogro"],
+  ["adj", "Vídeo até 25 s, gancho em 2 s, 30 fps, 1080×1920 + 4:5", "Nome do arquivo no padrão (é o nome do anúncio).", "Guia do funil"],
+  ["adj", "Sem data na tela em peça de anúncio", "A data vai na legenda.", "Regra de Ouro nº 01"]
+];
+
+/* ---------- abas ---------- */
+const TABS = [...document.querySelectorAll(".tab")];
+function abrir(id, push = true) {
+  if (!document.getElementById(id)) id = "geral";
+  TABS.forEach(t => t.classList.toggle("on", t.dataset.tab === id));
+  TABS.forEach(t => t.setAttribute("aria-pressed", t.dataset.tab === id));
+  document.querySelectorAll(".sec").forEach(s => s.hidden = s.id !== id);
+  if (push) history.replaceState(null, "", "#" + id);
+  const on = TABS.find(t => t.dataset.tab === id); if (on) on.scrollIntoView({ block: "nearest", inline: "nearest" });
+}
+TABS.forEach(t => t.addEventListener("click", () => abrir(t.dataset.tab)));
+document.addEventListener("click", e => { const b = e.target.closest("[data-ir]"); if (b) { abrir(b.dataset.ir); scrollTo({ top: 0 }); } });
+window.addEventListener("hashchange", () => abrir(location.hash.slice(1), false));
+
+/* ---------- helpers de render ---------- */
+const barra = (lbl, sub, segs, total, val) => `<div class="bar-row"><span>${esc(lbl)}${sub ? `<div class="sub">${esc(sub)}</div>` : ""}</span><div class="bar-track">${segs.map(([v, c]) => `<span style="width:${(v / total * 100).toFixed(1)}%;background:${c}" title="${v}"></span>`).join("")}</div><b>${val}</b></div>`;
+const kpi = (lbl, v, sub, ir, ac) => `<div class="card${ir ? " go" : ""}"${ir ? ` data-ir="${ir}" tabindex="0" role="button"` : ""}><span class="k-label">${esc(lbl)}</span><span class="k${ac ? " ac" : ""}">${v}</span><span class="k-sub">${sub}</span>${ir ? `<span class="go-more">Abrir</span>` : ""}</div>`;
+const dataRow = ([dt, tit, txt, tipo, ant]) => { const f = faltam(dt), x = d(dt); return `<div class="date${f < 0 ? " passou" : ""}" data-tipo="${tipo}"><div class="date-day">${String(x.getDate()).padStart(2, "0")}<small>${MESES[x.getMonth()]} · ${DIAS[x.getDay()]}</small></div><div class="date-txt"><b>${esc(tit)}</b><span>${esc(txt)}</span></div><span class="pill ${f < 0 ? "muted" : f <= ant ? "bad" : f <= ant * 2 ? "warn" : "muted"}">${f < 0 ? "passou" : f === 0 ? "hoje" : "em " + f + " d"} · pronta ${ant} d antes</span></div>`; };
+const node = x => `<div class="node ${x.s === "ok" ? "medido" : x.s}"><b>${esc(x.n)}</b><span class="nv">${esc(x.v)}</span><span class="k-sub">${esc(x.t)}</span>${x.c ? card(x.c) : ""}</div>`;
+const nomes = arr => (arr || []).map(l => PESSOAS[l] || l).join(", ") || "—";
+
+let DADOS = { demandas: [], gerado_em: null };
+
+function render() {
+  const dem = DADOS.demandas, abertas = dem.filter(x => x.estado === "open" && x.situacao !== "Concluída"), fora = abertas.filter(x => x.situacao === "Fora do board");
+  const sg = faltam("2026-12-04");
+  const totF = FUNIL.reduce((a, f) => a + f.certa + f.ajustar + f.falta, 0), certas = FUNIL.reduce((a, f) => a + f.certa, 0);
+
+  // hero
+  $("#lede").innerHTML = sg > 0
+    ? `Faltam <b>${sg} dias</b> para a inauguração de São Gonçalo (04/12). O plano está pronto e a maior parte das peças também: o que trava agora é <b>acesso, teste de oferta e gente</b>. ${abertas.length ? `<b>${abertas.length}</b> cards abertos, ${fora.length} fora do board.` : ""}`
+    : `São Gonçalo abriu em 04/12. Dezembro é o mês da captação: "Já deu por 2026", Ogro Bells e a recompra de fevereiro já em preparo.`;
+  $("#stamp").textContent = `Retrato do caderno e das sessões de 27/11/2026 · demandas do GitHub geradas em ${DADOS.gerado_em ? DADOS.gerado_em.split(" ")[0].split("-").reverse().join("/") + " às " + DADOS.gerado_em.split(" ")[1] : "— (dados.json não carregou)"}`;
+  $("#qlinks").innerHTML = LINKS.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("");
+
+  // visão geral
+  $("#kpis").innerHTML = [
+    kpi("Inauguração SG", sg > 0 ? sg : sg === 0 ? "hoje" : "aberta", sg > 0 ? "dias · sexta, 04/12" : "desde 04/12", "datas", true),
+    kpi("Funil SG", `${certas}<small style="font-size:18px">/${totF}</small>`, "peças certas · 25 e 26/11", "producao"),
+    kpi("Verba aprovada", "R$ 9 mil", "26/11 → 17/12 · em rascunho", "desempenho"),
+    kpi("Cards abertos", abertas.length || "—", fora.length ? `${fora.length} fora do board` : "do GitHub", "demandas"),
+    kpi("Aprovações", APROV.length, "esperando alguém", "aprovacao"),
+    kpi("Cupons de SG", "3", "OGROSG · OGRO10 · MCMANIS", "estrategia")
+  ].join("");
+  const radarCalc = RADAR.map(r => r.auto === "fora" ? { ...r, ev: fora.length ? `${fora.length} cards abertos ainda não estão no projeto S7: ${fora.map(x => "#" + x.n).join(", ")}.` : "Todos os cards abertos estão no board.", prio: fora.length ? "media" : "baixa" } : r);
+  $("#agora").innerHTML = radarCalc.filter(r => r.prio === "alta").map(radarHTML).join("");
+  $("#funil-mini").innerHTML = FUNIL.map(f => { const t = f.certa + f.ajustar + f.falta; return barra(f.etapa, f.obs, [[f.certa, "var(--ok)"], [f.ajustar, "var(--warn)"], [f.falta, "var(--line)"]], t, `${f.certa}/${t}`); }).join("");
+  $("#datas-mini").innerHTML = DATAS.filter(x => faltam(x[0]) >= 0).slice(0, 5).map(dataRow).join("");
+  const idade = DADOS.gerado_em ? Math.round((HOJE - d(DADOS.gerado_em.slice(0, 10))) / 864e5) : null;
+  $("#t-saude").innerHTML = [
+    ["Cards e board (GitHub)", "a cada publicação", DADOS.gerado_em ? fmt(DADOS.gerado_em.slice(0, 10)) : "—", idade === null ? ["bad", "não carregou"] : idade <= 2 ? ["ok", "em dia"] : ["warn", `${idade} dias`]],
+    ["Caderno do Victor", "a cada rodada", "27/11", ["ok", "em dia"]],
+    ["Leads da LP de SG", "a cada cadastro (planilha)", "—", ["warn", "existe, não ligada aqui"]],
+    ["Instagram (Postiz)", "—", "—", ["muted", "não ligada"]],
+    ["Meta Ads (CA7)", "—", "—", ["muted", "não ligada · em rascunho"]],
+    ["Pedidos e vendas", "—", "—", ["muted", "não ligada · falta Purchase"]]
+  ].map(([f, a, u, [c, s]]) => `<tr><td>${f}</td><td>${a}</td><td>${u}</td><td><span class="pill ${c}">${s}</span></td></tr>`).join("");
+
+  // inteligência
+  $("#ref-ara").innerHTML = ARA.map(([v, l]) => `<div><span class="k ac" style="font-size:26px">${v}</span><div class="k-sub">${l}</div></div>`).join("");
+  $("#t-prevpend").innerHTML = PREVPEND.map(([m, f]) => `<tr><td>${m}</td><td>${f}</td></tr>`).join("");
+  const tipos = ["todos", ...new Set(radarCalc.map(r => r.tipo))];
+  $("#f-radar").innerHTML = `<span class="lbl2">Tipo</span>` + tipos.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  const pintaRadar = f => $("#radar").innerHTML = radarCalc.filter(r => f === "todos" || r.tipo === f).sort((a, b) => ["alta", "media", "baixa"].indexOf(a.prio) - ["alta", "media", "baixa"].indexOf(b.prio)).map(radarHTML).join("");
+  pintaRadar("todos"); chipGroup("#f-radar", pintaRadar);
+  $("#cons-leitura").innerHTML = cards(CONSELHO.leitura);
+  $("#cons-perg").innerHTML = CONSELHO.perguntas.map(q => `<div class="q"><span class="q-p">${esc(q.p)}</span><span class="note">${cards(q.pq)}</span><span class="k-sub">Fonte: ${cards(q.fonte)}</span></div>`).join("");
+  $("#cons-op").innerHTML = CONSELHO.op.map(([t, c]) => `<div>${esc(t)} ${card(c)}</div>`).join("");
+  $("#cons-mov").innerHTML = CONSELHO.mov.map(([t, c]) => `<div>${esc(t)} ${card(c)}</div>`).join("");
+  $("#cons-prem").innerHTML = CONSELHO.prem.map(t => `<li>${esc(t)}</li>`).join("");
+  $("#cadeia").innerHTML = CADEIA.map(node).join("");
+  $("#t-dep").innerHTML = DEP.map(r => `<tr>${r.map(c => `<td>${cards(c)}</td>`).join("")}</tr>`).join("");
+
+  // desempenho
+  $("#verba-bars").innerHTML = VERBA.map(([b, p, v]) => barra(b, p, [[v, "var(--barra)"]], 3500, "R$ " + v.toLocaleString("pt-BR"))).join("");
+  $("#t-track").innerHTML = TRACK.map(([e, o, c, s]) => `<tr><td><b>${e}</b></td><td>${o}</td><td><span class="pill ${c}">${s}</span></td></tr>`).join("");
+  $("#t-camp").innerHTML = CAMP.map(r => `<tr>${r.map((c, i) => `<td${i === 4 ? ' class="n"' : ""}>${esc(c)}</td>`).join("")}</tr>`).join("");
+  $("#desemp-falta").innerHTML = DESFALTA.map(node).join("");
+
+  // demandas
+  renderDemandas(abertas);
+
+  // metas
+  $("#norte").innerHTML = NORTE.map(t => `<li>${cards(t)}</li>`).join("");
+  const nRegra = METAS.filter(m => m.fmt === "regra").length;
+  $("#metas-resumo").innerHTML = kpi("Metas", METAS.length, "dez/26 e 1º tri/27") + kpi("Com dado", 0, "nenhuma fonte de resultado ligada") + kpi("Regras de processo", nRegra, "conferidas à mão") + kpi("Sem dado", METAS.length - nRegra, "esperando a fonte", "inteligencia");
+  $("#metas-lista").innerHTML = METAS.map(m => `<div class="card goal" id="meta-${m.id}"><div class="goal-top"><div><span class="k-label">${esc(m.area)}</span><h3 style="font-size:14px;letter-spacing:.04em">${esc(m.nome)}</h3></div><span class="pill ${m.fmt === "regra" ? "warn" : "muted"}">${m.fmt === "regra" ? "regra" : "sem dado"}</span></div><div class="goal-meta"><span>Base: <b>${esc(m.base)}</b> (${esc(m.bq)})</span><span>Dez/26: <b>${esc(m.dez)}</b></span><span>1º tri/27: <b>${esc(m.q1)}</b></span></div><p class="note">${cards(m.pq)}</p></div>`).join("");
+
+  // plano
+  $("#flow").innerHTML = PASSOS.map(([n, t]) => `<div class="step"><b>${n}</b><span class="k-sub">${esc(t)}</span></div>`).join("");
+  renderPlano();
+  $("#melhorias").innerHTML = MELHORIAS.map(([n, t, c]) => `<div class="card"><div class="card-h"><b>${esc(n)}</b>${card(c)}</div><span class="k-sub">${esc(t)}</span></div>`).join("");
+
+  // estratégia
+  $("#campanhas").innerHTML = CAMPANHAS.map(([m, n, t]) => `<div class="card" style="padding:14px;gap:6px"><span class="k-label">${esc(m)}</span><b style="font:400 22px/1 var(--display);text-transform:uppercase">${esc(n)}</b><span class="k-sub">${esc(t)}</span></div>`).join("");
+  $("#t-quadros").innerHTML = QUADROS.map(([q, r, t]) => `<tr><td><b>${q}</b></td><td>${r}</td><td>${t}</td></tr>`).join("");
+  $("#dims").innerHTML = DIMS.map(x => `<div class="card dim"><div class="dim-score">${x.n}<small>de 5</small></div><div><h3>${esc(x.t)}</h3><p class="note">${cards(x.txt)}</p><ul>${x.li.map(([t, s]) => `<li>${t ? `<span class="tag ${t}">${t === "feito" ? "feito" : "proposta"}</span>` : ""}${cards(s)}</li>`).join("")}</ul></div></div>`).join("");
+
+  // datas
+  const tiposD = ["todos", ...new Set(DATAS.map(x => x[3]))];
+  $("#f-datas").innerHTML = `<span class="lbl2">Tipo</span>` + tiposD.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  const pintaDatas = f => $("#datas-full").innerHTML = DATAS.filter(x => f === "todos" || x[3] === f).map(dataRow).join("");
+  pintaDatas("todos"); chipGroup("#f-datas", pintaDatas);
+
+  // pautas
+  $("#t-trends").innerHTML = TRENDS.map(([t, tp, como, [a, b, c, e], ate]) => { const s = Math.round(((a * .35 + b * .25 + c * .25 + e * .15) - 1) / 4 * 100); return `<tr><td><b>${esc(t)}</b></td><td>${tp}</td><td>${esc(como)}</td><td><div style="display:flex;gap:8px;align-items:center;min-width:110px"><div class="goal-bar" style="flex:1"><span style="width:${s}%"></span></div><b>${s}</b></div></td><td>${fmt(ate)}</td></tr>`; }).join("");
+  $("#t-pautas").innerHTML = PAUTAS.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("");
+
+  // produção
+  $("#funil-etapas").innerHTML = FUNIL.map(f => { const t = f.certa + f.ajustar + f.falta; return barra(f.etapa, `${f.certa} certas · ${f.ajustar} ajustar · ${f.falta} a produzir`, [[f.certa, "var(--ok)"], [f.ajustar, "var(--warn)"], [f.falta, "var(--line)"]], t, t); }).join("");
+  $("#t-agenda").innerHTML = AGENDA.filter(a => faltam(a[0]) >= 0).map(([dt, o, c, q]) => `<tr><td style="white-space:nowrap"><b>${DIAS[d(dt).getDay()]} ${fmt(dt)}</b></td><td>${esc(o)}</td><td>${esc(c)}</td><td>${esc(q)}</td></tr>`).join("") || `<tr><td colspan="4">Agenda vencida: atualizar no próximo retrato.</td></tr>`;
+  $("#t-falta").innerHTML = FALTA.map(r => `<tr><td><b>${r[0]}</b></td>${r.slice(1).map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("");
+  $("#t-pecas").innerHTML = PECAS.map(([p, pa, v, s, c]) => `<tr><td><b>${esc(p)}</b></td><td>${esc(pa)}</td><td>${esc(v)}</td><td>${esc(s)}</td><td>${card(c)}</td></tr>`).join("");
+
+  // marca
+  $("#mk-ess").innerHTML = MARCA.ess.map(t => `<li>${esc(t)}</li>`).join("");
+  $("#mk-selo").innerHTML = MARCA.selo.map(t => `<li>${esc(t)}</li>`).join("");
+  $("#mk-pal").innerHTML = MARCA.pal.map(([h, n, u]) => `<div class="sw"><i style="background:${h}"></i><div><b>${n}</b> <code>${h}</code><div class="k-sub">${u}</div></div></div>`).join("");
+  $("#mk-tip").innerHTML = MARCA.tip.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("");
+  $("#mk-4").innerHTML = MARCA.q4.map(t => `<li>${t}</li>`).join("");
+  ["sim", "nao", "reg", "pub"].forEach(k => $("#mk-" + k).innerHTML = MARCA[k].map(t => `<li>${esc(t)}</li>`).join(""));
+
+  // aprovação
+  const quem = ["todos", "Bárbara", "Sócios", "Manu", "Matheus", "Meta"];
+  $("#ap-filtro").innerHTML = `<span class="lbl2">Com quem</span>` + quem.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  const pintaAp = f => $("#ap-pecas").innerHTML = APROV.filter(a => f === "todos" || a.quem.includes(f)).map(a => `<div class="pc"><div class="pc-top"><span class="pill warn">aguardando</span><span class="pill muted">${esc(a.quem)}</span></div><h4>${esc(a.t)}</h4><span class="k-sub">${esc(a.o)}</span><div class="btns"><a class="btn" href="${GH}${a.c}#issuecomment-new" target="_blank" rel="noopener">Responder no card #${a.c}</a></div></div>`).join("") || `<p class="note">Nada esperando por aqui.</p>`;
+  pintaAp("todos"); chipGroup("#ap-filtro", pintaAp);
+  renderCrit();
+}
+
+function radarHTML(r) {
+  const ic = { risco: "!", gargalo: "⏳", oportunidade: "↗", processo: "≡" }[r.tipo] || "•";
+  return `<div class="rad ${r.prio}"><span class="rad-ic" aria-hidden="true">${ic}</span><div class="rad-txt"><b>${esc(r.tit)}</b><span class="note">${cards(r.ev)}</span><span class="rad-acao"><b>Ação:</b> ${cards(r.acao)}</span><span class="rad-foot"><span class="pill ${r.prio === "alta" ? "bad" : r.prio === "media" ? "warn" : "muted"}">${r.prio === "media" ? "média" : r.prio}</span><span>${esc(r.tipo)}</span><span>Dono: ${esc(r.dono)}</span>${r.card ? card(r.card) : ""}</span></div></div>`;
+}
+function chipGroup(sel, fn) {
+  $(sel).addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; $(sel).querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); fn(b.dataset.f); });
+}
+function renderDemandas(abertas) {
+  const dem = DADOS.demandas;
+  if (!dem.length) { $("#t-dem").innerHTML = `<tr><td colspan="6" class="err">O dados.json não carregou. Abra pelo link publicado ou por um servidor local.</td></tr>`; return; }
+  const porF = {}; abertas.forEach(x => { const f = porF[x.frente] ||= [0, 0, 0]; f[x.dias_sem_mov > 30 ? 2 : x.dias_sem_mov >= 7 ? 1 : 0]++; });
+  const max = Math.max(...Object.values(porF).map(v => v[0] + v[1] + v[2]));
+  $("#dem-frente").innerHTML = Object.entries(porF).sort((a, b) => (b[1][0] + b[1][1] + b[1][2]) - (a[1][0] + a[1][1] + a[1][2])).map(([f, v]) => barra(f, "", [[v[0], "var(--barra)"], [v[1], "var(--warn)"], [v[2], "var(--bad)"]], max, v[0] + v[1] + v[2])).join("");
+  const sit = {}; dem.forEach(x => sit[x.situacao] = (sit[x.situacao] || 0) + 1);
+  const ordem = ["Atenção", "Em andamento", "Em revisão", "Pronta pra começar", "Backlog", "No board, sem status", "Fora do board", "Concluída"];
+  $("#t-sit").innerHTML = Object.entries(sit).sort((a, b) => ordem.indexOf(a[0]) - ordem.indexOf(b[0])).map(([s, n]) => `<tr><td>${pillSit(s)}</td><td class="n">${n}</td></tr>`).join("");
+  $("#dem-sub").insertAdjacentHTML("beforeend", ` Gerado em ${DADOS.gerado_em.split(" ")[0].split("-").reverse().join("/")}.`);
+  const fs = ["abertas", "fora do board", "paradas 7+ dias", "concluídas", "todas"];
+  $("#f-dem").innerHTML = `<span class="lbl2">Mostrar</span>` + fs.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  const pinta = f => {
+    const l = dem.filter(x => f === "todas" || (f === "abertas" && x.situacao !== "Concluída") || (f === "fora do board" && x.situacao === "Fora do board") || (f === "paradas 7+ dias" && x.situacao !== "Concluída" && x.dias_sem_mov >= 7) || (f === "concluídas" && x.situacao === "Concluída"));
+    $("#t-dem").innerHTML = l.map(x => `<tr><td>${card(x.n)}</td><td>${esc(x.titulo)}${x.prioridade ? `<div class="sub">${esc(x.prioridade)}</div>` : ""}</td><td>${esc(x.frente)}</td><td>${pillSit(x.situacao)}</td><td>${nomes(x.donos)}</td><td class="n">${x.situacao === "Concluída" ? "—" : `<span class="pill ${x.dias_sem_mov > 30 ? "bad" : x.dias_sem_mov >= 7 ? "warn" : "muted"}">${x.dias_sem_mov}</span>`}</td></tr>`).join("") || `<tr><td colspan="6">Nenhum card.</td></tr>`;
+  };
+  pinta("abertas"); chipGroup("#f-dem", pinta);
+}
+function pillSit(s) { const c = { "Atenção": "bad", "Em andamento": "ok", "Em revisão": "ok", "Pronta pra começar": "warn", "Fora do board": "bad", "Concluída": "muted" }[s] || "muted"; return `<span class="pill ${c}">${esc(s)}</span>`; }
+function renderPlano() {
+  const dem = DADOS.demandas, byN = Object.fromEntries(dem.map(x => [x.n, x]));
+  const acoes = Object.entries(ACOES_EXTRA).map(([n, [prazo, metas]]) => ({ n: +n, prazo, metas, x: byN[n] })).filter(a => a.x);
+  const feitas = acoes.filter(a => a.x.situacao === "Concluída").length;
+  $("#plano-prog").style.width = (acoes.length ? feitas / acoes.length * 100 : 0) + "%";
+  $("#plano-prog-txt").textContent = acoes.length ? `${feitas} de ${acoes.length}` : "dados.json não carregou";
+  const areas = ["todas", ...new Set(acoes.map(a => a.x.frente))], sits = ["todas", "atrasadas", ...new Set(acoes.map(a => a.x.situacao))];
+  $("#f-area").innerHTML = `<span class="lbl2">Área</span>` + areas.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  $("#f-sitp").innerHTML = `<span class="lbl2">Situação</span>` + sits.map((t, i) => `<button type="button" class="chip${i ? "" : " on"}" data-f="${t}">${t}</button>`).join("");
+  let fa = "todas", fsit = "todas";
+  const pinta = () => {
+    const l = acoes.filter(a => (fa === "todas" || a.x.frente === fa) && (fsit === "todas" || (fsit === "atrasadas" ? faltam(a.prazo) < 0 && a.x.situacao !== "Concluída" : a.x.situacao === fsit))).sort((a, b) => a.prazo.localeCompare(b.prazo));
+    $("#plano-lista").innerHTML = l.map(a => { const f = faltam(a.prazo), atr = f < 0 && a.x.situacao !== "Concluída", x = d(a.prazo); return `<div class="acao${atr ? " atrasada" : ""}"><div class="acao-dia">${String(x.getDate()).padStart(2, "0")}<small>${MESES[x.getMonth()]}</small></div><div class="acao-txt"><a href="${GH}${a.n}" target="_blank" rel="noopener">#${a.n} · ${esc(a.x.titulo)}</a><span class="k-sub">${esc(a.x.frente)} · com ${nomes(a.x.donos)}</span><div class="chips">${a.metas.map(m => `<button type="button" class="mchip" data-meta="${m}">${esc((METAS.find(z => z.id === m) || {}).nome || m)}</button>`).join("")}</div></div><div class="acao-side">${pillSit(a.x.situacao)}${atr ? `<span class="pill bad">prazo passou</span>` : a.x.situacao !== "Concluída" ? `<span class="pill muted">em ${f} d</span>` : ""}</div></div>`; }).join("") || `<p class="note">Nenhuma ação nesse filtro.</p>`;
+  };
+  pinta();
+  chipGroup("#f-area", v => { fa = v; pinta(); }); chipGroup("#f-sitp", v => { fsit = v; pinta(); });
+  $("#plano-lista").addEventListener("click", e => { const b = e.target.closest(".mchip"); if (!b) return; abrir("metas"); const el = document.getElementById("meta-" + b.dataset.meta); if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1600); } });
+}
+function renderCrit() {
+  let st = {}; try { st = JSON.parse(localStorage.getItem("ogro_geral_ck") || "{}"); } catch (e) { }
+  $("#crits").innerHTML = `<div class="bloco-h"><h3>Checagem</h3><span class="k-sub">${CRIT.length} critérios</span></div>` + CRIT.map(([t, n, how, src], i) => `<div class="crit${st[i] === "no" ? " st-no" : ""}" data-i="${i}"><div><span class="tag ${t}">${t === "blk" ? "trava" : "ajuste"}</span><span class="ct">${esc(n)}</span><div class="how">${esc(how)}</div><div class="src">Origem: ${cards(src)}</div></div><div class="seg" role="group" aria-label="${esc(n)}">${[["ok", "sim"], ["no", "não"], ["na", "n/a"]].map(([v, l]) => `<button type="button" data-v="${v}" class="${st[i] === v ? "on" : ""}" aria-pressed="${st[i] === v}">${l}</button>`).join("")}</div></div>`).join("");
+  const verd = () => {
+    const vals = CRIT.map((c, i) => [c[0], st[i]]), resp = vals.filter(v => v[1]).length, blk = vals.some(v => v[0] === "blk" && v[1] === "no"), adj = vals.filter(v => v[0] === "adj" && v[1] === "no").length;
+    const el = $("#verd"); el.className = "verd" + (resp === 0 ? "" : blk ? " bad" : adj ? " warn" : resp === CRIT.length ? " ok" : "");
+    $("#verd-v").textContent = resp === 0 ? "Comece a checar" : blk ? "Reprovada" : adj ? "Volta com ajuste" : resp === CRIT.length ? "Pode mandar" : "Checando";
+    $("#verd-c").textContent = `${resp} de ${CRIT.length} respondidos · ${adj} ajuste(s)`;
+  };
+  $("#crits").onclick = e => { const b = e.target.closest(".seg button"); if (!b) return; const row = b.closest(".crit"), i = row.dataset.i; st[i] = st[i] === b.dataset.v ? undefined : b.dataset.v; localStorage.setItem("ogro_geral_ck", JSON.stringify(st)); renderCrit(); };
+  $("#ck-limpa").onclick = () => { localStorage.removeItem("ogro_geral_ck"); renderCrit(); };
+  verd();
+}
+document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches(".card.go")) { e.preventDefault(); e.target.click(); } });
+
+fetch("dados.json?v=" + Date.now()).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(j => { DADOS = j; }).catch(() => { }).finally(() => { render(); abrir(location.hash.slice(1) || "geral", false); });
+</script>
+</body>
+</html>
