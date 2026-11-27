@@ -89,12 +89,12 @@ a{color:inherit}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* HOME */
-.hero{background:var(--preto);color:var(--concreto-100);position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:36px;background:var(--concreto-50);clip-path:polygon(0 100%,0 60%,4% 40%,7% 70%,10% 30%,13% 55%,17% 20%,21% 60%,25% 35%,29% 65%,33% 25%,38% 55%,42% 30%,46% 60%,50% 15%,54% 50%,58% 30%,62% 65%,66% 25%,70% 55%,74% 35%,78% 60%,82% 20%,86% 50%,90% 30%,94% 60%,97% 35%,100% 55%,100% 100%)}
+.hero{background:var(--preto);color:var(--concreto-100);position:relative;overflow-x:clip} /* só na horizontal: o recorte de baixo passa 2 px da borda e cobre a emenda de meio pixel */
+.hero::after{content:"";position:absolute;inset:auto 0 -2px 0;height:38px;z-index:1;background:var(--concreto-50);clip-path:polygon(0 100%,0 60%,4% 40%,7% 70%,10% 30%,13% 55%,17% 20%,21% 60%,25% 35%,29% 65%,33% 25%,38% 55%,42% 30%,46% 60%,50% 15%,54% 50%,58% 30%,62% 65%,66% 25%,70% 55%,74% 35%,78% 60%,82% 20%,86% 50%,90% 30%,94% 60%,97% 35%,100% 55%,100% 100%)}
 /* topo compacto: título + burger animado lado a lado, CEP logo abaixo, lojas já aparecem na primeira tela */
 .hero .wrap{display:grid;grid-template-columns:1fr 118px;column-gap:12px;row-gap:12px;align-items:center;padding-top:14px;padding-bottom:34px;position:relative;z-index:1}
 .hero .wrap > :not(.hero__txt):not(.hero__burger){grid-column:1 / -1}
-.hero::after{height:20px}
+.hero::after{height:22px}
 .hero__tag{display:inline-flex;align-items:center;gap:7px;color:var(--kraft);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
 .pulso{width:8px;height:8px;border-radius:50%;background:#5BD38A;box-shadow:0 0 0 0 rgba(91,211,138,.6);animation:pulsoV 1.8s infinite;flex:none}
 .pulso.off{background:#E06666;animation:none}
@@ -137,7 +137,7 @@ a{color:inherit}
 .link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
 .busca__res{font-size:14px;color:var(--grafite-700);min-height:1.2em}
 .busca__res b{color:var(--preto)}
-.continuar{background:var(--kraft);color:var(--preto);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:520px}
+.continuar{background:var(--kraft);color:var(--preto);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:560px}
 .continuar[hidden]{display:none}
 .continuar div{flex:1;font-size:14px;line-height:1.3}
 .continuar strong{display:block;font-size:15px}
@@ -568,11 +568,11 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 .topo__pts.bump{animation:bump .5s}
 @keyframes ptsBrilho{50%{box-shadow:0 0 0 5px rgba(232,178,58,.35)}}
 .topo__pts.ganhou{animation:ptsBrilho .9s ease 2}
-.pts-home{background:var(--grafite-800);color:#fff;border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:520px;text-align:left;border:1px solid #444}
-.pts-home .pts-ic{width:34px;height:34px}
-.pts-home div{flex:1;font-size:13px;line-height:1.35;color:var(--concreto-100)}
-.pts-home strong{display:block;font-size:15px;color:#fff}
-.pts-home .btn{padding:9px 12px;font-size:13px}
+.pts-home{display:flex;gap:10px;align-items:center;max-width:560px;width:100%;color:var(--concreto);font-size:14px;line-height:1.4;padding:2px 4px}
+.pts-home .pts-ic{width:26px;height:26px}
+.pts-home p{flex:1}
+.pts-home strong{color:#fff}
+.pts-home .link{color:var(--kraft);font-size:14px;padding:12px 4px;margin:-12px -4px;white-space:nowrap} /* área de toque de 44 px sem mudar o visual */
 .pts-box{background:#fff;border:2px solid var(--amarelo);border-radius:var(--r);padding:12px 14px;display:grid;gap:10px}
 .pts-box__l{display:flex;gap:10px;align-items:center;font-size:13px;line-height:1.35;color:var(--grafite-700)}
 .pts-box__l b{display:block;font-size:15px;color:var(--preto)}
@@ -691,11 +691,6 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
         <button class="btn btn--dark" id="continuar-b">Continuar</button>
       </div>
 
-      <div class="pts-home" id="pts-home">
-        <svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg>
-        <div><strong id="pts-home-t">Pedido aqui vira ponto</strong><span id="pts-home-s">R$ 1 = 1 ponto. 100 pontos = R$ 5.</span></div>
-        <button class="btn btn--kraft" id="pts-home-b">Ver como</button>
-      </div>
 
       <form class="busca" id="form-cep" novalidate>
         <label for="cep" class="sr">Teu CEP</label>
@@ -706,6 +701,10 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
         <div class="busca__pe"><button type="button" class="link" id="btn-geo"><svg><use href="#i-mira"/></svg>Usar minha localização</button></div>
         <p class="busca__res" id="cep-res" aria-live="polite" hidden></p>
       </form>
+      <div class="pts-home" id="pts-home">
+        <svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg>
+        <p><strong id="pts-home-t">Pedido aqui vira ponto:</strong> <span id="pts-home-s">R$ 1 = 1 ponto, 100 pontos = R$ 5.</span> <button class="link" id="pts-home-b">Ver como</button></p>
+      </div>
       <a class="hero__desce" href="#todas" id="hero-desce">Ou escolhe entre as 14 lojas <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </div>
   </div>
@@ -1601,7 +1600,7 @@ function renderContinuar() {
   const box = $("#continuar");
   if (n && l) {
     $("#continuar-t").textContent = "Teu pedido tá guardado";
-    $("#continuar-s").textContent = `${n} ${n === 1 ? "item" : "itens"} na sacola · loja ${l.n} · ${brl(totais().total)}`;
+    $("#continuar-s").textContent = `${n} ${n === 1 ? "item" : "itens"} na sacola · loja ${l.n} · ${brl(totais().sub)}`; // mesmo valor da barra "Ver sacola" (produtos; a entrega entra no fechamento)
     $("#continuar-b").textContent = "Continuar";
     $("#continuar-b").onclick = () => { track("continuar_pedido", { itens: n }); location.hash = "#/loja/" + l.id; setTimeout(abrirGaveta, 300); };
     box.hidden = false;
@@ -2518,9 +2517,9 @@ function renderSeloPontos() {
   $("#pontos-n").textContent = n ? fmtPts(n) : "Pontos";
   $("#btn-pontos").setAttribute("aria-label", n ? `Meus pontos: ${fmtPts(n)}, valem ${ptsEmR(n)}` : "Pontos Ogro: como funciona");
   const t = $("#pts-home-t"), s = $("#pts-home-s"), b = $("#pts-home-b");
-  if (n) { t.textContent = `Tu tem ${fmtPts(n)} pontos`; s.textContent = `Valem ${ptsEmR(n)} no próximo pedido. Usa direto na sacola.`; b.textContent = "Ver pontos"; }
-  else if (cam) { t.textContent = `+${fmtPts(cam)} pontos a caminho`; s.textContent = "Entram quando o pedido chegar."; b.textContent = "Ver pontos"; }
-  else { t.textContent = "Pedido aqui vira ponto"; s.textContent = `R$ 1 = 1 ponto. 100 pontos = R$ 5. No 1º pedido, +${PTS.boasVindas} de presente.`; b.textContent = "Ver como"; }
+  if (n) { t.textContent = `Tu tem ${fmtPts(n)} pontos:`; s.textContent = `valem ${ptsEmR(n)} no próximo pedido.`; b.textContent = "Ver pontos"; }
+  else if (cam) { t.textContent = `+${fmtPts(cam)} pontos a caminho:`; s.textContent = "entram quando o pedido chegar."; b.textContent = "Ver pontos"; }
+  else { t.textContent = "Pedido aqui vira ponto:"; s.textContent = `R$ 1 = 1 ponto, 100 pontos = R$ 5. No 1º pedido, +${PTS.boasVindas} de presente.`; b.textContent = "Ver como"; }
 }
 let ptsOrigem = null;
 function abrirPontos(origem) {
