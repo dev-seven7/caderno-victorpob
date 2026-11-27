@@ -1400,7 +1400,7 @@ const P = [
   { id: "dga", c: "dividir", n: "Ogro da Galera", d: "McManis + Ogro GPT + X-Cocó do Ogro + Batata Belga G + Nuggets (8) + 3 Coca-Cola lata 350ml.", p: 143.90, img: "p-dga", t: "simples" },
   { id: "dnu", c: "dividir", n: "McManis + Batata P + Bebida + Nuggets (4)", d: "McManis + batata palito P + Coca-Cola lata 350ml + 4 nuggets com barbecue.", p: 73.90, img: "p-dnu", t: "simples" },
   // combos
-  { id: "cmc", c: "combos", n: "Combo McManis", d: "McManis + batata + bebida. O carro-chefe com tudo que acompanha.", p: 59.90, img: "c-mcmanis", t: "combo", top: 1 },
+  { id: "cmc", c: "combos", n: "Combo McManis", d: "McManis + batata + bebida. O carro-chefe com tudo que acompanha.", p: 71.70, img: "c-mcmanis", t: "combo", top: 1 },  // preço real do Cardápio Digital (27/11; era 59,90)
   { id: "cfe", c: "combos", n: "Combo Ogro Festival", d: "Blend bovino, bacon, cheddar inglês e barbecue com especiarias + batata + bebida.", p: 59.90, img: "c-festival", t: "combo" },
   { id: "cos", c: "combos", n: "Combo Ogrostela", d: "Blend, cheddar inglês, maionese smoke, costela desfiada e barbecue + batata + bebida.", p: 69.90, img: "c-ogrostela", t: "combo" },
   { id: "ctx", c: "combos", n: "Combo Texano", d: "2 blends de 120g, american cheese, barbecue e maionese defumada + batata + bebida.", p: 67.80, img: "c-texano", t: "combo" },
@@ -1418,7 +1418,7 @@ const P = [
   { id: "bfe", c: "burgers", n: "Ogro Festival Burger", d: "Blend bovino, fatias de bacon, cheddar inglês e barbecue com especiarias no pão brioche.", p: 45.90, img: "festival", t: "burger", top: 3 },
   { id: "bos", c: "burgers", n: "Ogrostela", d: "O maioral tem nome. Blend bovino, cheddar inglês derretido, maionese smoke, costela desfiada e barbecue no pão brioche.", p: 50.90, img: "ogrostela", t: "burger", top: 4 },
   { id: "btx", c: "burgers", n: "Texano", d: "2 blends do Ogro de 120g, american cheese, barbecue e maionese defumada no pão brioche.", p: 47.90, img: "texano", t: "burger" },
-  { id: "bgp", c: "burgers", n: "Ogro GPT", d: "Blend bovino, cheddar, bacon crocante, alface, tomate, cebola caramelizada e maionese de alho confitado no pão brioche.", p: 48.90, img: "gpt", t: "burger" },
+  { id: "bgp", c: "burgers", n: "Ogro GPT", d: "Blend bovino, cheddar, bacon crocante, alface, tomate, cebola caramelizada e maionese de alho confitado no pão brioche.", p: 57.90, img: "gpt", t: "burger" },
   { id: "bxb", c: "burgers", n: "X Bacon", d: "Blend bovino, american cheese, maionese de alho confitado, bacon e barbecue no pão brioche.", p: 45.90, img: "xbacon", t: "burger" },
   { id: "bhi", c: "burgers", n: "Hiper McManis", d: "2 blends de 180g, american cheese, cebola caramelizada e maionese artesanal de alho confitado no pão brioche.", p: 69.90, img: "hiper-mcmanis", t: "burger" },
   { id: "bpc", c: "burgers", n: "P.C.Q (Pão, Carne e Queijo)", d: "O simples que dá certo. Blend bovino, american cheese e maionese artesanal de alho confitado no pão brioche.", p: 35.90, img: "pcq", t: "burger" },
@@ -1486,7 +1486,7 @@ const NIVEIS = [
 const TROCAS = [
   { id: "rag", pts: 115, g: "beber" }, { id: "rgu", pts: 150, g: "beber" }, { id: "rla", pts: 160, g: "beber" }, { id: "r60", pts: 210, g: "beber" },
   { id: "anu", pts: 190, g: "lado" }, { id: "sbr", pts: 230, g: "lado" }, { id: "abf", pts: 290, g: "lado" },
-  { id: "bpc", pts: 590, g: "burger" }, { id: "bmc", pts: 740, g: "burger" }, { id: "cpc", pts: 890, g: "burger" }, { id: "cmc", pts: 1190, g: "burger" }  // Combo McManis: R$ 71,70 na ficha real (o card ainda diz 59,90)
+  { id: "bpc", pts: 590, g: "burger" }, { id: "bmc", pts: 740, g: "burger" }, { id: "cpc", pts: 890, g: "burger" }, { id: "cmc", pts: 1190, g: "burger" }
 ];
 const GRUPOS_TROCA = [["beber", "Bebidas"], ["lado", "Acompanhamentos e doce"], ["burger", "Burgers e combos"]];
 const fmtPts = n => Math.round(n).toLocaleString("pt-BR");
@@ -1767,7 +1767,7 @@ const BANNERS = [
   { arq: "banner-dupla-monstro", dur: 7000, acao: "dmo", nome: "banner_dupla_monstro",
     alt: "Dupla Monstro, pra dividir: Ogrostela, Texano, Batata Belga G e 2 Coca-Cola lata por R$ 119,90. A janta de dois, resolvida por você. Toque para ver o combo." },
   { arq: "banner-combo-mcmanis", dur: 7000, acao: "cmc", nome: "banner_combo_mcmanis",
-    alt: "O carro-chefe: Combo McManis, com McManis, batata e bebida, por R$ 59,90. Você sabe o que é bom. Não complica. Toque para ver o combo." }
+    alt: "O carro-chefe: Combo McManis, com McManis, batata e bebida, por R$ 71,70. Você sabe o que é bom. Não complica. Toque para ver o combo." }
 ];
 const trilho = $("#carro-trilho"), dotsBox = $("#carro-dots"), NB = BANNERS.length;
 const pequeno = innerWidth < 700;
