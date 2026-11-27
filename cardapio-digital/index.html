@@ -618,6 +618,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 .pt-niveis b{font-size:14px}
 .pt-niveis em{font-style:normal;font-weight:800;color:var(--verde)}
 .pt-trocas{display:grid;gap:8px}
+.pt-sub{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza);margin-top:4px}
 .pt-troca{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center}
 .pt-troca .item__img{width:56px;height:56px}
 .pt-troca b{display:block;font-size:14px}
@@ -1480,8 +1481,14 @@ const NIVEIS = [
   { id: "casa", n: "Ogro de Casa", min: 3, mult: 1.2 },
   { id: "chapa", n: "Dono da Chapa", min: 6, mult: 1.5 }
 ];
-// preço ÷ pontos ≈ R$ 0,06 por ponto (desconto = R$ 0,05): a troca vale mais que o desconto
-const TROCAS = [{ id: "rla", pts: 160 }, { id: "anu", pts: 190 }, { id: "sbr", pts: 230 }, { id: "abf", pts: 290 }, { id: "bpc", pts: 590 }, { id: "bmc", pts: 740 }];
+// preço ÷ pontos ≈ R$ 0,06 por ponto (desconto = R$ 0,05): a troca vale mais que o desconto.
+// O preço é o da configuração mais barata da ficha (precoMin): é o que a troca cobre; o que passar disso o cliente paga.
+const TROCAS = [
+  { id: "rag", pts: 115, g: "beber" }, { id: "rgu", pts: 150, g: "beber" }, { id: "rla", pts: 160, g: "beber" }, { id: "r60", pts: 210, g: "beber" },
+  { id: "anu", pts: 190, g: "lado" }, { id: "sbr", pts: 230, g: "lado" }, { id: "abf", pts: 290, g: "lado" },
+  { id: "bpc", pts: 590, g: "burger" }, { id: "bmc", pts: 740, g: "burger" }, { id: "cpc", pts: 890, g: "burger" }, { id: "cmc", pts: 1190, g: "burger" }  // Combo McManis: R$ 71,70 na ficha real (o card ainda diz 59,90)
+];
+const GRUPOS_TROCA = [["beber", "Bebidas"], ["lado", "Acompanhamentos e doce"], ["burger", "Burgers e combos"]];
 const fmtPts = n => Math.round(n).toLocaleString("pt-BR");
 const ptsEmR = n => brl(Math.round(n) * PTS.real);
 const pctNivel = nv => (nv.mult * PTS.real * 100).toLocaleString("pt-BR") + "%";
@@ -1909,8 +1916,13 @@ function precoUnit(p, sel) {
     else if (g.tipo === "marca") val.forEach(n => v += precoOp(g, n));
     else Object.entries(val).forEach(([n, q]) => v += precoOp(g, n) * q);
   });
-  if (sel && sel.troca) v -= p.p; // troca por pontos: o preço de cardápio sai de graça (no refri ele mora no sabor); só o que passar disso é cobrado
+  if (sel && sel.troca) v -= precoMin(p); // troca por pontos: a configuração mais barata sai de graça (no refri o preço mora no sabor); só o que passar disso é cobrado
   return Math.round(Math.max(0, v) * 100) / 100;
+}
+// menor preço possível na ficha: base + o mínimo obrigatório de cada grupo pela opção mais barata
+function precoMin(p) {
+  if (!OPCOES[p.id]) return p.p;
+  return Math.round(gruposDe(p).reduce((v, g) => v + (g.min ? g.min * Math.min(...g.ops.map(o => o[1])) : 0), baseDe(p)) * 100) / 100;
 }
 function faltando(p, sel) {
   for (const g of gruposDe(p)) {
@@ -2540,7 +2552,7 @@ function renderPainelPontos() {
   h += `<div class="pt-card"><h3>Teu nível</h3><p>${textoNivel()}</p>${barraNivel()}
       <div class="pt-niveis">${NIVEIS.map(v => `<div class="${v.id === nv.id ? "at" : ""}"><span><b>${v.n}</b><br><small>${v.min ? `${v.min}+ pedidos em 90 dias` : "Desde o 1º pedido"}</small></span><span>${v.mult.toLocaleString("pt-BR")} pt por R$</span><em>${pctNivel(v)}</em></div>`).join("")}</div></div>`;
   h += `<div class="pt-card"><h3>Troca que rende mais</h3><p>Trocar por produto vale mais que o desconto: cada ponto rende uns R$ 0,06, em vez de R$ 0,05.</p>
-      <div class="pt-trocas">${TROCAS.map(tr => { const p = PID[tr.id], ok = disp >= tr.pts; return `<div class="pt-troca"><div class="item__img">${fotoTag(p.img, `alt="" loading="lazy" width="56" height="56"`)}</div><div><b>${esc(p.n)}</b><span>${fmtPts(tr.pts)} pontos · vale ${brl(p.p)}</span></div>${ok ? `<button class="btn btn--dark" data-trocar="${tr.id}" aria-label="Trocar ${fmtPts(tr.pts)} pontos por ${esc(p.n)}">Trocar</button>` : `<span>Faltam ${fmtPts(tr.pts - disp)}</span>`}</div>`; }).join("")}</div></div>`;
+      ${GRUPOS_TROCA.map(([gid, gn]) => `<h4 class="pt-sub">${gn}</h4><div class="pt-trocas">${TROCAS.filter(tr => tr.g === gid).map(tr => { const p = PID[tr.id], ok = disp >= tr.pts; return `<div class="pt-troca"><div class="item__img">${fotoTag(p.img, `alt="" loading="lazy" width="56" height="56"`)}</div><div><b>${esc(p.n)}</b><span>${fmtPts(tr.pts)} pontos · vale ${brl(precoMin(p))}</span></div>${ok ? `<button class="btn btn--dark" data-trocar="${tr.id}" aria-label="Trocar ${fmtPts(tr.pts)} pontos por ${esc(p.n)}">Trocar</button>` : `<span>Faltam ${fmtPts(tr.pts - disp)}</span>`}</div>`; }).join("")}</div>`).join("")}</div>`;
   h += `<div class="pt-card"><h3>Como funciona</h3><ol class="pt-passos">
       <li><span><b>Pede pelo Cardápio Digital</b>Cada R$ 1 em produto vira 1 ponto. Pedido de R$ 100 = 100 pontos.</span></li>
       <li><span><b>O pedido chega, os pontos entram</b>Ficam no teu WhatsApp e valem em qualquer loja do Ogro.</span></li>
