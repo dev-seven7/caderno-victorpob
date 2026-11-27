@@ -559,6 +559,87 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
   .barra-sacola{display:none}
   body{padding-bottom:0}
 }
+/* ---------- PONTOS OGRO ---------- */
+.topo__loja{min-width:0;flex-shrink:1}
+.topo__pts{display:flex;align-items:center;gap:5px;height:34px;padding:0 10px 0 7px;border-radius:99px;background:var(--grafite-800);color:#fff;font-weight:800;font-size:13px;flex:none;transition:transform .2s}
+.topo__loja[hidden]+.topo__pts{margin-left:auto}
+.topo__pts svg,.pts-ic{width:20px;height:20px;flex:none}
+.topo__pts.bump{animation:bump .5s}
+@keyframes ptsBrilho{50%{box-shadow:0 0 0 5px rgba(232,178,58,.35)}}
+.topo__pts.ganhou{animation:ptsBrilho .9s ease 2}
+.pts-home{background:var(--grafite-800);color:#fff;border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:520px;text-align:left;border:1px solid #444}
+.pts-home .pts-ic{width:34px;height:34px}
+.pts-home div{flex:1;font-size:13px;line-height:1.35;color:var(--concreto-100)}
+.pts-home strong{display:block;font-size:15px;color:#fff}
+.pts-home .btn{padding:9px 12px;font-size:13px}
+.pts-box{background:#fff;border:2px solid var(--amarelo);border-radius:var(--r);padding:12px 14px;display:grid;gap:10px}
+.pts-box__l{display:flex;gap:10px;align-items:center;font-size:13px;line-height:1.35;color:var(--grafite-700)}
+.pts-box__l b{display:block;font-size:15px;color:var(--preto)}
+.pts-box__l .pts-ic{width:30px;height:30px}
+.pts-box small{font-size:12px;color:var(--grafite-700)}
+.pts-box .prog i{background:var(--amarelo)}
+.pts-box .link{font-size:13px;justify-self:start}
+.pts-usar{display:flex;align-items:center;gap:10px;background:var(--concreto-50);border-radius:12px;padding:10px 12px;font-size:14px;cursor:pointer}
+.pts-usar span{flex:1;line-height:1.3}
+.pts-usar b{display:block}
+.pts-usar input{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:99px;background:var(--concreto);position:relative;flex:none;transition:background .2s;cursor:pointer}
+.pts-usar input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.pts-usar input:checked{background:var(--verde)}
+.pts-usar input:checked::after{transform:translateX(18px)}
+.pts-usar input:focus-visible{outline:3px solid var(--preto);outline-offset:2px}
+.totais .pts-l{color:var(--verde);font-weight:700}
+.totais .pts-g{color:#8a6410;font-weight:700;font-size:13px}
+.item .troca{display:inline-block;background:var(--amarelo);color:var(--preto);font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;margin-bottom:2px}
+.sh-pts{margin:0;padding:8px 16px;background:#FFF7E3;font-size:13px;color:#5c430b;display:flex;gap:8px;align-items:center;border-top:1px solid #F1DFAF}
+.sh-pts:empty{display:none}
+.sh-pts .pts-ic{width:18px;height:18px}
+/* painel "Meus pontos" */
+.pt-saldo{background:var(--preto);color:#fff;border-radius:18px;padding:18px 16px;display:grid;gap:6px;position:relative;overflow:clip}
+.pt-saldo::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(232,178,58,.28),transparent 70%)}
+.pt-saldo .n{font-family:var(--display);font-size:54px;line-height:1;color:var(--amarelo)}
+.pt-saldo .n small{font-size:22px;color:#fff;margin-left:6px}
+.pt-saldo .v{font-size:16px;font-weight:800}
+.pt-saldo p{font-size:13px;color:var(--concreto)}
+.pt-nivel{display:inline-flex;align-items:center;gap:6px;justify-self:start;background:var(--grafite-800);border:1px solid #555;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:800;color:#fff}
+.pt-nivel i{width:8px;height:8px;border-radius:50%;background:var(--amarelo)}
+.pt-card{background:#fff;border-radius:16px;padding:14px;display:grid;gap:10px}
+.pt-card h3{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:20px;letter-spacing:.01em}
+.pt-card p{font-size:13px;color:var(--grafite-700);line-height:1.4}
+.pt-card .prog{height:10px}
+.pt-card .prog i{background:var(--amarelo)}
+.pt-passos{list-style:none;display:grid;gap:10px;counter-reset:p}
+.pt-passos li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:14px;line-height:1.35;counter-increment:p}
+.pt-passos li::before{content:counter(p);width:28px;height:28px;border-radius:50%;background:var(--preto);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+.pt-passos b{display:block}
+.pt-niveis{display:grid;gap:6px}
+.pt-niveis div{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;font-size:13px;padding:8px 10px;border-radius:10px;background:var(--concreto-50)}
+.pt-niveis div.at{background:#FFF1CC;outline:2px solid var(--amarelo)}
+.pt-niveis b{font-size:14px}
+.pt-niveis em{font-style:normal;font-weight:800;color:var(--verde)}
+.pt-trocas{display:grid;gap:8px}
+.pt-troca{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center}
+.pt-troca .item__img{width:56px;height:56px}
+.pt-troca b{display:block;font-size:14px}
+.pt-troca span{font-size:12px;color:var(--grafite-700)}
+.pt-troca .btn{padding:9px 12px;font-size:13px}
+.pt-ext{list-style:none;display:grid;gap:0;font-size:13px}
+.pt-ext li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--concreto-200)}
+.pt-ext li:last-child{border-bottom:0}
+.pt-ext small{display:block;color:var(--cinza);font-size:11px}
+.pt-ext .mais{color:var(--verde);font-weight:800;white-space:nowrap}
+.pt-ext .menos{color:var(--barra);font-weight:800;white-space:nowrap}
+.pt-regras summary{font-weight:800;font-size:14px;cursor:pointer}
+.pt-regras ul{margin:8px 0 0 18px;font-size:13px;color:var(--grafite-700);display:grid;gap:4px;line-height:1.4}
+.pt-fecho{text-align:center;font-family:var(--display);text-transform:uppercase;font-size:20px;padding:4px 0 8px}
+/* pedido: pontos a caminho / creditados */
+.ped-pts{background:#fff;border-radius:18px;padding:16px;display:grid;gap:8px;border:2px solid var(--amarelo)}
+.ped-pts__l{display:flex;gap:12px;align-items:center}
+.ped-pts__l .pts-ic{width:40px;height:40px}
+.ped-pts__l b{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:24px;line-height:1.05}
+.ped-pts__l span{font-size:13px;color:var(--grafite-700)}
+.ped-pts.ok{background:#FFF7E3}
+.ped-pts .prog i{background:var(--amarelo)}
+.ped-pts .link{justify-self:start;font-size:13px}
 </style>
 </head>
 <body>
@@ -576,12 +657,14 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
   <symbol id="i-volta" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-ponto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#E8B23A"/><circle cx="12" cy="12" r="7.6" fill="none" stroke="#8a6410" stroke-width="1.4"/><path d="M12 7.2l1.45 2.95 3.25.47-2.35 2.29.56 3.24L12 14.62l-2.91 1.53.56-3.24-2.35-2.29 3.25-.47Z" fill="#1A1A1A"/></symbol>
 </svg>
 
 <header class="topo">
   <div class="wrap">
     <a href="#/" aria-label="Ogro Steaks · início"><img class="topo__logo" src="img/ogro-horizontal-branco.svg" alt="Ogro Steaks" width="120" height="30"></a>
     <button class="topo__loja" id="topo-loja" hidden aria-label="Trocar de loja"><span class="dot"></span><span id="topo-loja-n"></span></button>
+    <button class="topo__pts" id="btn-pontos" aria-label="Meus pontos"><svg aria-hidden="true"><use href="#i-ponto"/></svg><span id="pontos-n">Pontos</span></button>
     <button class="topo__sacola" id="btn-sacola" aria-label="Abrir sacola"><svg><use href="#i-sacola"/></svg><b id="sacola-n" aria-live="polite"></b></button>
   </div>
 </header>
@@ -604,6 +687,12 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
       <div class="continuar" id="continuar" hidden>
         <div><strong id="continuar-t">Teu pedido tá guardado</strong><span id="continuar-s"></span></div>
         <button class="btn btn--dark" id="continuar-b">Continuar</button>
+      </div>
+
+      <div class="pts-home" id="pts-home">
+        <svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg>
+        <div><strong id="pts-home-t">Pedido aqui vira ponto</strong><span id="pts-home-s">R$ 1 = 1 ponto. 100 pontos = R$ 5.</span></div>
+        <button class="btn btn--kraft" id="pts-home-b">Ver como</button>
       </div>
 
       <form class="busca" id="form-cep" novalidate>
@@ -723,6 +812,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
         <p style="font-size:13px;color:var(--cinza)" id="rs-loja"></p>
         <div id="rs-itens" style="display:grid;gap:6px"></div>
         <button class="link" id="rs-editar">Editar pedido</button>
+        <div id="rs-pts"></div>
         <div class="totais" id="rs-totais" style="padding:0"></div>
         <button class="btn btn--red btn--full" id="btn-confirmar" style="justify-content:space-between;padding:15px 18px;font-size:16px"><span>Confirmar pedido</span><span id="btn-confirmar-v"></span></button>
         <p class="seguro"><svg><use href="#i-cadeado"/></svg>Teus dados vão só pra loja que vai preparar o pedido.</p>
@@ -750,6 +840,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
       <p class="timer" id="pix-timer"></p>
       <button class="btn btn--red btn--full" id="btn-paguei">Já paguei</button>
     </div>
+    <div class="ped-pts" id="ped-pts" hidden aria-live="polite"></div>
     <div class="linha-tempo">
       <h2 class="disp">Acompanha aqui</h2>
       <ol class="lt" id="lt"></ol>
@@ -789,6 +880,7 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 <!-- sheet do produto -->
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-nome">
   <div class="sheet__corpo" id="sheet-corpo"></div>
+  <p class="sh-pts" id="sh-pts"></p>
   <div class="sheet__pe">
     <div class="stepper" aria-label="Quantidade"><button type="button" id="sh-menos" aria-label="Menos um">−</button><output id="sh-qtd">1</output><button type="button" id="sh-mais" aria-label="Mais um">+</button></div>
     <button class="btn btn--red" id="sh-add"><span id="sh-add-t">Adicionar</span><span id="sh-add-v"></span></button>
@@ -800,6 +892,12 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
   <div class="gaveta__cab"><h2 class="disp" id="h-sacola">Tua sacola</h2><button class="fechar" id="gv-fechar" aria-label="Fechar sacola"><svg><use href="#i-x"/></svg></button></div>
   <div class="gaveta__corpo" id="gv-corpo"></div>
   <div class="gaveta__pe" id="gv-pe"></div>
+</aside>
+
+<!-- painel "Meus pontos" -->
+<aside class="gaveta" id="pontos" role="dialog" aria-modal="true" aria-labelledby="h-pontos">
+  <div class="gaveta__cab"><h2 class="disp" id="h-pontos">Pontos Ogro</h2><button class="fechar" id="pt-fechar" aria-label="Fechar pontos"><svg><use href="#i-x"/></svg></button></div>
+  <div class="gaveta__corpo" id="pt-corpo"></div>
 </aside>
 
 <div class="toast" id="toast" role="status"><span id="toast-t"></span><button id="toast-b" hidden></button></div>
@@ -925,7 +1023,8 @@ const MAPA_EVENTOS = [
   ["filtro_cardapio", "Ligou ou tirou um filtro do cardápio (Frango, Costela, Bacon, Até R$ 40, Pra dividir), com nº de resultados", "", ""],
   ["search (resultados)", "A busca leva quantos produtos achou: 0 = o cliente procurou algo que não tem", "", ""],
   ["erro_tecnico", "Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)", "", ""],
-  ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""]
+  ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""],
+  ["pontos_painel · pontos_usar · pontos_troca · pontos_creditados", "Pontos Ogro: abriu o painel (de onde) · ligou ou desligou o desconto (pontos e R$) · trocou pontos por produto · pontos entraram na entrega (saldo e nível). O purchase leva pontos_ganhos, pontos_usados, desconto_pontos e nivel_pontos", "", ""]
 ];
 function metaParams(ev) {
   const e = ev.ecommerce || {}, it = e.items || [];
@@ -1358,6 +1457,87 @@ const S = {
   filtro: "Todas"
 };
 const salvarCart = () => { Store.set("ogro_sacola", S.cart); Store.set("ogro_sacola_ts", Date.now()); if (!S.cart.length) S.completaVista = false; };
+/* ---------- PONTOS OGRO (cashback em pontos · proposta de 27/11) ----------
+   Simulado no aparelho. No ar, a carteira fica no backend, presa ao WhatsApp do cliente (CRM, #56), e quem credita
+   é a loja ao marcar "entregue". Regras:
+   · R$ 1 pago em produto = 1 ponto. Taxa de entrega não pontua; cupom e pontos usados saem da conta.
+   · 100 pontos = R$ 5 (5% de volta). Usa a partir de 100 pontos, até metade do valor dos produtos.
+   · Nível pelos pedidos dos últimos 90 dias: Ogro 1×, Ogro de Casa (3+) 1,5×, Dono da Chapa (6+) 2×
+     = 5%, 7,5% e 10% de volta (teto de 10% do Ogro).
+   · Troca por produto rende ~20% mais que o desconto em R$ (para o Ogro custa só o CMV do item).
+   · Os pontos entram quando o pedido é entregue e valem 90 dias desde o último pedido (cada pedido renova tudo).
+   · 1º pedido pelo Cardápio Digital: +50 pontos de boas-vindas. Só o Cardápio Digital pontua (iFood e 99Food não). */
+const PTS = { real: 0.05, min: 100, teto: 0.5, validade: 90, boasVindas: 50 };
+const NIVEIS = [
+  { id: "ogro", n: "Ogro", min: 0, mult: 1 },
+  { id: "casa", n: "Ogro de Casa", min: 3, mult: 1.5 },
+  { id: "chapa", n: "Dono da Chapa", min: 6, mult: 2 }
+];
+// preço ÷ pontos ≈ R$ 0,06 por ponto (desconto = R$ 0,05): a troca vale mais que o desconto
+const TROCAS = [{ id: "rla", pts: 160 }, { id: "anu", pts: 190 }, { id: "sbr", pts: 230 }, { id: "abf", pts: 290 }, { id: "bpc", pts: 590 }, { id: "bmc", pts: 740 }];
+const fmtPts = n => Math.round(n).toLocaleString("pt-BR");
+const ptsEmR = n => brl(Math.round(n) * PTS.real);
+const pctNivel = nv => (nv.mult * PTS.real * 100).toLocaleString("pt-BR") + "%";
+const dataCurta = ts => new Date(ts).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+const Pontos = (() => {
+  const K = "ogro_pontos", DIA = 864e5;
+  let W = Object.assign({ saldo: 0, ext: [], pedidos: [], pend: [], venc: 0 }, Store.get(K) || {});
+  const salvar = () => Store.set(K, W);
+  const agora = () => Date.now();
+  function lancar(txt, pts, ts = agora()) { W.ext.unshift({ ts, txt, pts }); W.ext = W.ext.slice(0, 40); }
+  function expirar() {
+    if (W.saldo > 0 && W.venc && agora() > W.venc) { lancar(`Venceram (${PTS.validade} dias sem pedido)`, -W.saldo, W.venc); W.saldo = 0; salvar(); }
+  }
+  const pedidos90 = () => W.pedidos.filter(t => agora() - t < PTS.validade * DIA).length;
+  const nivel = (n = pedidos90()) => NIVEIS.slice().reverse().find(v => n >= v.min);
+  const proxNivel = (n = pedidos90()) => NIVEIS.find(v => v.min > n);
+  const reservado = () => S.cart.reduce((a, i) => a + (i.sel && i.sel.troca ? i.sel.troca * i.q : 0), 0);
+  const disponivel = () => Math.max(0, W.saldo - reservado());
+  const primeiro = () => !W.pedidos.length;
+  const aCaminho = () => W.pend.reduce((a, x) => a + x.pts, 0);
+  function ganho(pago) {
+    const base = Math.floor(Math.max(0, pago) * nivel().mult), bonus = primeiro() ? PTS.boasVindas : 0;
+    return { base, bonus, total: base + bonus, nivel: nivel().id };
+  }
+  function creditar(num) {
+    const x = W.pend.find(y => y.num === num); if (!x) return 0;
+    W.pend = W.pend.filter(y => y !== x); W.saldo += x.pts;
+    lancar(`Pedido ${num} entregue${x.bonus ? ` (com +${x.bonus} de boas-vindas)` : ""}`, x.pts); salvar();
+    track("pontos_creditados", { transaction_id: num, pontos: x.pts, saldo: W.saldo, nivel: nivel().id });
+    return x.pts;
+  }
+  // no ar o backend credita quando a loja marca "entregue"; aqui, pedido simulado com mais de 1 h conta como entregue
+  function creditarVelhos() { W.pend.filter(x => agora() - x.ts > 3600e3).forEach(x => creditar(x.num)); }
+  // sacola salva com troca que o saldo não cobre mais (venceu, outro aparelho...): a troca sai
+  function conferirSacola() {
+    if (reservado() <= W.saldo) return false;
+    S.cart = S.cart.filter(i => !(i.sel && i.sel.troca)); salvarCart();
+    toast("A troca por pontos saiu da sacola: teu saldo mudou."); return true;
+  }
+  function fechar(num, t) {
+    const trocas = S.cart.filter(i => i.sel && i.sel.troca);
+    const usados = t.pts + reservado();
+    if (t.pts) lancar(`Desconto no pedido ${num} (− ${brl(t.ptsDesc)})`, -t.pts);
+    trocas.forEach(i => lancar(`Troca: ${PID[i.id].n} (pedido ${num})`, -i.sel.troca * i.q));
+    W.saldo = Math.max(0, W.saldo - usados);
+    W.pedidos.push(agora()); W.pedidos = W.pedidos.filter(x => agora() - x < 365 * DIA);
+    W.venc = agora() + PTS.validade * DIA;
+    if (t.ganha.total) W.pend.push({ num, pts: t.ganha.total, bonus: t.ganha.bonus, ts: agora() });
+    salvar();
+    return { ganha: t.ganha.total, bonus: t.ganha.bonus, usados, trocas: trocas.length, nivel: t.ganha.nivel };
+  }
+  // conta de exemplo para apresentar a experiência (Manu, Igor, Databite): 2 pedidos, 240 pontos
+  function demo() {
+    const d = n => agora() - n * DIA;
+    W = { saldo: 240, pedidos: [d(26), d(9)], pend: [], venc: d(9) + PTS.validade * DIA, ext: [] };
+    lancar("Pedido OG-418220 entregue (com +50 de boas-vindas)", 112, d(26) + 3600e3);
+    lancar("Pedido OG-502917 entregue", 128, d(9) + 3600e3);
+    W.ext.sort((a, b) => b.ts - a.ts); salvar();
+  }
+  function zerar() { W = { saldo: 0, ext: [], pedidos: [], pend: [], venc: 0 }; salvar(); }
+  expirar(); creditarVelhos();
+  return { get W() { return W; }, nivel, proxNivel, pedidos90, disponivel, reservado, primeiro, aCaminho, ganho, creditar, fechar, conferirSacola, demo, zerar };
+})();
 const lojaAtual = () => LOJAS.find(l => l.id === S.loja);
 function distLoja(l) {
   const o = S.geo || (S.cep && cepCoord(S.cep)) ? (S.geo || { lat: cepCoord(S.cep)[0], lng: cepCoord(S.cep)[1] }) : null;
@@ -1720,7 +1900,8 @@ function precoUnit(p, sel) {
     else if (g.tipo === "marca") val.forEach(n => v += precoOp(g, n));
     else Object.entries(val).forEach(([n, q]) => v += precoOp(g, n) * q);
   });
-  return Math.round(v * 100) / 100;
+  if (sel && sel.troca) v -= p.p; // troca por pontos: o preço de cardápio sai de graça (no refri ele mora no sabor); só o que passar disso é cobrado
+  return Math.round(Math.max(0, v) * 100) / 100;
 }
 function faltando(p, sel) {
   for (const g of gruposDe(p)) {
@@ -1756,6 +1937,8 @@ function abrirProduto(id, editKey, origem, semEmpurrar) {
   const ed = editKey ? S.cart.find(i => i.k === editKey) : null;
   SH = { p, q: ed ? ed.q : 1, sel: ed ? JSON.parse(JSON.stringify(ed.sel)) : selPadrao(p), editKey, midia: null, abertos: {} };
   if (!SH.sel.g) SH.sel.g = {};
+  if (!ed && S.proxTroca) { SH.sel.troca = S.proxTroca; S.proxTroca = null; }
+  SH.troca = SH.sel.troca || 0; if (SH.troca) SH.q = 1;
   renderSheet(true);
   abrir($("#sheet"));
   rolagemFicha = scrollY;
@@ -1865,8 +2048,13 @@ function atualizarPeSheet() {
   $("#sh-qtd").textContent = q;
   $("#sh-menos").disabled = q <= 1;
   $("#sh-add").disabled = !!falta;
-  $("#sh-add-t").textContent = falta || (SH.editKey ? "Atualizar" : "Adicionar");
-  $("#sh-add-v").textContent = brl(precoUnit(p, sel) * q);
+  $("#sh-add-t").textContent = falta || (SH.troca ? (SH.editKey ? "Atualizar troca" : `Trocar por ${fmtPts(SH.troca)} pts`) : SH.editKey ? "Atualizar" : "Adicionar");
+  $("#sh-add-v").textContent = SH.troca && !precoUnit(p, sel) ? "grátis" : brl(precoUnit(p, sel) * q);
+  if (SH.troca) $("#sh-mais").disabled = true;
+  const ganha = Math.floor(precoUnit(p, sel) * q * Pontos.nivel().mult);
+  $("#sh-pts").innerHTML = SH.troca
+    ? `<svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg><span>Troca por pontos: usa <b>${fmtPts(SH.troca)}</b> dos teus ${fmtPts(Pontos.W.saldo)}.${precoUnit(p, sel) ? " Os adicionais pagos entram no total." : ""}</span>`
+    : ganha ? `<svg class="pts-ic" aria-hidden="true"><use href="#i-ponto"/></svg><span>Rende <b>+${fmtPts(ganha)} pontos</b> (${ptsEmR(ganha)} pro próximo pedido)</span>` : "";
 }
 const nomeG = gid => (gruposDe(SH.p).find(g => g.id === gid) || {}).t || gid;
 function depoisDeEscolher() {
@@ -1929,8 +2117,9 @@ $("#sh-add").onclick = () => {
   const itAdd = [itemCart({ id: p.id, q, sel, u: precoUnit(p, sel) })];
   track("add_to_cart", { origem, editou: editKey ? true : undefined }, { value: valorDe(itAdd), items: itAdd });
   const temAcomp = S.cart.some(i => PID[i.id].c === "acomp" || PID[i.id].c === "combos" || PID[i.id].c === "dividir" || i.sel.combo);
-  if (p.t === "burger" && !temAcomp) toast(`${p.n} na sacola.`, "+ Batata frita", () => addRapido("abf", $("#toast-b").getBoundingClientRect()), 5000);
-  else toast(editKey ? "Item atualizado." : `${q}× ${p.n} na sacola.`, "Ver sacola", abrirGaveta);
+  if (p.t === "burger" && !temAcomp && !sel.troca) toast(`${p.n} na sacola.`, "+ Batata frita", () => addRapido("abf", $("#toast-b").getBoundingClientRect()), 5000);
+  else toast(editKey ? "Item atualizado." : sel.troca ? `${p.n} na sacola, trocado por ${fmtPts(sel.troca)} pontos.` : `${q}× ${p.n} na sacola.`, "Ver sacola", abrirGaveta);
+  if (sel.troca && !editKey) track("pontos_troca", { item_id: p.id, item_name: p.n, pontos: sel.troca, saldo: Pontos.W.saldo });
 };
 // A foto do produto voa da ficha (ou do aviso) até o ícone da sacola, que pulsa quando ela chega; vibração curta no celular.
 // Sem animação nem vibração para quem pediu menos movimento. Devolve true se animou (aí o pulso fica para a chegada).
@@ -1966,7 +2155,12 @@ function totais() {
   const taxa = S.cart.length ? (taxaKm(d) ?? 6.9) : 0;
   let desc = 0, cupomMsg = "", falta = 0;
   if (S.cupom && CUPONS[S.cupom]) { const c = CUPONS[S.cupom]; if (sub >= c.min) desc = Math.round(sub * c.pct) / 100; else falta = c.min - sub; }
-  return { sub, taxa, desc, falta, total: Math.max(0, sub - desc + taxa) };
+  // pontos: a partir de 100, até metade do valor dos produtos (depois do cupom)
+  let pts = 0, ptsDesc = 0;
+  const ptsLim = Math.floor(Math.max(0, sub - desc) * PTS.teto / PTS.real), ptsPode = Math.min(Pontos.disponivel(), ptsLim);
+  if (S.usarPts && ptsPode >= PTS.min) { pts = ptsPode; ptsDesc = Math.round(pts * PTS.real * 100) / 100; }
+  const pago = Math.max(0, sub - desc - ptsDesc);
+  return { sub, taxa, desc, falta, pts, ptsDesc, ptsPode, ganha: Pontos.ganho(pago), total: pago + taxa };
 }
 function descSel(i) {
   const s = i.sel, out = [], p = PID[i.id];
@@ -2003,19 +2197,21 @@ function renderGaveta() {
     pe.innerHTML = `<button class="btn btn--red" data-ir="${l ? "#/loja/" + l.id : "#/"}"><span>${l ? "Ver o cardápio" : "Escolher a loja"}</span><svg><use href="#i-seta"/></svg></button>`;
     return;
   }
+  Pontos.conferirSacola();
   const t = totais();
   const ids = new Set(S.cart.map(i => i.id));
   const sug = P.filter(p => p.sug && !ids.has(p.id)).sort((a, b) => a.sug - b.sug).slice(0, 5);
   c.innerHTML = `${l ? `<p style="font-size:13px;color:var(--grafite-700)">Loja <b>${l.n}</b> · ${tempoKm(distLoja(l))}</p>` : ""}
     ${S.cart.map(i => { const p = PID[i.id]; return `<div class="item">
       <div class="item__img">${p.img ? fotoTag(p.arte ? p.img + "-q" : p.img, `alt="" loading="lazy" width="56" height="56"`) : `<div class="ph">${esc(p.ic || p.n.slice(0, 2))}</div>`}</div>
-      <div><h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
-        <div class="item__pe"><div class="stepper"><button data-q="${esc(i.k)}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${esc(i.k)}|1" aria-label="Mais um">+</button></div>
-        ${gruposDe(p).length || ["burgers", "combos", "dividir"].includes(p.c) ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
+      <div>${i.sel.troca ? `<span class="troca">Troca · ${fmtPts(i.sel.troca)} pts</span>` : ""}<h3>${esc(p.n)}</h3><p>${esc(descSel(i)) || "&nbsp;"}</p>
+        <div class="item__pe"><div class="stepper"><button data-q="${esc(i.k)}|-1" aria-label="${i.q === 1 ? "Remover" : "Menos um"}">${i.q === 1 ? "🗑" : "−"}</button><output>${i.q}</output><button data-q="${esc(i.k)}|1" aria-label="Mais um"${i.sel.troca ? " disabled" : ""}>+</button></div>
+        ${gruposDe(p).length || ["burgers", "combos", "dividir"].includes(p.c) ? `<button class="link" data-edit="${esc(i.k)}">Editar</button>` : ""}<b>${i.sel.troca && !i.u ? "grátis" : brl(i.u * i.q)}</b></div></div></div>`; }).join("")}
     ${sug.length ? `<div class="sug"><h3>Combina com teu pedido</h3><div class="sug__l">${sug.map((p, i) => `<button class="sug__i" data-add="${p.id}" data-list="sacola_sugestoes" data-idx="${i}">${p.img ? fotoTag(p.img, `alt="" loading="lazy" width="140" height="80"`) : `<div class="ph">${esc(p.ic || "")}</div>`}<div><b>${esc(p.n)}</b><span>+ ${brl(p.p)}</span></div></button>`).join("")}</div></div>` : ""}
     <div><div class="cupom"><input class="campo" id="cupom" placeholder="Tem cupom?" value="${S.cupom || ""}" aria-label="Cupom" autocomplete="off"><button class="btn btn--dark" id="cupom-b">${S.cupom ? "Trocar" : "Aplicar"}</button></div>
       <div id="cupom-msg">${S.cupom ? (t.falta ? `<p class="cupom-msg">Faltam <b>${brl(t.falta)}</b> pro cupom ${S.cupom} valer.</p><div class="prog"><i style="width:${Math.min(100, (t.sub / CUPONS[S.cupom].min) * 100)}%"></i></div>` : `<p class="cupom-msg ok">✓ ${S.cupom} aplicado: ${CUPONS[S.cupom].txt}</p>`) : ""}</div></div>
-    <div class="totais"><div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}<div><span>Entrega${distLoja(l) == null ? " (estimada)" : ""}</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div></div>`;
+    ${caixaPontos(t, "sacola")}
+    <div class="totais"><div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}${linhasPontos(t)}<div><span>Entrega${distLoja(l) == null ? " (estimada)" : ""}</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div>${t.ganha.total ? `<div class="pts-g"><span>Esse pedido rende</span><span>+${fmtPts(t.ganha.total)} pontos</span></div>` : ""}</div>`;
   pe.innerHTML = `<button class="btn btn--red" id="gv-fechar-ped"><span>Fechar pedido</span><span>${brl(t.total)}</span></button>`;
   Expo.observar(c);
 }
@@ -2073,6 +2269,7 @@ $("#gaveta").addEventListener("click", e => {
     // a chave do item já tem "|" e JSON dentro: o passo (+1/−1) é o que vem depois do ÚLTIMO "|"
     const cut = q.dataset.q.lastIndexOf("|"), k = q.dataset.q.slice(0, cut), d = q.dataset.q.slice(cut + 1);
     const i = S.cart.find(x => x.k === k); if (!i) return;
+    if (i.sel.troca && +d > 0) return toast("A troca por pontos é uma por item. Quer outra? Abre os pontos e troca de novo.");
     i.q += +d;
     const um = [itemCart({ ...i, q: 1 })];
     if (+d > 0) track("add_to_cart", { origem: "sacola_mais_um" }, { value: valorDe(um), items: um });
@@ -2123,6 +2320,7 @@ const perfil = () => Store.get("ogro_perfil") || {};
 function mascTel(v) { v = v.replace(/\D/g, "").slice(0, 11); if (v.length > 6) return `(${v.slice(0, 2)}) ${v.slice(2, v.length - 4)}-${v.slice(-4)}`; if (v.length > 2) return `(${v.slice(0, 2)}) ${v.slice(2)}`; return v; }
 function renderCheckout() {
   if (!S.cart.length) { location.hash = S.loja ? "#/loja/" + S.loja : "#/"; return; }
+  Pontos.conferirSacola();
   const pf = perfil(), l = lojaAtual(), ab = aberta(l.id);
   const set = (id, v) => { const el = $(id); if (el && !el.value && v) el.value = v; };
   set("#f-nome", pf.nome); set("#f-tel", pf.tel); set("#f-cep", pf.cep || (S.cep ? mascaraCep(S.cep) : "")); set("#f-rua", pf.rua); set("#f-num", pf.num); set("#f-bairro", pf.bairro); set("#f-comp", pf.comp); set("#f-ref", pf.ref);
@@ -2146,8 +2344,9 @@ function renderCheckout() {
 function renderResumo() {
   const t = totais(), l = lojaAtual();
   $("#rs-loja").textContent = l ? `Loja ${l.n} · ${l.cid}` : "";
-  $("#rs-itens").innerHTML = S.cart.map(i => `<div class="l"><span>${i.q}× ${esc(PID[i.id].n)}</span><span>${brl(i.u * i.q)}</span></div>`).join("");
-  $("#rs-totais").innerHTML = `<div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}<div><span>Entrega</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div>`;
+  $("#rs-itens").innerHTML = S.cart.map(i => `<div class="l"><span>${i.q}× ${esc(PID[i.id].n)}${i.sel.troca ? ` <small style="color:#8a6410;font-weight:800">(troca · ${fmtPts(i.sel.troca)} pts)</small>` : ""}</span><span>${i.sel.troca && !i.u ? "grátis" : brl(i.u * i.q)}</span></div>`).join("");
+  $("#rs-pts").innerHTML = caixaPontos(t, "checkout");
+  $("#rs-totais").innerHTML = `<div><span>Subtotal</span><span>${brl(t.sub)}</span></div>${t.desc ? `<div class="desc"><span>Cupom ${S.cupom}</span><span>− ${brl(t.desc)}</span></div>` : ""}${linhasPontos(t)}<div><span>Entrega</span><span>${brl(t.taxa)}</span></div><div class="tot"><span>Total</span><span>${brl(t.total)}</span></div>${t.ganha.total ? `<div class="pts-g"><span>Tu ganha quando chegar</span><span>+${fmtPts(t.ganha.total)} pontos</span></div>` : ""}`;
   $("#btn-confirmar-v").textContent = brl(t.total);
   atualizarSacola();
 }
@@ -2180,13 +2379,14 @@ $("#btn-confirmar").onclick = () => {
   const t = totais(), pag = $("input[name=pag]:checked").value, quando = $("input[name=quando]:checked").value;
   { const its = S.cart.map(itemCart); track("add_shipping_info", { shipping_tier: quando === "agora" ? "agora" : "agendado", lembrar_dados: $("#f-lembrar").checked }, { value: +t.total.toFixed(2), shipping_tier: quando === "agora" ? "agora" : "agendado", items: its }); }
   const num = "OG-" + String(Date.now()).slice(-6);
-  const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now() };
+  const pts = Pontos.fechar(num, t); // debita o que usou e deixa os pontos ganhos "a caminho" até a entrega
+  const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now(), pts };
   Store.set("ogro_pedido", pedido);
-  Store.set("ogro_ultimo", { loja: S.loja, itens: S.cart });
+  Store.set("ogro_ultimo", { loja: S.loja, itens: S.cart.filter(i => !i.sel.troca) }); // "pedir de novo" não repete troca por pontos
   // No ar o purchase só sai depois que o backend confirma o pedido (nunca no clique). Aqui é simulação.
   const itsC = S.cart.map(itemCart);
-  track("purchase", { event_id: `${storeId(S.loja)}_pedido_${num}`, payment_type: pag, agendado: quando !== "agora" }, { transaction_id: num, value: +t.total.toFixed(2), tax: 0, shipping: +t.taxa.toFixed(2), discount: t.desc ? +t.desc.toFixed(2) : undefined, coupon: S.cupom || undefined, items: itsC });
-  S.cart = []; S.cupom = null; salvarCart(); Store.del("ogro_cupom"); atualizarSacola();
+  track("purchase", { event_id: `${storeId(S.loja)}_pedido_${num}`, payment_type: pag, agendado: quando !== "agora", pontos_ganhos: pts.ganha, pontos_usados: pts.usados || undefined, desconto_pontos: t.ptsDesc || undefined, nivel_pontos: pts.nivel }, { transaction_id: num, value: +t.total.toFixed(2), tax: 0, shipping: +t.taxa.toFixed(2), discount: t.desc || t.ptsDesc ? +(t.desc + t.ptsDesc).toFixed(2) : undefined, coupon: S.cupom || undefined, items: itsC });
+  S.cart = []; S.cupom = null; S.usarPts = false; salvarCart(); Store.del("ogro_cupom"); atualizarSacola();
   location.hash = "#/pedido/" + num;
 };
 
@@ -2211,7 +2411,7 @@ function renderPedido() {
   $("#ped-pix").hidden = !pix;
   ETAPAS[1][2] = p.pag === "pix" ? "Pix recebido." : p.pag === "cartao" ? "Paga no cartão quando chegar." : "Paga em dinheiro quando chegar.";
   let at = p.pag === "pix" && !p.pago ? 0 : 1;
-  const desenhar = () => { const fim = at === ETAPAS.length - 1; $("#lt").innerHTML = ETAPAS.map(([ic, t, s], i) => `<li class="${i < at || fim ? "ok" : i === at ? "at" : ""}"><i>${i < at || fim ? "✓" : ic}</i><div>${t}<small>${i <= at ? s : ""}</small></div></li>`).join(""); $("#ped-aval").hidden = at < ETAPAS.length - 1; };
+  const desenhar = () => { const fim = at === ETAPAS.length - 1; if (fim && p.pts && Pontos.creditar(p.num)) ptsChegaram(); cartaoPontosPedido(p, fim); $("#lt").innerHTML = ETAPAS.map(([ic, t, s], i) => `<li class="${i < at || fim ? "ok" : i === at ? "at" : ""}"><i>${i < at || fim ? "✓" : ic}</i><div>${t}<small>${i <= at ? s : ""}</small></div></li>`).join(""); $("#ped-aval").hidden = at < ETAPAS.length - 1; };
   desenhar();
   clearInterval(ltTimer); clearInterval(pixTimer);
   const avancar = () => { ltTimer = setInterval(() => { if (at < ETAPAS.length - 1) { at++; desenhar(); } else clearInterval(ltTimer); }, 4000); }; // demo acelerada
@@ -2249,6 +2449,133 @@ $("#nudge-nao").onclick = () => { track("nudge_click", { acao: "ainda_escolhendo
 function resetIdle() { clearTimeout(idleT); idleT = setTimeout(() => mostrarNudge("inatividade"), 75000); }
 ["pointerdown", "keydown", "scroll"].forEach(ev => addEventListener(ev, resetIdle, { passive: true }));
 document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY < 8) mostrarNudge("saida"); });
+
+/* ---------- PONTOS OGRO: telas ----------
+   Onde o cliente vê os pontos: selo no topo (saldo), faixa na entrada, ficha ("rende +X"), sacola e checkout
+   (quanto rende, chave pra usar, barra até o 1º desconto), pedido (a caminho → na conta + nível) e o painel "Pontos Ogro". */
+const icPts = (c = "pts-ic") => `<svg class="${c}" aria-hidden="true"><use href="#i-ponto"/></svg>`;
+function linhasPontos(t) {
+  return t.pts ? `<div class="pts-l"><span>Pontos (${fmtPts(t.pts)})</span><span>− ${brl(t.ptsDesc)}</span></div>` : "";
+}
+function caixaPontos(t, onde) {
+  if (!S.cart.length) return "";
+  const disp = Pontos.disponivel(), g = t.ganha;
+  let h = `<div class="pts-box">
+    <div class="pts-box__l">${icPts()}<div><b>${g.total ? `Esse pedido rende +${fmtPts(g.total)} pontos` : "Pontos Ogro"}</b>${g.total ? `= ${ptsEmR(g.total)} pro próximo pedido. Entram quando chegar.` : "Cada R$ 1 em produto vira 1 ponto."}</div></div>`;
+  if (g.bonus) h += `<small>Já conta +${g.bonus} de boas-vindas: é teu 1º pedido pelo Cardápio Digital. 🎁</small>`;
+  if (t.ptsPode >= PTS.min) {
+    h += `<label class="pts-usar"><span><b>Usar ${fmtPts(t.ptsPode)} pontos</b>− ${ptsEmR(t.ptsPode)} neste pedido${t.ptsPode < disp ? `. Vale até metade dos produtos, sobram ${fmtPts(disp - t.ptsPode)}` : ""}</span><input type="checkbox" data-pts-usar="${onde}"${S.usarPts ? " checked" : ""} aria-label="Usar ${fmtPts(t.ptsPode)} pontos neste pedido"></label>`;
+  } else if (disp >= PTS.min) {
+    h += `<small>Teus ${fmtPts(disp)} pontos entram como desconto em pedido a partir de ${brl(PTS.min * PTS.real / PTS.teto)} em produtos.</small>`;
+  } else {
+    const depois = disp + g.total;
+    h += `<div><small>${disp ? `Tu tem ${fmtPts(disp)} pontos. ` : ""}Com esse pedido fica com <b>${fmtPts(depois)}</b>${depois >= PTS.min ? `: ${ptsEmR(depois)} de desconto no próximo.` : ` de ${PTS.min} pro 1º desconto.`}</small><div class="prog" role="img" aria-label="${fmtPts(Math.min(depois, PTS.min))} de ${PTS.min} pontos"><i style="width:${Math.min(100, depois / PTS.min * 100)}%"></i></div></div>`;
+  }
+  return h + `<button class="link" type="button" data-pts-abrir="${onde}">Como funcionam os pontos</button></div>`;
+}
+function textoNivel(curto) {
+  const nv = Pontos.nivel(), prox = Pontos.proxNivel(), n90 = Pontos.pedidos90();
+  if (!prox) return `Tu é <b>${nv.n}</b>: ${pctNivel(nv)} de volta em todo pedido, o máximo da casa.`;
+  const f = prox.min - n90;
+  return `${curto ? "" : `${n90} de ${prox.min} pedidos nos últimos 90 dias. `}Mais ${f} pedido${f > 1 ? "s" : ""} e tu vira <b>${prox.n}</b>: ${pctNivel(prox)} de volta.`;
+}
+const barraNivel = () => { const prox = Pontos.proxNivel(), n90 = Pontos.pedidos90(); return prox ? `<div class="prog" role="img" aria-label="${n90} de ${prox.min} pedidos"><i style="width:${n90 / prox.min * 100}%"></i></div>` : ""; };
+function cartaoPontosPedido(p, fim) {
+  const box = $("#ped-pts"), x = p.pts;
+  if (!x || (!x.ganha && !x.usados)) { box.hidden = true; return; }
+  const W = Pontos.W, entregue = fim || !W.pend.some(y => y.num === p.num);
+  box.hidden = false; box.classList.toggle("ok", entregue);
+  const topo = !x.ganha ? `<b>Pontos usados</b><span>Saldo: ${fmtPts(W.saldo)} pontos.</span>`
+    : entregue ? `<b>+${fmtPts(x.ganha)} pontos na conta</b><span>Saldo: ${fmtPts(W.saldo)} pontos = ${ptsEmR(W.saldo)} pro próximo pedido.</span>`
+    : `<b>+${fmtPts(x.ganha)} pontos a caminho</b><span>Entram quando o pedido chegar${x.bonus ? `, já com +${x.bonus} de boas-vindas` : ""}.</span>`;
+  box.innerHTML = `<div class="ped-pts__l">${icPts()}<div>${topo}</div></div>
+    ${x.usados ? `<p style="font-size:13px">Neste pedido tu usou ${fmtPts(x.usados)} pontos.</p>` : ""}
+    <p style="font-size:13px;color:var(--grafite-700)">${textoNivel(true)}</p>${barraNivel()}
+    <button class="link" data-pts-abrir="pedido">Ver meus pontos</button>`;
+}
+function ptsChegaram() {
+  renderSeloPontos();
+  const b = $("#btn-pontos"); b.classList.remove("ganhou", "bump"); void b.offsetWidth; b.classList.add("ganhou", "bump");
+  try { navigator.vibrate && navigator.vibrate([12, 60, 12]); } catch (e) {}
+}
+function renderSeloPontos() {
+  const W = Pontos.W, n = W.saldo, cam = Pontos.aCaminho();
+  $("#pontos-n").textContent = n ? fmtPts(n) : "Pontos";
+  $("#btn-pontos").setAttribute("aria-label", n ? `Meus pontos: ${fmtPts(n)}, valem ${ptsEmR(n)}` : "Pontos Ogro: como funciona");
+  const t = $("#pts-home-t"), s = $("#pts-home-s"), b = $("#pts-home-b");
+  if (n) { t.textContent = `Tu tem ${fmtPts(n)} pontos`; s.textContent = `Valem ${ptsEmR(n)} no próximo pedido. Usa direto na sacola.`; b.textContent = "Ver pontos"; }
+  else if (cam) { t.textContent = `+${fmtPts(cam)} pontos a caminho`; s.textContent = "Entram quando o pedido chegar."; b.textContent = "Ver pontos"; }
+  else { t.textContent = "Pedido aqui vira ponto"; s.textContent = `R$ 1 = 1 ponto. 100 pontos = R$ 5. No 1º pedido, +${PTS.boasVindas} de presente.`; b.textContent = "Ver como"; }
+}
+let ptsOrigem = null;
+function abrirPontos(origem) {
+  if ($(".sheet.on, .gaveta.on, .nudge.on")) fecharTudo();
+  ptsOrigem = origem; renderPainelPontos(); abrir($("#pontos")); $("#pt-corpo").scrollTop = 0;
+  track("pontos_painel", { origem, saldo: Pontos.W.saldo, nivel: Pontos.nivel().id });
+}
+function renderPainelPontos() {
+  const W = Pontos.W, nv = Pontos.nivel(), disp = Pontos.disponivel(), cam = Pontos.aCaminho(), res = Pontos.reservado();
+  const extras = [cam ? `+${fmtPts(cam)} a caminho` : "", res ? `${fmtPts(res)} reservados na sacola` : ""].filter(Boolean).join(" · ");
+  let h = `<div class="pt-saldo">
+      <span class="pt-nivel"><i></i>${nv.n} · ${pctNivel(nv)} de volta</span>
+      <div class="n">${fmtPts(W.saldo)}<small>pontos</small></div>
+      <div class="v">= ${ptsEmR(W.saldo)} pro próximo pedido</div>
+      <p>${W.saldo && W.venc ? `Valem até ${dataCurta(W.venc)}. Cada pedido renova todos por mais ${PTS.validade} dias.` : "Cada R$ 1 em produto vira 1 ponto. 100 pontos = R$ 5."}${extras ? `<br>${extras}` : ""}</p>
+    </div>`;
+  if ((ptsOrigem === "sacola" || ptsOrigem === "checkout") && S.cart.length) h += `<button class="btn btn--red btn--full" data-pts-voltar><span>${ptsOrigem === "sacola" ? "Voltar pra sacola" : "Voltar pro pedido"}</span><svg><use href="#i-seta"/></svg></button>`;
+  h += `<div class="pt-card"><h3>Teu nível</h3><p>${textoNivel()}</p>${barraNivel()}
+      <div class="pt-niveis">${NIVEIS.map(v => `<div class="${v.id === nv.id ? "at" : ""}"><span><b>${v.n}</b><br><small>${v.min ? `${v.min}+ pedidos em 90 dias` : "Desde o 1º pedido"}</small></span><span>${v.mult.toLocaleString("pt-BR")} pt por R$</span><em>${pctNivel(v)}</em></div>`).join("")}</div></div>`;
+  h += `<div class="pt-card"><h3>Troca que rende mais</h3><p>Trocar por produto vale mais que o desconto: cada ponto rende uns R$ 0,06, em vez de R$ 0,05.</p>
+      <div class="pt-trocas">${TROCAS.map(tr => { const p = PID[tr.id], ok = disp >= tr.pts; return `<div class="pt-troca"><div class="item__img">${fotoTag(p.img, `alt="" loading="lazy" width="56" height="56"`)}</div><div><b>${esc(p.n)}</b><span>${fmtPts(tr.pts)} pontos · vale ${brl(p.p)}</span></div>${ok ? `<button class="btn btn--dark" data-trocar="${tr.id}" aria-label="Trocar ${fmtPts(tr.pts)} pontos por ${esc(p.n)}">Trocar</button>` : `<span>Faltam ${fmtPts(tr.pts - disp)}</span>`}</div>`; }).join("")}</div></div>`;
+  h += `<div class="pt-card"><h3>Como funciona</h3><ol class="pt-passos">
+      <li><span><b>Pede pelo Cardápio Digital</b>Cada R$ 1 em produto vira 1 ponto. Pedido de R$ 100 = 100 pontos.</span></li>
+      <li><span><b>O pedido chega, os pontos entram</b>Ficam no teu WhatsApp e valem em qualquer loja do Ogro.</span></li>
+      <li><span><b>Usa do teu jeito</b>100 pontos = R$ 5 de desconto direto na sacola. Ou troca por um produto, que rende mais.</span></li></ol></div>`;
+  h += `<div class="pt-card"><h3>Extrato</h3>${W.ext.length ? `<ul class="pt-ext">${W.ext.slice(0, 12).map(e => `<li><span>${esc(e.txt)}<small>${dataCurta(e.ts)}</small></span><span class="${e.pts >= 0 ? "mais" : "menos"}">${e.pts >= 0 ? "+" : "−"}${fmtPts(Math.abs(e.pts))}</span></li>`).join("")}</ul>` : `<p>Ainda sem movimento. O 1º pedido já chega com +${PTS.boasVindas} pontos de boas-vindas.</p>`}</div>`;
+  h += `<details class="pt-card pt-regras"><summary>As regras, sem letra miúda</summary><ul>
+      <li>Pontua o valor pago em produtos. A taxa de entrega não pontua.</li>
+      <li>Só pedido pelo Cardápio Digital do Ogro pontua (iFood e 99Food, não).</li>
+      <li>Usa a partir de ${PTS.min} pontos, até metade do valor dos produtos do pedido.</li>
+      <li>Junta com cupom: o ponto conta sobre o valor já com desconto.</li>
+      <li>Os pontos entram quando o pedido é entregue. Pedido cancelado não pontua.</li>
+      <li>Valem ${PTS.validade} dias desde o teu último pedido. Pediu de novo, todos renovam.</li>
+      <li>O nível conta os pedidos dos últimos 90 dias.</li>
+      <li>Ponto não vira dinheiro e não passa pra outra pessoa.</li></ul></details>`;
+  h += `<p class="pt-fecho">Quem sabe o que é bom volta.<br>E a casa reconhece.</p>
+    <p style="text-align:center;font-size:12px;color:var(--cinza)">Protótipo: pontos simulados neste aparelho.<br><button class="link" data-pts-demo>Ver com saldo de exemplo</button> · <button class="link" data-pts-zerar>Zerar</button></p>`;
+  $("#pt-corpo").innerHTML = h;
+}
+$("#btn-pontos").onclick = () => abrirPontos("topo");
+$("#pts-home-b").onclick = () => abrirPontos("inicio");
+$("#pt-fechar").onclick = fecharTudo;
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-pts-abrir]"); if (a) { abrirPontos(a.dataset.ptsAbrir); }
+});
+document.addEventListener("change", e => {
+  const u = e.target.closest("[data-pts-usar]"); if (!u) return;
+  S.usarPts = u.checked;
+  const t = totais();
+  track("pontos_usar", { acao: u.checked ? "ligou" : "desligou", pontos: t.ptsPode, valor: +(t.ptsPode * PTS.real).toFixed(2), onde: u.dataset.ptsUsar });
+  if (u.dataset.ptsUsar === "sacola") renderGaveta(); else renderResumo();
+  const novo = $(`[data-pts-usar="${u.dataset.ptsUsar}"]`); if (novo) novo.focus({ preventScroll: true });
+  toast(u.checked ? `${fmtPts(t.ptsPode)} pontos aplicados: − ${ptsEmR(t.ptsPode)}.` : "Pontos guardados pra próxima.");
+});
+$("#pt-corpo").addEventListener("click", e => {
+  const tr = e.target.closest("[data-trocar]");
+  if (tr) {
+    const item = TROCAS.find(x => x.id === tr.dataset.trocar);
+    if (Pontos.disponivel() < item.pts) return toast("Os pontos não cobrem essa troca agora.");
+    fecharTudo();
+    if (!S.loja) { location.hash = "#/"; setTimeout(() => chamarLojas("Escolhe tua loja e a troca abre em seguida."), 300); S.pendente = item.id; S.proxTroca = item.pts; return; }
+    S.proxTroca = item.pts;
+    if (location.hash.startsWith("#/loja/" + S.loja)) setTimeout(() => abrirProduto(item.id, null, "troca_pontos"), 220);
+    else { S.abrirDepois = item.id; location.hash = "#/loja/" + S.loja; }
+    return;
+  }
+  if (e.target.closest("[data-pts-voltar]")) { const o = ptsOrigem; fecharTudo(); if (o === "sacola") abrirGaveta(); return; }
+  if (e.target.closest("[data-pts-demo]")) { Pontos.demo(); renderPainelPontos(); renderSeloPontos(); toast("Conta de exemplo: 240 pontos, 2 pedidos."); return; }
+  if (e.target.closest("[data-pts-zerar]")) { Pontos.zerar(); S.cart = S.cart.filter(i => !i.sel.troca); S.usarPts = false; salvarCart(); atualizarSacola(); renderPainelPontos(); renderSeloPontos(); toast("Pontos zerados."); }
+});
 
 /* ---------- ROTEADOR ---------- */
 /* ---------- LINK DIRETO (disparo de WhatsApp, direct do "comenta OGRO", bio, QR) ----------
@@ -2315,7 +2642,7 @@ function rota() {
   const l = lojaAtual();
   $("#topo-loja").hidden = !l || !!(h === "#/" || h === "");
   if (l) $("#topo-loja-n").textContent = "Ogro " + l.n;
-  atualizarSacola();
+  atualizarSacola(); renderSeloPontos();
   resetIdle();
   if (S.pendente && $("#v-home").classList.contains("on")) { const p = PID[S.pendente]; setTimeout(() => chamarLojas(`Escolhe tua loja: o ${p.n} tem em todas.`), 300); }
   // aviso do cupom depois do "escolhe tua loja" (um toast não cobre o outro)
