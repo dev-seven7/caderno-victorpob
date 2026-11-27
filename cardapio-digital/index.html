@@ -1461,17 +1461,19 @@ const salvarCart = () => { Store.set("ogro_sacola", S.cart); Store.set("ogro_sac
    Simulado no aparelho. No ar, a carteira fica no backend, presa ao WhatsApp do cliente (CRM, #56), e quem credita
    é a loja ao marcar "entregue". Regras:
    · R$ 1 pago em produto = 1 ponto. Taxa de entrega não pontua; cupom e pontos usados saem da conta.
-   · 100 pontos = R$ 5 (5% de volta). Usa a partir de 100 pontos, até metade do valor dos produtos.
-   · Nível pelos pedidos dos últimos 90 dias: Ogro 1×, Ogro de Casa (3+) 1,5×, Dono da Chapa (6+) 2×
-     = 5%, 7,5% e 10% de volta (teto de 10% do Ogro).
+   · 100 pontos = R$ 5 (5% de volta). Usa a partir de 100 pontos, até 30% do valor dos produtos e só em pedido
+     acima do mínimo da loja (l.min; sem dado real ainda, vale PTS.pedMin = R$ 30 em produtos). Ajuste de 27/11.
+   · Nível pelos pedidos dos últimos 90 dias: Ogro 1×, Ogro de Casa (3+) 1,2×, Dono da Chapa (6+) 1,5×
+     = 5%, 6% e 7,5% de volta (ajuste de 27/11: era 10% no topo, pesado demais pra margem em desconto).
    · Troca por produto rende ~20% mais que o desconto em R$ (para o Ogro custa só o CMV do item).
    · Os pontos entram quando o pedido é entregue e valem 90 dias desde o último pedido (cada pedido renova tudo).
    · 1º pedido pelo Cardápio Digital: +50 pontos de boas-vindas. Só o Cardápio Digital pontua (iFood e 99Food não). */
-const PTS = { real: 0.05, min: 100, teto: 0.5, validade: 90, boasVindas: 50 };
+const PTS = { real: 0.05, min: 100, teto: 0.3, validade: 90, boasVindas: 50, pedMin: 30 };
+const pedidoMin = () => { const l = LOJAS.find(x => x.id === S.loja); return (l && l.min) || PTS.pedMin; };
 const NIVEIS = [
   { id: "ogro", n: "Ogro", min: 0, mult: 1 },
-  { id: "casa", n: "Ogro de Casa", min: 3, mult: 1.5 },
-  { id: "chapa", n: "Dono da Chapa", min: 6, mult: 2 }
+  { id: "casa", n: "Ogro de Casa", min: 3, mult: 1.2 },
+  { id: "chapa", n: "Dono da Chapa", min: 6, mult: 1.5 }
 ];
 // preço ÷ pontos ≈ R$ 0,06 por ponto (desconto = R$ 0,05): a troca vale mais que o desconto
 const TROCAS = [{ id: "rla", pts: 160 }, { id: "anu", pts: 190 }, { id: "sbr", pts: 230 }, { id: "abf", pts: 290 }, { id: "bpc", pts: 590 }, { id: "bmc", pts: 740 }];
@@ -2155,12 +2157,13 @@ function totais() {
   const taxa = S.cart.length ? (taxaKm(d) ?? 6.9) : 0;
   let desc = 0, cupomMsg = "", falta = 0;
   if (S.cupom && CUPONS[S.cupom]) { const c = CUPONS[S.cupom]; if (sub >= c.min) desc = Math.round(sub * c.pct) / 100; else falta = c.min - sub; }
-  // pontos: a partir de 100, até metade do valor dos produtos (depois do cupom)
+  // pontos: a partir de 100, até 30% do valor dos produtos (depois do cupom), só acima do pedido mínimo da loja
   let pts = 0, ptsDesc = 0;
-  const ptsLim = Math.floor(Math.max(0, sub - desc) * PTS.teto / PTS.real), ptsPode = Math.min(Pontos.disponivel(), ptsLim);
+  const minLoja = pedidoMin(), base = Math.max(0, sub - desc);
+  const ptsLim = Math.floor(base * PTS.teto / PTS.real), ptsPode = base >= minLoja ? Math.min(Pontos.disponivel(), ptsLim) : 0;
   if (S.usarPts && ptsPode >= PTS.min) { pts = ptsPode; ptsDesc = Math.round(pts * PTS.real * 100) / 100; }
   const pago = Math.max(0, sub - desc - ptsDesc);
-  return { sub, taxa, desc, falta, pts, ptsDesc, ptsPode, ganha: Pontos.ganho(pago), total: pago + taxa };
+  return { sub, taxa, desc, falta, pts, ptsDesc, ptsPode, minLoja, ganha: Pontos.ganho(pago), total: pago + taxa };
 }
 function descSel(i) {
   const s = i.sel, out = [], p = PID[i.id];
@@ -2464,9 +2467,9 @@ function caixaPontos(t, onde) {
     <div class="pts-box__l">${icPts()}<div><b>${g.total ? `Esse pedido rende +${fmtPts(g.total)} pontos` : "Pontos Ogro"}</b>${g.total ? `= ${ptsEmR(g.total)} pro próximo pedido. Entram quando chegar.` : "Cada R$ 1 em produto vira 1 ponto."}</div></div>`;
   if (g.bonus) h += `<small>Já conta +${g.bonus} de boas-vindas: é teu 1º pedido pelo Cardápio Digital. 🎁</small>`;
   if (t.ptsPode >= PTS.min) {
-    h += `<label class="pts-usar"><span><b>Usar ${fmtPts(t.ptsPode)} pontos</b>− ${ptsEmR(t.ptsPode)} neste pedido${t.ptsPode < disp ? `. Vale até metade dos produtos, sobram ${fmtPts(disp - t.ptsPode)}` : ""}</span><input type="checkbox" data-pts-usar="${onde}"${S.usarPts ? " checked" : ""} aria-label="Usar ${fmtPts(t.ptsPode)} pontos neste pedido"></label>`;
+    h += `<label class="pts-usar"><span><b>Usar ${fmtPts(t.ptsPode)} pontos</b>− ${ptsEmR(t.ptsPode)} neste pedido${t.ptsPode < disp ? `. Vale até 30% dos produtos, sobram ${fmtPts(disp - t.ptsPode)}` : ""}</span><input type="checkbox" data-pts-usar="${onde}"${S.usarPts ? " checked" : ""} aria-label="Usar ${fmtPts(t.ptsPode)} pontos neste pedido"></label>`;
   } else if (disp >= PTS.min) {
-    h += `<small>Teus ${fmtPts(disp)} pontos entram como desconto em pedido a partir de ${brl(PTS.min * PTS.real / PTS.teto)} em produtos.</small>`;
+    h += `<small>Teus ${fmtPts(disp)} pontos viram desconto a partir de ${brl(t.minLoja)} em produtos, o pedido mínimo da loja. Faltam ${brl(Math.max(0, t.minLoja - (t.sub - t.desc)))}.</small>`;
   } else {
     const depois = disp + g.total;
     h += `<div><small>${disp ? `Tu tem ${fmtPts(disp)} pontos. ` : ""}Com esse pedido fica com <b>${fmtPts(depois)}</b>${depois >= PTS.min ? `: ${ptsEmR(depois)} de desconto no próximo.` : ` de ${PTS.min} pro 1º desconto.`}</small><div class="prog" role="img" aria-label="${fmtPts(Math.min(depois, PTS.min))} de ${PTS.min} pontos"><i style="width:${Math.min(100, depois / PTS.min * 100)}%"></i></div></div>`;
@@ -2535,7 +2538,7 @@ function renderPainelPontos() {
   h += `<details class="pt-card pt-regras"><summary>As regras, sem letra miúda</summary><ul>
       <li>Pontua o valor pago em produtos. A taxa de entrega não pontua.</li>
       <li>Só pedido pelo Cardápio Digital do Ogro pontua (iFood e 99Food, não).</li>
-      <li>Usa a partir de ${PTS.min} pontos, até metade do valor dos produtos do pedido.</li>
+      <li>Usa a partir de ${PTS.min} pontos, em pedido acima do mínimo da loja, cobrindo até 30% do valor dos produtos.</li>
       <li>Junta com cupom: o ponto conta sobre o valor já com desconto.</li>
       <li>Os pontos entram quando o pedido é entregue. Pedido cancelado não pontua.</li>
       <li>Valem ${PTS.validade} dias desde o teu último pedido. Pediu de novo, todos renovam.</li>
