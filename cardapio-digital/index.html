@@ -370,7 +370,48 @@ textarea.campo{min-height:70px;resize:vertical}
 /* PEDIDO */
 .ped{padding-top:20px;padding-bottom:40px;display:grid;gap:16px;max-width:720px;margin-inline:auto}
 [hidden]{display:none!important}
-.ped__ok{background:var(--preto);color:#fff;border-radius:20px;padding:22px 18px;text-align:center;display:grid;gap:6px;justify-items:center}
+.st{background:var(--preto);color:#fff;border-radius:20px;padding:16px 18px 18px;display:grid;gap:8px;justify-items:center;text-align:center}
+.st__top{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:var(--concreto)}
+.st__vivo{display:inline-flex;align-items:center;gap:6px}
+.st__vivo i{width:8px;height:8px;border-radius:50%;background:#5BD38A;box-shadow:0 0 0 0 rgba(91,211,138,.6);animation:pulsoV 1.6s infinite}
+.st__vivo.fim i{background:var(--concreto);animation:none}
+.st__num{font-family:var(--display);font-size:15px;letter-spacing:.06em;color:var(--kraft);font-weight:400}
+.st__ic{width:72px;height:72px;border-radius:50%;background:var(--grafite-800);display:grid;place-items:center;font-size:36px;margin-top:2px}
+.st__ic.vivo{animation:respira 2.2s ease-in-out infinite}
+@keyframes respira{50%{transform:scale(1.07)}}
+.st h1{font-size:clamp(30px,8vw,46px);line-height:1}
+.st__sub{color:var(--concreto-100);font-size:15px;max-width:440px}
+.st.atraso .st__sub{color:#FFD08A}
+.st__eta{background:var(--grafite-800);border-radius:14px;padding:8px 16px;display:grid;gap:0}
+.st__eta:empty{display:none}
+.st__eta small{font-size:12px;color:var(--concreto)}
+.st__eta b{font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.02em;line-height:1.1}
+.st__barra{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+.st__barra i{height:6px;border-radius:99px;background:#3a3a3a;overflow:hidden;position:relative}
+.st__barra i.ok{background:#5BD38A}
+.st__barra i.at{background:#3a3a3a}
+.st__barra i.at::after{content:"";position:absolute;inset:0;width:45%;border-radius:99px;background:#5BD38A;animation:corre 1.6s ease-in-out infinite}
+@keyframes corre{0%{transform:translateX(-100%)}100%{transform:translateX(230%)}}
+.st__rot{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;list-style:none;font-size:11px;font-weight:700;color:var(--concreto)}
+.st__rot li.on{color:#fff}
+.lt-cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.lt-cab h2{margin:0}
+.lt-cab small{font-size:11px;color:var(--cinza)}
+.lt time{font-variant-numeric:tabular-nums;font-weight:800;color:var(--preto);margin-right:6px}
+.lt li.prev small{color:#9a9a9a}
+.ajuda{gap:10px}
+.ajuda__bts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ajuda__bts .btn{padding:12px 10px;font-size:14px;white-space:normal}
+.ajuda__bts .btn.feito{border-color:var(--verde);color:var(--verde)}
+.ajuda__p{font-size:13px;color:var(--grafite-700);text-align:center}
+.resumo-ped summary{cursor:pointer;font-weight:800;font-size:15px;list-style:none;display:flex;justify-content:space-between}
+.resumo-ped summary::-webkit-details-marker{display:none}
+.resumo-ped summary::after{content:"+";font-size:20px;line-height:1}
+.resumo-ped[open] summary::after{content:"–"}
+.resumo-ped .l{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:4px 0}
+.resumo-ped .l small{display:block;color:var(--cinza);font-size:12px}
+.resumo-ped h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza);margin:12px 0 4px}
+.resumo-ped .tot{font-weight:800;font-size:16px;border-top:1px dashed var(--concreto-200);margin-top:6px;padding-top:8px}
 .ped__ok h1{font-size:clamp(34px,9vw,54px)}
 .ped__ok .num{font-family:var(--display);font-size:20px;color:var(--kraft);letter-spacing:.06em}
 .check{width:64px;height:64px;border-radius:50%;background:var(--verde);display:grid;place-items:center;animation:pop .5s ease}
@@ -827,13 +868,16 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
 <section class="view" id="v-pedido" aria-labelledby="h-ped">
   <div class="wrap ped">
     <ol class="etapas" aria-label="Etapas do pedido">
-      <li class="ok"><b>✓</b>Loja</li><li class="ok"><b>✓</b>Pedido</li><li class="ok"><b>✓</b>Entrega e pagamento</li><li class="at"><b>4</b>Pronto</li>
+      <li class="ok"><b>✓</b>Loja</li><li class="ok"><b>✓</b>Pedido</li><li class="ok"><b>✓</b>Entrega e pagamento</li><li class="at"><b>4</b>Acompanhar</li>
     </ol>
-    <div class="ped__ok">
-      <div class="check"><svg><use href="#i-check"/></svg></div>
-      <h1 class="disp" id="h-ped">Pedido feito.</h1>
-      <span class="num" id="ped-num"></span>
-      <p id="ped-sub" style="color:var(--concreto)"></p>
+    <!-- Status ao vivo: o que está acontecendo AGORA, em 1 frase, com hora de chegada (não "27–42 min" parado) -->
+    <div class="st" id="st">
+      <div class="st__top"><span class="st__vivo" id="st-vivo"><i></i><span>Ao vivo</span></span><span class="st__num" id="ped-num"></span></div>
+      <div class="st__ic" id="st-ic" aria-hidden="true"></div>
+      <div aria-live="polite" aria-atomic="true"><h1 class="disp" id="h-ped">Pedido feito.</h1><p class="st__sub" id="ped-sub"></p></div>
+      <div class="st__eta" id="st-eta"></div>
+      <div class="st__barra" id="st-barra" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-label="Andamento do pedido"><i></i><i></i><i></i><i></i></div>
+      <ol class="st__rot" aria-hidden="true"><li>Confirmado</li><li>Na chapa</li><li>Saiu</li><li>Entregue</li></ol>
     </div>
     <div class="pix" id="ped-pix" hidden>
       <h2 class="disp" style="font-size:26px">Paga no Pix pra loja começar</h2>
@@ -842,16 +886,24 @@ picture{display:contents} /* <picture> AVIF/WebP: a <img> de dentro segue com o 
       <p class="timer" id="pix-timer"></p>
       <button class="btn btn--red btn--full" id="btn-paguei">Já paguei</button>
     </div>
-    <div class="ped-pts" id="ped-pts" hidden aria-live="polite"></div>
     <div class="linha-tempo">
-      <h2 class="disp">Acompanha aqui</h2>
+      <div class="lt-cab"><h2 class="disp">Passo a passo</h2><small id="lt-demo">Demonstração acelerada: aqui cada etapa leva segundos</small></div>
       <ol class="lt" id="lt"></ol>
+    </div>
+    <div class="bloco ajuda" id="ped-ajuda">
+      <div class="ajuda__bts">
+        <button class="btn btn--ghost" id="btn-avisar"><span aria-hidden="true">🔔</span> Me avisa quando sair</button>
+        <button class="btn btn--ghost" id="btn-loja"><span aria-hidden="true">💬</span> Falar com a loja</button>
+      </div>
+      <p class="ajuda__p" id="ajuda-p"></p>
     </div>
     <div class="bloco" id="ped-aval" hidden style="text-align:center">
       <h2 class="disp" style="justify-content:center">Chegou. Como foi?</h2>
       <div class="estrelas" id="estrelas" role="group" aria-label="Nota de 1 a 5"></div>
       <p id="aval-msg" style="font-size:14px;color:var(--grafite-700)"></p>
     </div>
+    <div class="ped-pts" id="ped-pts" hidden aria-live="polite"></div>
+    <details class="bloco resumo-ped" id="ped-resumo"><summary>Resumo do pedido</summary><div id="ped-resumo-c"></div></details>
     <!-- convite para instalar: só depois do 1º pedido, só se ainda não instalou, e "Agora não" é respeitado -->
     <div class="bloco app-convite" id="app-convite" hidden>
       <img src="img/icone-192.png" alt="" width="56" height="56">
@@ -1027,6 +1079,7 @@ const MAPA_EVENTOS = [
   ["search (resultados)", "A busca leva quantos produtos achou: 0 = o cliente procurou algo que não tem", "", ""],
   ["erro_tecnico", "Script quebrado ou foto/vídeo que não carregou (até 10 por sessão)", "", ""],
   ["completa_pedido", "Passo “Completa teu pedido?” antes do pagamento: mostrou (o que faltava) e seguiu (quantos itens entraram)", "", ""],
+  ["pedido_status · pedido_avisar · pedido_falar_loja", "Acompanhamento: mudou de etapa (confirmado, na chapa, saiu, entregue, com minutos desde o pedido) · pediu aviso quando sair (permitiu ou não) · tocou em Falar com a loja", "", ""],
   ["pontos_painel · pontos_usar · pontos_troca · pontos_creditados", "Pontos Ogro: abriu o painel (de onde) · ligou ou desligou o desconto (pontos e R$) · trocou pontos por produto · pontos entraram na entrega (saldo e nível). O purchase leva pontos_ganhos, pontos_usados, desconto_pontos e nivel_pontos", "", ""]
 ];
 function metaParams(ev) {
@@ -1604,8 +1657,15 @@ function renderContinuar() {
   const n = S.cart.reduce((a, i) => a + i.q, 0);
   const l = lojaAtual();
   const ult = Store.get("ogro_ultimo");
-  const box = $("#continuar");
-  if (n && l) {
+  const box = $("#continuar"), ped = pedidoAtivo();
+  if (ped) {
+    const e = estadoPedido(ped);
+    $("#continuar-t").textContent = `${e.ic} ${e.curto}`;
+    $("#continuar-s").textContent = `Pedido ${ped.num} · ${e.etaTxt}`;
+    $("#continuar-b").textContent = "Acompanhar";
+    $("#continuar-b").onclick = () => { track("continuar_pedido", { acompanhar: true }); location.hash = "#/pedido/" + ped.num; };
+    box.hidden = false;
+  } else if (n && l) {
     $("#continuar-t").textContent = "Teu pedido tá guardado";
     $("#continuar-s").textContent = `${n} ${n === 1 ? "item" : "itens"} na sacola · loja ${l.n} · ${brl(totais().sub)}`; // mesmo valor da barra "Ver sacola" (produtos; a entrega entra no fechamento)
     $("#continuar-b").textContent = "Continuar";
@@ -2402,7 +2462,8 @@ $("#btn-confirmar").onclick = () => {
   { const its = S.cart.map(itemCart); track("add_shipping_info", { shipping_tier: quando === "agora" ? "agora" : "agendado", lembrar_dados: $("#f-lembrar").checked }, { value: +t.total.toFixed(2), shipping_tier: quando === "agora" ? "agora" : "agendado", items: its }); }
   const num = "OG-" + String(Date.now()).slice(-6);
   const pts = Pontos.fechar(num, t); // debita o que usou e deixa os pontos ganhos "a caminho" até a entrega
-  const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now(), pts };
+  const pedido = { num, loja: S.loja, itens: S.cart, t, pag, quando: quando === "agora" ? "agora" : $("#f-hora").value, nome: dados.nome.split(" ")[0], ts: Date.now(), pts,
+    prazo: tempoKm(distLoja(lojaAtual())), end: `${dados.rua}, ${dados.num}`, bairro: dados.bairro, comp: dados.comp, at: pag === "pix" ? 0 : 1 };
   Store.set("ogro_pedido", pedido);
   Store.set("ogro_ultimo", { loja: S.loja, itens: S.cart.filter(i => !i.sel.troca) }); // "pedir de novo" não repete troca por pontos
   // No ar o purchase só sai depois que o backend confirma o pedido (nunca no clique). Aqui é simulação.
@@ -2422,33 +2483,145 @@ function qrSvg(seed) {
   for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const nf = (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9); if (!nf && rnd() > .52) r += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }
   return `<svg class="qr" viewBox="-2 -2 ${N + 4} ${N + 4}" role="img" aria-label="QR Code Pix de demonstração"><rect x="-2" y="-2" width="${N + 4}" height="${N + 4}" fill="#fff"/><g fill="#1A1A1A">${r}${finder(0, 0)}${finder(N - 7, 0)}${finder(0, N - 7)}</g></svg>`;
 }
-const ETAPAS = [["📥", "Pedido recebido", "A loja já viu teu pedido."], ["💳", "Pagamento confirmado", ""], ["🔥", "Na chapa", "Teu burger tá sendo montado agora."], ["🛵", "Saiu pra entrega", "O entregador tá a caminho."], ["✅", "Entregue", "Bom proveito. De um ogro pra outro."]];
+/* ---------- ACOMPANHAMENTO DO PEDIDO (27/11) ----------
+   O cliente precisa saber, sem rolar: em que etapa está, quando chega (hora de relógio) e se algo atrasou.
+   No ar, cada etapa vem da loja (o PDV marca) e o horário é o real. Aqui é demonstração acelerada:
+   cada etapa leva 4 s, e os horários mostrados são os previstos para um pedido de verdade. */
+const TITULO0 = document.title;
+const hm = ms => new Date(ms).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+const MIN = 60000;
+function prazoPedido(p) { const m = String(p.prazo || "").match(/(\d+)\D+(\d+)/); return m ? [+m[1], +m[2]] : [30, 45]; }
+// "Hoje 18:00" / "Amanhã 12:30" / "Sexta 19:00" → horário em ms
+function horaAgendada(p) {
+  const m = String(p.quando).match(/^(\S+)\s+(\d{1,2}):(\d{2})/); if (!m) return null;
+  const d = new Date(p.ts); d.setHours(+m[2], +m[3], 0, 0);
+  let dias = 0; const dia = m[1].toLowerCase();
+  if (dia.startsWith("amanh")) dias = 1;
+  else if (!dia.startsWith("hoje")) { const i = DIAS_LONGO.findIndex(x => x.toLowerCase() === dia); if (i >= 0) dias = (i - new Date(p.ts).getDay() + 7) % 7 || 7; }
+  return d.getTime() + dias * 864e5;
+}
+// horários de cada etapa: [recebido, pago/confirmado, na chapa, saiu, entregue] + janela de chegada
+function marcosPedido(p) {
+  const [a, b] = prazoPedido(p), ag = p.quando !== "agora" ? horaAgendada(p) : null;
+  const pago = p.pagoEm || p.ts;
+  const inicio = ag ? ag - a * MIN : pago;                 // agendado: a loja começa a tempo de chegar na hora marcada
+  const eta0 = ag || inicio + a * MIN, eta1 = ag ? ag + 15 * MIN : inicio + b * MIN;
+  const marcos = [p.ts, Math.max(pago, p.ts + MIN), inicio + 3 * MIN, inicio + Math.max(8, a - 10) * MIN, inicio + Math.round((a + b) / 2) * MIN];
+  return { marcos, eta0, eta1, agendado: !!ag };
+}
+const FALAS = [
+  { ic: "⏳", curto: "Falta só o Pix", h: () => "Falta só o Pix", s: () => "Assim que o Pix cair, a loja começa teu pedido." },
+  { ic: "✅", curto: "Pedido confirmado", h: () => "A loja confirmou teu pedido", s: (p, e) => e.agendado ? `Valeu, ${p.nome}. A loja começa a tempo de chegar na hora marcada.` : `Valeu, ${p.nome}. Já já vai pra chapa.` },
+  { ic: "🔥", curto: "Teu pedido tá na chapa", h: () => "Teu pedido tá na chapa", s: () => "Feito na hora, do jeito que tu pediu." },
+  { ic: "🛵", curto: "Teu pedido saiu pra entrega", h: () => "Saiu pra entrega", s: p => p.end ? `O entregador tá indo pro teu endereço: ${p.end}.` : "O entregador tá indo pro teu endereço." },
+  { ic: "🍔", curto: "Pedido entregue", h: p => `Entregue. Bom proveito, ${p.nome}.`, s: () => "De um ogro pra outro." }
+];
+function estadoPedido(p) {
+  const at = p.at ?? (p.pag === "pix" && !p.pago ? 0 : 1), e = marcosPedido(p), f = FALAS[at];
+  const atrasado = at > 0 && at < 4 && Date.now() > e.eta1;
+  const etaTxt = at === 4 ? `entregue às ${hm(e.marcos[4])}` : e.agendado ? `agendado pra ${hm(e.eta0)}` : `chega entre ${hm(e.eta0)} e ${hm(e.eta1)}`;
+  return { ...e, at, ic: f.ic, curto: f.curto, h: f.h(p, e), s: atrasado ? "Tá levando mais que o previsto. A loja já foi avisada; se quiser, fala com ela aqui embaixo." : f.s(p, e), atrasado, etaTxt };
+}
+// pedido que ainda não chegou (ou chegou há pouco): aparece na entrada do site
+function pedidoAtivo() { const p = Store.get("ogro_pedido"); return p && (p.at ?? 1) < 4 && Date.now() - p.ts < 6 * 3600e3 ? p : null; }
+const ETAPAS_PED = [
+  { ic: "📥", t: "Pedido recebido", s: (p, h, l) => h ? `A loja ${l} recebeu às ${h}.` : "" },
+  { ic: "💳", t: p => p.pag === "pix" ? "Pix confirmado" : "Pagamento na entrega", s: (p, h) => p.pag === "pix" ? (h ? `Pix recebido às ${h}. Pedido confirmado.` : "Esperando o Pix cair.") : `Confirmado às ${h}. Paga ${p.pag === "cartao" ? "no cartão, na maquininha" : "em dinheiro"} quando chegar.` },
+  { ic: "🔥", t: "Na chapa", s: (p, h) => `Começou às ${h}. Feito na hora.` },
+  { ic: "🛵", t: "Saiu pra entrega", s: (p, h) => `Saiu às ${h}. O entregador tá a caminho.` },
+  { ic: "🏠", t: "Entregue", s: (p, h) => `Entregue às ${h}.` }
+];
+let avisarPedido = false;
 function renderPedido() {
   const p = Store.get("ogro_pedido"); if (!p) { location.hash = "#/"; return; }
-  const l = LOJAS.find(x => x.id === p.loja);
+  const l = LOJAS.find(x => x.id === p.loja), lojaN = l ? l.n : "";
+  if (p.at == null) p.at = p.pag === "pix" && !p.pago ? 0 : 1;
   $("#ped-num").textContent = "Pedido " + p.num;
-  $("#h-ped").textContent = `Valeu, ${p.nome}.`;
-  $("#ped-sub").textContent = `Loja ${l ? l.n : ""} · ${brl(p.t.total)} · ${p.quando === "agora" ? "chega em " + tempoKm(l ? distLoja(l) : null) : "agendado: " + p.quando}`;
+  const desenhar = (mudou) => {
+    const e = estadoPedido(p), at = e.at, fim = at === 4;
+    if (at >= 1 && !p.confEnviado) { p.confEnviado = true; Store.set("ogro_pedido", p); track("pedido_status", { transaction_id: p.num, etapa: "confirmado", minutos: Math.round((e.marcos[1] - p.ts) / MIN) }); }
+    // status ao vivo
+    $("#st").classList.toggle("atraso", e.atrasado);
+    $("#st-ic").textContent = e.ic; $("#st-ic").classList.toggle("vivo", !fim && at > 0);
+    $("#h-ped").textContent = e.h; $("#ped-sub").textContent = e.s;
+    $("#st-vivo").classList.toggle("fim", fim); $("#st-vivo span").textContent = fim ? "Finalizado" : "Ao vivo · atualiza sozinho";
+    $("#st-eta").innerHTML = fim ? `<small>Entregue às</small><b>${hm(e.marcos[4])}</b>`
+      : e.agendado ? `<small>Agendado pra</small><b>${hm(e.eta0)}</b>`
+      : `<small>${at === 0 ? "Se pagar agora, chega entre" : "Chega entre"}</small><b>${hm(e.eta0)} e ${hm(e.eta1)}</b>`;
+    $$("#st-barra i").forEach((x, i) => { x.className = i + 1 <= at ? "ok" : i + 1 === at + 1 && at > 0 && !fim ? "at" : ""; });
+    $("#st-barra").setAttribute("aria-valuenow", at); $("#st-barra").setAttribute("aria-valuetext", e.curto);
+    $$(".st__rot li").forEach((x, i) => x.classList.toggle("on", i + 1 <= at));
+    // passo a passo com hora (feito) ou previsão (próximas)
+    $("#lt").innerHTML = ETAPAS_PED.map((et, i) => {
+      // feito = já aconteceu; atual = acontecendo agora (na chapa, a caminho, esperando o Pix); prev = previsão
+      const feito = fim || i < at || (i === at && i <= 1), atual = !feito && (i === at || (at === 0 && i === 1));
+      const tit = typeof et.t === "function" ? et.t(p) : et.t, hh = hm(e.marcos[i]), semHora = i === 1 && at === 0;
+      const cls = feito ? "ok" : atual ? "at" : "prev";
+      const txt = semHora ? "Esperando o Pix cair." : feito || atual ? et.s(p, hh, lojaN) : `Previsto por volta das ${hh}.`;
+      return `<li class="${cls}"><i>${feito ? "✓" : et.ic}</i><div>${(feito || atual) && !semHora ? `<time>${hh}</time>` : ""}${tit}<small>${txt}</small></div></li>`;
+    }).join("");
+    $("#ped-aval").hidden = !fim;
+    // ajuda
+    $("#btn-avisar").hidden = at >= 3;
+    $("#btn-avisar").classList.toggle("feito", avisarPedido);
+    $("#btn-avisar").innerHTML = avisarPedido ? `<span aria-hidden="true">✓</span> Vou te avisar` : `<span aria-hidden="true">🔔</span> Me avisa quando sair`;
+    $(".ajuda__bts").style.gridTemplateColumns = at >= 3 ? "1fr" : "";
+    $("#ajuda-p").textContent = fim ? "Faltou alguma coisa? Fala com a loja que ela resolve." : `Cada etapa também chega no teu WhatsApp. Loja ${lojaN}.`;
+    cartaoPontosPedido(p, fim, mudou === "credito");
+    document.title = `${e.ic} ${e.curto} · ${p.num}`;
+  };
+  // resumo: o que pediu, pra onde vai, como paga
+  const t = p.t || {};
+  $("#ped-resumo-c").innerHTML = `<h3>Itens</h3>${(p.itens || []).map(i => `<div class="l"><span>${i.q}× ${esc(PID[i.id] ? PID[i.id].n : "")}${descSel(i) ? `<small>${esc(descSel(i))}</small>` : ""}</span><span>${i.sel && i.sel.troca && !i.u ? "troca" : brl(i.u * i.q)}</span></div>`).join("")}
+    <h3>Entrega</h3><div class="l"><span>${esc(p.end || "")}${p.bairro ? " · " + esc(p.bairro) : ""}${p.comp ? `<small>${esc(p.comp)}</small>` : ""}</span></div>
+    <h3>Pagamento</h3><div class="l"><span>${p.pag === "pix" ? "Pix" : p.pag === "cartao" ? "Cartão na entrega" : "Dinheiro na entrega"}</span></div>
+    <h3>Valores</h3><div class="l"><span>Produtos</span><span>${brl(t.sub || 0)}</span></div>${t.desc ? `<div class="l"><span>Cupom</span><span>− ${brl(t.desc)}</span></div>` : ""}${t.ptsDesc ? `<div class="l"><span>Pontos</span><span>− ${brl(t.ptsDesc)}</span></div>` : ""}
+    <div class="l"><span>Entrega</span><span>${brl(t.taxa || 0)}</span></div><div class="l tot"><span>Total</span><span>${brl(t.total || 0)}</span></div>`;
   const pix = p.pag === "pix" && !p.pago;
   $("#ped-pix").hidden = !pix;
-  ETAPAS[1][2] = p.pag === "pix" ? "Pix recebido." : p.pag === "cartao" ? "Paga no cartão quando chegar." : "Paga em dinheiro quando chegar.";
-  let at = p.pag === "pix" && !p.pago ? 0 : 1;
-  const desenhar = () => { const fim = at === ETAPAS.length - 1; const cred = fim && p.pts ? Pontos.creditar(p.num) : 0; cartaoPontosPedido(p, fim, !!cred); if (cred) ptsChegaram(); $("#lt").innerHTML = ETAPAS.map(([ic, t, s], i) => `<li class="${i < at || fim ? "ok" : i === at ? "at" : ""}"><i>${i < at || fim ? "✓" : ic}</i><div>${t}<small>${i <= at ? s : ""}</small></div></li>`).join(""); $("#ped-aval").hidden = at < ETAPAS.length - 1; };
-  desenhar();
+  const credVelho = p.at === 4 && p.pts ? Pontos.creditar(p.num) : 0; // reabriu um pedido já entregue
+  desenhar(credVelho ? "credito" : "");
   clearInterval(ltTimer); clearInterval(pixTimer);
-  const avancar = () => { ltTimer = setInterval(() => { if (at < ETAPAS.length - 1) { at++; desenhar(); } else clearInterval(ltTimer); }, 4000); }; // demo acelerada
+  const passo = () => {
+    if (p.at >= 4) return clearInterval(ltTimer);
+    p.at++; Store.set("ogro_pedido", p);
+    const e = estadoPedido(p);
+    track("pedido_status", { transaction_id: p.num, etapa: ["pix", "confirmado", "na_chapa", "saiu", "entregue"][p.at], minutos: Math.round((e.marcos[p.at] - p.ts) / MIN) });
+    try { navigator.vibrate && navigator.vibrate(p.at >= 3 ? [20, 60, 20] : 15); } catch (er) {}
+    if (avisarPedido && p.at >= 3 && "Notification" in window && Notification.permission === "granted") {
+      try { new Notification(p.at === 3 ? "Teu pedido saiu pra entrega 🛵" : "Pedido entregue 🍔", { body: p.at === 3 ? `Chega entre ${hm(e.eta0)} e ${hm(e.eta1)}.` : "Bom proveito. De um ogro pra outro.", icon: "img/icone-192.png", tag: "ogro-" + p.num }); } catch (er) {}
+    }
+    const cred = p.at === 4 && p.pts ? Pontos.creditar(p.num) : 0;
+    desenhar(cred ? "credito" : "");
+    if (cred) ptsChegaram();
+    if (p.at >= 4) clearInterval(ltTimer);
+  };
+  const avancar = () => { clearInterval(ltTimer); if (p.at < 4) ltTimer = setInterval(passo, 4000); }; // demo acelerada
   if (pix) {
     $("#ped-qr").innerHTML = qrSvg(p.num);
-    $("#pix-code").value = `00020126580014BR.GOV.BCB.PIX0136ogro-demo-${p.num}5204000053039865406${p.t.total.toFixed(2)}5802BR5911OGRO STEAKS6014RIO DE JANEIRO`;
-    let s = 600; const tick = () => { $("#pix-timer").textContent = `O código vale por ${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; if (s-- <= 0) { clearInterval(pixTimer); $("#pix-timer").textContent = "O código venceu. Toca em Já paguei ou gera outro pedido."; } };
+    $("#pix-code").value = `00020126580014BR.GOV.BCB.PIX0136ogro-demo-${p.num}5204000053039865406${(t.total || 0).toFixed(2)}5802BR5911OGRO STEAKS6014RIO DE JANEIRO`;
+    let sg = 600; const tick = () => { $("#pix-timer").textContent = `O código vale por ${Math.floor(sg / 60)}:${String(sg % 60).padStart(2, "0")}`; if (sg-- <= 0) { clearInterval(pixTimer); $("#pix-timer").textContent = "O código venceu. Toca em Já paguei ou gera outro pedido."; } };
     tick(); pixTimer = setInterval(tick, 1000);
-    $("#btn-paguei").onclick = () => { track("pix_paguei", { transaction_id: p.num, segundos_no_pix: 600 - Math.max(0, s) }); p.pago = true; Store.set("ogro_pedido", p); $("#ped-pix").hidden = true; clearInterval(pixTimer); at = 1; desenhar(); avancar(); toast("Pix confirmado. A loja já começou."); };
+    $("#btn-paguei").onclick = () => { track("pix_paguei", { transaction_id: p.num, segundos_no_pix: 600 - Math.max(0, sg) }); p.pago = true; p.pagoEm = Date.now(); p.at = 1; Store.set("ogro_pedido", p); $("#ped-pix").hidden = true; clearInterval(pixTimer); desenhar(); avancar(); toast("Pix confirmado. A loja já começou."); };
   } else avancar();
   mostrarConviteApp();
   $("#estrelas").innerHTML = [1, 2, 3, 4, 5].map(n => `<button data-e="${n}" aria-label="${n} estrela${n > 1 ? "s" : ""}">★</button>`).join("");
   $("#aval-msg").textContent = "";
   window.scrollTo(0, 0);
 }
+$("#btn-avisar").onclick = async () => {
+  let ok = false;
+  try { if ("Notification" in window) ok = Notification.permission === "granted" || (await Notification.requestPermission()) === "granted"; } catch (e) {}
+  avisarPedido = ok; track("pedido_avisar", { permitiu: ok });
+  toast(ok ? "Combinado: te aviso aqui quando sair pra entrega." : "O navegador não deixou avisar por aqui. Toda etapa também chega no teu WhatsApp.");
+  $("#btn-avisar").classList.toggle("feito", ok);
+  if (ok) $("#btn-avisar").innerHTML = `<span aria-hidden="true">✓</span> Vou te avisar`;
+};
+$("#btn-loja").onclick = () => {
+  const p = Store.get("ogro_pedido"), l = p && LOJAS.find(x => x.id === p.loja);
+  track("pedido_falar_loja", { transaction_id: p && p.num, etapa: p && p.at });
+  toast(`Demonstração: no ar, abre o WhatsApp da loja ${l ? l.n : ""} já com o número ${p ? p.num : ""}.`, null, null, 4500);
+};
 $("#btn-copiar").onclick = async () => { try { await navigator.clipboard.writeText($("#pix-code").value); } catch (e) { $("#pix-code").select(); document.execCommand("copy"); } toast("Código Pix copiado. Cola no app do banco."); track("pix_copiar"); };
 $("#estrelas").addEventListener("click", e => { const b = e.target.closest("[data-e]"); if (!b) return; const n = +b.dataset.e; $$("#estrelas button").forEach((x, i) => x.classList.toggle("on", i < n)); $("#aval-msg").textContent = n >= 4 ? "Valeu. Isso faz o dia de quem tá na chapa." : "Valeu por avisar. A loja vai ver tua nota."; track("rating", { value: n }); });
 $("#btn-novo").onclick = repetir;
@@ -2664,6 +2837,7 @@ function rota() {
   } else if (h === "#/checkout") { $("#v-checkout").classList.add("on"); renderCheckout(); }
   else if (h.startsWith("#/pedido")) { $("#v-pedido").classList.add("on"); renderPedido(); }
   else { $("#v-home").classList.add("on"); renderFiltros(); renderLojas(); renderContinuar(); renderTopo(); renderFavs(); if (S.cep) $("#cep").value = mascaraCep(S.cep); window.scrollTo(0, 0); }
+  if (!h.startsWith("#/pedido")) { clearInterval(ltTimer); document.title = TITULO0; }
   if (!$("#v-home").classList.contains("on")) heroVid.pause();
   const l = lojaAtual();
   $("#topo-loja").hidden = !l || !!(h === "#/" || h === "");
