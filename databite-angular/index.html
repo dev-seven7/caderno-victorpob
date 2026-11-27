@@ -1982,6 +1982,8 @@
       },
     };
     const SITES = ['atual', 'prototipo'];
+    // data da gravação no endereço: vídeo regravado = endereço novo, e o navegador nunca mostra a cópia antiga guardada
+    const VERSAO_VIDEO = { atual: '2026-11-25', prototipo: '2026-11-27' };
     const sec = document.getElementById('cmp');
     if (!sec) return;
     const palco = document.getElementById('palco');
@@ -2018,7 +2020,7 @@
         el.parentElement.querySelector('.fim').hidden = true;
         document.getElementById('b-' + s).style.width = '0';
         document.getElementById('r-' + s).innerHTML = tem ? RES[cap][s].map(t => `<li>${t}</li>`).join('') : '';
-        if (tem) { const base = `vid/${s}-${dev}-${cap}`; el.poster = base + '.jpg'; el.src = base + '.mp4'; }
+        if (tem) { const base = `vid/${s}-${dev}-${cap}`, v = VERSAO_VIDEO[s]; el.poster = `${base}.jpg?v=${v}`; el.src = `${base}.mp4?v=${v}`; }
         else { el.pause(); el.removeAttribute('src'); el.load(); }
       });
       aviso.hidden = RES[cap].atual !== null;
