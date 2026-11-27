@@ -208,7 +208,7 @@
       <div class="kpi"><b>18</b><small>diferenciais do protótipo</small></div>
       <div class="kpi"><b>14<span>/18</span></b><small>já em código</small></div>
       <div class="kpi"><b>44<span>/44</span></b><small>testes das regras passando</small></div>
-      <div class="kpi"><b>48</b><small>eventos de medição, iguais no protótipo e no código</small></div>
+      <div class="kpi"><b>51</b><small>eventos de medição, iguais no protótipo e no código</small></div>
     </div>
   </div>
 </header>
@@ -1461,6 +1461,9 @@
   { ga4: <span class="s">'pwa_convite'</span>, quando: <span class="s">'Convite para instalar o app apareceu (só depois do 1º pedido)'</span> },
   { ga4: <span class="s">'pwa_instalar'</span>, quando: <span class="s">'Resposta ao convite (aceitou, recusou, agora não)'</span> },
   { ga4: <span class="s">'pwa_instalado'</span>, quando: <span class="s">'App instalado. Todo evento aberto pelo app leva app: true'</span> },
+  { ga4: <span class="s">'pedido_status'</span>, quando: <span class="s">'Pedido mudou de etapa (confirmado, na chapa, saiu, entregue), com minutos desde o pedido. No ar vem do PDV da loja'</span> },
+  { ga4: <span class="s">'pedido_avisar'</span>, quando: <span class="s">'Pediu aviso quando sair pra entrega (permitiu a notificação ou não)'</span> },
+  { ga4: <span class="s">'pedido_falar_loja'</span>, quando: <span class="s">'Tocou em "Falar com a loja" no acompanhamento (com a etapa)'</span> },
   { ga4: <span class="s">'pontos_painel'</span>, quando: <span class="s">'Abriu o painel Pontos Ogro (de onde: topo, entrada, sacola, checkout, pedido)'</span> },
   { ga4: <span class="s">'pontos_usar'</span>, quando: <span class="s">'Ligou ou desligou o desconto em pontos (pontos e R$)'</span> },
   { ga4: <span class="s">'pontos_troca'</span>, quando: <span class="s">'Trocou pontos por um produto (item e pontos)'</span> },
@@ -1808,7 +1811,7 @@
       </article>
 
     </div>
-    <p class="arqs" style="margin-top:1rem">O protótipo também tem, ainda sem código Angular: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). Acompanhamento do pedido e Pix seguem bloqueados até os contratos B8–B10.</p>
+    <p class="arqs" style="margin-top:1rem">O protótipo também tem, ainda sem código Angular: lembrete de sacola guardada (fatia F6) e carrossel de banners (depende do contrato B13). O acompanhamento do pedido (status ao vivo, chegada em hora de relógio, etapas com hora, aviso ao sair e falar com a loja) e o Pix seguem bloqueados até os contratos B8–B10: no ar, cada etapa precisa vir do PDV da loja.</p>
   </section>
 
   <section id="atual-melhor">
@@ -1833,7 +1836,7 @@
     <div class="arq">
       <div class="camada pura"><h3>domain/</h3><p>Regras de negócio: horários, seleção e "Já vem com", Monte seu hambúrguer, cupom, Pontos Ogro, agendamento, busca, link de campanha. Dinheiro em centavos inteiros.</p><ul><li>12 arquivos + 6 de testes</li><li>Funções puras: recebem a hora, não leem o relógio</li></ul></div>
       <div class="camada"><h3>state/</h3><p>Sacola com signals, com persistência, "Desfazer" e editar. Link de campanha pendente.</p><ul><li>Armazenamento trocável por token de injeção</li></ul></div>
-      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 48 eventos, igual ao do protótipo.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
+      <div class="camada"><h3>data-access/</h3><p>Medição única: dataLayer e Meta, só com consentimento e com o mesmo event_id. Mapa dos 51 eventos, igual ao do protótipo.</p><ul><li>Nunca envia nome, telefone ou endereço</li></ul></div>
       <div class="camada"><h3>ui/</h3><p>Diretivas de vídeo e de impressão, animação da sacola, "Completa teu pedido?", burger montado com as camadas reais (SVG) e foto ampliada (OnPush).</p><ul><li>Respeita "menos movimento" e economia de dados</li></ul></div>
     </div>
   </section>
@@ -1845,7 +1848,7 @@
       <thead><tr><th>Gate</th><th>Status</th><th>Evidência</th></tr></thead>
       <tbody>
         <tr><td>Testes das regras (domain)</td><td><span class="chip st-ok">PASS</span></td><td>44 de 44, exit 0, Node 26.12, 27/11/2026. Os testes usam a sintaxe Jasmine/Jest e rodam no CI do Angular sem mudança.</td></tr>
-        <tr><td>Eventos do código × protótipo</td><td><span class="chip st-ok">PASS</span></td><td>48 de 48 nomes iguais ao mapa do protótipo, conferidos por script em 27/11.</td></tr>
+        <tr><td>Eventos do código × protótipo</td><td><span class="chip st-ok">PASS</span></td><td>51 de 51 nomes iguais ao mapa do protótipo, conferidos por script em 27/11.</td></tr>
         <tr><td>Build, lint e typecheck do Angular</td><td><span class="chip st-warn">Não rodado</span></td><td>O Angular não está instalado aqui. O código assume Angular 17+ (standalone, signals, @if/@for) até a Databite confirmar a versão.</td></tr>
         <tr><td>Testes de componente</td><td><span class="chip st-warn">Não rodado</span></td><td>Dependem do TestBed do Angular.</td></tr>
         <tr><td>Paridade visual</td><td><span class="chip st-warn">Não rodado</span></td><td>Falta montar as telas (fatia F2).</td></tr>
@@ -1972,8 +1975,8 @@
       },
       depois: {
         atual: null,
-        semVideo: 'Não gravado: no Cardápio atual, mostrar esta etapa exigiria fazer um pedido real na loja.',
-        prototipo: ['O CEP preenche a rua sozinho', 'Pix com QR e copia-e-cola, com prazo na tela', 'Acompanha o pedido: recebido, pago, na chapa, saiu, entregue', 'Os pontos do pedido aparecem "a caminho"', 'Demonstração: nenhum pedido é enviado'],
+        semVideo: 'Não gravado: no Cardápio atual, mostrar esta etapa exigiria fazer um pedido real na loja. Pelo relato do time do Ogro, o atual só mostra "em andamento", sem dizer em que etapa o pedido está.',
+        prototipo: ['Enquanto o Pix não cai: "Falta só o Pix", sem ✓ de confirmado', 'No topo, ao vivo: "Teu pedido tá na chapa" e a chegada em hora de relógio ("chega entre 18:06 e 18:21")', 'Cada etapa com a hora em que aconteceu e a previsão das próximas', '"Me avisa quando sair", "Falar com a loja" e o resumo do pedido', 'Demonstração acelerada: nenhum pedido é enviado'],
       },
       pontos: {
         atual: null,
@@ -1983,7 +1986,7 @@
     };
     const SITES = ['atual', 'prototipo'];
     // data da gravação no endereço: vídeo regravado = endereço novo, e o navegador nunca mostra a cópia antiga guardada
-    const VERSAO_VIDEO = { atual: '2026-11-25', prototipo: '2026-11-27' };
+    const VERSAO_VIDEO = { atual: '2026-11-25', prototipo: '2026-11-27b' };
     const sec = document.getElementById('cmp');
     if (!sec) return;
     const palco = document.getElementById('palco');

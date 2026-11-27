@@ -24,44 +24,44 @@
   "kb": 273
  },
  "prototipo-desktop-busca": {
-  "segundos": 21.5,
-  "kb": 1014
+  "segundos": 21.3,
+  "kb": 1009
  },
  "prototipo-desktop-foto": {
-  "segundos": 20.9,
-  "kb": 624
+  "segundos": 21.2,
+  "kb": 643
  },
  "prototipo-desktop-sacola": {
-  "segundos": 30.9,
-  "kb": 640
+  "segundos": 31.1,
+  "kb": 644
  },
  "prototipo-desktop-link": {
   "segundos": 13.4,
-  "kb": 577
+  "kb": 555
  },
  "prototipo-desktop-depois": {
-  "segundos": 44.5,
-  "kb": 546
+  "segundos": 45.7,
+  "kb": 597
  },
  "prototipo-mobile-busca": {
-  "segundos": 21.7,
-  "kb": 712
+  "segundos": 21.6,
+  "kb": 724
  },
  "prototipo-mobile-foto": {
-  "segundos": 19.7,
-  "kb": 458
+  "segundos": 20.1,
+  "kb": 464
  },
  "prototipo-mobile-sacola": {
-  "segundos": 28.5,
-  "kb": 484
+  "segundos": 28.4,
+  "kb": 471
  },
  "prototipo-mobile-link": {
-  "segundos": 13.7,
-  "kb": 426
+  "segundos": 13.8,
+  "kb": 390
  },
  "prototipo-mobile-depois": {
-  "segundos": 43.3,
-  "kb": 568
+  "segundos": 46.0,
+  "kb": 610
  },
  "prototipo-desktop-entrada": {
   "segundos": 17.7,
@@ -76,8 +76,8 @@
   "kb": 387
  },
  "prototipo-desktop-pontos": {
-  "segundos": 32.1,
-  "kb": 650
+  "segundos": 32.4,
+  "kb": 642
  },
  "prototipo-mobile-entrada": {
   "segundos": 17.3,
@@ -92,7 +92,7 @@
   "kb": 294
  },
  "prototipo-mobile-pontos": {
-  "segundos": 32.7,
-  "kb": 549
+  "segundos": 33.0,
+  "kb": 627
  }
 }
