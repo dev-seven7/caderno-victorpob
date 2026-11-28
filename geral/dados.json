@@ -1,13 +1,13 @@
 {
- "gerado_em": "2026-11-27 20:51",
+ "gerado_em": "2026-11-27 21:16",
  "repo": "dev-seven7/cs-ogro-steaks",
  "demandas": [
   {
    "n": 58,
    "titulo": "🧭 🥩 OGRO · Workspace geral do Ogro (caderno-victorpob/geral) no molde do painel da Temakeria (Victor)",
    "estado": "open",
-   "situacao": "No board, sem status",
-   "status_board": null,
+   "situacao": "Em revisão",
+   "status_board": "In review",
    "prioridade": null,
    "no_board": true,
    "frente": "Base e operação",
@@ -15,8 +15,8 @@
     "victorpobgruporobfood"
    ],
    "criada": "2026-11-27",
-   "atualizada": "2026-11-27",
-   "dias_sem_mov": 0
+   "atualizada": "2026-11-28",
+   "dias_sem_mov": -1
   },
   {
    "n": 57,
@@ -167,8 +167,8 @@
     "victorpobgruporobfood"
    ],
    "criada": "2026-11-19",
-   "atualizada": "2026-11-27",
-   "dias_sem_mov": 0
+   "atualizada": "2026-11-28",
+   "dias_sem_mov": -1
   },
   {
    "n": 45,
